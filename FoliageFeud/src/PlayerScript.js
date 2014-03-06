@@ -75,11 +75,11 @@ var observationInstance = {
 		
 		if (this.atLowestPos === true)
 		{
-			this.vy = -8;
+			this.vy = -12;
 			this.atLowestPos = false;
 		}
 		
-		if (this.atLowestPos === false && this.vy < 8)
+		if (this.atLowestPos === false && this.vy < 12)
 		{
 			this.vy += this.gravity;
 		}
@@ -99,7 +99,7 @@ var observationInstance = {
 	vy: 0,
 	width: 64,
 	height: 64,
-	gravity: 1,
+	gravity: 2,
 	lowestPos: 0,
 	atLowestPos: true,
 	
