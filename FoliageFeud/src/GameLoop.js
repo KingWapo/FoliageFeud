@@ -44,6 +44,12 @@ cd.type = "text/javascript";
 cd.src = "CollisionDetection.js";
 document.body.appendChild(cd);
 
+// Load the click handler
+var clickhandler = document.createElement("script");
+clickhandler.type = "text/javascript";
+clickhandler.src = "Clickhandler.js";
+document.body.appendChild(clickhandler);
+
 // Bool list for the loaded positions
 screensLoaded = [true, // Title
 				 false, // Gameplay
@@ -157,11 +163,25 @@ function mainUpdate()
 
 function mainRender()
 {
-	drawingSurface.clearRect(0, 0, canvas.width, canvas.height);
-	
 	drawingSurface.save();
 	
 	render();
 	
 	drawingSurface.restore();
+}
+
+// Needs to be last call in each game mode to properly load screens
+function loadScreens()
+{
+	for (var i = 0; i < screensLoaded.length; i++)
+	{
+		if (i == currentScreen)
+		{
+			screensLoaded[i] = true;
+		}
+		else
+		{
+			screensLoaded[i] = false;
+		}
+	}
 }

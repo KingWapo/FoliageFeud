@@ -76,7 +76,7 @@ var WALL = 6;
 
 //**** Replace with tile map ****//
 //Create the foreground sprite
-/*
+
 var foreground = Object.create(spriteObject);
 foreground.sprite.src = "../img/testbg.png";
 
@@ -101,7 +101,6 @@ switch(mapOrientation)
 		foreground.width = height;
 		foreground.height = width;
 		break;
-	/*
 	case 2: // Rotate 180 degrees (North is down)
 		foreground.sourceWidth = width;
 		foreground.sourceHeight = height;
@@ -116,12 +115,10 @@ switch(mapOrientation)
 		foreground.height = width;
 		foreground.rotation = 270;
 		break;
-	*//*
 }
 
 console.debug("Width: " + foreground.width);
 console.debug("\nHeight: " + foreground.height);
-*/
 //The sprite's rotation
 //drawingSurface.translate(-foreground.width / 2, -foreground.height / 2);
 //drawingSurface.rotate(foreground.rotation);

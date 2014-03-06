@@ -1,4 +1,4 @@
-// Created by Brandon Felch
+// Created by Batman
 
 // ISpy game mode
 
@@ -9,41 +9,45 @@ var FOREST  = "Forest";
 var CLIFF   = "Cliff";
 var PRAIRIE = "Prairie";
 
+// If not initialized, grow flowers
+var initialized = false;
+
+// Stores info on current instance
 var observeInstance =
 {
 	region: "",
 	environment: ""
 }
 
-var canvas = document.querySelector("canvas");
-var drawingSurface = canvas.getContext("2d");
+// Initializes instance
+function init()
+{
+	for (var i = 0; i < plantList.length; i++)
+	{
+		var x = Math.floor(Math.random() * 200);
+		var y = Math.floor(Math.random() * 200);
+		
+		growPlant(i, x, y);
+	}
+}
 
+// Nothing to update
 function update()
 {
-	requestAnimFrame(update);
-
-	render();
 }
 
+// Initializes if newly loaded, nothing otherwise
 function render()
 {
-	// Sets sprite path
-	// Draws sprite to canvas
-	for (var i = 0; i < plantNames.length; i++)
+	if (!initialized)
 	{
-		var sprite = new Image();
-		sprite.src = "../img/Plants/".concat(plantNames[i], ".png");
-		drawingSurface.drawImage(sprite, 64 * i, 100);
+		clearClickHandler();
+		
+		drawingSurface.clearRect(0, 0, canvas.width, canvas.height);
+		init();
+		initialized = true;
 	}
 }
 
-//Last call should change the state to loaded and all previous states to false
-for (var i = 0; i < screensLoaded.length; i++)
-{
-	if (i == currentScreen) {
-		screensLoaded[i] = true;
-	}
-	else {
-		screensLoaded[i] = false;
-	}
-}
+// Updates loaded screens variables
+loadScreens();

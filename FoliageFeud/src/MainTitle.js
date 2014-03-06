@@ -24,13 +24,4 @@ function render()
 {
 }
 
-//Last call should change the state to loaded and all previous states to false
-for (var i = 0; i < screensLoaded.length; i++)
-{
-	if (i == currentScreen) {
-		screensLoaded[i] = true;
-	}
-	else {
-		screensLoaded[i] = false;
-	}
-}
+loadScreens();

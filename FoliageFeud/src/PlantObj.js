@@ -1,41 +1,36 @@
-// Created by Brandon Felch
+// Created by Batman
 
 // All plant objects
 
 var plant =
 {
 	name: "",
-	sprite: new Image(),
-	srcX: 0,
-	srcY: 0,
-	srcW: 64,
-	srcH: 64,
-	x: 0,
-	y: 0,
-	w: 32,
-	h: 32
-}
+	sprite: ""
+};
 
 var plantNames = ["brown", "orange", "red", "white", "yellow"];
-//var plantList = [];
+var plantList = [];
 
-/* function growPlants(i, x, y)
+// Creates a list of all possible plants
+for (var i = 0; i < plantNames.length; i++)
 {
 	var newPlant = Object.create(plant);
 	newPlant.name = plantNames[i];
-	newPlant.sprite.src = "../img/".concat(plantNames[i], ".png");
-	newPlant.x = x;
-	newPlant.y = y;
-	
-	return newPlant;
-} */
+	newPlant.sprite = new Image();
+	newPlant.sprite.src = "../img/Plants/".concat(plantNames[i], ".png");
+	plantList.push(newPlant);
+}
 
-/* for (var i = 0; i < plantNames.length; i++)
+// Draws plants to screen and adds them as clickable objects
+function growPlant(i, x, y)
 {
-	plantList.push(growPlants(i, 64 * i, 100));
-} */
+	addItem(x, y, plantList[i].sprite.width, plantList[i].sprite.height, exitObserve);
+	
+	drawingSurface.drawImage(plantList[i].sprite, x, y);
+}
 
-function clickHandler()
+// Switch gamemode to standard gameplay
+function exitObserve()
 {
 	currentScreen = ScreenState.Gameplay;
 }
