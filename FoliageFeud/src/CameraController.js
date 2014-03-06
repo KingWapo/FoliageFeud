@@ -4,6 +4,10 @@
 	Setting up the functionality behind the camera and
 	the parallaxing background for the player to move
 	along
+	
+	Maps will be 150 x 100, 
+	the screen is 40 x 20,
+	the tiles are 32 x 32
 */
 
 //--- The sprite object
@@ -90,7 +94,14 @@ foreground.sprite.src = "../img/testbg.png";
 var width = 2200;
 var height = 1375;
 
+foreground.sourceWidth = width;
+foreground.sourceHeight = height;
+foreground.width = width;
+foreground.height = height;
+
+/*
 foreground.rotation = mapOrientation / 2;
+
 
 switch(mapOrientation)
 {
@@ -108,6 +119,7 @@ switch(mapOrientation)
 		foreground.width = height;
 		foreground.height = width;
 		break;
+		/*
 	case 2: // Rotate 180 degrees (North is down)
 		foreground.sourceWidth = width;
 		foreground.sourceHeight = height;
@@ -122,10 +134,11 @@ switch(mapOrientation)
 		foreground.height = width;
 		foreground.rotation = 270;
 		break;
+		
 }
 
 console.debug("Width: " + foreground.width);
-console.debug("\nHeight: " + foreground.height);
+console.debug("\nHeight: " + foreground.height);*/
 //The sprite's rotation
 //drawingSurface.translate(-foreground.width / 2, -foreground.height / 2);
 //drawingSurface.rotate(foreground.rotation);

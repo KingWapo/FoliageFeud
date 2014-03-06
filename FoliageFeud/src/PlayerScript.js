@@ -70,10 +70,6 @@ var observationInstance = {
 
 var cameraLoaded = false;
 
-//The canvas and its drawing surface
-var canvas = document.querySelector("canvas");
-var drawingSurface = canvas.getContext("2d");
-
 // Load the CameraController
 var cc = document.createElement("script");
 cc.type = "text/javascript";
