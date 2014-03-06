@@ -47,7 +47,7 @@ var player = {
 	height: 64,
 	vx: 0,
 	vy: 0,
-	speed: 2,
+	speed: 4,
 	sprite: new Image(),
 	direction: Direction.Idle
 }
@@ -57,13 +57,27 @@ setInterval(updateAnimation, 100);
 var observationInstance = {
 	sourceX: 0,
 	sourceY: 0,
-	sourceWidth: 144,
-	sourceHeight: 118,
+	sourceWidth: 64,
+	sourceHeight: 64,
+	
+	numOfFrames: 30,
+	currentFrame: 0,
+	
+	//Update Animation Function
+	updateAnimation: function()
+	{
+		this.sourceX = this.currentFrame * this.sourceWidth;
+			
+		this.currentFrame += 1;
+		if ( this.currentFrame === this.numOfFrames ) {
+			this.currentFrame = 0;
+		}
+	},
 	
 	x: 0,
 	y: 0,
-	width: 144,
-	height: 118,
+	width: 64,
+	height: 64,
 	
 	sprite: new Image()
 }
@@ -81,7 +95,7 @@ document.body.appendChild(cc);
 //player.sprite.addEventListener("load", loadHandler, false);
 player.sprite.src = "../img/characterMale.png";
 
-observationInstance.sprite.src = "../img/observationEvent.png";
+observationInstance.sprite.src = "../img/exclamationPoint.png";
 
 //Arrow key codes
 var LEFT = 37;
@@ -154,6 +168,7 @@ function update()
 function updateAnimation()
 {
 	player.updateAnimation();
+	observationInstance.updateAnimation();
 }
 
 function checkMovement()
@@ -220,7 +235,6 @@ function checkMovement()
 			player.direction = Direction.Idle;
 		}
 	}
-	
 	
 	if (cameraLoaded)
 	{
