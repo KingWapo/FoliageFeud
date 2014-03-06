@@ -25,7 +25,13 @@ var spriteObject =
   rotation: 0
 };
 
-var map = 
+//Game Level Maps
+//Arrays to store the level maps
+var levelMaps = [];
+var levelGameObjects = [];
+
+// First map
+var map1 = 
 [
   [6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6],
   [6,1,2,1,1,2,1,1,1,1,2,2,1,1,1,6],
@@ -45,7 +51,8 @@ var map =
   [6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6]
 ];
 
-var gameObjects =
+// First set of game objects
+var gameObjects1 =
 [
   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -63,7 +70,7 @@ var gameObjects =
   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-]
+];
 
 //Map code
 var EMPTY = 0;
