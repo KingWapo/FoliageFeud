@@ -22,6 +22,7 @@ function update()
 
 function render()
 {
+	drawingSurface.clearRect(0, 0, canvas.width, canvas.height);
 }
 
 loadScreens();
