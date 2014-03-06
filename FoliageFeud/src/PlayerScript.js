@@ -72,12 +72,36 @@ var observationInstance = {
 		if ( this.currentFrame === this.numOfFrames ) {
 			this.currentFrame = 0;
 		}
+		
+		if (this.atLowestPos === true)
+		{
+			this.vy = -8;
+			this.atLowestPos = false;
+		}
+		
+		if (this.atLowestPos === false && this.vy < 8)
+		{
+			this.vy += this.gravity;
+		}
+		
+		this.y += this.vy;
+		
+		if (this.y >= this.lowestPos)
+		{
+			this.y = this.lowestPos;
+			this.vy = 0;
+			this.atLowestPos = true;
+		}
 	},
 	
 	x: 0,
 	y: 0,
+	vy: 0,
 	width: 64,
 	height: 64,
+	gravity: 1,
+	lowestPos: 0,
+	atLowestPos: true,
 	
 	sprite: new Image()
 }
@@ -287,6 +311,7 @@ function placeObservationEvent()
 	
 	observationInstance.x = obsX;
 	observationInstance.y = obsY;
+	observationInstance.lowestPos = obsY;
 	
 	console.debug("x: " + obsX + " y: " + obsY);
 }
