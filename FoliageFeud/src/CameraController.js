@@ -5,13 +5,13 @@
 	the parallaxing background for the player to move
 	along
 	
-	Maps will be 150 x 100, 
-	the screen is 40 x 20,
-	the tiles are 32 x 32
+	Maps will be 75 x 50, 
+	the screen is 18 x 8,
+	the tiles are 64 x 64
 */
 
 //--- The sprite object
-
+/*
 var spriteObject =
 {
   sourceX: 0,
@@ -28,14 +28,20 @@ var spriteObject =
   sprite: new Image(),
   rotation: 0
 };
-
+*/
 //Game Level Maps
 //Arrays to store the level maps
 var levelMaps = [];
 var levelGameObjects = [];
 
+//A level counter
+var levelCounter = 0;
+
+//A timer to help delay the change time between levels
+var levelChangeTimer = 0;
+
 // First map
-var map1 = 
+/*var map1 = 
 [
   [6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6],
   [6,1,2,1,1,2,1,1,1,1,2,2,1,1,1,6],
@@ -53,8 +59,28 @@ var map1 =
   [6,1,1,1,1,1,2,1,1,1,1,2,1,2,1,6],
   [6,1,2,1,2,1,1,1,1,2,1,1,1,1,1,6],
   [6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6]
-];
+];*/
 
+var map1 = []
+for (var i = 0; i < 50; i++)
+{
+	var tempList = [];
+	for (var j = 0; j < 75; j++)
+	{
+		if (i == 0 || i == 49 || j == 0 || j == 74)
+		{
+			tempList.push(6);
+		}
+		else {
+			tempList.push(1);
+		}
+	}
+	map1.push(tempList);
+}
+
+levelMaps.push(map1);
+
+/*
 // First set of game objects
 var gameObjects1 =
 [
@@ -74,20 +100,60 @@ var gameObjects1 =
   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-];
+];*/
+
+var gameObjects1 = [];
+
+for (var i = 0; i < 50; i++)
+{
+	var tempList = [];
+	for (var j = 0; j < 74; j++)
+	{
+		tempList.push(0);
+	}
+	gameObjects1.push(tempList);
+}
+
+levelGameObjects.push(gameObjects1);
+
 
 //Map code
 var EMPTY = 0;
-var FLOOR = 1;
+var GRASS = 1;
 var BOX = 2;
 var MONSTER = 3;
 var STAR = 4;
 var ALIEN = 5;
 var WALL = 6;
 
+// Size of each tile
+var SIZE = 64;
+
+//The number of rows and columns
+var ROWS = map1.length;
+var COLUMNS = map1[0].length;
+
+//Arrays to store the game objects
+var sprites = [];
+var boxes = [];
+
+//Load the tilesheet image
+var image = new Image();
+image.addEventListener("load", loadHandler, false);
+image.src = "../img/monsterMayhem.png";
+//assetsToLoad.push(image);
+
+//The number of columns on the tilesheet
+var tilesheetColumns = 4;
+
+var WIDTH = COLUMNS * SIZE;
+var HEIGHT = ROWS * SIZE;
+
+buildMap(levelMaps[0]);
+
 //**** Replace with tile map ****//
 //Create the foreground sprite
-
+/*
 var foreground = Object.create(spriteObject);
 foreground.sprite.src = "../img/testbg.png";
 
@@ -152,8 +218,8 @@ var gameWorld =
 {
   x: 0,
   y: 0,
-  width: foreground.width,
-  height: foreground.height
+  width: WIDTH,
+  height:HEIGHT
 };
 
 //The camera has 2 new properties: "vx" and "previousX"
@@ -233,6 +299,41 @@ function cameraRender()
 	//Move the drawing surface so that it's positioned relative to the camera
 	drawingSurface.translate(-camera.x, -camera.y);
 	
+	if(sprites.length !== 0)
+	{
+		for(var i = sprites.length - 1; i >= 0; i--)
+		{
+		  var sprite = sprites[i];
+			 
+		  //display the scrolling sprites
+		  if(sprite.visible && sprite.scrollable)
+		  {
+			 drawingSurface.drawImage
+			 (
+			   image, 
+			   sprite.sourceX, sprite.sourceY, 
+			   sprite.sourceWidth, sprite.sourceHeight,
+			   Math.floor(sprite.x), Math.floor(sprite.y), 
+			   sprite.width, sprite.height
+			 ); 
+		   }
+			 
+		   //display the non-scrolling sprites
+		   if(sprite.visible && !sprite.scrollable)
+		   {
+			 drawingSurface.drawImage
+			 (
+			   image, 
+			   sprite.sourceX, sprite.sourceY, 
+			   sprite.sourceWidth, sprite.sourceHeight,
+			   Math.floor(camera.x + sprite.x), Math.floor(camera.y + sprite.y), 
+			   sprite.width, sprite.height
+			 ); 
+		   }
+		   
+		} 
+	}
+	/*
 	drawingSurface.drawImage
       (
         foreground.sprite, 
@@ -241,10 +342,91 @@ function cameraRender()
         Math.floor(foreground.x), Math.floor(foreground.y) 
         //foreground.width, foreground.height
       );
+	 */
 }
 
-function buildMap()
+function buildMap(levelMap)
 {
+  for(var row = 0; row < ROWS; row++) 
+  {	
+    for(var column = 0; column < COLUMNS; column++) 
+    { 
+      var currentTile = levelMap[row][column];
+    
+      if(currentTile != EMPTY)
+      {
+        //Find the tile's x and y position on the tile sheet
+        var tilesheetX = Math.floor((currentTile - 1) % tilesheetColumns) * SIZE; 
+        var tilesheetY = Math.floor((currentTile - 1) / tilesheetColumns) * SIZE;
+        
+        switch (currentTile)
+        {
+          case GRASS:
+            var floor = Object.create(spriteObject);
+            floor.sourceX = tilesheetX;
+            floor.sourceY = tilesheetY;
+            floor.x = column * SIZE;
+            floor.y = row * SIZE;
+            sprites.push(floor);
+            break;
+          
+          case BOX:
+            var box = Object.create(spriteObject);
+            box.sourceX = tilesheetX;
+            box.sourceY = tilesheetY;
+            box.x = column * SIZE;
+            box.y = row * SIZE;
+            sprites.push(box);
+            boxes.push(box);
+            break;
+          
+          case WALL:
+            var wall = Object.create(spriteObject);
+            wall.sourceX = tilesheetX;
+            wall.sourceY = tilesheetY;            
+            wall.x = column * SIZE;
+            wall.y = row * SIZE;
+            sprites.push(wall);
+            break;
+          
+          case MONSTER:
+            var monster = Object.create(monsterObject);
+            monster.sourceX = tilesheetX;
+            monster.sourceY = tilesheetY;
+            monster.x = column * SIZE;
+            monster.y = row * SIZE;
+            //Make the monster choose a random start direction 
+            changeDirection(monster)          
+            monsters.push(monster);
+            sprites.push(monster);
+            break; 
+          
+          case STAR:
+            var star = Object.create(spriteObject);
+            star.sourceX = tilesheetX;
+            star.sourceY = tilesheetY;
+            star.sourceWidth = 48;
+            star.sourceHeight = 48;
+            star.width = 48;  
+            star.height = 48;          
+            star.x = column * SIZE + 8;
+            star.y = row * SIZE + 8;
+            stars.push(star);
+            sprites.push(star);
+            break;
+            
+          case ALIEN:
+            alien = Object.create(spriteObject);
+            alien.sourceX = tilesheetX;
+            alien.sourceY = tilesheetY;            
+            alien.x = column * SIZE;
+            alien.y = row * SIZE;
+            sprites.push(alien);
+            break;
+        }
+      }
+    }
+  }
 }
 
 placeObservationEvent();
