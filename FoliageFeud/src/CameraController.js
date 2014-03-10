@@ -135,7 +135,7 @@ var COLUMNS = map1[0].length;
 
 //Load the tilesheet image
 var tilesheet = new Image();
-tilesheet.addEventListener("load", loadHandler, false);
+//tilesheet.addEventListener("load", loadHandler, false);
 tilesheet.src = "../img/tilesheet.png";
 //assetsToLoad.push(image);
 
