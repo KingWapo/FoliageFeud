@@ -52,8 +52,6 @@ var player = {
 	direction: Direction.Idle
 }
 
-setInterval(updateAnimation, 100);
-
 var observationInstance = {
 	sourceX: 0,
 	sourceY: 0,
@@ -187,6 +185,8 @@ function update()
 	{
 		currentScreen = ScreenState.Observation;
 	}
+	
+	updateAnimation();
 }
 
 function updateAnimation()
