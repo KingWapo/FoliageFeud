@@ -107,7 +107,7 @@ var gameObjects1 = [];
 for (var i = 0; i < 50; i++)
 {
 	var tempList = [];
-	for (var j = 0; j < 74; j++)
+	for (var j = 0; j < 75; j++)
 	{
 		tempList.push(0);
 	}
@@ -133,14 +133,10 @@ var SIZE = 64;
 var ROWS = map1.length;
 var COLUMNS = map1[0].length;
 
-//Arrays to store the game objects
-var sprites = [];
-var boxes = [];
-
 //Load the tilesheet image
-var image = new Image();
-image.addEventListener("load", loadHandler, false);
-image.src = "../img/monsterMayhem.png";
+var tilesheet = new Image();
+tilesheet.addEventListener("load", loadHandler, false);
+tilesheet.src = "../img/tilesheet.png";
 //assetsToLoad.push(image);
 
 //The number of columns on the tilesheet
@@ -148,6 +144,22 @@ var tilesheetColumns = 4;
 
 var WIDTH = COLUMNS * SIZE;
 var HEIGHT = ROWS * SIZE;
+
+
+//Arrays to store the game objects
+var baseTiles = [];
+for (var i = 0; i < 50; i++)
+{
+	var tempList = [];
+	for (var j = 0; j < 75; j++)
+	{
+		var sprite = Object.create(spriteObject);
+		tempList.push(sprite);
+	}
+	baseTiles.push(tempList);
+}
+var sprites = [];
+var boxes = [];
 
 buildMap(levelMaps[0]);
 
@@ -298,7 +310,43 @@ function cameraRender()
 {
 	//Move the drawing surface so that it's positioned relative to the camera
 	drawingSurface.translate(-camera.x, -camera.y);
-	
+	for (var row = Math.floor(camera.y / 64); row < Math.floor((camera.y + camera.height)/64) + 2; row++)
+	{
+		for (var column = Math.floor(camera.x / 64); column < Math.floor((camera.x + camera.width)/64) + 2; column++)
+		{
+			if (row < ROWS && column < COLUMNS)
+			{
+				var sprite = baseTiles[row][column];
+				
+				//display the scrolling sprites
+				if(sprite.visible && sprite.scrollable)
+				{
+				 drawingSurface.drawImage
+				 (
+				   tilesheet, 
+				   sprite.sourceX, sprite.sourceY, 
+				   sprite.sourceWidth, sprite.sourceHeight,
+				   Math.floor(sprite.x), Math.floor(sprite.y), 
+				   sprite.width, sprite.height
+				 ); 
+				}
+				 
+				//display the non-scrolling sprites
+				if(sprite.visible && !sprite.scrollable)
+				{
+				 drawingSurface.drawImage
+				 (
+				   tilesheet, 
+				   sprite.sourceX, sprite.sourceY, 
+				   sprite.sourceWidth, sprite.sourceHeight,
+				   Math.floor(camera.x + sprite.x), Math.floor(camera.y + sprite.y), 
+				   sprite.width, sprite.height
+				 ); 
+				}
+			}
+		}		
+	}
+	/*
 	if(sprites.length !== 0)
 	{
 		for(var i = sprites.length - 1; i >= 0; i--)
@@ -333,6 +381,7 @@ function cameraRender()
 		   
 		} 
 	}
+	*/
 	/*
 	drawingSurface.drawImage
       (
@@ -362,12 +411,13 @@ function buildMap(levelMap)
         switch (currentTile)
         {
           case GRASS:
-            var floor = Object.create(spriteObject);
-            floor.sourceX = tilesheetX;
-            floor.sourceY = tilesheetY;
-            floor.x = column * SIZE;
-            floor.y = row * SIZE;
-            sprites.push(floor);
+            var grass = Object.create(spriteObject);
+            grass.sourceX = tilesheetX;
+            grass.sourceY = tilesheetY;
+            grass.x = column * SIZE;
+            grass.y = row * SIZE;
+            //sprites.push(grass);
+			baseTiles[row][column] = grass;
             break;
           
           case BOX:
@@ -376,7 +426,8 @@ function buildMap(levelMap)
             box.sourceY = tilesheetY;
             box.x = column * SIZE;
             box.y = row * SIZE;
-            sprites.push(box);
+            //sprites.push(box);
+			baseTiles[row][column] = box;
             boxes.push(box);
             break;
           
@@ -386,7 +437,7 @@ function buildMap(levelMap)
             wall.sourceY = tilesheetY;            
             wall.x = column * SIZE;
             wall.y = row * SIZE;
-            sprites.push(wall);
+			baseTiles[row][column] = wall;
             break;
           
           case MONSTER:
