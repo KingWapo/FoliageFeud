@@ -105,6 +105,7 @@ var observationInstance = {
 }
 
 var cameraLoaded = false;
+var onPause = false;
 
 // Load the CameraController
 var cc = document.createElement("script");
@@ -124,6 +125,7 @@ var LEFT = 37;
 var UP = 38;
 var RIGHT = 39;
 var DOWN = 40;
+var ENTER = 13;
 
 //Directions
 var moveLeft = false;
@@ -134,47 +136,70 @@ var moveDown = false;
 //Add keyboard listeners
 window.addEventListener("keydown", function(event)
 {
-  switch(event.keyCode)
-  {
-	  case LEFT:
-	    moveLeft = true;
-	    break;  
+	if (!onPause)
+	{
+	  switch(event.keyCode)
+	  {
+		  case LEFT:
+			moveLeft = true;
+			break;  
+		
+		  case UP:
+			moveUp = true;
+			break;
+			
+		  case RIGHT:
+			moveRight = true;
+			break; 
+		
+		  case DOWN:
+			moveDown = true;
+			break;
+		
+	  }
+	}
 	
-	  case UP:
-	  	moveUp = true;
-		break;
-	    
-	  case RIGHT:
-	    moveRight = true;
-	    break; 
-	
-	  case DOWN:
-	  	moveDown = true;
-		break;
-  }
 }, false);
 
 window.addEventListener("keyup", function(event)
 {
-  switch(event.keyCode)
-  {   
-	  case LEFT:
-	    moveLeft = false;
-	    break;  
+	if (onPause)
+	{
+		if (event.keyCode == ENTER)
+		{
+			console.debug("Exit Pause");
+			onPause = false;
+		}
+	}
+	else
+	{
+	  switch(event.keyCode)
+	  {   
+		  case LEFT:
+			moveLeft = false;
+			break;  
+			
+		  case UP:
+			moveUp = false;
+			break;
+			
+		  case RIGHT:
+			moveRight = false;
+			break; 
 		
-	  case UP:
-	  	moveUp = false;
-		break;
-	    
-	  case RIGHT:
-	    moveRight = false;
-	    break; 
-	
-	  case DOWN:
-	  	moveDown = false;
-		break;
-  }
+		  case DOWN:
+			moveDown = false;
+			break;
+		
+		  
+		  case ENTER:
+			console.debug("Enter Pause");
+			onPause = true;
+			break;
+	  }
+    }
 }, false);
+
 
 
 function update()
@@ -187,6 +212,10 @@ function update()
 	}
 	
 	updateAnimation();
+	
+	if (onPause)
+	{
+	}
 }
 
 function updateAnimation()
