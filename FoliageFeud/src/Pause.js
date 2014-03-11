@@ -32,36 +32,37 @@ function buildInGameMap()
 			var tile = pauseMap[row][column];
 			if (column == playerLocation[0] && row == playerLocation[1])
 			{
-				var playerMapSprite = Object.create(spriteObject);
-				playerMapSprite.sourceX = 2;
-				playerMapSprite.x = column * MAPWIDTH;
-				playerMapSprite.y = row * MAPHEIGHT;
-				mapSprites.push(playerMapSprite);
+				mapSprites.push(createSprite(2, column, row));
 			}
 			else if (column == objective[0] && row == objective[0])
 			{
-				var objectiveMapSprite = Object.create(spriteObject);
-				objectiveMapSprite.sourceX = 1;
-				objectiveMapSprite.x = column * MAPWIDTH;
-				objectiveMapSprite.y = row * MAPHEIGHT;
-				mapSprites.push(objectiveMapSprite);
+				mapSprites.push(createSprite(1, column, row));
 			}
 			else
 			{
 				switch(tile)
 				{
 					case BLANK:
-						var grass = Object.create(spriteObject);
-						grass.sourceX = 0;
-						grass.sourceY = 0;
-						grass.x = column * MAPWIDTH;
-						grass.y = row * MAPHEIGHT;
-						mapSprites.push(grass);
+						mapSprites.push(createSprite(0, column, row));
 						break;
 				}
 			}
 		}
 	}
+}
+
+function createSprite(tile, column, row)
+{
+	var mapTile = Object.create(spriteObject);
+	mapTile.sourceX = tile * MAPWIDTH;
+	mapTile.sourceWidth = MAPWIDTH;
+	mapTile.sourceHeight = MAPHEIGHT;
+	mapTile.x = column * MAPWIDTH;
+	mapTile.y = row * MAPHEIGHT;
+	mapTile.width = MAPWIDTH;
+	mapTile.height = MAPHEIGHT;
+	
+	return mapTile;
 }
 
 function pauseRender()
