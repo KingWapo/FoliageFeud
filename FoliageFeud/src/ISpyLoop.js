@@ -19,15 +19,22 @@ var observeInstance =
 	environment: ""
 }
 
+var bg = new Image();
+bg.src = "../img/ispywall.png";
+
 // Initializes instance
 function init()
 {
+	drawingSurface.drawImage
+		(
+			bg, 
+			0, 0, 1152, 512,
+			0, 0, 1152, 512
+		  );
+		  
 	for (var i = 0; i < plantList.length; i++)
 	{
-		var x = Math.floor(Math.random() * 32 * 39);
-		var y = Math.floor(Math.random() * 32 * 19);
-		
-		growPlant(i, x, y);
+		growPlant(i);
 	}
 }
 

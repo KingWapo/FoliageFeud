@@ -10,6 +10,7 @@ var plant =
 
 var plantNames = ["brown", "orange", "red", "white", "yellow"];
 var plantList = [];
+var originOffset = 64;
 
 // Creates a list of all possible plants
 for (var i = 0; i < plantNames.length; i++)
@@ -22,11 +23,20 @@ for (var i = 0; i < plantNames.length; i++)
 }
 
 // Draws plants to screen and adds them as clickable objects
-function growPlant(i, x, y)
+function growPlant(i)
 {
-	addItem(x, y, plantList[i].sprite.width, plantList[i].sprite.height, exitObserve);
 	
-	drawingSurface.drawImage(plantList[i].sprite, x, y);
+	for (var j = 0; j < Math.floor(Math.random() * 4) + 1; j++)
+	{
+		do
+		{
+			var x = Math.floor((Math.random() * (64 * 16)) + 32);
+			var y = Math.floor((Math.random() * (64 * 6)) + 32);
+		} while(isIntersecting(x, y, 32, 32))
+		
+		addItem(x, y, plantList[i].sprite.width, plantList[i].sprite.height, exitObserve);
+		drawingSurface.drawImage(plantList[i].sprite, x, y);
+	}
 }
 
 // Switch gamemode to standard gameplay

@@ -17,13 +17,13 @@ var clickObj =
 };
 
 // Add item to list
-function addItem(x, y, w, h, func)
+function addItem(x, y, width, height, func)
 {
 	var item = Object.create(clickObj);
 	item.x = x;
 	item.y = y;
-	item.w = w;
-	item.h = h;
+	item.width = width;
+	item.height = height;
 	item.func = func;
 	
 	clickable.push(item);
@@ -49,12 +49,28 @@ function handleClick(event)
 	for (var i = 0; i < clickable.length; i++)
 	{
 		// If image was clicked, runs specified function
-		if (posx >= clickable[i].x && posx <= clickable[i].x + clickable[i].w &&
-			posy >= clickable[i].y && posy <= clickable[i].y + clickable[i].h)
+		if (posx >= clickable[i].x && posx <= clickable[i].x + clickable[i].width &&
+			posy >= clickable[i].y && posy <= clickable[i].y + clickable[i].height)
 		{
 			clickable[i].func();
 		}
 	}
+}
+
+function isIntersecting(x, y, width, height)
+{
+	for (var i = 0; i < clickable.length; i++)
+	{
+		if (((clickable[i].x + clickable[i].width >= x &&
+			clickable[i].y + clickable[i].height >= y) ||
+			(x <= clickable[i].x && y <= clickable[i].y)) &&
+			((x + width >= clickable[i].x &&
+			y + height >= clickable[i].y) ||
+			(clickable[i].x <= x && clickable[i].y <= y)))
+			return true;
+	}
+	
+	return false;
 }
 
 window.addEventListener("click", handleClick, false);
