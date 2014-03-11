@@ -10,25 +10,6 @@
 	the tiles are 64 x 64
 */
 
-//--- The sprite object
-/*
-var spriteObject =
-{
-  sourceX: 0,
-  sourceY: 0,
-  sourceWidth: 64,
-  sourceHeight: 64,
-  x: 0,
-  y: 0,
-  width: 64,
-  height: 64,
-  vx: 0,
-  vy: 0,
-  gravity: 0.3,
-  sprite: new Image(),
-  rotation: 0
-};
-*/
 //Game Level Maps
 //Arrays to store the level maps
 var levelMaps = [];
@@ -39,27 +20,6 @@ var levelCounter = 0;
 
 //A timer to help delay the change time between levels
 var levelChangeTimer = 0;
-
-// First map
-/*var map1 = 
-[
-  [6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6],
-  [6,1,2,1,1,2,1,1,1,1,2,2,1,1,1,6],
-  [6,1,1,1,1,1,2,1,2,1,1,1,1,2,1,6],
-  [6,2,1,1,1,1,1,1,1,1,1,2,1,1,1,6],
-  [6,1,2,1,2,2,1,1,1,1,2,1,1,1,1,6],
-  [6,1,2,1,1,1,1,1,1,1,1,2,2,1,1,6],
-  [6,1,1,1,2,1,2,2,1,1,1,1,1,1,2,6],
-  [6,1,1,2,1,1,2,1,1,1,2,1,2,1,1,6],
-  [6,1,2,1,1,1,2,1,2,1,1,1,1,2,1,6],
-  [6,1,2,2,1,1,2,2,2,1,2,2,1,1,2,6],
-  [6,2,1,1,1,2,1,1,1,1,1,1,1,1,1,6],
-  [6,1,2,2,1,1,2,1,1,2,1,2,1,2,2,6],
-  [6,1,1,1,2,1,1,1,2,1,1,1,1,1,1,6],
-  [6,1,1,1,1,1,2,1,1,1,1,2,1,2,1,6],
-  [6,1,2,1,2,1,1,1,1,2,1,1,1,1,1,6],
-  [6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6]
-];*/
 
 var map1 = []
 for (var i = 0; i < 50; i++)
@@ -114,7 +74,6 @@ var COLUMNS = map1[0].length;
 
 //Load the tilesheet image
 var tilesheet = new Image();
-//tilesheet.addEventListener("load", loadHandler, false);
 tilesheet.src = "../img/tilesheet.png";
 //assetsToLoad.push(image);
 
@@ -460,5 +419,8 @@ function buildMap(levelMap)
 }
 
 placeObservationEvent();
+
+listOfGameObjectMaps = levelGameObjects;
+currentLocation = levelCounter;
 
 cameraLoaded = true;

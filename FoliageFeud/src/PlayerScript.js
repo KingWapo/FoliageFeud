@@ -6,6 +6,9 @@
 var mapOrientation = Math.floor(Math.random() * 4);
 console.debug("Map Orientation: " + mapOrientation);
 
+var listOfGameObjectMaps = [];
+var currentLocation = 0;
+
 // Enum to determine the screen the game is currently at
 Direction = {
 	Idle: 0,
@@ -105,6 +108,8 @@ var observationInstance = {
 }
 
 var cameraLoaded = false;
+var pauseLoaded = false;
+var mapBuilt = false;
 var onPause = false;
 
 // Load the CameraController
@@ -113,9 +118,7 @@ cc.type = "text/javascript";
 cc.src = "CameraController.js";
 document.body.appendChild(cc);
 
-
 // Load the image files
-//player.sprite.addEventListener("load", loadHandler, false);
 player.sprite.src = "../img/characterMale.png";
 
 observationInstance.sprite.src = "../img/exclamationPoint.png";
@@ -133,88 +136,110 @@ var moveUp = false;
 var moveRight = false;
 var moveDown = false;
 
-//Add keyboard listeners
-window.addEventListener("keydown", function(event)
+if (!playerBePlayin)
 {
-	if (!onPause)
+	//Add keyboard listeners
+	window.addEventListener("keydown", function(event)
 	{
-	  switch(event.keyCode)
-	  {
-		  case LEFT:
-			moveLeft = true;
-			break;  
-		
-		  case UP:
-			moveUp = true;
-			break;
-			
-		  case RIGHT:
-			moveRight = true;
-			break; 
-		
-		  case DOWN:
-			moveDown = true;
-			break;
-		
-	  }
-	}
-	
-}, false);
-
-window.addEventListener("keyup", function(event)
-{
-	if (onPause)
-	{
-		if (event.keyCode == ENTER)
+		if (!onPause)
 		{
-			console.debug("Exit Pause");
-			onPause = false;
+		  switch(event.keyCode)
+		  {
+			  case LEFT:
+				moveLeft = true;
+				break;  
+			
+			  case UP:
+				moveUp = true;
+				break;
+				
+			  case RIGHT:
+				moveRight = true;
+				break; 
+			
+			  case DOWN:
+				moveDown = true;
+				break;
+			
+		  }
 		}
-	}
-	else
+		
+	}, false);
+
+	window.addEventListener("keyup", function(event)
 	{
-	  switch(event.keyCode)
-	  {   
-		  case LEFT:
-			moveLeft = false;
-			break;  
-			
-		  case UP:
-			moveUp = false;
-			break;
-			
-		  case RIGHT:
-			moveRight = false;
-			break; 
-		
-		  case DOWN:
-			moveDown = false;
-			break;
-		
-		  
-		  case ENTER:
-			console.debug("Enter Pause");
-			onPause = true;
-			break;
-	  }
-    }
-}, false);
+		if (onPause)
+		{
+			if (event.keyCode == ENTER)
+			{
+				console.debug("Exit Pause");
+				mapBuilt = false;
+				onPause = false;
+			}
+		}
+		else
+		{
+			switch(event.keyCode)
+			{   
+			  case LEFT:
+				moveLeft = false;
+				break;  
+				
+			  case UP:
+				moveUp = false;
+				break;
+				
+			  case RIGHT:
+				moveRight = false;
+				break; 
 
+			  case DOWN:
+				moveDown = false;
+				break;
 
+			  
+			  case ENTER:
+				console.debug("Enter Pause");
+				onPause = true;
+				break;
+			}
+		}
+		
+	}, false);
+
+}
 
 function update()
 {
-	checkMovement();
-	
-	if ( cameraLoaded && collisionDetection(player, observationInstance))
+	if (cameraLoaded && !pauseLoaded)
 	{
-		currentScreen = ScreenState.Observation;
+		var pausejs = document.createElement("script");
+		pausejs.type = "text/javascript";
+		pausejs.src = "Pause.js";
+		document.body.appendChild(pausejs);
 	}
-	
-	updateAnimation();
-	
-	if (onPause)
+	if (!onPause)
 	{
+		checkMovement();
+		
+		if ( cameraLoaded && collisionDetection(player, observationInstance))
+		{
+			currentScreen = ScreenState.Observation;
+		}
+		
+		updateAnimation();
+	}
+	else
+	{
+		if (!mapBuilt)
+		{
+			buildInGameMap();
+			mapBuilt = true;
+		}
+		else
+		{
+			pauseRender();
+		}
 	}
 }
 
@@ -346,3 +371,4 @@ function placeObservationEvent()
 }
 
 loadScreens();
+playerBePlayin = true;

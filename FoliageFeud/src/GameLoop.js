@@ -25,6 +25,7 @@ window.requestAnimFrame = (function() {
         })();
 		
 
+var playerBePlayin = false;
 
 // Load the title screen
 var screenjs = document.createElement("script");
