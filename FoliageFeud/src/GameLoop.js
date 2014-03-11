@@ -154,7 +154,10 @@ function mainUpdate()
 			break;
 	}
 	//The animation loop
-  	requestAnimFrame(mainUpdate, canvas);
+  	setTimeout( function()
+		{
+			requestAnimFrame(mainUpdate, canvas);
+		}, 1000/30);
 	
 	update();
 	

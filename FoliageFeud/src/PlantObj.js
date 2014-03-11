@@ -10,6 +10,7 @@ var plant =
 
 var plantNames = ["brown", "orange", "red", "white", "yellow"];
 var plantList = [];
+var originOffset = 64;
 
 // Creates a list of all possible plants
 for (var i = 0; i < plantNames.length; i++)
@@ -26,7 +27,12 @@ function growPlant(i, x, y)
 {
 	addItem(x, y, plantList[i].sprite.width, plantList[i].sprite.height, exitObserve);
 	
-	drawingSurface.drawImage(plantList[i].sprite, x, y);
+	for (var j = 0; j < Math.floor(Math.random() * 4) + 1; j++)
+	{
+		var newX = Math.floor(Math.random() * originOffset) - (originOffset / 2);
+		var newY = Math.floor(Math.random() * originOffset) - (originOffset / 2);
+		drawingSurface.drawImage(plantList[i].sprite, x + newX, y + newY);
+	}
 }
 
 // Switch gamemode to standard gameplay
