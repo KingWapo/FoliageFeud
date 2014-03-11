@@ -34,10 +34,7 @@ function init()
 		  
 	for (var i = 0; i < plantList.length; i++)
 	{
-		var x = Math.floor((Math.random() * (64 * 16)) + 32);
-		var y = Math.floor((Math.random() * (64 * 6)) + 32);
-		
-		growPlant(i, x, y);
+		growPlant(i);
 	}
 }
 

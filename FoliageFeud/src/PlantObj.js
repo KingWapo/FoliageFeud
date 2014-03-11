@@ -23,15 +23,19 @@ for (var i = 0; i < plantNames.length; i++)
 }
 
 // Draws plants to screen and adds them as clickable objects
-function growPlant(i, x, y)
+function growPlant(i)
 {
-	addItem(x, y, plantList[i].sprite.width, plantList[i].sprite.height, exitObserve);
 	
 	for (var j = 0; j < Math.floor(Math.random() * 4) + 1; j++)
 	{
-		var newX = Math.floor(Math.random() * originOffset) - (originOffset / 2);
-		var newY = Math.floor(Math.random() * originOffset) - (originOffset / 2);
-		drawingSurface.drawImage(plantList[i].sprite, x + newX, y + newY);
+		do
+		{
+			var x = Math.floor((Math.random() * (64 * 16)) + 32);
+			var y = Math.floor((Math.random() * (64 * 6)) + 32);
+		} while(isIntersecting(x, y, 32, 32))
+		
+		addItem(x, y, plantList[i].sprite.width, plantList[i].sprite.height, exitObserve);
+		drawingSurface.drawImage(plantList[i].sprite, x, y);
 	}
 }
 
