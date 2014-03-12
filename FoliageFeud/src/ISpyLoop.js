@@ -25,12 +25,12 @@ var observeInstance =
 // Initializes instance
 function init()
 {
-	var grd = drawingSurface.createLinearGradient(0, 0, 0, 512);
+	var grd = backgroundSurface.createLinearGradient(0, 0, 0, 512);
 	grd.addColorStop(0, "darkgreen");
 	grd.addColorStop(1, "limegreen");
 	
-	drawingSurface.fillStyle = grd;
-	drawingSurface.fillRect(0, 0, 1152, 512);
+	backgroundSurface.fillStyle = grd;
+	backgroundSurface.fillRect(0, 0, 1152, 512);
 
 	var requestedPlant = Math.floor(Math.random() * plantList.length);
 	

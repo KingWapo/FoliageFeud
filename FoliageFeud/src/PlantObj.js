@@ -53,6 +53,7 @@ function harvestPlant(i)
 {
 	console.debug("Plant Harvested");
 	console.debug("--ADD MORE FUNCTIONALITY TO HARVEST FUNCTION");
+	drawingSurface.clearRect(clickable[i].x, clickable[i].y, clickable[i].width, clickable[i].height);
 	clickable.splice(i, 1);
 	numRequested -= 1;
 	
