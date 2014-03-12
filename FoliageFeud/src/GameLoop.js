@@ -27,12 +27,6 @@ window.requestAnimFrame = (function() {
 
 var playerBePlayin = false;
 
-// Load the title screen
-var screenjs = document.createElement("script");
-screenjs.type = "text/javascript";
-screenjs.src = "MainTitle.js";
-document.body.appendChild(screenjs);
-
 // Add the plants
 var plantobj = document.createElement("script");
 plantobj.type = "text/javascript";
@@ -50,6 +44,12 @@ var clickhandler = document.createElement("script");
 clickhandler.type = "text/javascript";
 clickhandler.src = "Clickhandler.js";
 document.body.appendChild(clickhandler);
+
+// Load the title screen
+var screenjs = document.createElement("script");
+screenjs.type = "text/javascript";
+screenjs.src = "MainTitle.js";
+document.body.appendChild(screenjs);
 
 // Bool list for the loaded positions
 screensLoaded = [true, // Title
