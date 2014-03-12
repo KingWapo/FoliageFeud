@@ -376,8 +376,8 @@ function clamp(val, minVal, maxVal)
 // Randomly places the observationInstance on the map
 function placeObservationEvent()
 {
-	var obsX = Math.random() * gameWorld.width - observationInstance.width;
-	var obsY = Math.random() * gameWorld.height - observationInstance.height;
+	var obsX = Math.random() * (gameWorld.width - 128) - observationInstance.width + 128;
+	var obsY = Math.random() * (gameWorld.height - 128) - observationInstance.height + 128;
 	
 	observationInstance.x = obsX;
 	observationInstance.y = obsY;
