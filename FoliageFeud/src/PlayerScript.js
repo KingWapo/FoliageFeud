@@ -145,10 +145,6 @@ if (!playerBePlayin)
 		{
 			player.speed = 10;
 		}
-		else
-		{
-			player.speed = 4;
-		}
 		if (!onPause)
 		{
 		  switch(event.keyCode)
@@ -176,6 +172,10 @@ if (!playerBePlayin)
 
 	window.addEventListener("keyup", function(event)
 	{
+		if (event.keyCode == 16)
+		{
+			player.speed = 4;
+		}
 		if (onPause)
 		{
 			if (event.keyCode == ENTER)

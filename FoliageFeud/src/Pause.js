@@ -92,7 +92,7 @@ function pauseRender()
 			mapTilesheet, 
 			mapSprites[i].sourceX, mapSprites[i].sourceY, 
 			mapSprites[i].sourceWidth, mapSprites[i].sourceHeight,
-			Math.floor(mapSprites[i].x), Math.floor(mapSprites[i].y), 
+			Math.floor(mapSprites[i].x) + 13, Math.floor(mapSprites[i].y) + 6, 
 			mapSprites[i].width, mapSprites[i].height
 		); 
 	}
