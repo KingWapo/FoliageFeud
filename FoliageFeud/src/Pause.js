@@ -1,16 +1,6 @@
 // Pause Screen script
 
 var pauseMap = [];
-
-var playerLocation = [
-	Math.floor(player.x / WIDTH),
-	Math.floor(player.y / HEIGHT)
-	];
-	
-var objective = [
-	Math.floor(observationInstance.x / WIDTH),
-	Math.floor(observationInstance.y / HEIGHT)
-	];
 	
 var mapTilesheet = new Image();
 mapTilesheet.src = "../img/MapTilesheet.png";
@@ -18,34 +8,61 @@ mapTilesheet.src = "../img/MapTilesheet.png";
 var mapSprites = [];
 
 var BLANK = 0;
+var TREE = 2;
 
 var MAPWIDTH = 15;
 var MAPHEIGHT = 10;
 	
 function buildInGameMap()
 {
+	var playerLocation = [
+		Math.floor(player.x / SIZE),
+		Math.floor(player.y / SIZE)
+		];
+		
+	var objective = [
+		Math.floor(observationInstance.x / SIZE),
+		Math.floor(observationInstance.y / SIZE)
+		];
+	console.debug("(" + playerLocation[0] + ", " + playerLocation[1] + ")");
+	console.debug("(" + objective[0] + ", " + objective[1] + ")");
 	pauseMap = listOfGameObjectMaps[currentLocation];
 	for (var row = 0; row < ROWS; row++)
 	{
 		for (var column = 0; column < COLUMNS; column++)
 		{
 			var tile = pauseMap[row][column];
+			var tempSprite;
 			if (column == playerLocation[0] && row == playerLocation[1])
 			{
-				mapSprites.push(createSprite(2, column, row));
+				tempSprite = createSprite(2, column, row);
+				mapSprites.push(tempSprite);
+				console.debug("Player");
 			}
-			else if (column == objective[0] && row == objective[0])
+			else if (column == objective[0] && row == objective[1])
 			{
-				mapSprites.push(createSprite(1, column, row));
+				tempSprite = createSprite(1, column, row);
+				mapSprites.push(tempSprite);
 			}
 			else
 			{
+				// Use the switch for now. Rearrange mapTilesheet
+				// to be the same as the regular tilesheet so we can just use:
+				//
+				// tempSprite = createSprite(tile, column, row);
+				// mapSprites.push(tempSprite);
 				switch(tile)
 				{
 					case BLANK:
-						mapSprites.push(createSprite(0, column, row));
+						tempSprite = createSprite(0, column, row);
+						mapSprites.push(tempSprite);
+						break;
+					case TREE:
+						tempSprite = createSprite(3, column, row);
+						mapSprites.push(tempSprite);
 						break;
 				}
+				
 			}
 		}
 	}
@@ -55,6 +72,7 @@ function createSprite(tile, column, row)
 {
 	var mapTile = Object.create(spriteObject);
 	mapTile.sourceX = tile * MAPWIDTH;
+	mapTile.sourceY = 0;
 	mapTile.sourceWidth = MAPWIDTH;
 	mapTile.sourceHeight = MAPHEIGHT;
 	mapTile.x = column * MAPWIDTH;
@@ -67,16 +85,15 @@ function createSprite(tile, column, row)
 
 function pauseRender()
 {
-	for(var sprite in mapSprites)
+	for(var i = 0; i < mapSprites.length; i++)
 	{
-		console.debug("Enter Rendering");
-		drawingSurface.drawImage
+		menuSurface.drawImage
 		(
 			mapTilesheet, 
-			sprite.sourceX, sprite.sourceY, 
-			sprite.sourceWidth, sprite.sourceHeight,
-			Math.floor(sprite.x), Math.floor(sprite.y), 
-			sprite.width, sprite.height
+			mapSprites[i].sourceX, mapSprites[i].sourceY, 
+			mapSprites[i].sourceWidth, mapSprites[i].sourceHeight,
+			Math.floor(mapSprites[i].x), Math.floor(mapSprites[i].y), 
+			mapSprites[i].width, mapSprites[i].height
 		); 
 	}
 }

@@ -84,9 +84,40 @@ var fps = 60;
 var counter = 0;
 
 // The canvas and its drawing surface
-var canvas = document.querySelector("canvas");
+var backgroundCanvas = document.getElementById("backgroundCanvas");
+var backgroundSurface = backgroundCanvas.getContext("2d");
+
+var canvas = document.getElementById("gameplayCanvas");
 var drawingSurface = canvas.getContext("2d");
 
+var menuCanvas = document.getElementById("menuCanvas");
+var menuSurface = menuCanvas.getContext("2d");
+
+// This is to create and initialize the layers
+// of the canvas using a third party source of 
+// canvaslayers.js
+// -Iron Man
+//
+// Didn't really work the way I wanted...
+/*
+var container = new CanvasLayers.Container(canvas, true);
+
+// Initialize the background to always draw white
+container.onRender = function(layer, rect, context) {
+	context.fillStyle = "#fff";
+	context.fillRect(0, 0, layer.getWidth(), layer.getHeight());
+}
+
+var gameplayLayer = new CanvasLayers.Layer(0, 0, canvas.width, canvas.height);
+//gameplayLayer.onRender = function(layer, rect, context) {
+//	console.debug("Enter onRender");
+//	render();
+//}
+container.getChildren().add(gameplayLayer); // Add the gameplayLayer to the children of the container
+
+
+var menuLayer;
+*/
 // Load the image files
 var image = new Image();
 image.addEventListener("load", loadHandler, false);
@@ -128,6 +159,10 @@ function mainUpdate()
 				document.body.replaceChild(newScreenjs, screenjs);
 				screenjs = newScreenjs;
 				console.debug("In Gameplay");
+				//gameplayLayer.onRender = function(layer, rect, context) {
+				//	console.debug("Enter onRender");
+				//	render();
+				//}
 			}
 			break;
 		case ScreenState.Information:
@@ -167,11 +202,18 @@ function mainUpdate()
 
 function mainRender()
 {
+	backgroundSurface.save();
 	drawingSurface.save();
 	
-	render();
+	render(); 
 	
+	backgroundSurface.restore();
 	drawingSurface.restore();
+	
+	
+	// New attempt at rendering
+	//
+	//container.redraw();
 }
 
 // Needs to be last call in each game mode to properly load screens

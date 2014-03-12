@@ -44,8 +44,8 @@ var player = {
 	},
 	
 	// Gameplay info
-	x: 0,
-	y: 0,
+	x: 128,
+	y: 128,
 	width: 64,
 	height: 64,
 	vx: 0,
@@ -141,6 +141,14 @@ if (!playerBePlayin)
 	//Add keyboard listeners
 	window.addEventListener("keydown", function(event)
 	{
+		if (event.keyCode == 16)
+		{
+			player.speed = 10;
+		}
+		else
+		{
+			player.speed = 4;
+		}
 		if (!onPause)
 		{
 		  switch(event.keyCode)
@@ -201,6 +209,10 @@ if (!playerBePlayin)
 			  case ENTER:
 				console.debug("Enter Pause");
 				onPause = true;
+				moveDown = false;
+				moveLeft = false;
+				moveRight = false;
+				moveUp = false;
 				break;
 			}
 		}
@@ -235,10 +247,6 @@ function update()
 		{
 			buildInGameMap();
 			mapBuilt = true;
-		}
-		else
-		{
-			pauseRender();
 		}
 	}
 }
@@ -324,31 +332,39 @@ function checkMovement()
 
 function render()
 {
-	if (cameraLoaded)
+	if (!onPause)
 	{
-		cameraRender();
+		backgroundSurface.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
+		drawingSurface.clearRect(0, 0, canvas.width, canvas.height);
+		menuSurface.clearRect(0, 0, canvas.width, canvas.height);
+		if (cameraLoaded)
+		{
+			cameraRender();
+			
+			drawingSurface.drawImage
+			  (
+				observationInstance.sprite, 
+				observationInstance.sourceX, observationInstance.sourceY, 
+				observationInstance.sourceWidth, observationInstance.sourceHeight,
+				Math.floor(observationInstance.x), Math.floor(observationInstance.y), 
+				observationInstance.width, observationInstance.height
+			  );
+		}
 		
+		  
 		drawingSurface.drawImage
 		  (
-			observationInstance.sprite, 
-			observationInstance.sourceX, observationInstance.sourceY, 
-			observationInstance.sourceWidth, observationInstance.sourceHeight,
-			Math.floor(observationInstance.x), Math.floor(observationInstance.y), 
-			observationInstance.width, observationInstance.height
+			player.sprite, 
+			player.sourceX, player.sourceY + player.direction * player.sourceHeight, 
+			player.sourceWidth, player.sourceHeight,
+			Math.floor(player.x), Math.floor(player.y), 
+			player.width, player.height
 		  );
 	}
-	
-	  
-	drawingSurface.drawImage
-      (
-        player.sprite, 
-        player.sourceX, player.sourceY + player.direction * player.sourceHeight, 
-        player.sourceWidth, player.sourceHeight,
-        Math.floor(player.x), Math.floor(player.y), 
-        player.width, player.height
-      );
-	  
-	  
+	else
+	{
+		pauseRender();
+	}
 }
 
 function clamp(val, minVal, maxVal)

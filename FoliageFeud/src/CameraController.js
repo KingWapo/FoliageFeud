@@ -27,13 +27,7 @@ for (var i = 0; i < 50; i++)
 	var tempList = [];
 	for (var j = 0; j < 75; j++)
 	{
-		if (i == 0 || i == 49 || j == 0 || j == 74)
-		{
-			tempList.push(6);
-		}
-		else {
-			tempList.push(1);
-		}
+		tempList.push(1);
 	}
 	map1.push(tempList);
 }
@@ -48,7 +42,13 @@ for (var i = 0; i < 50; i++)
 	var tempList = [];
 	for (var j = 0; j < 75; j++)
 	{
-		tempList.push(0);
+		if ((i == 0 && j % 2 == 0) || (i == 49 && j % 2 == 0) || (j == 0 && i % 2 == 0) || (j == 74 && i % 2 == 0))
+		{
+			tempList.push(2);
+		}
+		else {
+			tempList.push(0);
+		}
 	}
 	gameObjects1.push(tempList);
 }
@@ -59,7 +59,8 @@ levelGameObjects.push(gameObjects1);
 //Map code
 var EMPTY = 0;
 var GRASS = 1;
-var BOX = 2;
+var TREE = 2;
+
 var MONSTER = 3;
 var STAR = 4;
 var ALIEN = 5;
@@ -86,20 +87,25 @@ var HEIGHT = ROWS * SIZE;
 
 //Arrays to store the game objects
 var baseTiles = [];
+var foregroundTiles = [];
 for (var i = 0; i < 50; i++)
 {
 	var tempList = [];
+	var foregroundTemp = [];
 	for (var j = 0; j < 75; j++)
 	{
 		var sprite = Object.create(spriteObject);
 		tempList.push(sprite);
+		foregroundTemp.push(sprite);
 	}
 	baseTiles.push(tempList);
+	foregroundTiles.push(foregroundTemp);
 }
 var sprites = [];
 var boxes = [];
 
 buildMap(levelMaps[0]);
+buildMap(levelGameObjects[0]);
 
 //**** Replace with tile map ****//
 //Create the foreground sprite
@@ -247,19 +253,20 @@ function cameraUpdate()
 function cameraRender()
 {
 	//Move the drawing surface so that it's positioned relative to the camera
+	backgroundSurface.translate(-camera.x, -camera.y);
 	drawingSurface.translate(-camera.x, -camera.y);
-	for (var row = Math.floor(camera.y / 64); row < Math.floor((camera.y + camera.height)/64) + 2; row++)
+	for (var row = Math.floor(camera.y / 64) - 2; row < Math.floor((camera.y + camera.height)/64) + 2; row++)
 	{
-		for (var column = Math.floor(camera.x / 64); column < Math.floor((camera.x + camera.width)/64) + 2; column++)
+		for (var column = Math.floor(camera.x / 64) - 2; column < Math.floor((camera.x + camera.width)/64) + 2; column++)
 		{
-			if (row < ROWS && column < COLUMNS)
+			if (row >= 0 && row < ROWS && column >= 0 && column < COLUMNS)
 			{
 				var sprite = baseTiles[row][column];
 				
 				//display the scrolling sprites
 				if(sprite.visible && sprite.scrollable)
 				{
-				 drawingSurface.drawImage
+				 backgroundSurface.drawImage
 				 (
 				   tilesheet, 
 				   sprite.sourceX, sprite.sourceY, 
@@ -272,7 +279,7 @@ function cameraRender()
 				//display the non-scrolling sprites
 				if(sprite.visible && !sprite.scrollable)
 				{
-				 drawingSurface.drawImage
+				 backgroundSurface.drawImage
 				 (
 				   tilesheet, 
 				   sprite.sourceX, sprite.sourceY, 
@@ -281,9 +288,49 @@ function cameraRender()
 				   sprite.width, sprite.height
 				 ); 
 				}
+				
+				
+				var gameObjectMap = levelGameObjects[levelCounter];
+				if (gameObjectMap[row][column] != EMPTY)
+				{
+					var foregroundSprite = foregroundTiles[row][column];
+					drawingSurface.drawImage
+					 (
+					   tilesheet, 
+					   foregroundSprite.sourceX, foregroundSprite.sourceY, 
+					   foregroundSprite.sourceWidth, foregroundSprite.sourceHeight,
+					   Math.floor(foregroundSprite.x), Math.floor(foregroundSprite.y), 
+					   foregroundSprite.width, foregroundSprite.height
+					 ); 
+					
+				}
 			}
 		}		
 	}
+	/*
+	for (var row = Math.floor(camera.y / 64) - 2; row < Math.floor((camera.y + camera.height)/64) + 2; row++)
+	{
+		for (var column = Math.floor(camera.x / 64) - 2; column < Math.floor((camera.x + camera.width)/64) + 2; column++)
+		{
+			if (row < ROWS && row > 0 && column < COLUMNS && column > 0)
+			{
+				var gameObjectMap = levelGameObjects[levelCounter];
+				if (gameObjectMap[row][column] != EMPTY)
+				{
+					var foregroundSprite = foregroundTiles[row][column];
+					drawingSurface.drawImage
+					 (
+					   tilesheet, 
+					   foregroundSprite.sourceX, foregroundSprite.sourceY, 
+					   foregroundSprite.sourceWidth, foregroundSprite.sourceHeight,
+					   Math.floor(foregroundSprite.x), Math.floor(foregroundSprite.y), 
+					   foregroundSprite.width, foregroundSprite.height
+					 ); 
+					
+				}
+			}
+		}
+	}*/
 	/*
 	if(sprites.length !== 0)
 	{
@@ -358,15 +405,19 @@ function buildMap(levelMap)
 			baseTiles[row][column] = grass;
             break;
           
-          case BOX:
-            var box = Object.create(spriteObject);
-            box.sourceX = tilesheetX;
-            box.sourceY = tilesheetY;
-            box.x = column * SIZE;
-            box.y = row * SIZE;
+          case TREE:
+            var tree = Object.create(spriteObject);
+            tree.sourceX = tilesheetX;
+            tree.sourceY = tilesheetY;
+			tree.sourceWidth = 128;
+			tree.sourceHeight = 128;
+            tree.x = column * SIZE;
+            tree.y = row * SIZE;
+			tree.width = 128;
+			tree.height = 128;
             //sprites.push(box);
-			baseTiles[row][column] = box;
-            boxes.push(box);
+			foregroundTiles[row][column] = tree;
+            //boxes.push(box);
             break;
           
           case WALL:
