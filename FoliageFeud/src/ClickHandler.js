@@ -52,7 +52,7 @@ function handleClick(event)
 		if (posx >= clickable[i].x && posx <= clickable[i].x + clickable[i].width &&
 			posy >= clickable[i].y && posy <= clickable[i].y + clickable[i].height)
 		{
-			clickable[i].func();
+			clickable[i].func(i);
 		}
 	}
 }

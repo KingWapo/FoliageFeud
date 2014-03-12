@@ -28,7 +28,7 @@ play.y = (menuCanvas.height - play.height) / 2;
 
 addItem(play.x, play.y, play.width, play.height, playClicked);
 
-function playClicked()
+function playClicked(i)
 {
 	currentScreen = ScreenState.Gameplay;
 }

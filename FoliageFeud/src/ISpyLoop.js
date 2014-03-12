@@ -19,22 +19,27 @@ var observeInstance =
 	environment: ""
 }
 
-var bg = new Image();
-bg.src = "../img/ispywall.png";
+//var bg = new Image();
+//bg.src = "../img/ispywall.png";
 
 // Initializes instance
 function init()
 {
-	drawingSurface.drawImage
-		(
-			bg, 
-			0, 0, 1152, 512,
-			0, 0, 1152, 512
-		  );
-		  
+	var grd = drawingSurface.createLinearGradient(0, 0, 0, 512);
+	grd.addColorStop(0, "darkgreen");
+	grd.addColorStop(1, "limegreen");
+	
+	drawingSurface.fillStyle = grd;
+	drawingSurface.fillRect(0, 0, 1152, 512);
+
+	var requestedPlant = Math.floor(Math.random() * plantList.length);
+	
 	for (var i = 0; i < plantList.length; i++)
 	{
-		growPlant(i);
+		if (i === requestedPlant)
+			growPlant(i, true);
+		else
+			growPlant(i, false);
 	}
 }
 

@@ -11,6 +11,7 @@ var plant =
 var plantNames = ["brown", "orange", "red", "white", "yellow"];
 var plantList = [];
 var originOffset = 64;
+var numRequested = 0;
 
 // Creates a list of all possible plants
 for (var i = 0; i < plantNames.length; i++)
@@ -23,10 +24,11 @@ for (var i = 0; i < plantNames.length; i++)
 }
 
 // Draws plants to screen and adds them as clickable objects
-function growPlant(i)
+function growPlant(i, requested)
 {
+	var numPlants = Math.floor(Math.random() * 6) + 1;
 	
-	for (var j = 0; j < Math.floor(Math.random() * 4) + 1; j++)
+	for (var j = 0; j < numPlants; j++)
 	{
 		do
 		{
@@ -34,13 +36,34 @@ function growPlant(i)
 			var y = Math.floor((Math.random() * (64 * 6)) + 32);
 		} while(isIntersecting(x, y, 32, 32))
 		
-		addItem(x, y, plantList[i].sprite.width, plantList[i].sprite.height, exitObserve);
+		if (requested)
+		{
+			addItem(x, y, plantList[i].sprite.width, plantList[i].sprite.height, harvestPlant);
+			numRequested = numPlants;
+		}
+		else
+			addItem(x, y, plantList[i].sprite.width, plantList[i].sprite.height, ignorePlant);
+			
 		drawingSurface.drawImage(plantList[i].sprite, x, y);
 	}
 }
 
 // Switch gamemode to standard gameplay
-function exitObserve()
+function harvestPlant(i)
 {
-	currentScreen = ScreenState.Gameplay;
+	console.debug("Plant Harvested");
+	console.debug("--ADD MORE FUNCTIONALITY TO HARVEST FUNCTION");
+	clickable.splice(i, 1);
+	numRequested -= 1;
+	
+	// FIGURE OUT HOW TO REDRAW UNCLICKED OBJECTS
+	
+	if (numRequested <= 0)
+		currentScreen = ScreenState.Gameplay;
+}
+
+// Ignore plant harvestPlant
+function ignorePlant(i)
+{
+	console.debug("You selected the wrong flower");
 }
