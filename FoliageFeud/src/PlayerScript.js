@@ -120,6 +120,23 @@ document.body.appendChild(cc);
 
 // Load the image files
 player.sprite.src = "../img/characterMale.png";
+updateSprite();
+setInterval(updateSprite, 100);
+
+// Load the image files
+function updateSprite()
+{
+	switch(currentSprite)
+	{
+		case SpriteState.Boy:
+			player.sprite.src = "../img/characterMale.png";
+		break;
+		
+		case SpriteState.Girl:
+			player.sprite.src = "../img/characterFemale.png";
+		break;	
+	}
+}
 
 observationInstance.sprite.src = "../img/exclamationPoint.png";
 

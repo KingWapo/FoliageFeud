@@ -8,7 +8,7 @@ mapTilesheet.src = "../img/MapTilesheet.png";
 var mapSprites = [];
 
 var BLANK = 0;
-var TREE = 2;
+var TREE = 5;
 
 var MAPWIDTH = 15;
 var MAPHEIGHT = 10;

@@ -12,9 +12,10 @@ play.href = "javascript:playClicked()";
 document.body.appendChild(play);
 */
 
-var playImage = new Image();
-playImage.src = "../img/playButton.png";
-
+var girlImage = new Image();
+girlImage.src = "../img/playButtonGirl.png";
+var boyImage = new Image();
+boyImage.src="../img/playButtonBoy.png";
 var menuScreen = new Image();
 menuScreen.src = "../img/menuscreen.png";
 
@@ -24,13 +25,29 @@ play.sourceHeight = 128;
 play.width = 256;
 play.height = 128;
 play.x = (menuCanvas.width - play.width) / 2;
-play.y = (menuCanvas.height - play.height) / 2;
-
+play.y = (menuCanvas.height - play.height) / 2 - 96;
 addItem(play.x, play.y, play.width, play.height, playClicked);
 
-function playClicked(i)
+var playBoy = Object.create(spriteObject);
+playBoy.sourceWidth = 256;
+playBoy.sourceHeight = 128;
+playBoy.width = 256;
+playBoy.height = 128;
+playBoy.x = (menuCanvas.width - play.width) / 2;
+playBoy.y = ((menuCanvas.height - play.height) / 2)+96;
+addItem(playBoy.x, playBoy.y, playBoy.width, playBoy.height, playBoyClicked);
+
+
+function playClicked()
 {
 	currentScreen = ScreenState.Gameplay;
+	currentSprite = SpriteState.Girl;
+}
+
+function playBoyClicked()
+{
+	currentScreen = ScreenState.Gameplay;
+	currentSprite = SpriteState.Boy;
 }
 
 function update()
@@ -44,8 +61,13 @@ function render()
 	menuSurface.clearRect(0, 0, menuCanvas.width, menuCanvas.height);
 	
 	menuSurface.drawImage(
-		playImage,
+		girlImage,
 		play.x, play.y
+		);
+		
+	menuSurface.drawImage(
+		boyImage,
+		playBoy.x, playBoy.y
 		);
 		
 	backgroundSurface.drawImage(

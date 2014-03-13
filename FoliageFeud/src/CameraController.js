@@ -21,7 +21,42 @@ var levelCounter = 0;
 //A timer to help delay the change time between levels
 var levelChangeTimer = 0;
 
-var map1 = []
+var map0 = [];
+for (var i = 0; i < 50; i++)
+{
+	var tempList = [];
+	for (var j = 0; j < 75; j++)
+	{
+		tempList.push(1);
+	}
+	map0.push(tempList);
+}
+levelMaps.push(map0);
+
+var gameObjects0 = [];
+
+for (var i = 0; i < 50; i++)
+{
+	var tempList = [];
+	for (var j = 0; j < 75; j++)
+	{
+		if ((i == 0 && j % 2 == 0) || (i == 49 && j % 2 == 0) || (j == 0 && i % 2 == 0) || (j == 74 && i % 2 == 0))
+		{
+			tempList.push(5); // Push Tree
+		}
+		else if (j == 23)
+		{
+			tempList.push(2); // Push water
+		}
+		else {
+			tempList.push(0); // Push Empty
+		}
+	}
+	gameObjects0.push(tempList);
+}
+levelGameObjects.push(gameObjects0);
+
+var map1 = [];
 for (var i = 0; i < 50; i++)
 {
 	var tempList = [];
@@ -59,12 +94,9 @@ levelGameObjects.push(gameObjects1);
 //Map code
 var EMPTY = 0;
 var GRASS = 1;
-var TREE = 2;
-
-var MONSTER = 3;
-var STAR = 4;
-var ALIEN = 5;
-var WALL = 6;
+var WATER = 2;
+var ROCK = 3;
+var TREE = 5;
 
 // Size of each tile
 var SIZE = 64;
@@ -102,72 +134,10 @@ for (var i = 0; i < 50; i++)
 	foregroundTiles.push(foregroundTemp);
 }
 var sprites = [];
-var boxes = [];
+var collidables = [];
 
 buildMap(levelMaps[0]);
 buildMap(levelGameObjects[0]);
-
-//**** Replace with tile map ****//
-//Create the foreground sprite
-/*
-var foreground = Object.create(spriteObject);
-foreground.sprite.src = "../img/testbg.png";
-
-var width = 2200;
-var height = 1375;
-
-foreground.sourceWidth = width;
-foreground.sourceHeight = height;
-foreground.width = width;
-foreground.height = height;
-
-/*
-foreground.rotation = mapOrientation / 2;
-
-
-switch(mapOrientation)
-{
-	case 0: // Rotate 0 degrees (North is up)
-	case 2: // Rotate 180 degrees (North is down)
-		foreground.sourceWidth = width;
-		foreground.sourceHeight = height;
-		foreground.width = width;
-		foreground.height = height;
-		break;
-	case 1: // Rotate 90 degrees (North is left)
-	case 3: // Rotate 270 degrees (North is right)
-		foreground.sourceWidth = height;
-		foreground.sourceHeight = width;
-		foreground.width = height;
-		foreground.height = width;
-		break;
-		/*
-	case 2: // Rotate 180 degrees (North is down)
-		foreground.sourceWidth = width;
-		foreground.sourceHeight = height;
-		foreground.width = width;
-		foreground.height = height;
-		foreground.rotation = 180;
-		break;
-	case 3: // Rotate 270 degrees (North is right)
-		foreground.sourceWidth = height;
-		foreground.sourceHeight = width;
-		foreground.width = height;
-		foreground.height = width;
-		foreground.rotation = 270;
-		break;
-		
-}
-
-console.debug("Width: " + foreground.width);
-console.debug("\nHeight: " + foreground.height);*/
-//The sprite's rotation
-//drawingSurface.translate(-foreground.width / 2, -foreground.height / 2);
-//drawingSurface.rotate(foreground.rotation);
-//drawingSurface.translate(foreground.width / 2, foreground.height / 2);
-
-//**** Replace with tile map ****//
-
 
 //Create the gameWorld and camera objects
 var gameWorld = 
@@ -307,76 +277,6 @@ function cameraRender()
 			}
 		}		
 	}
-	/*
-	for (var row = Math.floor(camera.y / 64) - 2; row < Math.floor((camera.y + camera.height)/64) + 2; row++)
-	{
-		for (var column = Math.floor(camera.x / 64) - 2; column < Math.floor((camera.x + camera.width)/64) + 2; column++)
-		{
-			if (row < ROWS && row > 0 && column < COLUMNS && column > 0)
-			{
-				var gameObjectMap = levelGameObjects[levelCounter];
-				if (gameObjectMap[row][column] != EMPTY)
-				{
-					var foregroundSprite = foregroundTiles[row][column];
-					drawingSurface.drawImage
-					 (
-					   tilesheet, 
-					   foregroundSprite.sourceX, foregroundSprite.sourceY, 
-					   foregroundSprite.sourceWidth, foregroundSprite.sourceHeight,
-					   Math.floor(foregroundSprite.x), Math.floor(foregroundSprite.y), 
-					   foregroundSprite.width, foregroundSprite.height
-					 ); 
-					
-				}
-			}
-		}
-	}*/
-	/*
-	if(sprites.length !== 0)
-	{
-		for(var i = sprites.length - 1; i >= 0; i--)
-		{
-		  var sprite = sprites[i];
-			 
-		  //display the scrolling sprites
-		  if(sprite.visible && sprite.scrollable)
-		  {
-			 drawingSurface.drawImage
-			 (
-			   image, 
-			   sprite.sourceX, sprite.sourceY, 
-			   sprite.sourceWidth, sprite.sourceHeight,
-			   Math.floor(sprite.x), Math.floor(sprite.y), 
-			   sprite.width, sprite.height
-			 ); 
-		   }
-			 
-		   //display the non-scrolling sprites
-		   if(sprite.visible && !sprite.scrollable)
-		   {
-			 drawingSurface.drawImage
-			 (
-			   image, 
-			   sprite.sourceX, sprite.sourceY, 
-			   sprite.sourceWidth, sprite.sourceHeight,
-			   Math.floor(camera.x + sprite.x), Math.floor(camera.y + sprite.y), 
-			   sprite.width, sprite.height
-			 ); 
-		   }
-		   
-		} 
-	}
-	*/
-	/*
-	drawingSurface.drawImage
-      (
-        foreground.sprite, 
-        //foreground.sourceX, foreground.sourceY, 
-        //foreground.sourceWidth, foreground.sourceHeight,
-        Math.floor(foreground.x), Math.floor(foreground.y) 
-        //foreground.width, foreground.height
-      );
-	 */
 }
 
 function buildMap(levelMap)
@@ -395,74 +295,48 @@ function buildMap(levelMap)
         
         switch (currentTile)
         {
-          case GRASS:
-            var grass = Object.create(spriteObject);
-            grass.sourceX = tilesheetX;
-            grass.sourceY = tilesheetY;
-            grass.x = column * SIZE;
-            grass.y = row * SIZE;
-            //sprites.push(grass);
-			baseTiles[row][column] = grass;
-            break;
-          
-          case TREE:
-            var tree = Object.create(spriteObject);
-            tree.sourceX = tilesheetX;
-            tree.sourceY = tilesheetY;
-			tree.sourceWidth = 128;
-			tree.sourceHeight = 128;
-            tree.x = column * SIZE;
-            tree.y = row * SIZE;
-			tree.width = 128;
-			tree.height = 128;
-            //sprites.push(box);
-			foregroundTiles[row][column] = tree;
-            //boxes.push(box);
-            break;
-          
-          case WALL:
-            var wall = Object.create(spriteObject);
-            wall.sourceX = tilesheetX;
-            wall.sourceY = tilesheetY;            
-            wall.x = column * SIZE;
-            wall.y = row * SIZE;
-			baseTiles[row][column] = wall;
-            break;
-          
-          case MONSTER:
-            var monster = Object.create(monsterObject);
-            monster.sourceX = tilesheetX;
-            monster.sourceY = tilesheetY;
-            monster.x = column * SIZE;
-            monster.y = row * SIZE;
-            //Make the monster choose a random start direction 
-            changeDirection(monster)          
-            monsters.push(monster);
-            sprites.push(monster);
-            break; 
-          
-          case STAR:
-            var star = Object.create(spriteObject);
-            star.sourceX = tilesheetX;
-            star.sourceY = tilesheetY;
-            star.sourceWidth = 48;
-            star.sourceHeight = 48;
-            star.width = 48;  
-            star.height = 48;          
-            star.x = column * SIZE + 8;
-            star.y = row * SIZE + 8;
-            stars.push(star);
-            sprites.push(star);
-            break;
-            
-          case ALIEN:
-            alien = Object.create(spriteObject);
-            alien.sourceX = tilesheetX;
-            alien.sourceY = tilesheetY;            
-            alien.x = column * SIZE;
-            alien.y = row * SIZE;
-            sprites.push(alien);
-            break;
+			case GRASS:
+				var grass = Object.create(spriteObject);
+				grass.sourceX = tilesheetX;
+				grass.sourceY = tilesheetY;
+				grass.x = column * SIZE;
+				grass.y = row * SIZE;
+				baseTiles[row][column] = grass;
+				break;
+			  
+			case TREE:
+				var tree = Object.create(spriteObject);
+				tree.sourceX = tilesheetX;
+				tree.sourceY = tilesheetY;
+				tree.sourceWidth = 128;
+				tree.sourceHeight = 128;
+				tree.x = column * SIZE;
+				tree.y = row * SIZE;
+				tree.width = 128;
+				tree.height = 128;
+				foregroundTiles[row][column] = tree;
+				collidables.push(tree);
+				break;
+				
+			case WATER:
+				var water = Object.create(spriteObject);
+				water.sourceX = tilesheetX;
+				water.sourceY = tilesheetY;
+				water.x = column * SIZE;
+				water.y = row * SIZE;
+				baseTiles[row][column] = water;
+				collidables.push(water);
+				break;
+				
+			case ROCK:
+				var rock = Object.create(spriteObject);
+				rock.sourceX = tilesheetX;
+				rock.sourceY = tilesheetY;
+				rock.x = column * SIZE;
+				rock.y = row * SIZE;
+				baseTiles[row][column] = rock;
+				collidables.push(rock);
+				break;
         }
       }
     }
