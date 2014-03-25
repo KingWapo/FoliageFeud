@@ -142,6 +142,17 @@ function mainUpdate()
 			}
 			break;
 		case ScreenState.Information:
+			// Load Information js file
+			
+			if (!screensLoaded[currentScreen])
+			{
+				var newScreenjs = document.createElement("script");
+				newScreenjs.type = "text/javascript";
+				newScreenjs.src = "InformationLoop.js";
+				document.body.replaceChild(newScreenjs, screenjs);
+				screenjs = newScreenjs;
+				console.debug("In Info");
+			}
 			break;
 		case ScreenState.Observation:
 			// Load ISpy js file

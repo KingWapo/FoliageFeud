@@ -46,6 +46,9 @@ function init()
 	menuSurface.fillText("Requested Plant: ".concat(plantList[requestedPlant].name), 10, 50);
 	menuSurface.fillText("Leaf Type: ".concat(plantList[requestedPlant].leaf), 10, 100);
 	menuSurface.fillText("Plant Color: ".concat(plantList[requestedPlant].color), 10, 150);
+	menuSurface.fillText("Harvested: ".concat(plantList[requestedPlant].harvested), 10, 200);
+	
+	setRequestedPlant(requestedPlant);
 	
 	for (var i = 0; i < plantList.length; i++)
 	{
