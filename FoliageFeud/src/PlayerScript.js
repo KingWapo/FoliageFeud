@@ -202,9 +202,6 @@ if (!playerBePlayin)
 				onPause = false;
 			}
 		}
-		else if (screensLoaded[ScreenState.WorldEvent])
-		{
-		}
 		else
 		{
 			switch(event.keyCode)
@@ -323,18 +320,21 @@ function checkMovement()
 			player.direction = Direction.Left;
 		}
 	}
-	if (moveUp && !moveDown)
+	if (!screensLoaded[ScreenState.WorldEvent])
 	{
-		player.vy = -player.speed;
-		if (player.direction !== Direction.Up) {
-			player.direction = Direction.Up;
+		if (moveUp && !moveDown)
+		{
+			player.vy = -player.speed;
+			if (player.direction !== Direction.Up) {
+				player.direction = Direction.Up;
+			}
 		}
-	}
-	if (moveDown && !moveUp)
-	{
-		player.vy = player.speed;
-		if (player.direction !== Direction.Down) {
-			player.direction = Direction.Down;
+		if (moveDown && !moveUp)
+		{
+			player.vy = player.speed;
+			if (player.direction !== Direction.Down) {
+				player.direction = Direction.Down;
+			}
 		}
 	}
 	
@@ -381,7 +381,18 @@ function checkMovement()
 
 function render()
 {
-	if (!onPause)
+	if (onPause)
+	{
+		pauseRender();
+	}
+	else if (screensLoaded[ScreenState.WorldEvent])
+	{
+		backgroundSurface.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
+		drawingSurface.clearRect(0, 0, canvas.width, canvas.height);
+		menuSurface.clearRect(0, 0, canvas.width, canvas.height);
+		worldEventRender();
+	}
+	else
 	{
 		backgroundSurface.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
 		drawingSurface.clearRect(0, 0, canvas.width, canvas.height);
@@ -409,10 +420,6 @@ function render()
 			Math.floor(player.x), Math.floor(player.y), 
 			player.width, player.height
 		  );
-	}
-	else
-	{
-		pauseRender();
 	}
 }
 

@@ -161,6 +161,9 @@ function mainUpdate()
 		case ScreenState.TrainingMode:
 			break;
 		case ScreenState.WorldEvent:
+			onEnterWorldEvent();
+			buildWorldEventsMap();
+			screensLoaded[currentScreen] = true;
 			break;
 		case ScreenState.End:
 			break;

@@ -96,6 +96,7 @@ var EMPTY = 0;
 var GRASS = 1;
 var WATER = 2;
 var ROCK = 3;
+var SKY = 4;
 var TREE = 5;
 
 // Size of each tile
@@ -281,9 +282,9 @@ function cameraRender()
 
 function buildMap(levelMap)
 {
-  for(var row = 0; row < ROWS; row++) 
+  for(var row = 0; row < levelMap.length; row++) 
   {	
-    for(var column = 0; column < COLUMNS; column++) 
+    for(var column = 0; column < levelMap[row].length; column++) 
     { 
       var currentTile = levelMap[row][column];
     
@@ -343,6 +344,25 @@ function buildMap(levelMap)
     }
   }
 }
+
+/*
+function resetTiles()
+{
+	for (var i = 0; i < 50; i++)
+	{
+		var tempList = [];
+		var foregroundTemp = [];
+		for (var j = 0; j < 75; j++)
+		{
+			var sprite = Object.create(spriteObject);
+			tempList.push(sprite);
+			foregroundTemp.push(sprite);
+		}
+		baseTiles.push(tempList);
+		foregroundTiles.push(foregroundTemp);
+	}
+}
+*/
 
 placeObservationEvent();
 
