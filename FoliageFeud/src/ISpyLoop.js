@@ -31,8 +31,21 @@ function init()
 	
 	backgroundSurface.fillStyle = grd;
 	backgroundSurface.fillRect(0, 0, 1152, 512);
+	
+	var grd2 = menuSurface.createLinearGradient(0, 0, 0, 512);
+	grd2.addColorStop(0, "darkgrey");
+	grd2.addColorStop(1, "grey");
+	
+	menuSurface.fillStyle = grd2;
+	menuSurface.fillRect(0, 0, 64 * 4, 512);
 
 	var requestedPlant = Math.floor(Math.random() * plantList.length);
+	
+	menuSurface.fillStyle = "#000";
+	menuSurface.font = "20px Arial";
+	menuSurface.fillText("Requested Plant: ".concat(plantList[requestedPlant].name), 10, 50);
+	menuSurface.fillText("Leaf Type: ".concat(plantList[requestedPlant].leaf), 10, 100);
+	menuSurface.fillText("Plant Color: ".concat(plantList[requestedPlant].color), 10, 150);
 	
 	for (var i = 0; i < plantList.length; i++)
 	{

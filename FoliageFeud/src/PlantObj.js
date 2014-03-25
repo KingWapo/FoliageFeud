@@ -2,26 +2,44 @@
 
 // All plant objects
 
-var plant =
+/*var plant =
 {
 	name: "",
-	sprite: ""
-};
+	sprite: "",
+	harvested: false,
+	leaf: "",
+	color: ""
+};*/
 
-var plantNames = ["brown", "orange", "red", "white", "yellow"];
+//var plantNames = ["brown", "orange", "red", "white", "yellow"];
 var plantList = [];
-var originOffset = 64;
 var numRequested = 0;
 
 // Creates a list of all possible plants
-for (var i = 0; i < plantNames.length; i++)
+/*for (var i = 0; i < plantNames.length; i++)
 {
 	var newPlant = Object.create(plant);
 	newPlant.name = plantNames[i];
 	newPlant.sprite = new Image();
 	newPlant.sprite.src = "../img/Plants/".concat(plantNames[i], ".png");
 	plantList.push(newPlant);
+}*/
+
+function Plant(name, leaf, color)
+{
+	this.name = name;
+	this.sprite = new Image();
+	this.sprite.src = "../img/Plants/".concat(name, ".png");
+	this.harvested = false;
+	this.leaf = leaf;
+	this.color = color;
 }
+
+plantList.push(new Plant("brown", "round", "brownish"));
+plantList.push(new Plant("orange", "thorns", "orange and black"));
+plantList.push(new Plant("red", "pointed", "red"));
+plantList.push(new Plant("white", "bulb", "white"));
+plantList.push(new Plant("yellow", "thin", "yellow"));
 
 // Draws plants to screen and adds them as clickable objects
 function growPlant(i, requested)
@@ -32,7 +50,7 @@ function growPlant(i, requested)
 	{
 		do
 		{
-			var x = Math.floor((Math.random() * (64 * 16)) + 32);
+			var x = Math.floor((Math.random() * (64 * 12)) + 32 + (64 * 4));
 			var y = Math.floor((Math.random() * (64 * 6)) + 32);
 		} while(isIntersecting(x, y, 32, 32))
 		
