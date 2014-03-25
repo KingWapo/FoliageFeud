@@ -1,9 +1,16 @@
+// Created by Batman
+
+// Information Screen
+
+// Variables
 var initialized = false;
 var notFound = new Image();
 notFound.src = "../img/Buttons/QuestionMark.png";
 
+// Initialize info wall
 function init()
 {
+	// Blue gradient bg
 	var grd = backgroundSurface.createLinearGradient(0, 0, 0, 512);
 	grd.addColorStop(0, "darkblue");
 	grd.addColorStop(1, "blue");
@@ -11,6 +18,7 @@ function init()
 	backgroundSurface.fillStyle = grd;
 	backgroundSurface.fillRect(0, 0, 1152, 512);
 	
+	// Grey side panel
 	var grd2 = drawingSurface.createLinearGradient(0, 0, 0, 512);
 	grd2.addColorStop(0, "darkgrey");
 	grd2.addColorStop(1, "black");
@@ -18,6 +26,7 @@ function init()
 	drawingSurface.fillStyle = grd2;
 	drawingSurface.fillRect(0, 0, 64 * 4, 512);
 	
+	// Display appropriate sprite for each plant
 	for (var i = 0; i < plantList.length; i++)
 	{
 		var sprite = new Image();
@@ -46,6 +55,7 @@ function init()
 	}
 }
 
+// Display plant info if harvested
 function displayPlantInfo(i)
 {
 	var strings = [];
@@ -57,6 +67,7 @@ function displayPlantInfo(i)
 	writeText(menuSurface, strings, 10, 50, 64 * 4, 20);
 }
 
+// Display unharvested text
 function displayPlantNotFound(i)
 {
 	var strings = [];

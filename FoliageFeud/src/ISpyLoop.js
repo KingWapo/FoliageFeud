@@ -25,6 +25,7 @@ var observeInstance =
 // Initializes instance
 function init()
 {
+	// Green gradient bg
 	var grd = backgroundSurface.createLinearGradient(0, 0, 0, 512);
 	grd.addColorStop(0, "darkgreen");
 	grd.addColorStop(1, "limegreen");
@@ -32,21 +33,25 @@ function init()
 	backgroundSurface.fillStyle = grd;
 	backgroundSurface.fillRect(0, 0, 1152, 512);
 	
-	var grd2 = menuSurface.createLinearGradient(0, 0, 0, 512);
+	// Grey side panel
+	var grd2 = drawingSurface.createLinearGradient(0, 0, 0, 512);
 	grd2.addColorStop(0, "darkgrey");
 	grd2.addColorStop(1, "grey");
 	
-	menuSurface.fillStyle = grd2;
-	menuSurface.fillRect(0, 0, 64 * 4, 512);
+	drawingSurface.fillStyle = grd2;
+	drawingSurface.fillRect(0, 0, 64 * 4, 512);
 
+	// Write requested plant info and display plant
 	var requestedPlant = Math.floor(Math.random() * plantList.length);
 	
-	menuSurface.fillStyle = "#000";
-	menuSurface.font = "20px Arial";
-	menuSurface.fillText("Requested Plant: ".concat(plantList[requestedPlant].name), 10, 50);
-	menuSurface.fillText("Leaf Type: ".concat(plantList[requestedPlant].leaf), 10, 100);
-	menuSurface.fillText("Plant Color: ".concat(plantList[requestedPlant].color), 10, 150);
-	menuSurface.fillText("Harvested: ".concat(plantList[requestedPlant].harvested), 10, 200);
+	var strings = [];
+	
+	strings.push("Requested Plant: ".concat(plantList[requestedPlant].name));
+	strings.push("Leaf Type: ".concat(plantList[requestedPlant].leaf));
+	strings.push("Plant Color: ".concat(plantList[requestedPlant].color));
+	strings.push("Harvested: ".concat(plantList[requestedPlant].harvested));
+	
+	writeText(menuSurface, strings, 10, 50, 64 * 4, 20);
 	
 	setRequestedPlant(requestedPlant);
 	
