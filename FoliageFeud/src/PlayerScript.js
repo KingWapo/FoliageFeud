@@ -202,6 +202,9 @@ if (!playerBePlayin)
 				onPause = false;
 			}
 		}
+		else if (screensLoaded[ScreenState.WorldEvent])
+		{
+		}
 		else
 		{
 			switch(event.keyCode)
