@@ -247,13 +247,27 @@ function update()
 		pausejs.src = "Pause.js";
 		document.body.appendChild(pausejs);
 	}
+	
 	if (!onPause)
-	{
-		checkMovement();
-		
-		if ( cameraLoaded && collisionDetection(player, observationInstance))
 		{
-			currentScreen = ScreenState.Observation;
+			checkMovement();
+		
+			if ( cameraLoaded && collisionDetection(player, observationInstance))
+			{
+				currentScreen = ScreenState.Observation;
+			}	
+		
+		if(cameraLoaded)
+		{
+			for( i=0; i<collidables.length; i++)
+			{
+				
+				if ( collisionDetection(player, collidables[i]) && collidables[i].name=="water")
+				{
+					collide();
+				}
+		
+			}
 		}
 		
 		updateAnimation();
@@ -266,8 +280,23 @@ function update()
 			mapBuilt = true;
 		}
 	}
+	
+	
+	
 }
-
+function collide()
+{
+	playerSpeed=0;
+	if(player.direction==Direction.Right)
+	{
+		player.x=player.x-16;
+		
+	}
+	if(player.direction==Direction.Left)
+	{
+		player.x=player.x-16;
+	}
+}
 function updateAnimation()
 {
 	player.updateAnimation();

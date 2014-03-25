@@ -17,6 +17,7 @@ var spriteObject =
   rotation: 0,
   visible: true,
   scrollable: true,
+  name:"",
   
   //Getters
   centerX: function()

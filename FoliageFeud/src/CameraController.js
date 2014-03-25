@@ -325,6 +325,7 @@ function buildMap(levelMap)
 				water.x = column * SIZE;
 				water.y = row * SIZE;
 				baseTiles[row][column] = water;
+				water.name="water";
 				collidables.push(water);
 				break;
 				
