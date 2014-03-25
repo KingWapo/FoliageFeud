@@ -55,6 +55,7 @@ var player = {
 	direction: Direction.Idle
 }
 
+
 var observationInstance = {
 	sourceX: 0,
 	sourceY: 0,
@@ -259,7 +260,7 @@ function update()
 			{
 				currentScreen = ScreenState.Observation;
 			}	
-		
+		//check for collisions with collidables.
 		if(cameraLoaded)
 		{
 			for( i=0; i<collidables.length; i++)
@@ -269,7 +270,10 @@ function update()
 				{
 					collide();
 				}
-		
+				if ( collisionDetection(player, collidables[i]) && collidables[i].name=="rock")
+				{
+					collide();
+				}		
 			}
 		}
 		
@@ -297,8 +301,39 @@ function collide()
 	}
 	if(player.direction==Direction.Left)
 	{
-		player.x=player.x-16;
+		player.x=player.x+16;
 	}
+	
+	if(player.direction==Direction.Up)
+	{
+		player.y=player.y+16;
+	}
+	if(player.direction==Direction.Down)
+	{
+		player.y=player.y-16;
+		
+	}
+	if (moveRight && !moveLeft)
+	{
+		player.x = player.x-16;
+	}
+	if (moveLeft && !moveRight)
+	{
+		player.x = player.x+16;
+		
+	}
+	if (moveUp && !moveDown)
+	{
+		player.y = player.y+16;
+		
+	}
+	if (moveDown && !moveUp)
+	{
+		player.y = player.y-16;
+		
+	}
+	
+	
 }
 function updateAnimation()
 {
