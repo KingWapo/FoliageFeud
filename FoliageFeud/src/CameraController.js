@@ -48,6 +48,14 @@ for (var i = 0; i < 50; i++)
 		{
 			tempList.push(2); // Push water
 		}
+		else if (i==10)
+		{
+			tempList.push(2); // push water
+		}
+		else if (i==5 && j==5 || i==5 && j==6||i==6&&j==5||i==6&&j==6)
+		{
+			tempList.push(2); // push water
+		}
 		else {
 			tempList.push(0); // Push Empty
 		}
@@ -315,6 +323,7 @@ function buildMap(levelMap)
 				tree.y = row * SIZE;
 				tree.width = 128;
 				tree.height = 128;
+				tree.name="tree";
 				foregroundTiles[row][column] = tree;
 				collidables.push(tree);
 				break;

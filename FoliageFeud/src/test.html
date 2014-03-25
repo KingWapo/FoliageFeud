@@ -8,11 +8,18 @@
 <title>Foliage Feud</title>
 </head>
 
+<style type="text/css">
+	canvas{
+		border: 1px dashed black;
+		position: absolute;
+	}
+</style>
+
 <body>
 	<div id="stage" style="position: relative">
-		<canvas width="1152" height="512" id="backgroundCanvas" style="z-index: 0; border: 1px dashed black; position:absolute"> </canvas>
-		<canvas width="1152" height="512" id="gameplayCanvas" style="z-index: 1; border: 1px dashed black; position:absolute"> </canvas>
-		<canvas width="1152" height="512" id="menuCanvas" style="z-index: 2; position:absolute"> </canvas>
+		<canvas width="1152" height="512" id="backgroundCanvas" style="z-index: 0;"> </canvas>
+		<canvas width="1152" height="512" id="gameplayCanvas" style="z-index: 1;"> </canvas>
+		<canvas width="1152" height="512" id="menuCanvas" style="z-index: 2;"> </canvas>
 	</div>
 	<div id="playArea"> </div>
     <script> console.debug("Testing Page"); </script>

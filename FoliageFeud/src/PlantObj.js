@@ -13,6 +13,7 @@
 
 //var plantNames = ["brown", "orange", "red", "white", "yellow"];
 var plantList = [];
+var requestedPlant = -1;
 var numRequested = 0;
 
 // Creates a list of all possible plants
@@ -40,6 +41,11 @@ plantList.push(new Plant("orange", "thorns", "orange and black"));
 plantList.push(new Plant("red", "pointed", "red"));
 plantList.push(new Plant("white", "bulb", "white"));
 plantList.push(new Plant("yellow", "thin", "yellow"));
+
+function setRequestedPlant(i)
+{
+	requestedPlant = i;
+}
 
 // Draws plants to screen and adds them as clickable objects
 function growPlant(i, requested)
@@ -74,6 +80,8 @@ function harvestPlant(i)
 	drawingSurface.clearRect(clickable[i].x, clickable[i].y, clickable[i].width, clickable[i].height);
 	clickable.splice(i, 1);
 	numRequested -= 1;
+	
+	plantList[requestedPlant].harvested = true;
 	
 	// FIGURE OUT HOW TO REDRAW UNCLICKED OBJECTS
 	

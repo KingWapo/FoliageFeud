@@ -73,4 +73,40 @@ function isIntersecting(x, y, width, height)
 	return false;
 }
 
+function writeText(context, text, x, y, maxWidth, lineHeight)
+{
+	context.clearRect(0, 0, 1152, 512);
+	
+	context.fillStyle = "#000";
+	context.font = "20px Arial";
+	
+	for (var j = 0; j < text.length; j++)
+	{
+		var words = text[j].split(' ');
+		var line = '';
+		
+		for (var i = 0; i < words.length; i++)
+		{
+			var testLine = line + words[i] + ' ';
+			var metrics = context.measureText(testLine);
+			var testWidth = metrics.width;
+			
+			if (testWidth > maxWidth && i > 0)
+			{
+				context.fillText(line, x, y);
+				line = words[i] + ' ';
+				y += lineHeight;
+			}
+			else
+			{
+				line = testLine;
+			}
+		}
+		
+		context.fillText(line, x, y);
+		
+		y += lineHeight * 2;
+	}
+}
+
 window.addEventListener("click", handleClick, false);
