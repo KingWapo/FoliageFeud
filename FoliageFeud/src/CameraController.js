@@ -378,6 +378,8 @@ function resetTiles()
 */
 
 placeObservationEvent();
+placeBlue();
+placeGray();
 
 listOfGameObjectMaps = levelGameObjects;
 currentLocation = levelCounter;

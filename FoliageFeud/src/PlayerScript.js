@@ -44,8 +44,8 @@ var player = {
 	},
 	
 	// Gameplay info
-	x: 128,
-	y: 128,
+	x: 192,
+	y: 256,
 	width: 64,
 	height: 64,
 	vx: 0,
@@ -64,6 +64,7 @@ var observationInstance = {
 	
 	numOfFrames: 30,
 	currentFrame: 0,
+
 	
 	//Update Animation Function
 	updateAnimation: function()
@@ -107,6 +108,55 @@ var observationInstance = {
 	
 	sprite: new Image()
 }
+var blueCoin =
+{
+	sourceX: 0,
+	sourceY: 0,
+	sourceWidth: 64,
+	sourceHeight: 64,
+	numOfFrames: 10,
+	currentFrame: 0,
+	visible: true,
+	update:0,
+	updateAnimation: function()
+	{
+			if(this.update===0)
+			{
+					this.sourceX = this.currentFrame * this.sourceWidth;
+			
+					this.currentFrame += 1;
+					
+				if ( this.currentFrame === this.numOfFrames )
+				 {
+					this.currentFrame = 0;	
+				 }
+					
+			}
+	this.update = (this.update+1)%2;
+	},
+	x: 20,
+	y: 20,
+	width: 64,
+	height: 64,
+	
+	sprite: new Image()
+	
+}
+var grayCoin =
+{
+	sourceX: 0,
+	sourceY: 0,
+	sourceWidth: 64,
+	sourceHeight: 64,
+	visible: true,
+	x: 20,
+	y: 20,
+	width: 64,
+	height: 64,
+	
+	sprite: new Image()
+	
+}
 
 var cameraLoaded = false;
 var pauseLoaded = false;
@@ -140,6 +190,9 @@ function updateSprite()
 }
 
 observationInstance.sprite.src = "../img/exclamationPoint.png";
+blueCoin.sprite.src=  "../img/waterToken.png";
+grayCoin.sprite.src=  "../img/cat.png";
+
 
 //Arrow key codes
 var LEFT = 37;
@@ -262,15 +315,43 @@ function update()
 		{
 			for( i=0; i<collidables.length; i++)
 			{
-				
-				if ( collisionDetection(player, collidables[i]) && collidables[i].name=="water")
+					var wCount=0;
+				if ( collisionDetection(player, collidables[i]) && collidables[i].name=="water" && skillBook.swim==false)
 				{
+					
 					collide();
+			
+					if(wCount===0)
+					{
+						message("water");
+						
+					}
+					wCount++;
+					if(wCount===3000)
+					{
+						wCount=0;
+					}
 				}
 				if ( collisionDetection(player, collidables[i]) && collidables[i].name=="tree")
 				{
 					collide();
-				}		
+				}	
+					if ( collisionDetection(player, blueCoin) && blueCoin.visible==true)
+					
+				{
+					skillBook.swim=true;
+					blueCoin.visible=false;
+					message("swim")
+				
+				}
+				if ( collisionDetection(player, grayCoin) && grayCoin.visible==true)
+					
+				{
+					skillBook.climb=true;
+					grayCoin.visible=false;
+					message("climb");
+				
+				}				
 			}
 		}
 		
@@ -284,6 +365,7 @@ function update()
 			mapBuilt = true;
 		}
 	}
+	
 	
 	
 	
@@ -332,10 +414,41 @@ function collide()
 	
 	
 }
+function message(name)
+{
+	
+	if(name === "water" )
+	{	
+		if( levelCounter ===0)
+		
+		window.alert("OH no you dont want to die! You need a magical blue spining coin to guide you across the waters...hmmmm wonder if there is one on this map.");	
+	}
+	 else if(name === "swim" )
+	{	
+		if( levelCounter ===0)
+		
+		window.alert(" You have gained the ability to swim! The swim ability is now unlocked in your skill book. GO GET EM TIGER!");	
+	}
+	else if(name ==="climb")
+	{
+		window.alert(" man...you can climb now thanks to this cat you collected....hopefully the artists will make it..idk..not a cat");	
+	}
+	else
+	{
+	 window.alert("dont die your significant other needs you! learn to swim before you try to explore the rivers");
+	}
+				moveDown = false;
+				moveLeft = false;
+				moveRight = false;
+				moveUp = false;
+	
+}
+
 function updateAnimation()
 {
 	player.updateAnimation();
 	observationInstance.updateAnimation();
+	blueCoin.updateAnimation();
 }
 
 function checkMovement()
@@ -436,17 +549,45 @@ function render()
 		{
 			cameraRender();
 			
+			if(blueCoin.visible==true)
+			{
+			 drawingSurface.drawImage
+		  (
+			
+				blueCoin.sprite, 
+				blueCoin.sourceX, blueCoin.sourceY, 
+				blueCoin.sourceWidth, blueCoin.sourceHeight,
+				Math.floor(blueCoin.x), Math.floor(blueCoin.y), 
+				blueCoin.width, blueCoin.height
+			 );
+		}
+		if(grayCoin.visible==true)
+			{
+			 drawingSurface.drawImage
+		  (
+			
+				grayCoin.sprite, 
+				grayCoin.sourceX, grayCoin.sourceY, 
+				grayCoin.sourceWidth, grayCoin.sourceHeight,
+				Math.floor(grayCoin.x), Math.floor(grayCoin.y), 
+				grayCoin.width, grayCoin.height
+			 );
+		}
 			drawingSurface.drawImage
 			  (
+			  
 				observationInstance.sprite, 
 				observationInstance.sourceX, observationInstance.sourceY, 
 				observationInstance.sourceWidth, observationInstance.sourceHeight,
 				Math.floor(observationInstance.x), Math.floor(observationInstance.y), 
 				observationInstance.width, observationInstance.height
 			  );
+	
+			 
+		
 		}
 		
-		  
+		
 		drawingSurface.drawImage
 		  (
 			player.sprite, 
@@ -455,6 +596,10 @@ function render()
 			Math.floor(player.x), Math.floor(player.y), 
 			player.width, player.height
 		  );
+		 
+		 
+		
+		  
 	}
 }
 
@@ -476,6 +621,18 @@ function placeObservationEvent()
 	
 	console.debug("x: " + obsX + " y: " + obsY);
 }
-
+//places the blue ojbect
+function placeBlue()
+{
+	blueCoin.x=1000;
+	blueCoin.y=128*2;
+	console.debug("x " + blueCoin.x);	
+}
+// randomly places the gray coin
+function placeGray()
+{
+	grayCoin.x=2000;
+	grayCoin.y=1000;
+}
 loadScreens();
 playerBePlayin = true;
