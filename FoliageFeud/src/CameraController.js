@@ -118,7 +118,11 @@ var COLUMNS = map1[0].length;
 var tilesheet = new Image();
 tilesheet.src = "../img/tilesheet.png";
 //assetsToLoad.push(image);
-
+//load the skillbok.js
+var skillBook= document.createElement("script");
+skillBook.type = "text/javascript";
+skillBook.src = "skillBook.js";
+document.body.appendChild(skillBook);
 //The number of columns on the tilesheet
 var tilesheetColumns = 4;
 
