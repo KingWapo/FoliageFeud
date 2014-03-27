@@ -2,13 +2,6 @@
 
 // ISpy game mode
 
-// Environment constants
-var MARSH   = "Marsh";
-var WATER   = "Water";
-var FOREST  = "Forest";
-var CLIFF   = "Cliff";
-var PRAIRIE = "Prairie";
-
 // If not initialized, grow flowers
 var initialized = false;
 
@@ -42,7 +35,7 @@ function init()
 	drawingSurface.fillRect(0, 0, 64 * 4, 512);
 
 	// Write requested plant info and display plant
-	var requestedPlant = Math.floor(Math.random() * plantList.length);
+	/*var requestedPlant = Math.floor(Math.random() * plantList.length);
 	
 	var strings = [];
 	
@@ -51,17 +44,24 @@ function init()
 	strings.push("Plant Color: ".concat(plantList[requestedPlant].color));
 	strings.push("Harvested: ".concat(plantList[requestedPlant].harvested));
 	
-	writeText(menuSurface, strings, 10, 50, 64 * 4, 20);
+	writeText(menuSurface, strings, 10, 50, 64 * 4, 20);*/
 	
-	setRequestedPlant(requestedPlant);
+	var curPlants = [];
 	
 	for (var i = 0; i < plantList.length; i++)
 	{
-		if (i === requestedPlant)
-			growPlant(i, true);
-		else
-			growPlant(i, false);
+		if (plantList[i].region === MARSH && !plantList[i].harvested)
+		{
+			var listObject = {
+				plant: plantList[i],
+				index: i
+			};
+			
+			curPlants.push(listObject);
+		}
 	}
+	
+	startInstance(curPlants);
 }
 
 // Nothing to update
