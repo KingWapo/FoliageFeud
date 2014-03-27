@@ -267,7 +267,7 @@ function update()
 				{
 					collide();
 				}
-				if ( collisionDetection(player, collidables[i]) && collidables[i].name=="rock")
+				if ( collisionDetection(player, collidables[i]) && collidables[i].name=="tree")
 				{
 					collide();
 				}		
