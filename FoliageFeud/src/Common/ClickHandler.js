@@ -2,13 +2,13 @@
 
 // Clickable object
 // Stores location, size, and function to run when clicked
-clickObj = {
+var clickObj = {
 	x: 0,
 	y: 0,
 	w: 0,
 	h: 0,
 	func: ""
-}
+};
 
 // Click Handler
 var utility = {
@@ -43,13 +43,13 @@ var utility = {
 		var posy = event.clientY - rect.top;
 		
 		// Checks each object to see if it was clicked
-		for (var i = 0; i < this.clickable.length; i++)
+		for (var i = 0; i < utility.clickable.length; i++)
 		{
 			// If image was clicked, runs specified function
-			if (posx >= this.clickable[i].x && posx <= this.clickable[i].x + this.clickable[i].width &&
-				posy >= this.clickable[i].y && posy <= this.clickable[i].y + this.clickable[i].height)
+			if (posx >= utility.clickable[i].x && posx <= utility.clickable[i].x + utility.clickable[i].width &&
+				posy >= utility.clickable[i].y && posy <= utility.clickable[i].y + utility.clickable[i].height)
 			{
-				this.clickable[i].func(i);
+				utility.clickable[i].func(i);
 			}
 		}
 	},

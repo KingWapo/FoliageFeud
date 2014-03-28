@@ -135,9 +135,10 @@ function mainUpdate()
 		case ScreenState.Observation: // ISpy Gameplay
 			if (entering[currentScreen])
 			{
+				ispy.init();
 			}
-			observationUpdate();
-			observationRender();
+			ispy.update();
+			ispy.render();
 			break;
 		case ScreenState.SkillBook:
 			break;
