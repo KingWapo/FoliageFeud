@@ -16,7 +16,7 @@ var observeInstance =
 //bg.src = "../img/ispywall.png";
 
 // Initializes instance
-function init()
+function observationOnEnter()
 {
 	// Green gradient bg
 	var grd = backgroundSurface.createLinearGradient(0, 0, 0, 512);
@@ -65,12 +65,12 @@ function init()
 }
 
 // Nothing to update
-function update()
+function observationUpdate()
 {
 }
 
 // Initializes if newly loaded, nothing otherwise
-function render()
+function observationRender()
 {
 	if (!initialized)
 	{
@@ -81,6 +81,3 @@ function render()
 		initialized = true;
 	}
 }
-
-// Updates loaded screens variables
-loadScreens();

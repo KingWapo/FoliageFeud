@@ -5,11 +5,11 @@
 // Variables
 var initialized = false;
 var notFound = new Image();
-notFound.src = "../img/Buttons/QuestionMark.png";
+notFound.src = "../../img/Buttons/QuestionMark.png";
 var tileSize = 128;
 
 // Initialize info wall
-function init()
+function infoOnEnter()
 {
 	// Blue gradient bg
 	var grd = backgroundSurface.createLinearGradient(0, 0, 0, 512);
@@ -83,12 +83,12 @@ function displayPlantNotFound(i)
 }
 
 // Nothing to update
-function update()
+function informationUpdate()
 {
 }
 
 // Initializes if newly loaded, nothing otherwise
-function render()
+function informationRender()
 {
 	if (!initialized)
 	{
@@ -99,5 +99,3 @@ function render()
 		initialized = true;
 	}
 }
-
-loadScreens();

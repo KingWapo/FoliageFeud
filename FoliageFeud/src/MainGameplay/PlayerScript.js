@@ -9,13 +9,14 @@ console.debug("Map Orientation: " + mapOrientation);
 var listOfGameObjectMaps = [];
 var currentLocation = 0;
 
-// Enum to determine the screen the game is currently at
-Direction = {
+// Enum to determine the animation to be played
+Animation = {
 	Idle: 0,
 	Right: 1,
 	Left: 2,
 	Down: 3,
-	Up: 4
+	Up: 4,
+	WorldEventRight: 5
 };
 
 var player = {
@@ -32,7 +33,7 @@ var player = {
 	//Update Animation Function
 	updateAnimation: function()
 	{
-		if (this.direction !== Direction.Idle)
+		if (this.animation !== Animation.Idle)
 		{
 			this.sourceX = this.currentFrame * this.sourceWidth;
 			
@@ -51,8 +52,10 @@ var player = {
 	vx: 0,
 	vy: 0,
 	speed: 4,
+	walkSpeed: 4,
+	runSpeed: 10,
 	sprite: new Image(),
-	direction: Direction.Idle
+	animation: Animation.Idle
 }
 
 
@@ -163,20 +166,15 @@ var pauseLoaded = false;
 var mapBuilt = false;
 var onPause = false;
 
-// Load the CameraController
-var cc = document.createElement("script");
-cc.type = "text/javascript";
-cc.src = "CameraController.js";
-document.body.appendChild(cc);
-
 // Load the image files
-player.sprite.src = "../img/Player/characterMale.png";
+player.sprite.src = "../../img/Player/characterMale.png";
 updateSprite();
 setInterval(updateSprite, 100);
 
 // Load the image files
 function updateSprite()
 {
+	/*
 	switch(currentSprite)
 	{
 		case SpriteState.Boy:
@@ -187,11 +185,12 @@ function updateSprite()
 			player.sprite.src = "../img/Player/characterFemale.png";
 		break;	
 	}
+	*/
 }
 
-observationInstance.sprite.src = "../img/Tokens/exclamationPoint.png";
-blueCoin.sprite.src=  "../img/Tokens/waterToken.png";
-grayCoin.sprite.src=  "../img/Tokens/cat.png";
+observationInstance.sprite.src = "../../img/Tokens/exclamationPoint.png";
+blueCoin.sprite.src=  "../../img/Tokens/waterToken.png";
+grayCoin.sprite.src=  "../../img/Tokens/cat.png";
 
 
 //Arrow key codes
@@ -207,109 +206,110 @@ var moveUp = false;
 var moveRight = false;
 var moveDown = false;
 
-if (!playerBePlayin)
+//Add keyboard listeners
+window.addEventListener("keydown", function(event)
 {
-	//Add keyboard listeners
-	window.addEventListener("keydown", function(event)
+	if (event.keyCode == 16)
 	{
-		if (event.keyCode == 16)
-		{
-			player.speed = 10;
-		}
-		if (!onPause)
-		{
-		  switch(event.keyCode)
-		  {
-			  case LEFT:
-				moveLeft = true;
-				break;  
-			
-			  case UP:
-				moveUp = true;
-				break;
-				
-			  case RIGHT:
-				moveRight = true;
-				break; 
-			
-			  case DOWN:
-				moveDown = true;
-				break;
-			
-		  }
-		}
+		player.speed = player.runSpeed;
+	}
+	if (!onPause)
+	{
+	  switch(event.keyCode)
+	  {
+		  case LEFT:
+			moveLeft = true;
+			break;  
 		
-	}, false);
-
-	window.addEventListener("keyup", function(event)
-	{
-		if (event.keyCode == 16)
-		{
-			player.speed = 4;
-		}
-		if (onPause)
-		{
-			if (event.keyCode == ENTER)
-			{
-				console.debug("Exit Pause");
-				mapBuilt = false;
-				onPause = false;
-			}
-		}
-		else
-		{
-			switch(event.keyCode)
-			{   
-			  case LEFT:
-				moveLeft = false;
-				break;  
-				
-			  case UP:
-				moveUp = false;
-				break;
-				
-			  case RIGHT:
-				moveRight = false;
-				break; 
-
-			  case DOWN:
-				moveDown = false;
-				break;
-
-			  
-			  case ENTER:
-				console.debug("Enter Pause");
-				onPause = true;
-				moveDown = false;
-				moveLeft = false;
-				moveRight = false;
-				moveUp = false;
-				break;
-			}
-		}
+		  case UP:
+			moveUp = true;
+			break;
+			
+		  case RIGHT:
+			moveRight = true;
+			break; 
 		
-	}, false);
-
-}
-
-function update()
-{
-	if (cameraLoaded && !pauseLoaded)
-	{
-		var pausejs = document.createElement("script");
-		pausejs.type = "text/javascript";
-		pausejs.src = "Pause.js";
-		document.body.appendChild(pausejs);
+		  case DOWN:
+			moveDown = true;
+			break;
+		
+	  }
 	}
 	
-	if (!onPause)
+}, false);
+
+window.addEventListener("keyup", function(event)
+{
+	if (event.keyCode == 16)
+	{
+		player.speed = player.walkSpeed;
+	}
+	if (onPause)
+	{
+		if (event.keyCode == ENTER)
 		{
-			checkMovement();
-		
-			if ( cameraLoaded && collisionDetection(player, observationInstance))
-			{
-				currentScreen = ScreenState.Observation;
-			}	
+			console.debug("Exit Pause");
+			mapBuilt = false;
+			onPause = false;
+		}
+	}
+	else
+	{
+		switch(event.keyCode)
+		{   
+		  case LEFT:
+			moveLeft = false;
+			break;  
+			
+		  case UP:
+			moveUp = false;
+			break;
+			
+		  case RIGHT:
+			moveRight = false;
+			break; 
+
+		  case DOWN:
+			moveDown = false;
+			break;
+
+		  
+		  case ENTER:
+			console.debug("Enter Pause");
+			onPause = true;
+			moveDown = false;
+			moveLeft = false;
+			moveRight = false;
+			moveUp = false;
+			break;
+		}
+	}
+	
+}, false);
+
+
+function gameplayUpdate()
+{
+	if (onPause)
+	{
+		if (!mapBuilt)
+		{
+			buildInGameMap();
+			mapBuilt = true;
+		}
+	}
+	else if (screensLoaded[ScreenState.WorldEvent])
+	{
+		worldEventUpdate();
+	}
+	else if (screensLoaded[ScreenState.Gameplay])
+	{
+		checkMovement();
+	
+		if ( cameraLoaded && collisionDetection(player, observationInstance))
+		{
+			currentScreen = ScreenState.Observation;
+		}	
 		//check for collisions with collidables.
 		if(cameraLoaded)
 		{
@@ -357,41 +357,31 @@ function update()
 		
 		updateAnimation();
 	}
-	else
-	{
-		if (!mapBuilt)
-		{
-			buildInGameMap();
-			mapBuilt = true;
-		}
-	}
-	
-	
-	
-	
 }
 function collide()
 {
 	playerSpeed=0;
-	if(player.direction==Direction.Right)
+	/*
+	if(player.animation==Animation.Right)
 	{
 		player.x=player.x-16;
 		
 	}
-	if(player.direction==Direction.Left)
+	if(player.animation==Animation.Left)
 	{
 		player.x=player.x+16;
 	}
 	
-	if(player.direction==Direction.Up)
+	if(player.animation==Animation.Up)
 	{
 		player.y=player.y+16;
 	}
-	if(player.direction==Direction.Down)
+	if(player.animation==Animation.Down)
 	{
 		player.y=player.y-16;
 		
 	}
+	*/
 	if (moveRight && !moveLeft)
 	{
 		player.x = player.x-16;
@@ -457,15 +447,15 @@ function checkMovement()
 	if (moveRight && !moveLeft)
 	{
 		player.vx = player.speed;
-		if (player.direction !== Direction.Right) {
-			player.direction = Direction.Right;
+		if (player.animation !== Animation.Right) {
+			player.animation = Animation.Right;
 		}
 	}
 	if (moveLeft && !moveRight)
 	{
 		player.vx = -player.speed;
-		if (player.direction !== Direction.Left) {
-			player.direction = Direction.Left;
+		if (player.animation !== Animation.Left) {
+			player.animation = Animation.Left;
 		}
 	}
 	if (!screensLoaded[ScreenState.WorldEvent])
@@ -473,15 +463,15 @@ function checkMovement()
 		if (moveUp && !moveDown)
 		{
 			player.vy = -player.speed;
-			if (player.direction !== Direction.Up) {
-				player.direction = Direction.Up;
+			if (player.animation !== Animation.Up) {
+				player.animation = Animation.Up;
 			}
 		}
 		if (moveDown && !moveUp)
 		{
 			player.vy = player.speed;
-			if (player.direction !== Direction.Down) {
-				player.direction = Direction.Down;
+			if (player.animation !== Animation.Down) {
+				player.animation = Animation.Down;
 			}
 		}
 	}
@@ -498,24 +488,24 @@ function checkMovement()
 	
 	if (!moveRight && !moveLeft && !moveDown && !moveUp)
 	{
-		if (player.direction !== Direction.Idle) {
-			if (player.direction == Direction.Right) {
+		if (player.animation !== Animation.Idle) {
+			if (player.animation == Animation.Right) {
 				player.currentFrame = 0;
 				player.sourceX = 0;
 			}
-			else if (player.direction == Direction.Left) {
+			else if (player.animation == Animation.Left) {
 				player.currentFrame = 1;
 				player.sourceX = player.sourceWidth;
 			}
-			else if (player.direction == Direction.Up) {
+			else if (player.animation == Animation.Up) {
 				player.currentFrame = 3;
 				player.sourceX = 3 * player.sourceWidth;
 			}
-			else if (player.direction == Direction.Down) {
+			else if (player.animation == Animation.Down) {
 				player.currentFrame = 2;
 				player.sourceX = 2 * player.sourceWidth;
 			}
-			player.direction = Direction.Idle;
+			player.animation = Animation.Idle;
 		}
 	}
 	
@@ -527,7 +517,7 @@ function checkMovement()
 	}
 }
 
-function render()
+function gameplayRender()
 {
 	if (onPause)
 	{
@@ -542,7 +532,7 @@ function render()
 		drawingSurface.drawImage
 		  (
 			player.sprite, 
-			player.sourceX, player.sourceY + player.direction * player.sourceHeight, 
+			player.sourceX, player.sourceY + player.animation * player.sourceHeight, 
 			player.sourceWidth, player.sourceHeight,
 			Math.floor(player.x), Math.floor(player.y), 
 			player.width, player.height
@@ -599,7 +589,7 @@ function render()
 		drawingSurface.drawImage
 		  (
 			player.sprite, 
-			player.sourceX, player.sourceY + player.direction * player.sourceHeight, 
+			player.sourceX, player.sourceY + player.animation * player.sourceHeight, 
 			player.sourceWidth, player.sourceHeight,
 			Math.floor(player.x), Math.floor(player.y), 
 			player.width, player.height
@@ -629,12 +619,11 @@ function placeObservationEvent()
 	
 	console.debug("x: " + obsX + " y: " + obsY);
 }
-//places the blue ojbect
+//places the blue object
 function placeBlue()
 {
 	blueCoin.x=1000;
 	blueCoin.y=128*2;
-	console.debug("x " + blueCoin.x);	
 }
 // randomly places the gray coin
 function placeGray()
@@ -642,5 +631,3 @@ function placeGray()
 	grayCoin.x=2000;
 	grayCoin.y=1000;
 }
-loadScreens();
-playerBePlayin = true;

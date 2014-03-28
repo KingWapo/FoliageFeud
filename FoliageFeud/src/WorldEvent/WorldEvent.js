@@ -15,34 +15,39 @@ var worldEventMap = [
 
 
 var xMovement = 0;
-var playerPosition;
+var playerVars;
 var cameraPosition;
 var entered = false;
 var exited = false;
+var offset = 10;
 
 function onEnterWorldEvent()
 {
-	playerPosition = [player.x, player.y];
+	playerVars = [player.x, player.y, player.speed, player.animation];
 	cameraPosition = [camera.x, camera.y];
 	
 	camera.x = 0;
 	camera.y = 0;
 	
-	player.x = 0;
-	player.y = 5 * player.height;
+	player.x = 5 * player.width;
+	player.y = 5 * player.height + offset;
+	player.speed = player.runSpeed;
+	player.animation = Animation.WorldEventRight;
 }
 
 function onExitWorldEvent()
 {
-	player.x = playerPosition[0];
-	player.y = playerPosition[1];
+	player.x = playerVars[0];
+	player.y = playerVars[1];
+	player.walkSpeed = playerVars[2];
+	player.animation = playerVars[3];
 	camera.x = cameraPosition[0];
 	camera.y = cameraPosition[1];
 }
 
 function worldEventUpdate()
 {
-	
+	player.updateAnimation();
 }
 
 function worldEventRender()

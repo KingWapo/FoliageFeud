@@ -116,13 +116,8 @@ var COLUMNS = map1[0].length;
 
 //Load the tilesheet image
 var tilesheet = new Image();
-tilesheet.src = "../img/Tiles/tilesheet.png";
-//assetsToLoad.push(image);
-//load the skillbok.js
-var skillBook= document.createElement("script");
-skillBook.type = "text/javascript";
-skillBook.src = "skillBook.js";
-document.body.appendChild(skillBook);
+tilesheet.src = "../../img/Tiles/tilesheet.png";
+
 //The number of columns on the tilesheet
 var tilesheetColumns = 4;
 
@@ -371,25 +366,6 @@ function buildMap(levelMap)
     }
   }
 }
-
-/*
-function resetTiles()
-{
-	for (var i = 0; i < 50; i++)
-	{
-		var tempList = [];
-		var foregroundTemp = [];
-		for (var j = 0; j < 75; j++)
-		{
-			var sprite = Object.create(spriteObject);
-			tempList.push(sprite);
-			foregroundTemp.push(sprite);
-		}
-		baseTiles.push(tempList);
-		foregroundTiles.push(foregroundTemp);
-	}
-}
-*/
 
 placeObservationEvent();
 placeBlue();
