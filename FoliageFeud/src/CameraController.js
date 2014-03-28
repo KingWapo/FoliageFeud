@@ -116,7 +116,7 @@ var COLUMNS = map1[0].length;
 
 //Load the tilesheet image
 var tilesheet = new Image();
-tilesheet.src = "../img/tilesheet.png";
+tilesheet.src = "../img/Tiles/tilesheet.png";
 //assetsToLoad.push(image);
 //load the skillbok.js
 var skillBook= document.createElement("script");

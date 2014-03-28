@@ -14,23 +14,25 @@ var plantList = [];
 var imgSize = 256;
 var requestedPlant = -1;
 
-function Plant(name, leaf, color, region)
+function Plant(name, traits, numImages)
 {
 	this.name = name;
-	this.sprite = new Image();
-	this.sprite.src = "../img/Plants/".concat(name, ".png");
+	this.sprite = [];
+	
+	for (var i = 0; i < numImages; i++)
+	{
+		this.sprite[i] = new Image();
+		this.sprite[i].src = "../img/Plants/".concat(name, "/", i, ".png");
+	}
+	
+	this.traits = traits;
 	this.harvested = false;
-	this.leaf = leaf;
-	this.color = color;
-	this.region = region;
 }
 
 // Creates a list of all possible plants
-plantList.push(new Plant("Wild Ginger", "kidney-shaped", "brown or red", MARSH));
-plantList.push(new Plant("Hepatica", "three-lobed", "pink, purple, blue, or white", MARSH));
-plantList.push(new Plant("Blood Root", "sheath-like and multi-lobed", "white", MARSH));
-plantList.push(new Plant("Dutchman's Breeches", "teardrop-shaped", "pink or white", MARSH));
-plantList.push(new Plant("Violet", "heart-shaped", "violet, blue, yellow, white, or cream", MARSH));
+plantList.push(new Plant("Liverwort", ["No leaves or stem", "Flattened, branching thallus", "Found near moist, shady stream banks"], 6));
+plantList.push(new Plant("Hair-Cap Moss", ["Pointed leaves", "Found in dense colonies in moist, acidic soils", "Specialized internal vascular tissues"], 6));
+plantList.push(new Plant("Peat Moss", ["Forms large, deep colonies or floating mats", "Upright stems", "Spherical brown-to-black sporophyte capsules"], 8));
 
 function startInstance(curPlants)
 {
@@ -59,7 +61,9 @@ function growPlants(curPlants, i)
 		else
 			addItem(x, y, imgSize, imgSize, ignorePlant);
 
-		drawingSurface.drawImage(curPlants[j].plant.sprite, x, y, imgSize, imgSize);
+		var imgNum = Math.floor(Math.random() * curPlants[j].plant.sprite.length);
+		
+		drawingSurface.drawImage(curPlants[j].plant.sprite[imgNum], x, y, imgSize, imgSize);
 	}
 }
 

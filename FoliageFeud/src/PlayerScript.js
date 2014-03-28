@@ -170,7 +170,7 @@ cc.src = "CameraController.js";
 document.body.appendChild(cc);
 
 // Load the image files
-player.sprite.src = "../img/characterMale.png";
+player.sprite.src = "../img/Player/characterMale.png";
 updateSprite();
 setInterval(updateSprite, 100);
 
@@ -180,18 +180,18 @@ function updateSprite()
 	switch(currentSprite)
 	{
 		case SpriteState.Boy:
-			player.sprite.src = "../img/characterMale.png";
+			player.sprite.src = "../img/Player/characterMale.png";
 		break;
 		
 		case SpriteState.Girl:
-			player.sprite.src = "../img/characterFemale.png";
+			player.sprite.src = "../img/Player/characterFemale.png";
 		break;	
 	}
 }
 
-observationInstance.sprite.src = "../img/exclamationPoint.png";
-blueCoin.sprite.src=  "../img/waterToken.png";
-grayCoin.sprite.src=  "../img/cat.png";
+observationInstance.sprite.src = "../img/Tokens/exclamationPoint.png";
+blueCoin.sprite.src=  "../img/Tokens/waterToken.png";
+grayCoin.sprite.src=  "../img/Tokens/cat.png";
 
 
 //Arrow key codes

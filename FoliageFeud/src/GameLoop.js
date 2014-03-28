@@ -101,7 +101,7 @@ var menuSurface = menuCanvas.getContext("2d");
 // Load the image files
 var image = new Image();
 image.addEventListener("load", loadHandler, false);
-image.src = "../img/cat.png";
+image.src = "../img/Tokens/cat.png";
 
 
 function loadHandler()
