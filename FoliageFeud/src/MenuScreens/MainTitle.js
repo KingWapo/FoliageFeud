@@ -6,7 +6,7 @@
 
 // The Main Title Screen
 
-var titleObject = {
+var title = {
 	girlImage: new Image(),
 	boyImage: new Image(),
 	menuScreen: new Image(),
@@ -41,7 +41,8 @@ var titleObject = {
 		this.playAsGirl.height = 128;
 		this.playAsGirl.x = (menuCanvas.width - this.playAsGirl.width) / 2;
 		this.playAsGirl.y = (menuCanvas.height - this.playAsGirl.height) / 2 - 96;
-		addItem(this.playAsGirl.x, this.playAsGirl.y, this.playAsGirl.width, this.playAsGirl.height, this.playAsGirlClicked);
+		utility.addClickItem(this.playAsGirl.x, this.playAsGirl.y, this.playAsGirl.width, this.playAsGirl.height, this.playAsGirlClicked);
+		//addItem(this.playAsGirl.x, this.playAsGirl.y, this.playAsGirl.width, this.playAsGirl.height, this.playAsGirlClicked);
 		
 		this.playAsBoy.sourceWidth = 256;
 		this.playAsBoy.sourceHeight = 128;
@@ -49,19 +50,22 @@ var titleObject = {
 		this.playAsBoy.height = 128;
 		this.playAsBoy.x = (menuCanvas.width - this.playAsBoy.width) / 2;
 		this.playAsBoy.y = ((menuCanvas.height - this.playAsBoy.height) / 2)+96;
-		addItem(this.playAsBoy.x, this.playAsBoy.y, this.playAsBoy.width, this.playAsBoy.height, this.playAsBoyClicked);
+		utility.addClickItem(this.playAsBoy.x, this.playAsBoy.y, this.playAsBoy.width, this.playAsBoy.height, this.playAsBoyClicked);
+		//addItem(this.playAsBoy.x, this.playAsBoy.y, this.playAsBoy.width, this.playAsBoy.height, this.playAsBoyClicked);
 	},
 	
 	playAsBoyClicked: function()
 	{
-		currentScreen = ScreenState.Gameplay;
-		currentSprite = SpriteState.Boy;
+		//currentScreen = ScreenState.Gameplay;
+		//currentSprite = SpriteState.Boy;
+		console.debug("Boy Clicked");
 	},
 	
 	playAsGirlClicked: function()
 	{
-		currentScreen = ScreenState.Gameplay;
-		currentSprite = SpriteState.Girl;
+		//currentScreen = ScreenState.Gameplay;
+		//currentSprite = SpriteState.Girl;
+		console.debug("Girl Clicked");
 	},
 	
 	render: function()

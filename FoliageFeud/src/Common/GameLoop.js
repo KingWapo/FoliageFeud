@@ -72,7 +72,7 @@ ScreenState = {
 };
 
 // Instances of the Screens 
-var title = Object.create(titleObject);
+//var title = Object.create(titleObject);
 
 SpriteState = {
 	Girl: 0,
