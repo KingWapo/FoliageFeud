@@ -6,7 +6,7 @@
 var initialized = false;
 var notFound = new Image();
 notFound.src = "../img/Buttons/QuestionMark.png";
-var tileSize = 64;
+var tileSize = 128;
 
 // Initialize info wall
 function init()
@@ -31,12 +31,12 @@ function init()
 	for (var i = 0; i < plantList.length; i++)
 	{
 		var sprite = new Image();
-		var x = (tileSize * (i % 11)) + (tileSize * 4) + (4 * i) + 4;
-		var y = ((tileSize + 4) * Math.floor(i / 11)) + 4;
+		var x = (tileSize * (i % 5)) + (tileSize * 2) + (4 * i) + 4;
+		var y = ((tileSize + 4) * Math.floor(i / 5)) + 4;
 		
 		if (plantList[i].harvested)
 		{
-			sprite = plantList[i].sprite;
+			sprite = plantList[i].sprite[0]; // SET TO PICK RANDOM
 			
 			addItem(x, y, tileSize, tileSize, displayPlantInfo);
 		}
@@ -61,16 +61,14 @@ function displayPlantInfo(i)
 {
 	var strings = [];
 	
-	strings.push("Requested Plant: ".concat(plantList[i].name));
-	strings.push("Leaf Type: ".concat(plantList[i].leaf));
-	strings.push("Plant Color: ".concat(plantList[i].color));
+	strings.push("Name: ".concat(plantList[i].name));
 
 	writeText(menuSurface, strings, 10, 50, 64 * 4, 20);
 	
 	menuSurface.drawImage(
-		plantList[i].sprite, 0, 0,
-		plantList[i].sprite.width, plantList[i].sprite.height,
-		0, 256, 256, 256);
+		plantList[i].sprite[0], 0, 0,
+		plantList[i].sprite[0].width, plantList[i].sprite[0].height,
+		0, 256, 256, 256); // SET TO PICK RANDOM
 }
 
 // Display unharvested text

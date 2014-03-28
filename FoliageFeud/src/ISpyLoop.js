@@ -50,7 +50,7 @@ function init()
 	
 	for (var i = 0; i < plantList.length; i++)
 	{
-		if (plantList[i].region === MARSH && !plantList[i].harvested)
+		if (!plantList[i].harvested)
 		{
 			var listObject = {
 				plant: plantList[i],
