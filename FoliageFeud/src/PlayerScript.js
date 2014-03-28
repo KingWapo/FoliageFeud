@@ -313,45 +313,45 @@ function update()
 		//check for collisions with collidables.
 		if(cameraLoaded)
 		{
-			for( i=0; i<collidables.length; i++)
+			if (!screensLoaded[ScreenState.WorldEvent])
 			{
+				for( i=0; i<collidables.length; i++)
+				{
 					var wCount=0;
-				if ( collisionDetection(player, collidables[i]) && collidables[i].name=="water" && skillBook.swim==false)
-				{
-					
-					collide();
-			
-					if(wCount===0)
+					if ( collisionDetection(player, collidables[i]) && collidables[i].name=="water" && skillBook.swim==false)
 					{
-						message("water");
-						
+						collide();
+				
+						if(wCount===0)
+						{
+							message("water");
+							
+						}
+						wCount++;
+						if(wCount===3000)
+						{
+							wCount=0;
+						}
 					}
-					wCount++;
-					if(wCount===3000)
+					if ( collisionDetection(player, collidables[i]) && collidables[i].name=="tree")
 					{
-						wCount=0;
-					}
-				}
-				if ( collisionDetection(player, collidables[i]) && collidables[i].name=="tree")
-				{
-					collide();
-				}	
+						collide();
+					}	
 					if ( collisionDetection(player, blueCoin) && blueCoin.visible==true)
+					{
+						skillBook.swim=true;
+						blueCoin.visible=false;
+						message("swim")
 					
-				{
-					skillBook.swim=true;
-					blueCoin.visible=false;
-					message("swim")
-				
+					}
+					if ( collisionDetection(player, grayCoin) && grayCoin.visible==true)
+					{
+						skillBook.climb=true;
+						grayCoin.visible=false;
+						message("climb");
+					
+					}				
 				}
-				if ( collisionDetection(player, grayCoin) && grayCoin.visible==true)
-					
-				{
-					skillBook.climb=true;
-					grayCoin.visible=false;
-					message("climb");
-				
-				}				
 			}
 		}
 		
@@ -537,8 +537,16 @@ function render()
 	{
 		backgroundSurface.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
 		drawingSurface.clearRect(0, 0, canvas.width, canvas.height);
-		menuSurface.clearRect(0, 0, canvas.width, canvas.height);
+		menuSurface.clearRect(0, 0, menuCanvas.width, menuCanvas.height);
 		worldEventRender();
+		drawingSurface.drawImage
+		  (
+			player.sprite, 
+			player.sourceX, player.sourceY + player.direction * player.sourceHeight, 
+			player.sourceWidth, player.sourceHeight,
+			Math.floor(player.x), Math.floor(player.y), 
+			player.width, player.height
+		  );
 	}
 	else
 	{

@@ -274,18 +274,21 @@ function cameraRender()
 				
 				
 				var gameObjectMap = levelGameObjects[levelCounter];
-				if (gameObjectMap[row][column] != EMPTY)
+				if (!screensLoaded[ScreenState.WorldEvent])
 				{
-					var foregroundSprite = foregroundTiles[row][column];
-					drawingSurface.drawImage
-					 (
-					   tilesheet, 
-					   foregroundSprite.sourceX, foregroundSprite.sourceY, 
-					   foregroundSprite.sourceWidth, foregroundSprite.sourceHeight,
-					   Math.floor(foregroundSprite.x), Math.floor(foregroundSprite.y), 
-					   foregroundSprite.width, foregroundSprite.height
-					 ); 
-					
+					if (gameObjectMap[row][column] != EMPTY)
+					{
+						var foregroundSprite = foregroundTiles[row][column];
+						drawingSurface.drawImage
+						 (
+						   tilesheet, 
+						   foregroundSprite.sourceX, foregroundSprite.sourceY, 
+						   foregroundSprite.sourceWidth, foregroundSprite.sourceHeight,
+						   Math.floor(foregroundSprite.x), Math.floor(foregroundSprite.y), 
+						   foregroundSprite.width, foregroundSprite.height
+						 ); 
+						
+					}
 				}
 			}
 		}		
@@ -341,6 +344,17 @@ function buildMap(levelMap)
 				baseTiles[row][column] = water;
 				water.name="water";
 				collidables.push(water);
+				break;
+				
+			case SKY:
+				var sky = Object.create(spriteObject);
+				sky.sourceX = tilesheetX;
+				sky.sourceY = tilesheetY;
+				sky.x = column * SIZE;
+				sky.y = row * SIZE;
+				baseTiles[row][column] = sky;
+				sky.name="sky";
+				collidables.push(sky);
 				break;
 				
 			case ROCK:
