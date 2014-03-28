@@ -56,6 +56,10 @@ for (var i = 0; i < 50; i++)
 		{
 			tempList.push(2); // push water
 		}
+		else if(j==40)
+			{
+				tempList.push(3); // push rock
+			}
 		else {
 			tempList.push(0); // Push Empty
 		}
@@ -348,6 +352,7 @@ function buildMap(levelMap)
 				rock.sourceX = tilesheetX;
 				rock.sourceY = tilesheetY;
 				rock.x = column * SIZE;
+				rock.name="rock";
 				rock.y = row * SIZE;
 				baseTiles[row][column] = rock;
 				collidables.push(rock);

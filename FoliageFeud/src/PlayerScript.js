@@ -149,6 +149,25 @@ var grayCoin =
 	sourceWidth: 64,
 	sourceHeight: 64,
 	visible: true,
+	numOfFrames: 10,
+	currentFrame: 0,
+	update:0,
+	updateAnimation: function()
+	{
+			if(this.update===0)
+			{
+					this.sourceX = this.currentFrame * this.sourceWidth;
+			
+					this.currentFrame += 1;
+					
+				if ( this.currentFrame === this.numOfFrames )
+				 {
+					this.currentFrame = 0;	
+				 }
+					
+			}
+	this.update = (this.update+1)%2;
+	},
 	x: 20,
 	y: 20,
 	width: 64,
@@ -191,7 +210,7 @@ function updateSprite()
 
 observationInstance.sprite.src = "../img/exclamationPoint.png";
 blueCoin.sprite.src=  "../img/waterToken.png";
-grayCoin.sprite.src=  "../img/cat.png";
+grayCoin.sprite.src=  "../img/rockToken.png";
 
 
 //Arrow key codes
@@ -320,22 +339,17 @@ function update()
 				{
 					
 					collide();
-			
-					if(wCount===0)
-					{
-						message("water");
-						
-					}
-					wCount++;
-					if(wCount===3000)
-					{
-						wCount=0;
-					}
+					message("water");
+					
 				}
 				if ( collisionDetection(player, collidables[i]) && collidables[i].name=="tree")
 				{
 					collide();
-				}	
+				}
+				if ( collisionDetection(player, collidables[i]) && collidables[i].name=="rock" && skillBook.climb==false)
+				{
+					collide();
+				}		
 					if ( collisionDetection(player, blueCoin) && blueCoin.visible==true)
 					
 				{
@@ -419,9 +433,9 @@ function message(name)
 	
 	if(name === "water" )
 	{	
-		if( levelCounter ===0)
-		
-		window.alert("OH no you dont want to die! You need a magical blue spining coin to guide you across the waters...hmmmm wonder if there is one on this map.");	
+		var tempArray=[];
+		tempArray.push("you have ran into water..collect a blue coin to move on");
+	 	writeText(menuSurface, tempArray , 256 , 256, 256,20);
 	}
 	 else if(name === "swim" )
 	{	
@@ -432,6 +446,10 @@ function message(name)
 	else if(name ==="climb")
 	{
 		window.alert(" man...you can climb now thanks to this cat you collected....hopefully the artists will make it..idk..not a cat");	
+	}
+	else if (name ==="wall")
+	{
+		window.alert(" you hit your face on the near by mountain..maybe you should learn to climb I bet you can find a skill coin or something of value to make this possible")
 	}
 	else
 	{
@@ -449,6 +467,7 @@ function updateAnimation()
 	player.updateAnimation();
 	observationInstance.updateAnimation();
 	blueCoin.updateAnimation();
+	grayCoin.updateAnimation();
 }
 
 function checkMovement()
