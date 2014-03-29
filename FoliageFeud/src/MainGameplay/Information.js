@@ -66,10 +66,11 @@ var info = {
 
 		utility.writeText(menuSurface, strings, 10, 50, 64 * 4, 20);
 		
+		var r = Math.floor(Math.random() * plantList[i].sprite.length);
 		menuSurface.drawImage
 		(
-			plantList[i].sprite[0], 0, 0,
-			plantList[i].sprite[0].width, plantList[i].sprite[0].height,
+			plantList[i].sprite[r], 0, 0,
+			plantList[i].sprite[r].width, plantList[i].sprite[r].height,
 			0, 256, 256, 256
 		); // SET TO PICK RANDOM
 	},

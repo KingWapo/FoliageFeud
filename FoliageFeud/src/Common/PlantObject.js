@@ -2,7 +2,6 @@
 
 // All plant objects
 
-//var plantNames = ["brown", "orange", "red", "white", "yellow"];
 var plantList = [];
 
 function Plant(name, traits, numImages)

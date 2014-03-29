@@ -3,11 +3,15 @@
 // ISpy game mode
 
 var ispy = {
+	// Size of image on screen
 	imgSize: 256,
+	// Index of requested plant
 	requestedPlant: -1,
 	
+	// Initialize game mode
 	init: function()
 	{
+		// Clear canvases and click handler
 		utility.clearAll();
 		
 		// Green gradient bg
@@ -25,19 +29,8 @@ var ispy = {
 		
 		gameplaySurface.fillStyle = grd2;
 		gameplaySurface.fillRect(0, 0, 64 * 4, 512);
-
-		// Write requested plant info and display plant
-		/*var requestedPlant = Math.floor(Math.random() * plantList.length);
 		
-		var strings = [];
-		
-		strings.push("Requested Plant: ".concat(plantList[requestedPlant].name));
-		strings.push("Leaf Type: ".concat(plantList[requestedPlant].leaf));
-		strings.push("Plant Color: ".concat(plantList[requestedPlant].color));
-		strings.push("Harvested: ".concat(plantList[requestedPlant].harvested));
-		
-		writeText(menuSurface, strings, 10, 50, 64 * 4, 20);*/
-		
+		// Add unharvested plants to ispy pool
 		var curPlants = [];
 		
 		for (var i = 0; i < plantList.length; i++)
@@ -53,6 +46,11 @@ var ispy = {
 			}
 		}
 		
+		/**
+		ADD SHUFFLE FUNCTION TO UTILITY
+		**/
+		
+		// Set number of images on screen
 		var numImgs = 3;
 	
 		if (curPlants.length >= numImgs)
@@ -61,13 +59,28 @@ var ispy = {
 			this.growPlants(curPlants, curPlants.length % numImgs);
 	},
 	
-	// Draws plants to screen and adds them as clickable objects
+	// Draws objects to screen for game mode
 	growPlants: function(curPlants, i)
 	{
+		// Pick requested plant from first i elements in array
 		var requested = Math.floor(Math.random() * i);
 
+		// Get index of that plant
 		this.requestedPlant = curPlants[requested].index;
 		
+		// Write plant name and traits to screen
+		var strings = [];
+		
+		strings.push("Requested Plant: ".concat(plantList[this.requestedPlant].name));
+		
+		for (var j = 0; j < plantList[this.requestedPlant].traits.length; j++)
+		{
+			strings.push("Trait[".concat(j, "]: ", plantList[this.requestedPlant].traits[j]));
+		}
+		
+		utility.writeText(menuSurface, strings, 10, 50, 64 * 4, 20);
+		
+		// Draw plants on screen and add them to click handler
 		for (var j = 0; j < i; j++)
 		{
 			var x = ((this.imgSize  + 32)* j) + (64 * 4.5);
@@ -84,21 +97,24 @@ var ispy = {
 		}
 	},
 
-	// Switch gamemode to standard gameplay
+	// Handle correct guess
 	harvestPlant: function(i)
 	{
-		console.debug("Plant Harvested");
-		console.debug("--ADD MORE FUNCTIONALITY TO HARVEST FUNCTION");
+		// Clear image from screen and clickable array
 		gameplaySurface.clearRect(utility.clickable[i].x, utility.clickable[i].y, utility.clickable[i].width, utility.clickable[i].height);
 		utility.clickable.splice(i, 1);
 		
+		// Show that plant was harvested
 		plantList[ispy.requestedPlant].harvested = true;
+		
+		// Reset requested plant index
 		ispy.requestedPlant = -1;
 
+		// Exit game mode
 		exiting[currentScreen] = true;
 	},
 
-	// Ignore plant harvestPlant
+	// Handle incorrect guess
 	ignorePlant: function(i)
 	{
 		console.debug("You selected the wrong flower");

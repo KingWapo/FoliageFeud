@@ -15,6 +15,7 @@ var utility = {
 	// List of clickable objects in current screen
 	clickable: [],
 	
+	// Clear screen and all objects from clickable
 	clearAll: function()
 	{
 		this.clearClickHandler();
@@ -63,6 +64,7 @@ var utility = {
 		}
 	},
 	
+	// Write text to screen, wrapping if hits max width
 	writeText: function(context, text, x, y, maxWidth, lineHeight)
 	{
 		context.clearRect(0, 0, 1152, 512);
