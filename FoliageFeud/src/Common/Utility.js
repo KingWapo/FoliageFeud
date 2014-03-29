@@ -15,6 +15,15 @@ var utility = {
 	// List of clickable objects in current screen
 	clickable: [],
 	
+	clearAll: function()
+	{
+		this.clearClickHandler();
+		
+		backgroundSurface.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
+		gameplaySurface.clearRect(0, 0, gameplayCanvas.width, gameplayCanvas.height);
+		menuSurface.clearRect(0, 0, menuCanvas.width, menuCanvas.height);
+	},
+	
 	// Add item to the list
 	addClickItem: function(x, y, width, height, func)
 	{
