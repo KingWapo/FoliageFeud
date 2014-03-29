@@ -404,7 +404,7 @@ var gameplay = {
 						this.message("swim")
 					
 					}
-					if ( utility.collisionDetection(gameplay.player, gameplay.grayCoin) && grayCoin.visible==true)
+					if ( utility.collisionDetection(gameplay.player, gameplay.grayCoin) && gameplay.grayCoin.visible==true)
 					{
 						skillBook.climb=true;
 						this.grayCoin.visible=false;
