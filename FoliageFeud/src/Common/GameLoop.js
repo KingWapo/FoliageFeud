@@ -29,13 +29,13 @@ var playerBePlayin = false;
 
 // Bool list for the loaded positions
 entering = [true, // Title
-		 false, // Gameplay
-		 false, // Information
-		 false, // Observation
-		 false, // SkillBook
-		 false, // TrainingMode
-		 false, // WorldEvent
-		 false // End
+		 true, // Gameplay
+		 true, // Information
+		 true, // Observation
+		 true, // SkillBook
+		 true, // TrainingMode
+		 true, // WorldEvent
+		 true // End
 		 ];
 // Bool list for the loaded positions
 screensLoaded = [true, // Title
@@ -88,16 +88,6 @@ var fps = 60;
 
 var counter = 0;
 
-// The canvas and its drawing surface
-var backgroundCanvas = document.getElementById("backgroundCanvas");
-var backgroundSurface = backgroundCanvas.getContext("2d");
-
-var canvas = document.getElementById("gameplayCanvas");
-var drawingSurface = canvas.getContext("2d");
-
-var menuCanvas = document.getElementById("menuCanvas");
-var menuSurface = menuCanvas.getContext("2d");
-
 mainUpdate();
 
 function mainUpdate()
@@ -115,14 +105,23 @@ function mainUpdate()
 				entering[currentScreen] = false;
 			}
 			title.render();
+			if (exiting[currentScreen])
+			{
+				screensLoaded[currentScreen] = false;
+				currentScreen = ScreenState.Gameplay;
+				screensLoaded[currentScreen] = true;
+				exiting[currentScreen] = false;
+			}
 			break;
 			
 		case ScreenState.Gameplay: // Gameplay Screen
 			if (entering[currentScreen])
 			{
+				gameplay.init();
+				entering[currentScreen] = false;
 			}
-			gameplayUpdate();
-			gameplayRender();
+			gameplay.update();
+			gameplay.render();
 			break;
 			
 		case ScreenState.Information: // Information Screen

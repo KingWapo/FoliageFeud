@@ -10,95 +10,6 @@
 	the tiles are 64 x 64
 */
 
-//Game Level Maps
-//Arrays to store the level maps
-var levelMaps = [];
-var levelGameObjects = [];
-
-//A level counter
-var levelCounter = 0;
-
-//A timer to help delay the change time between levels
-var levelChangeTimer = 0;
-
-var map0 = [];
-for (var i = 0; i < 50; i++)
-{
-	var tempList = [];
-	for (var j = 0; j < 75; j++)
-	{
-		tempList.push(1);
-	}
-	map0.push(tempList);
-}
-levelMaps.push(map0);
-
-var gameObjects0 = [];
-
-for (var i = 0; i < 50; i++)
-{
-	var tempList = [];
-	for (var j = 0; j < 75; j++)
-	{
-		if ((i == 0 && j % 2 == 0) || (i == 49 && j % 2 == 0) || (j == 0 && i % 2 == 0) || (j == 74 && i % 2 == 0))
-		{
-			tempList.push(5); // Push Tree
-		}
-		else if (j == 23)
-		{
-			tempList.push(2); // Push water
-		}
-		else if (i==10)
-		{
-			tempList.push(2); // push water
-		}
-		else if (i==5 && j==5 || i==5 && j==6||i==6&&j==5||i==6&&j==6)
-		{
-			tempList.push(2); // push water
-		}
-		else {
-			tempList.push(0); // Push Empty
-		}
-	}
-	gameObjects0.push(tempList);
-}
-levelGameObjects.push(gameObjects0);
-
-var map1 = [];
-for (var i = 0; i < 50; i++)
-{
-	var tempList = [];
-	for (var j = 0; j < 75; j++)
-	{
-		tempList.push(1);
-	}
-	map1.push(tempList);
-}
-
-levelMaps.push(map1);
-
-
-var gameObjects1 = [];
-
-for (var i = 0; i < 50; i++)
-{
-	var tempList = [];
-	for (var j = 0; j < 75; j++)
-	{
-		if ((i == 0 && j % 2 == 0) || (i == 49 && j % 2 == 0) || (j == 0 && i % 2 == 0) || (j == 74 && i % 2 == 0))
-		{
-			tempList.push(2);
-		}
-		else {
-			tempList.push(0);
-		}
-	}
-	gameObjects1.push(tempList);
-}
-
-levelGameObjects.push(gameObjects1);
-
-
 //Map code
 var EMPTY = 0;
 var GRASS = 1;
@@ -110,268 +21,356 @@ var TREE = 5;
 // Size of each tile
 var SIZE = 64;
 
-//The number of rows and columns
-var ROWS = map1.length;
-var COLUMNS = map1[0].length;
-
-//Load the tilesheet image
-var tilesheet = new Image();
-tilesheet.src = "../../img/Tiles/tilesheet.png";
-
 //The number of columns on the tilesheet
 var tilesheetColumns = 4;
 
-var WIDTH = COLUMNS * SIZE;
-var HEIGHT = ROWS * SIZE;
+var cameraController = {
+	//Game Level Maps
+	//Arrays to store the level maps
+	levelMaps: [],
+	levelGameObjects: [],
+	levelCounter: 0,
+	tilesheet: new Image(),
+	baseTiles: [],
+	foregroundTiles: [],
+	sprites: [],
+	collidables: [],
+	ROWS: 0,
+	COLUMNS: 0,
+	WIDTH: 0,
+	HEIGHT: 0,
+	
+	gameWorld: {
+		x: 0,
+		y: 0,
+		width: this.WIDTH,
+		height:this.HEIGHT
+	},
+	
+	camera: {
+		x: 0,
+		y: 0,
+		width: canvas.width,
+		height: canvas.height,
+		vx: 0,
+		previousX: 0,
 
-
-//Arrays to store the game objects
-var baseTiles = [];
-var foregroundTiles = [];
-for (var i = 0; i < 50; i++)
-{
-	var tempList = [];
-	var foregroundTemp = [];
-	for (var j = 0; j < 75; j++)
-	{
-		var sprite = Object.create(spriteObject);
-		tempList.push(sprite);
-		foregroundTemp.push(sprite);
-	}
-	baseTiles.push(tempList);
-	foregroundTiles.push(foregroundTemp);
-}
-var sprites = [];
-var collidables = [];
-
-buildMap(levelMaps[0]);
-buildMap(levelGameObjects[0]);
-
-//Create the gameWorld and camera objects
-var gameWorld = 
-{
-  x: 0,
-  y: 0,
-  width: WIDTH,
-  height:HEIGHT
-};
-
-//The camera has 2 new properties: "vx" and "previousX"
-var camera = 
-{
-  x: 0,
-  y: 0,
-  width: canvas.width,
-  height: canvas.height,
-  vx: 0,
-  previousX: 0,
-  
-  //The camera's inner scroll boundaries
-  rightInnerBoundary: function()
-  {
-    return this.x + (this.width * 0.95);
-  },
-  
-  leftInnerBoundary: function()
-  {
-    return this.x + (this.width * 0.05);
-  },
-  
-  upperInnerBoundary: function()
-  {
-	return this.y + (this.height * 0.05);
-  },
-  
-  lowerInnerBoundary: function()
-  {
-	return this.y + (this.height * 0.95);
-  }
-};
-
-
-function cameraUpdate()
-{
-	//Scroll the camera
-	if (player.x < camera.leftInnerBoundary())
-	{
-		camera.x -= player.speed; 
-	}
-	if (player.x + player.width > camera.rightInnerBoundary())
-	{
-		camera.x += player.speed; 
-	}
-	if (player.y < camera.upperInnerBoundary())
-	{
-		camera.y -= player.speed;
-	}
-	if (player.y + player.height > camera.lowerInnerBoundary())
-	{
-		camera.y += player.speed;
-	}
-
-	//The camera's world boundaries
-	if (camera.x < gameWorld.x)
-	{
-		camera.x = gameWorld.x;
-	}
-	if (camera.x + camera.width > gameWorld.x + gameWorld.width)
-	{
-		camera.x = gameWorld.x + gameWorld.width - camera.width;
-	}
-	if (camera.y < gameWorld.y)
-	{
-		camera.y = gameWorld.y;
-	}
-	if (camera.y + camera.height > gameWorld.y + gameWorld.height)
-	{
-		camera.y = gameWorld.y + gameWorld.height - camera.height;
-	}
-}
-
-function cameraRender()
-{
-	//Move the drawing surface so that it's positioned relative to the camera
-	backgroundSurface.translate(-camera.x, -camera.y);
-	drawingSurface.translate(-camera.x, -camera.y);
-	for (var row = Math.floor(camera.y / 64) - 2; row < Math.floor((camera.y + camera.height)/64) + 2; row++)
-	{
-		for (var column = Math.floor(camera.x / 64) - 2; column < Math.floor((camera.x + camera.width)/64) + 2; column++)
+		//The camera's inner scroll boundaries
+		rightInnerBoundary: function()
 		{
-			if (row >= 0 && row < ROWS && column >= 0 && column < COLUMNS)
+		return this.x + (this.width * 0.95);
+		},
+
+		leftInnerBoundary: function()
+		{
+		return this.x + (this.width * 0.05);
+		},
+
+		upperInnerBoundary: function()
+		{
+		return this.y + (this.height * 0.05);
+		},
+
+		lowerInnerBoundary: function()
+		{
+		return this.y + (this.height * 0.95);
+		}
+	},
+	
+	init: function()
+	{
+		this.tilesheet.src = "../img/Tiles/tilesheet.png";
+		
+		var map0 = [];
+		for (var i = 0; i < 50; i++)
+		{
+			var tempList = [];
+			for (var j = 0; j < 75; j++)
 			{
-				var sprite = baseTiles[row][column];
-				
-				//display the scrolling sprites
-				if(sprite.visible && sprite.scrollable)
+				tempList.push(1);
+			}
+			map0.push(tempList);
+		}
+		this.levelMaps.push(map0);
+
+		var gameObjects0 = [];
+
+		for (var i = 0; i < 50; i++)
+		{
+			var tempList = [];
+			for (var j = 0; j < 75; j++)
+			{
+				if ((i == 0 && j % 2 == 0) || (i == 49 && j % 2 == 0) || (j == 0 && i % 2 == 0) || (j == 74 && i % 2 == 0))
 				{
-				 backgroundSurface.drawImage
-				 (
-				   tilesheet, 
-				   sprite.sourceX, sprite.sourceY, 
-				   sprite.sourceWidth, sprite.sourceHeight,
-				   Math.floor(sprite.x), Math.floor(sprite.y), 
-				   sprite.width, sprite.height
-				 ); 
+					tempList.push(5); // Push Tree
 				}
-				 
-				//display the non-scrolling sprites
-				if(sprite.visible && !sprite.scrollable)
+				else if (j == 23)
 				{
-				 backgroundSurface.drawImage
-				 (
-				   tilesheet, 
-				   sprite.sourceX, sprite.sourceY, 
-				   sprite.sourceWidth, sprite.sourceHeight,
-				   Math.floor(camera.x + sprite.x), Math.floor(camera.y + sprite.y), 
-				   sprite.width, sprite.height
-				 ); 
+					tempList.push(2); // Push water
 				}
-				
-				
-				var gameObjectMap = levelGameObjects[levelCounter];
-				if (!screensLoaded[ScreenState.WorldEvent])
+				else if (i==10)
 				{
-					if (gameObjectMap[row][column] != EMPTY)
-					{
-						var foregroundSprite = foregroundTiles[row][column];
-						drawingSurface.drawImage
-						 (
-						   tilesheet, 
-						   foregroundSprite.sourceX, foregroundSprite.sourceY, 
-						   foregroundSprite.sourceWidth, foregroundSprite.sourceHeight,
-						   Math.floor(foregroundSprite.x), Math.floor(foregroundSprite.y), 
-						   foregroundSprite.width, foregroundSprite.height
-						 ); 
-						
-					}
+					tempList.push(2); // push water
+				}
+				else if (i==5 && j==5 || i==5 && j==6||i==6&&j==5||i==6&&j==6)
+				{
+					tempList.push(2); // push water
+				}
+				else {
+					tempList.push(0); // Push Empty
 				}
 			}
-		}		
+			gameObjects0.push(tempList);
+		}
+		this.levelGameObjects.push(gameObjects0);
+
+		var map1 = [];
+		for (var i = 0; i < 50; i++)
+		{
+			var tempList = [];
+			for (var j = 0; j < 75; j++)
+			{
+				tempList.push(1);
+			}
+			map1.push(tempList);
+		}
+
+		this.levelMaps.push(map1);
+
+
+		var gameObjects1 = [];
+
+		for (var i = 0; i < 50; i++)
+		{
+			var tempList = [];
+			for (var j = 0; j < 75; j++)
+			{
+				if ((i == 0 && j % 2 == 0) || (i == 49 && j % 2 == 0) || (j == 0 && i % 2 == 0) || (j == 74 && i % 2 == 0))
+				{
+					tempList.push(2);
+				}
+				else {
+					tempList.push(0);
+				}
+			}
+			gameObjects1.push(tempList);
+		}
+
+		this.levelGameObjects.push(gameObjects1);
+		
+		//The number of rows and columns
+		this.ROWS = map1.length;
+		this.COLUMNS = map1[0].length;
+		
+		this.WIDTH = this.COLUMNS * SIZE;
+		this.HEIGHT = this.ROWS * SIZE;
+		
+		this.gameWorld.width = this.WIDTH;
+		this.gameWorld.height = this.HEIGHT;
+		
+		for (var i = 0; i < 50; i++)
+		{
+			var tempList = [];
+			var foregroundTemp = [];
+			for (var j = 0; j < 75; j++)
+			{
+				var sprite = Object.create(spriteObject);
+				tempList.push(sprite);
+				foregroundTemp.push(sprite);
+			}
+			this.baseTiles.push(tempList);
+			this.foregroundTiles.push(foregroundTemp);
+		}
+		
+		this.buildMap(this.levelMaps[0]);
+		this.buildMap(this.levelGameObjects[0]);
+	},
+	
+	update: function()
+	{
+		//Scroll the camera
+		if (gameplay.player.x < this.camera.leftInnerBoundary())
+		{
+			this.camera.x -= gameplay.player.speed; 
+		}
+		if (gameplay.player.x + gameplay.player.width > this.camera.rightInnerBoundary())
+		{
+			this.camera.x += gameplay.player.speed; 
+		}
+		if (gameplay.player.y < this.camera.upperInnerBoundary())
+		{
+			this.camera.y -= gameplay.player.speed;
+		}
+		if (gameplay.player.y + gameplay.player.height > this.camera.lowerInnerBoundary())
+		{
+			this.camera.y += gameplay.player.speed;
+		}
+
+		//The camera's world boundaries
+		if (this.camera.x < this.gameWorld.x)
+		{
+			this.camera.x = this.gameWorld.x;
+		}
+		if (this.camera.x + this.camera.width > this.gameWorld.x + this.gameWorld.width)
+		{
+			this.camera.x = this.gameWorld.x + this.gameWorld.width - this.camera.width;
+		}
+		if (this.camera.y < this.gameWorld.y)
+		{
+			this.camera.y = this.gameWorld.y;
+		}
+		if (this.camera.y + this.camera.height > this.gameWorld.y + this.gameWorld.height)
+		{
+			this.camera.y = this.gameWorld.y + this.gameWorld.height - this.camera.height;
+		}
+	},
+	
+	render: function()
+	{
+		//Move the drawing surface so that it's positioned relative to the camera
+		backgroundSurface.translate(-this.camera.x, -this.camera.y);
+		drawingSurface.translate(-this.camera.x, -this.camera.y);
+		for (var row = Math.floor(this.camera.y / 64) - 2; row < Math.floor((this.camera.y + this.camera.height)/64) + 2; row++)
+		{
+			for (var column = Math.floor(this.camera.x / 64) - 2; column < Math.floor((this.camera.x + this.camera.width)/64) + 2; column++)
+			{
+				if (row >= 0 && row < this.ROWS && column >= 0 && column < this.COLUMNS)
+				{
+					var sprite = this.baseTiles[row][column];
+					//console.debug("row, column: " + row + ", " + column);
+					//console.debug("width, height: " + sprite.width + ", " + sprite.height);
+					
+					//display the scrolling sprites
+					try
+					{
+						if(sprite.visible && sprite.scrollable)
+						{
+						 backgroundSurface.drawImage
+						 (
+						   this.tilesheet, 
+						   sprite.sourceX, sprite.sourceY, 
+						   sprite.sourceWidth, sprite.sourceHeight,
+						   Math.floor(sprite.x), Math.floor(sprite.y), 
+						   sprite.width, sprite.height
+						 ); 
+						}
+					}
+					catch(err){ console.debug("Error: " + err);}
+					 
+					//display the non-scrolling sprites
+					if(sprite.visible && !sprite.scrollable)
+					{
+					 backgroundSurface.drawImage
+					 (
+					   this.tilesheet, 
+					   sprite.sourceX, sprite.sourceY, 
+					   sprite.sourceWidth, sprite.sourceHeight,
+					   Math.floor(camera.x + sprite.x), Math.floor(camera.y + sprite.y), 
+					   sprite.width, sprite.height
+					 ); 
+					}
+					
+					
+					var gameObjectMap = this.levelGameObjects[this.levelCounter];
+					if (!screensLoaded[ScreenState.WorldEvent])
+					{
+						if (gameObjectMap[row][column] != EMPTY)
+						{
+							var foregroundSprite = this.foregroundTiles[row][column];
+							try {
+							drawingSurface.drawImage
+							 (
+							   this.tilesheet, 
+							   foregroundSprite.sourceX, foregroundSprite.sourceY, 
+							   foregroundSprite.sourceWidth, foregroundSprite.sourceHeight,
+							   Math.floor(foregroundSprite.x), Math.floor(foregroundSprite.y), 
+							   foregroundSprite.width, foregroundSprite.height
+							 ); 
+							}
+							catch(err){console.debug("Error: " + err);}
+						}
+					}
+				}
+			}		
+		}
+	},
+	
+	buildMap: function(levelMap)
+	{
+		for(var row = 0; row < levelMap.length; row++) 
+		{	
+			for(var column = 0; column < levelMap[row].length; column++) 
+			{ 
+			  var currentTile = levelMap[row][column];
+
+			  if(currentTile != EMPTY)
+			  {
+				//Find the tile's x and y position on the tile sheet
+				var tilesheetX = Math.floor((currentTile - 1) % tilesheetColumns) * SIZE; 
+				var tilesheetY = Math.floor((currentTile - 1) / tilesheetColumns) * SIZE;
+				
+				switch (currentTile)
+				{
+					case GRASS:
+						var grass = Object.create(spriteObject);
+						grass.sourceX = tilesheetX;
+						grass.sourceY = tilesheetY;
+						grass.x = column * SIZE;
+						grass.y = row * SIZE;
+						this.baseTiles[row][column] = grass;
+						break;
+					  
+					case TREE:
+						var tree = Object.create(spriteObject);
+						tree.sourceX = tilesheetX;
+						tree.sourceY = tilesheetY;
+						tree.sourceWidth = 128;
+						tree.sourceHeight = 128;
+						tree.x = column * SIZE;
+						tree.y = row * SIZE;
+						tree.width = 128;
+						tree.height = 128;
+						tree.name="tree";
+						this.foregroundTiles[row][column] = tree;
+						this.collidables.push(tree);
+						break;
+						
+					case WATER:
+						var water = Object.create(spriteObject);
+						water.sourceX = tilesheetX;
+						water.sourceY = tilesheetY;
+						water.x = column * SIZE;
+						water.y = row * SIZE;
+						this.baseTiles[row][column] = water;
+						water.name="water";
+						this.collidables.push(water);
+						break;
+						
+					case SKY:
+						var sky = Object.create(spriteObject);
+						sky.sourceX = tilesheetX;
+						sky.sourceY = tilesheetY;
+						sky.x = column * SIZE;
+						sky.y = row * SIZE;
+						this.baseTiles[row][column] = sky;
+						sky.name="sky";
+						this.collidables.push(sky);
+						break;
+						
+					case ROCK:
+						var rock = Object.create(spriteObject);
+						rock.sourceX = tilesheetX;
+						rock.sourceY = tilesheetY;
+						rock.x = column * SIZE;
+						rock.y = row * SIZE;
+						this.baseTiles[row][column] = rock;
+						this.collidables.push(rock);
+						break;
+				}
+			  }
+			}
+		}
 	}
+	
+	
 }
-
-function buildMap(levelMap)
-{
-  for(var row = 0; row < levelMap.length; row++) 
-  {	
-    for(var column = 0; column < levelMap[row].length; column++) 
-    { 
-      var currentTile = levelMap[row][column];
-    
-      if(currentTile != EMPTY)
-      {
-        //Find the tile's x and y position on the tile sheet
-        var tilesheetX = Math.floor((currentTile - 1) % tilesheetColumns) * SIZE; 
-        var tilesheetY = Math.floor((currentTile - 1) / tilesheetColumns) * SIZE;
-        
-        switch (currentTile)
-        {
-			case GRASS:
-				var grass = Object.create(spriteObject);
-				grass.sourceX = tilesheetX;
-				grass.sourceY = tilesheetY;
-				grass.x = column * SIZE;
-				grass.y = row * SIZE;
-				baseTiles[row][column] = grass;
-				break;
-			  
-			case TREE:
-				var tree = Object.create(spriteObject);
-				tree.sourceX = tilesheetX;
-				tree.sourceY = tilesheetY;
-				tree.sourceWidth = 128;
-				tree.sourceHeight = 128;
-				tree.x = column * SIZE;
-				tree.y = row * SIZE;
-				tree.width = 128;
-				tree.height = 128;
-				tree.name="tree";
-				foregroundTiles[row][column] = tree;
-				collidables.push(tree);
-				break;
-				
-			case WATER:
-				var water = Object.create(spriteObject);
-				water.sourceX = tilesheetX;
-				water.sourceY = tilesheetY;
-				water.x = column * SIZE;
-				water.y = row * SIZE;
-				baseTiles[row][column] = water;
-				water.name="water";
-				collidables.push(water);
-				break;
-				
-			case SKY:
-				var sky = Object.create(spriteObject);
-				sky.sourceX = tilesheetX;
-				sky.sourceY = tilesheetY;
-				sky.x = column * SIZE;
-				sky.y = row * SIZE;
-				baseTiles[row][column] = sky;
-				sky.name="sky";
-				collidables.push(sky);
-				break;
-				
-			case ROCK:
-				var rock = Object.create(spriteObject);
-				rock.sourceX = tilesheetX;
-				rock.sourceY = tilesheetY;
-				rock.x = column * SIZE;
-				rock.y = row * SIZE;
-				baseTiles[row][column] = rock;
-				collidables.push(rock);
-				break;
-        }
-      }
-    }
-  }
-}
-
-placeObservationEvent();
-placeBlue();
-placeGray();
-
-listOfGameObjectMaps = levelGameObjects;
-currentLocation = levelCounter;
-
-cameraLoaded = true;

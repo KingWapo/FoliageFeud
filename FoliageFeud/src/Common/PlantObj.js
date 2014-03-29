@@ -34,6 +34,16 @@ plantList.push(new Plant("Liverwort", ["No leaves or stem", "Flattened, branchin
 plantList.push(new Plant("Hair-Cap Moss", ["Pointed leaves", "Found in dense colonies in moist, acidic soils", "Specialized internal vascular tissues"], 6));
 plantList.push(new Plant("Peat Moss", ["Forms large, deep colonies or floating mats", "Upright stems", "Spherical brown-to-black sporophyte capsules"], 8));
 
+function startInstance(curPlants)
+{
+	var numImgs = 3;
+	
+	if (curPlants.length >= numImgs)
+		growPlants(curPlants, numImgs);
+	else
+		growPlants(curPlants, curPlants.length % numImgs);
+}
+
 // Draws plants to screen and adds them as clickable objects
 function growPlants(curPlants, i)
 {

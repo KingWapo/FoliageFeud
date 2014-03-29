@@ -42,7 +42,6 @@ var title = {
 		this.playAsGirl.x = (menuCanvas.width - this.playAsGirl.width) / 2;
 		this.playAsGirl.y = (menuCanvas.height - this.playAsGirl.height) / 2 - 96;
 		utility.addClickItem(this.playAsGirl.x, this.playAsGirl.y, this.playAsGirl.width, this.playAsGirl.height, this.playAsGirlClicked);
-		//addItem(this.playAsGirl.x, this.playAsGirl.y, this.playAsGirl.width, this.playAsGirl.height, this.playAsGirlClicked);
 		
 		this.playAsBoy.sourceWidth = 256;
 		this.playAsBoy.sourceHeight = 128;
@@ -51,21 +50,18 @@ var title = {
 		this.playAsBoy.x = (menuCanvas.width - this.playAsBoy.width) / 2;
 		this.playAsBoy.y = ((menuCanvas.height - this.playAsBoy.height) / 2)+96;
 		utility.addClickItem(this.playAsBoy.x, this.playAsBoy.y, this.playAsBoy.width, this.playAsBoy.height, this.playAsBoyClicked);
-		//addItem(this.playAsBoy.x, this.playAsBoy.y, this.playAsBoy.width, this.playAsBoy.height, this.playAsBoyClicked);
 	},
 	
 	playAsBoyClicked: function()
 	{
-		//currentScreen = ScreenState.Gameplay;
-		//currentSprite = SpriteState.Boy;
-		console.debug("Boy Clicked");
+		currentSprite = SpriteState.Boy;
+		exiting[currentScreen] = true;
 	},
 	
 	playAsGirlClicked: function()
 	{
-		//currentScreen = ScreenState.Gameplay;
-		//currentSprite = SpriteState.Girl;
-		console.debug("Girl Clicked");
+		currentSprite = SpriteState.Girl;
+		exiting[currentScreen] = true;
 	},
 	
 	render: function()

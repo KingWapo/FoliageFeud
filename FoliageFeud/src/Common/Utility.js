@@ -88,6 +88,24 @@ var utility = {
 			
 			y += lineHeight * 2;
 		}
+	},
+	
+	clamp: function(val, minVal, maxVal)
+	{
+		return Math.max(minVal, Math.min(val, maxVal));
+	},
+	
+	collisionDetection: function(chaseTheCollider, brandonTheCollidee)
+	{
+		if ( chaseTheCollider.x > brandonTheCollidee.x + brandonTheCollidee.width ||
+			 chaseTheCollider.x + chaseTheCollider.width < brandonTheCollidee.x ||
+			 chaseTheCollider.y > brandonTheCollidee.y + brandonTheCollidee.height ||
+			 chaseTheCollider.y + chaseTheCollider.height < brandonTheCollidee.y) {
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 };
 
