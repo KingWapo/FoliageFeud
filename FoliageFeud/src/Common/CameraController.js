@@ -272,7 +272,7 @@ var cameraController = {
 					
 					
 					var gameObjectMap = this.levelGameObjects[this.levelCounter];
-					if (!screensLoaded[ScreenState.WorldEvent])
+					if (currentScreen != ScreenState.WorldEvent)
 					{
 						if (gameObjectMap[row][column] != EMPTY)
 						{

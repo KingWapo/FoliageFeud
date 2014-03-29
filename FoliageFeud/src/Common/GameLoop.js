@@ -111,6 +111,7 @@ function mainUpdate()
 				currentScreen = ScreenState.Gameplay;
 				screensLoaded[currentScreen] = true;
 				exiting[currentScreen] = false;
+				utility.clearClickHandler();
 			}
 			break;
 			
@@ -144,19 +145,20 @@ function mainUpdate()
 		case ScreenState.TrainingMode:
 			break;
 		case ScreenState.WorldEvent:
-			if (!entered)
+			if (entering[currentScreen])
 			{
-				entered = true;
-				onEnterWorldEvent();
+				screensLoaded[currentScreen] = true;
+				worldEvent.init();
+				entering[currentScreen] = false;
 			}
-			buildWorldEventsMap();
-			screensLoaded[currentScreen] = true;
-			if (exited)
+			worldEvent.update();
+			worldEvent.render();
+			if (exiting[currentScreen])
 			{
-				screensLoaded[ScreenState.WorldEvent] = false;
-				screensLoaded[ScreenState.Gameplay] = true;
-				entered = false;
-				exited = false;
+				screensLoaded[currentScreen] = false;
+				worldEvent.onExit();
+				entering[currentScreen] = true;
+				exiting[currentScreen] = false;
 			}
 			break;
 		case ScreenState.End:

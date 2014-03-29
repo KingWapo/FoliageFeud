@@ -295,7 +295,7 @@ var gameplay = {
 				this.player.animation = Animation.Left;
 			}
 		}
-		if (!screensLoaded[ScreenState.WorldEvent])
+		if (currentScreen != ScreenState.WorldEvent)
 		{
 			if (moveUp && !moveDown)
 			{
@@ -360,11 +360,11 @@ var gameplay = {
 				this.mapBuilt = true;
 			}
 		}
-		else if (screensLoaded[ScreenState.WorldEvent])
+		else if (currentScreen == ScreenState.WorldEvent)
 		{
-			worldEventUpdate();
+			worldEvent.update();
 		}
-		else if (screensLoaded[ScreenState.Gameplay])
+		else if (currentScreen == ScreenState.Gameplay)
 		{
 			this.checkMovement();
 		
@@ -423,12 +423,11 @@ var gameplay = {
 		{
 			pause.render();
 		}
-		else if (screensLoaded[ScreenState.WorldEvent])
+		else if (currentScreen == ScreenState.WorldEvent)
 		{
 			backgroundSurface.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
 			gameplaySurface.clearRect(0, 0, gameplayCanvas.width, gameplayCanvas.height);
 			menuSurface.clearRect(0, 0, menuCanvas.width, menuCanvas.height);
-			worldEventRender();
 			gameplaySurface.drawImage
 			  (
 				this.player.sprite, 
