@@ -93,7 +93,7 @@ mainUpdate();
 function mainUpdate()
 {
 	backgroundSurface.save();
-	drawingSurface.save();
+	gameplaySurface.save();
 	
 	// Find the screen currently being used and update it.
 	switch(currentScreen)
@@ -165,9 +165,9 @@ function mainUpdate()
 	//The animation loop
   	setTimeout( function()
 		{
-			requestAnimFrame(mainUpdate, canvas);
+			requestAnimFrame(mainUpdate, gameplayCanvas);
 		}, 1000/30);
 	
 	backgroundSurface.restore();
-	drawingSurface.restore();
+	gameplaySurface.restore();
 }

@@ -5,10 +5,10 @@
 var ispy = {
 	init: function()
 	{
-		clearClickHandler();
+		utility.clearClickHandler();
 		
 		backgroundSurface.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
-		drawingSurface.clearRect(0, 0, canvas.width, canvas.height);
+		gameplaySurface.clearRect(0, 0, gameplayCanvas.width, gameplayCanvas.height);
 		menuSurface.clearRect(0, 0, menuCanvas.width, menuCanvas.height);
 		
 		// Green gradient bg
@@ -20,12 +20,12 @@ var ispy = {
 		backgroundSurface.fillRect(0, 0, 1152, 512);
 		
 		// Grey side panel
-		var grd2 = drawingSurface.createLinearGradient(0, 0, 0, 512);
+		var grd2 = gameplaySurface.createLinearGradient(0, 0, 0, 512);
 		grd2.addColorStop(0, "darkgrey");
 		grd2.addColorStop(1, "grey");
 		
-		drawingSurface.fillStyle = grd2;
-		drawingSurface.fillRect(0, 0, 64 * 4, 512);
+		gameplaySurface.fillStyle = grd2;
+		gameplaySurface.fillRect(0, 0, 64 * 4, 512);
 
 		// Write requested plant info and display plant
 		/*var requestedPlant = Math.floor(Math.random() * plantList.length);

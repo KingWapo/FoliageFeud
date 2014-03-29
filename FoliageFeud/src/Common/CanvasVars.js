@@ -5,8 +5,8 @@
 var backgroundCanvas = document.getElementById("backgroundCanvas");
 var backgroundSurface = backgroundCanvas.getContext("2d");
 
-var canvas = document.getElementById("gameplayCanvas");
-var drawingSurface = canvas.getContext("2d");
+var gameplayCanvas = document.getElementById("gameplayCanvas");
+var gameplaySurface = gameplayCanvas.getContext("2d");
 
 var menuCanvas = document.getElementById("menuCanvas");
 var menuSurface = menuCanvas.getContext("2d");

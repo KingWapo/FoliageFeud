@@ -38,7 +38,7 @@ var utility = {
 	handleClick: function(event)
 	{
 		// Gets position of click
-		var rect = canvas.getBoundingClientRect();
+		var rect = gameplayCanvas.getBoundingClientRect();
 		var posx = event.clientX - rect.left;
 		var posy = event.clientY - rect.top;
 		

@@ -67,7 +67,7 @@ var title = {
 	render: function()
 	{
 		backgroundSurface.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
-		drawingSurface.clearRect(0, 0, canvas.width, canvas.height);
+		gameplaySurface.clearRect(0, 0, gameplayCanvas.width, gameplayCanvas.height);
 		menuSurface.clearRect(0, 0, menuCanvas.width, menuCanvas.height);
 		
 		menuSurface.drawImage(

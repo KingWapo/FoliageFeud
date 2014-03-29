@@ -426,10 +426,10 @@ var gameplay = {
 		else if (screensLoaded[ScreenState.WorldEvent])
 		{
 			backgroundSurface.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
-			drawingSurface.clearRect(0, 0, canvas.width, canvas.height);
+			gameplaySurface.clearRect(0, 0, gameplayCanvas.width, gameplayCanvas.height);
 			menuSurface.clearRect(0, 0, menuCanvas.width, menuCanvas.height);
 			worldEventRender();
-			drawingSurface.drawImage
+			gameplaySurface.drawImage
 			  (
 				this.player.sprite, 
 				this.player.sourceX, this.player.sourceY + this.player.animation * this.player.sourceHeight, 
@@ -441,14 +441,14 @@ var gameplay = {
 		else
 		{
 			backgroundSurface.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
-			drawingSurface.clearRect(0, 0, canvas.width, canvas.height);
-			menuSurface.clearRect(0, 0, canvas.width, canvas.height);
+			gameplaySurface.clearRect(0, 0, gameplayCanvas.width, gameplayCanvas.height);
+			menuSurface.clearRect(0, 0, menuCanvas.width, menuCanvas.height);
 			
 			cameraController.render();
 			
 			if(this.blueCoin.visible==true)
 			{
-				drawingSurface.drawImage
+				gameplaySurface.drawImage
 				(
 				
 					this.blueCoin.sprite, 
@@ -461,7 +461,7 @@ var gameplay = {
 			
 			if(this.grayCoin.visible==true)
 			{
-				drawingSurface.drawImage
+				gameplaySurface.drawImage
 				(
 				
 					this.grayCoin.sprite, 
@@ -472,7 +472,7 @@ var gameplay = {
 				 );
 			}
 			
-			drawingSurface.drawImage
+			gameplaySurface.drawImage
 			(
 			  
 				this.observationInstance.sprite, 
@@ -481,7 +481,7 @@ var gameplay = {
 				Math.floor(this.observationInstance.x), Math.floor(this.observationInstance.y), 
 				this.observationInstance.width, this.observationInstance.height
 			);
-			drawingSurface.drawImage
+			gameplaySurface.drawImage
 			(
 				this.player.sprite, 
 				this.player.sourceX, this.player.sourceY + this.player.animation * this.player.sourceHeight, 

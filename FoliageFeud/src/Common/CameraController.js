@@ -50,8 +50,8 @@ var cameraController = {
 	camera: {
 		x: 0,
 		y: 0,
-		width: canvas.width,
-		height: canvas.height,
+		width: gameplayCanvas.width,
+		height: gameplayCanvas.height,
 		vx: 0,
 		previousX: 0,
 
@@ -229,7 +229,7 @@ var cameraController = {
 	{
 		//Move the drawing surface so that it's positioned relative to the camera
 		backgroundSurface.translate(-this.camera.x, -this.camera.y);
-		drawingSurface.translate(-this.camera.x, -this.camera.y);
+		gameplaySurface.translate(-this.camera.x, -this.camera.y);
 		for (var row = Math.floor(this.camera.y / 64) - 2; row < Math.floor((this.camera.y + this.camera.height)/64) + 2; row++)
 		{
 			for (var column = Math.floor(this.camera.x / 64) - 2; column < Math.floor((this.camera.x + this.camera.width)/64) + 2; column++)
@@ -278,7 +278,7 @@ var cameraController = {
 						{
 							var foregroundSprite = this.foregroundTiles[row][column];
 							try {
-							drawingSurface.drawImage
+							gameplaySurface.drawImage
 							 (
 							   this.tilesheet, 
 							   foregroundSprite.sourceX, foregroundSprite.sourceY, 

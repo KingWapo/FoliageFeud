@@ -20,12 +20,12 @@ function infoOnEnter()
 	backgroundSurface.fillRect(0, 0, 1152, 512);
 	
 	// Grey side panel
-	var grd2 = drawingSurface.createLinearGradient(0, 0, 0, 512);
+	var grd2 = gameplaySurface.createLinearGradient(0, 0, 0, 512);
 	grd2.addColorStop(0, "darkgrey");
 	grd2.addColorStop(1, "black");
 	
-	drawingSurface.fillStyle = grd2;
-	drawingSurface.fillRect(0, 0, 64 * 4, 512);
+	gameplaySurface.fillStyle = grd2;
+	gameplaySurface.fillRect(0, 0, 64 * 4, 512);
 	
 	// Display appropriate sprite for each plant
 	for (var i = 0; i < plantList.length; i++)
@@ -47,7 +47,7 @@ function infoOnEnter()
 			addItem(x, y, tileSize, tileSize, displayPlantNotFound);
 		}
 		
-		drawingSurface.drawImage
+		gameplaySurface.drawImage
 		(
 			sprite,
 			0, 0, sprite.width, sprite.height, x, y,
@@ -94,7 +94,7 @@ function informationRender()
 	{
 		clearClickHandler();
 		
-		drawingSurface.clearRect(0, 0, canvas.width, canvas.height);
+		gameplaySurface.clearRect(0, 0, gameplayCanvas.width, gameplayCanvas.height);
 		init();
 		initialized = true;
 	}
