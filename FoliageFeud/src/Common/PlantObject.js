@@ -2,13 +2,6 @@
 
 // All plant objects
 
-// Environment constants
-var MARSH   = "Marsh";
-var WATER   = "Water";
-var FOREST  = "Forest";
-var CLIFF   = "Cliff";
-var PRAIRIE = "Prairie";
-
 //var plantNames = ["brown", "orange", "red", "white", "yellow"];
 var plantList = [];
 

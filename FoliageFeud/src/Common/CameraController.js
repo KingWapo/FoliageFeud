@@ -87,7 +87,23 @@ var cameraController = {
 			var tempList = [];
 			for (var j = 0; j < 75; j++)
 			{
-				tempList.push(1);
+				if (j == 23)
+				{
+					tempList.push(2); // Push water
+					console.debug("Water pushed");
+				}
+				else if (i==10)
+				{
+					tempList.push(2); // push water
+				}
+				else if (i==5 && j==5 || i==5 && j==6||i==6&&j==5||i==6&&j==6)
+				{
+					tempList.push(2); // push water
+				}
+				else
+				{
+					tempList.push(1);
+				}
 			}
 			map0.push(tempList);
 		}
@@ -103,18 +119,6 @@ var cameraController = {
 				if ((i == 0 && j % 2 == 0) || (i == 49 && j % 2 == 0) || (j == 0 && i % 2 == 0) || (j == 74 && i % 2 == 0))
 				{
 					tempList.push(5); // Push Tree
-				}
-				else if (j == 23)
-				{
-					tempList.push(2); // Push water
-				}
-				else if (i==10)
-				{
-					tempList.push(2); // push water
-				}
-				else if (i==5 && j==5 || i==5 && j==6||i==6&&j==5||i==6&&j==6)
-				{
-					tempList.push(2); // push water
 				}
 				else {
 					tempList.push(0); // Push Empty
@@ -237,14 +241,13 @@ var cameraController = {
 				if (row >= 0 && row < this.ROWS && column >= 0 && column < this.COLUMNS)
 				{
 					var sprite = this.baseTiles[row][column];
-					//console.debug("row, column: " + row + ", " + column);
-					//console.debug("width, height: " + sprite.width + ", " + sprite.height);
 					
 					//display the scrolling sprites
 					try
 					{
 						if(sprite.visible && sprite.scrollable)
 						{
+						//console.debug("Source x, y: " + sprite.sourceX + ", " + sprite.sourceY);
 						 backgroundSurface.drawImage
 						 (
 						   this.tilesheet, 
@@ -257,20 +260,6 @@ var cameraController = {
 					}
 					catch(err){ console.debug("Error: " + err);}
 					 
-					//display the non-scrolling sprites
-					if(sprite.visible && !sprite.scrollable)
-					{
-					 backgroundSurface.drawImage
-					 (
-					   this.tilesheet, 
-					   sprite.sourceX, sprite.sourceY, 
-					   sprite.sourceWidth, sprite.sourceHeight,
-					   Math.floor(camera.x + sprite.x), Math.floor(camera.y + sprite.y), 
-					   sprite.width, sprite.height
-					 ); 
-					}
-					
-					
 					var gameObjectMap = this.levelGameObjects[this.levelCounter];
 					if (currentScreen != ScreenState.WorldEvent)
 					{
