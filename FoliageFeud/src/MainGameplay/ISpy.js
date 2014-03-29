@@ -57,7 +57,7 @@ var ispy = {
 	
 		if (curPlants.length >= numImgs)
 			this.growPlants(curPlants, numImgs);
-		else
+		else if (curPlants.length > 0)
 			this.growPlants(curPlants, curPlants.length % numImgs);
 	},
 	
@@ -73,7 +73,7 @@ var ispy = {
 			var x = ((this.imgSize  + 32)* j) + (64 * 4.5);
 			var y = 128;
 			
-			if (j === this.requestedPlant)
+			if (curPlants[j].index === this.requestedPlant)
 				utility.addClickItem(x, y, this.imgSize, this.imgSize, this.harvestPlant);
 			else
 				utility.addClickItem(x, y, this.imgSize, this.imgSize, this.ignorePlant);

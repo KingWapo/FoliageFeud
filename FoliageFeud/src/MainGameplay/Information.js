@@ -3,13 +3,11 @@
 // Information Screen
 
 var notFound = new Image();
-notFound.src = "../../img/Buttons/QuestionMark.png";
+notFound.src = "../img/Buttons/QuestionMark.png";
 
 var info = {
 	// Variables
 	tileSize: 128,
-	curPlant: '',
-	curImg: 0,
 
 	// Initialize info wall
 	init: function()
@@ -49,14 +47,12 @@ var info = {
 				sprite = notFound;
 				utility.addClickItem(x, y, this.tileSize, this.tileSize, this.displayPlantNotFound);
 			}
-				
-			
+
 			gameplaySurface.drawImage
 			(
 				sprite,
 				0, 0, sprite.width, sprite.height, x, y,
-				this.tileSize,
-				this.tileSize
+				this.tileSize, this.tileSize
 			);
 		}
 	},
@@ -64,13 +60,18 @@ var info = {
 	// Display plant info if harvested
 	displayPlantInfo: function(i)
 	{
-		this.curPlant = plantList[i];
-		
 		var strings = [];
 		
-		strings.push("Name: ".concat(curPlant.name));
+		strings.push("Name: ".concat(plantList[i].name));
 
 		utility.writeText(menuSurface, strings, 10, 50, 64 * 4, 20);
+		
+		menuSurface.drawImage
+		(
+			plantList[i].sprite[0], 0, 0,
+			plantList[i].sprite[0].width, plantList[i].sprite[0].height,
+			0, 256, 256, 256
+		); // SET TO PICK RANDOM
 	},
 
 	// Display unharvested text
@@ -82,20 +83,7 @@ var info = {
 		strings.push("To find this plant, explore more regions.");
 					 
 		utility.writeText(menuSurface, strings, 10, 50, 64 * 4, 20);
-	},
-	
-	update: function()
-	{
-		if (curPlant != '')
-		{
-			menuSurface.drawImage
-			(
-				curPlant.sprite[curImg], 0, 0,
-				curPlant.sprite[curImg].width, curPlant.sprite[curImg].height,
-				0, 256, 256, 256
-			); // SET TO PICK RANDOM
-			
-			curImg = curImg % curPlant.sprite.length;
-		}
+		
+		this.curPlant = -1;
 	}
 };
