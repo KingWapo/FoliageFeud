@@ -107,11 +107,15 @@ function mainUpdate()
 			title.render();
 			if (exiting[currentScreen])
 			{
+<<<<<<< HEAD
+				switchGamemode(ScreenState.Gameplay);
+=======
 				screensLoaded[currentScreen] = false;
 				currentScreen = ScreenState.Gameplay;
 				screensLoaded[currentScreen] = true;
 				exiting[currentScreen] = false;
 				utility.clearClickHandler();
+>>>>>>> b145982a4bc23e03dfdcf85304e9b39bbd2182c9
 			}
 			break;
 			
