@@ -90,7 +90,6 @@ var cameraController = {
 				if (j == 23)
 				{
 					tempList.push(2); // Push water
-					console.debug("Water pushed");
 				}
 				else if (i==10)
 				{

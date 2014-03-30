@@ -41,6 +41,8 @@ var worldEvent = {
 		gameplay.player.animation = Animation.WorldEventRight;
 		
 		this.wall.sprite.src = "../img/WorldEvent/WALL.png";
+		
+		createScenery.init();
 	},
 	
 	onExit: function()
@@ -60,6 +62,7 @@ var worldEvent = {
 	update: function()
 	{
 		gameplay.player.updateAnimation();
+		createScenery.update();
 	},
 	
 	render: function()
@@ -67,10 +70,13 @@ var worldEvent = {
 		gameplay.render();
 		cameraController.render();
 		
+		createScenery.render();
+		
 		gameplaySurface.drawImage(
 			this.wall.sprite,
 			this.wall.x, 0
 		);
+		
 	}
 
 }
