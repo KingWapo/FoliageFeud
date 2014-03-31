@@ -4,7 +4,7 @@
 
 var plantList = [];
 
-function Plant(name, traits, numImages)
+function PlantObject(name, traits, numImages)
 {
 	this.name = name;
 	this.sprite = [];
@@ -19,7 +19,21 @@ function Plant(name, traits, numImages)
 	this.harvested = false;
 }
 
+var plant = {
+	getRandTrait: function(index)
+	{
+		var i = Math.floor(Math.random() * plantList[index].traits.length);
+		
+		return plantList[index].traits[i];
+	},
+
+	getName: function(index)
+	{
+		return plantList[index].name;
+	}
+}
+
 // Creates a list of all possible plants
-plantList.push(new Plant("Liverwort", ["No leaves or stem", "Flattened, branching thallus", "Found near moist, shady stream banks"], 6));
-plantList.push(new Plant("Hair-Cap Moss", ["Pointed leaves", "Found in dense colonies in moist, acidic soils", "Specialized internal vascular tissues"], 6));
-plantList.push(new Plant("Peat Moss", ["Forms large, deep colonies or floating mats", "Upright stems", "Spherical brown-to-black sporophyte capsules"], 8));
+plantList.push(new PlantObject("Liverwort", ["No leaves or stem", "Flattened, branching thallus", "Found near moist, shady stream banks"], 6));
+plantList.push(new PlantObject("Hair-Cap Moss", ["Pointed leaves", "Found in dense colonies in moist, acidic soils", "Specialized internal vascular tissues"], 6));
+plantList.push(new PlantObject("Peat Moss", ["Forms large, deep colonies or floating mats", "Upright stems", "Spherical brown-to-black sporophyte capsules"], 8));
