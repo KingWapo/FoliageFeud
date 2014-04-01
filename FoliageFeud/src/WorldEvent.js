@@ -17,6 +17,8 @@ var worldEventMap = [
 var xMovement = 0;
 var playerPosition;
 var cameraPosition;
+var entered = false;
+var exited = false;
 
 function onEnterWorldEvent()
 {
