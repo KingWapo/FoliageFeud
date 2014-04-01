@@ -18,6 +18,22 @@ var worldEvent = {
 	playerVars: [],
 	cameraPosition: [],
 	offset: 10,
+	questionBeingAsked: false,
+	questionImageIndex: -1,
+	correctImage: new Image(),
+	questions: [
+		{
+			name: "",
+			correct: false
+		},
+		{
+			name: "",
+			correct: false
+		},
+		{
+			name: "",
+			correct: false
+		}],
 	
 	wall: {
 		x: 0,
@@ -61,8 +77,15 @@ var worldEvent = {
 	
 	update: function()
 	{
-		gameplay.player.updateAnimation();
-		createScenery.update();
+		if (!this.questionBeingAsked)
+		{
+			gameplay.player.updateAnimation();
+			createScenery.update();
+			if (Math.random() * 1000 < 10)
+			{
+				this.askQuestion();
+			}
+		}
 	},
 	
 	render: function()
@@ -77,6 +100,76 @@ var worldEvent = {
 			this.wall.x, 0
 		);
 		
+		if (this.questionBeingAsked)
+		{
+			this.renderQuestion();
+		}
+		
+	},
+	
+	askQuestion: function()
+	{
+		this.questionBeingAsked = true;
+		
+		numsChosen = [-1, -1, -1];
+		
+		var curQuestion = 0;
+		this.questionImageIndex = Math.floor(Math.random() * this.questions.length);
+		this.questions[this.questionImageIndex].correct = true;
+		while (curQuestion < 3)
+		{
+			var index = Math.floor(Math.random() * plantList.length);
+			if (index == numsChosen[0] ||
+				index == numsChosen[1] ||
+				index == numsChosen[2]){ }
+			else
+			{
+				this.questions[curQuestion].name = plantList[index].name;
+				if (this.questions[curQuestion].correct)
+				{
+					this.correctImage = plantList[index].sprite[0];
+				}
+				curQuestion++;
+			}
+		}
+		
+	},
+	
+	answerQuestion: function(index)
+	{
+		if (this.questions[index].correct)
+		{
+			console.debug("Congrats!!");
+		}
+		else
+		{
+			console.debug("Awww darn");
+		}
+		this.questionBeingAsked = false;
+		utility.clearClickHandler();
+		this.resetQuestions();
+	},
+	
+	resetQuestions: function()
+	{
+		for (var i = 0; i < 3; i++)
+		{
+			this.questions[i].name = "";
+			this.questions[i].correct = false;
+		}
+	},
+	
+	renderQuestion: function()
+	{
+		utility.writeText(menuSurface, [this.questions[0].name, this.questions[1].name, this.questions[2].name], gameplayCanvas.width - 480, gameplayCanvas.height / 4 + 32, 256, 16);
+		utility.addClickItem(gameplayCanvas.width - 480, gameplayCanvas.height / 4 + 16, 256, 16, this.answerQuestion(0))
+		utility.addClickItem(gameplayCanvas.width - 480, gameplayCanvas.height / 4 + 48, 256, 16, this.answerQuestion(1))
+		utility.addClickItem(gameplayCanvas.width - 480, gameplayCanvas.height / 4 + 80, 256, 16, this.answerQuestion(2))
+		menuSurface.drawImage(
+			this.correctImage,
+			gameplayCanvas.width / 2 - 64, gameplayCanvas.height / 4,
+			128, 128
+			);
 	}
 
 }

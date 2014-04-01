@@ -85,12 +85,12 @@ var utility = {
 	},
 	
 	// Write text to screen, wrapping if hits max width
-	writeText: function(context, text, x, y, maxWidth, lineHeight)
+	writeText: function(context, text, x, y, maxWidth, fontSize)
 	{
 		context.clearRect(0, 0, 1152, 512);
 		
 		context.fillStyle = "#000";
-		context.font = "20px Arial";
+		context.font = fontSize + "px Arial";
 		
 		for (var j = 0; j < text.length; j++)
 		{
@@ -107,7 +107,7 @@ var utility = {
 				{
 					context.fillText(line, x, y);
 					line = words[i] + ' ';
-					y += lineHeight;
+					y += fontSize;
 				}
 				else
 				{
@@ -117,7 +117,7 @@ var utility = {
 			
 			context.fillText(line, x, y);
 			
-			y += lineHeight * 2;
+			y += fontSize * 2;
 		}
 	},
 	
