@@ -94,8 +94,6 @@ var ispy = {
 
 			var imgNum = Math.floor(Math.random() * curPlants[j].plant.sprite.length);
 			
-			console.debug("image: ", imgNum, ", ", plantList[curPlants[j].index].name, ", ", curPlants[j].plant.sprite.length);
-			
 			gameplaySurface.drawImage(curPlants[j].plant.sprite[imgNum], x, y, this.imgSize, this.imgSize);
 		}
 	},

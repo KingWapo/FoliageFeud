@@ -11,7 +11,10 @@ window.addEventListener("keydown", function(event)
 	if (event.keyCode === 190)
 	{
 		info.debugInfo = !info.debugInfo;
-		console.debug("debugging info");
+		if (info.debugInfo)
+			console.debug("debugging info");
+		else
+			console.debug("not debugging info");
 	}
 }, false);
 
