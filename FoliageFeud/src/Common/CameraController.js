@@ -99,6 +99,10 @@ var cameraController = {
 				{
 					tempList.push(2); // push water
 				}
+				else if(i==20)
+				{
+					tempList.push(3); // push rocksss
+				}
 				else
 				{
 					tempList.push(1);
@@ -351,6 +355,7 @@ var cameraController = {
 						rock.sourceY = tilesheetY;
 						rock.x = column * SIZE;
 						rock.y = row * SIZE;
+						rock.name="rock";
 						this.baseTiles[row][column] = rock;
 						this.collidables.push(rock);
 						break;

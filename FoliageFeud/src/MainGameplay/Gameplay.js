@@ -156,8 +156,73 @@ var gameplay = {
 		sprite: new Image()
 		
 	},
-	
-	grayCoin: {
+		grayCoin: {
+		sourceX: 0,
+		sourceY: 0,
+		sourceWidth: 64,
+		sourceHeight: 64,
+		numOfFrames: 10,
+		currentFrame: 0,
+		visible: true,
+		update:0,
+		updateAnimation: function()
+		{
+				if(this.update===0)
+				{
+						this.sourceX = this.currentFrame * this.sourceWidth;
+				
+						this.currentFrame += 1;
+						
+					if ( this.currentFrame === this.numOfFrames )
+					 {
+						this.currentFrame = 0;	
+					 }
+						
+				}
+		this.update = (this.update+1)%2;
+		},
+		x: 20,
+		y: 20,
+		width: 64,
+		height: 64,
+		
+		sprite: new Image()
+		
+	},
+	speedCoin: {
+		sourceX: 0,
+		sourceY: 0,
+		sourceWidth: 64,
+		sourceHeight: 64,
+		numOfFrames: 10,
+		currentFrame: 0,
+		visible: true,
+		update:0,
+		updateAnimation: function()
+		{
+				if(this.update===0)
+				{
+						this.sourceX = this.currentFrame * this.sourceWidth;
+				
+						this.currentFrame += 1;
+						
+					if ( this.currentFrame === this.numOfFrames )
+					 {
+						this.currentFrame = 0;	
+					 }
+						
+				}
+		this.update = (this.update+1)%2;
+		},
+		x: 20,
+		y: 20,
+		width: 64,
+		height: 64,
+		
+		sprite: new Image()
+		
+	},
+	telePorter: {
 		sourceX: 0,
 		sourceY: 0,
 		sourceWidth: 64,
@@ -169,7 +234,10 @@ var gameplay = {
 		height: 64,
 		
 		sprite: new Image()
+		
 	},
+	
+	
 	
 	init: function()
 	{
@@ -182,11 +250,17 @@ var gameplay = {
 		this.player.sprite.src = "../img/Player/characterMale.png";
 		this.updateSprite();
 		this.observationInstance.sprite.src = "../img/Tokens/exclamationPoint.png";
+		//load the coin files
 		this.blueCoin.sprite.src=  "../img/Tokens/waterToken.png";
-		this.grayCoin.sprite.src=  "../img/Tokens/cat.png";
+		this.grayCoin.sprite.src=  "../img/Tokens/rockToken.png";
+		this.speedCoin.sprite.src="../img/Tokens/speedToken.png";
+		//place the coins and objects 
+		
 		this.placeObservationEvent();
 		this.placeBlue();
 		this.placeGray();
+		this.placeSpeed();
+		
 	},
 	
 	updateSprite: function()
@@ -255,11 +329,24 @@ var gameplay = {
 		 else if(name === "swim" )
 		{	
 			if( cameraController.levelCounter ===0)
-				window.alert(" You have gained the ability to swim! The swim ability is now unlocked in your skill book. GO GET EM TIGER!");	
+				window.alert(" You have gained the ability to swim! The swim ability is now unlocked in your skill book. Now you must find the gray coin");	
+				window.alert(" The gray coin is to the south east and will allow you to pass through the mountains");	
 		}
 		else if(name ==="climb")
 		{
-			window.alert(" man...you can climb now thanks to this cat you collected....hopefully the artists will make it..idk..not a cat");	
+			window.alert("You can now climb! Now you must find the final coin the speed coin to the south west");	
+		}
+			else if(name ==="rock")
+		{
+			window.alert("you must learn to climb to pass through that");	
+		}
+			else if(name ==="speed")
+		{
+			window.alert("hold the shift key to run at high speeds in order to hunt down the ! hidden on this map.");	
+		}
+		else if(name ==="!")
+		{
+			window.alert("you must collect all three coins to progress");	
 		}
 		else
 		{
@@ -276,6 +363,8 @@ var gameplay = {
 		this.player.updateAnimation();
 		this.observationInstance.updateAnimation();
 		this.blueCoin.updateAnimation();
+		this.grayCoin.updateAnimation();
+		this.speedCoin.updateAnimation();
 	},
 	
 	checkMovement: function()
@@ -369,9 +458,18 @@ var gameplay = {
 			this.checkMovement();
 		
 			if (utility.collisionDetection(gameplay.player, gameplay.observationInstance))
-			{
-				currentScreen = ScreenState.Observation;
-			}	
+			{	
+				if(skillBook.swim==true && skillBook.climb ==true && skillBook.sprint==true)
+					{
+						currentScreen = ScreenState.Observation;
+					}
+					else
+					{
+						this.collide();
+						this.message("!")
+					}
+			}
+				
 			//check for collisions with collidables.
 			if (!screensLoaded[ScreenState.WorldEvent])
 			{
@@ -397,11 +495,16 @@ var gameplay = {
 					{
 						this.collide();
 					}	
+					if ( utility.collisionDetection(gameplay.player, cameraController.collidables[i]) && cameraController.collidables[i].name=="rock" && skillBook.climb===false)
+					{
+						this.collide();
+						this.message("rock");
+					}
 					if ( utility.collisionDetection(gameplay.player, gameplay.blueCoin) && gameplay.blueCoin.visible==true)
 					{
 						skillBook.swim=true;
 						this.blueCoin.visible=false;
-						this.message("swim")
+						this.message("swim");
 					
 					}
 					if ( utility.collisionDetection(gameplay.player, gameplay.grayCoin) && gameplay.grayCoin.visible==true)
@@ -410,7 +513,15 @@ var gameplay = {
 						this.grayCoin.visible=false;
 						this.message("climb");
 					
-					}				
+					}
+					if ( utility.collisionDetection(gameplay.player, gameplay.speedCoin) && gameplay.speedCoin.visible==true)
+					{
+						
+						this.speedCoin.visible=false;
+						this.message("speed");
+						skillBook.sprint = true;
+					
+					}							
 				}
 			}
 			this.updateAnimation();
@@ -470,6 +581,18 @@ var gameplay = {
 					this.grayCoin.width, this.grayCoin.height
 				 );
 			}
+			if(this.speedCoin.visible==true)
+			{
+				gameplaySurface.drawImage
+				(
+				
+					this.speedCoin.sprite, 
+					this.speedCoin.sourceX, this.speedCoin.sourceY, 
+					this.speedCoin.sourceWidth, this.speedCoin.sourceHeight,
+					Math.floor(this.speedCoin.x), Math.floor(this.speedCoin.y), 
+					this.speedCoin.width, this.speedCoin.height
+				 );
+			}
 			
 			gameplaySurface.drawImage
 			(
@@ -518,6 +641,11 @@ var gameplay = {
 	{
 		this.grayCoin.x=2000;
 		this.grayCoin.y=1000;
+	},
+	placeSpeed:function()
+	{
+		this.speedCoin.x=1000;
+		this.speedCoin.y=1500;
 	}
 	
 }
@@ -527,7 +655,7 @@ var gameplay = {
 //Add keyboard listeners
 window.addEventListener("keydown", function(event)
 {
-	if (event.keyCode == 16)
+	if (event.keyCode == 16 && skillBook.sprint== true)
 	{
 		gameplay.player.speed = gameplay.player.runSpeed;
 	}
