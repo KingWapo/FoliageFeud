@@ -13,11 +13,11 @@ document.body.appendChild(play);
 */
 
 var girlImage = new Image();
-girlImage.src = "../img/playButtonGirl.png";
+girlImage.src = "../img/Buttons/playButtonGirl.png";
 var boyImage = new Image();
-boyImage.src="../img/playButtonBoy.png";
+boyImage.src="../img/Buttons/playButtonBoy.png";
 var menuScreen = new Image();
-menuScreen.src = "../img/menuscreen.png";
+menuScreen.src = "../img/Backgrounds/menuscreen.png";
 
 var play = Object.create(spriteObject);
 play.sourceWidth = 256;

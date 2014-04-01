@@ -2,73 +2,68 @@
 
 // All plant objects
 
-/*var plant =
-{
-	name: "",
-	sprite: "",
-	harvested: false,
-	leaf: "",
-	color: ""
-};*/
+// Environment constants
+var MARSH   = "Marsh";
+var WATER   = "Water";
+var FOREST  = "Forest";
+var CLIFF   = "Cliff";
+var PRAIRIE = "Prairie";
 
 //var plantNames = ["brown", "orange", "red", "white", "yellow"];
 var plantList = [];
+var imgSize = 256;
 var requestedPlant = -1;
-var numRequested = 0;
 
-// Creates a list of all possible plants
-/*for (var i = 0; i < plantNames.length; i++)
-{
-	var newPlant = Object.create(plant);
-	newPlant.name = plantNames[i];
-	newPlant.sprite = new Image();
-	newPlant.sprite.src = "../img/Plants/".concat(plantNames[i], ".png");
-	plantList.push(newPlant);
-}*/
-
-function Plant(name, leaf, color)
+function Plant(name, traits, numImages)
 {
 	this.name = name;
-	this.sprite = new Image();
-	this.sprite.src = "../img/Plants/".concat(name, ".png");
+	this.sprite = [];
+	
+	for (var i = 0; i < numImages; i++)
+	{
+		this.sprite[i] = new Image();
+		this.sprite[i].src = "../img/Plants/".concat(name, "/", i, ".png");
+	}
+	
+	this.traits = traits;
 	this.harvested = false;
-	this.leaf = leaf;
-	this.color = color;
 }
 
-plantList.push(new Plant("brown", "round", "brownish"));
-plantList.push(new Plant("orange", "thorns", "orange and black"));
-plantList.push(new Plant("red", "pointed", "red"));
-plantList.push(new Plant("white", "bulb", "white"));
-plantList.push(new Plant("yellow", "thin", "yellow"));
+// Creates a list of all possible plants
+plantList.push(new Plant("Liverwort", ["No leaves or stem", "Flattened, branching thallus", "Found near moist, shady stream banks"], 6));
+plantList.push(new Plant("Hair-Cap Moss", ["Pointed leaves", "Found in dense colonies in moist, acidic soils", "Specialized internal vascular tissues"], 6));
+plantList.push(new Plant("Peat Moss", ["Forms large, deep colonies or floating mats", "Upright stems", "Spherical brown-to-black sporophyte capsules"], 8));
 
-function setRequestedPlant(i)
+function startInstance(curPlants)
 {
-	requestedPlant = i;
+	var numImgs = 3;
+	
+	if (curPlants.length >= numImgs)
+		growPlants(curPlants, numImgs);
+	else
+		growPlants(curPlants, curPlants.length % numImgs);
 }
 
 // Draws plants to screen and adds them as clickable objects
-function growPlant(i, requested)
+function growPlants(curPlants, i)
 {
-	var numPlants = Math.floor(Math.random() * 6) + 1;
+	var requested = Math.floor(Math.random() * i);
 	
-	for (var j = 0; j < numPlants; j++)
+	requestedPlant = curPlants[requested].index;
+	
+	for (var j = 0; j < i; j++)
 	{
-		do
-		{
-			var x = Math.floor((Math.random() * (64 * 12)) + 32 + (64 * 4));
-			var y = Math.floor((Math.random() * (64 * 6)) + 32);
-		} while(isIntersecting(x, y, 32, 32))
+		var x = ((imgSize  + 32)* j) + (64 * 4.5);
+		var y = 128;
 		
-		if (requested)
-		{
-			addItem(x, y, plantList[i].sprite.width, plantList[i].sprite.height, harvestPlant);
-			numRequested = numPlants;
-		}
+		if (requested === j)
+			addItem(x, y, imgSize, imgSize, harvestPlant);
 		else
-			addItem(x, y, plantList[i].sprite.width, plantList[i].sprite.height, ignorePlant);
-			
-		drawingSurface.drawImage(plantList[i].sprite, x, y);
+			addItem(x, y, imgSize, imgSize, ignorePlant);
+
+		var imgNum = Math.floor(Math.random() * curPlants[j].plant.sprite.length);
+		
+		drawingSurface.drawImage(curPlants[j].plant.sprite[imgNum], x, y, imgSize, imgSize);
 	}
 }
 
@@ -79,14 +74,11 @@ function harvestPlant(i)
 	console.debug("--ADD MORE FUNCTIONALITY TO HARVEST FUNCTION");
 	drawingSurface.clearRect(clickable[i].x, clickable[i].y, clickable[i].width, clickable[i].height);
 	clickable.splice(i, 1);
-	numRequested -= 1;
 	
 	plantList[requestedPlant].harvested = true;
-	
-	// FIGURE OUT HOW TO REDRAW UNCLICKED OBJECTS
-	
-	if (numRequested <= 0)
-		currentScreen = ScreenState.Gameplay;
+	requestedPlant = -1;
+
+	currentScreen = ScreenState.Gameplay;
 }
 
 // Ignore plant harvestPlant

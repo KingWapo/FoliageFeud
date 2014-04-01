@@ -101,7 +101,7 @@ var menuSurface = menuCanvas.getContext("2d");
 // Load the image files
 var image = new Image();
 image.addEventListener("load", loadHandler, false);
-image.src = "../img/cat.png";
+image.src = "../img/Tokens/cat.png";
 
 
 function loadHandler()
@@ -172,9 +172,20 @@ function mainUpdate()
 		case ScreenState.TrainingMode:
 			break;
 		case ScreenState.WorldEvent:
-			onEnterWorldEvent();
+			if (!entered)
+			{
+				entered = true;
+				onEnterWorldEvent();
+			}
 			buildWorldEventsMap();
 			screensLoaded[currentScreen] = true;
+			if (exited)
+			{
+				screensLoaded[ScreenState.WorldEvent] = false;
+				screensLoaded[ScreenState.Gameplay] = true;
+				entered = false;
+				exited = false;
+			}
 			break;
 		case ScreenState.End:
 			break;

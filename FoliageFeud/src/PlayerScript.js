@@ -149,6 +149,25 @@ var grayCoin =
 	sourceWidth: 64,
 	sourceHeight: 64,
 	visible: true,
+	numOfFrames: 10,
+	currentFrame: 0,
+	update:0,
+	updateAnimation: function()
+	{
+			if(this.update===0)
+			{
+					this.sourceX = this.currentFrame * this.sourceWidth;
+			
+					this.currentFrame += 1;
+					
+				if ( this.currentFrame === this.numOfFrames )
+				 {
+					this.currentFrame = 0;	
+				 }
+					
+			}
+	this.update = (this.update+1)%2;
+	},
 	x: 20,
 	y: 20,
 	width: 64,
@@ -170,7 +189,7 @@ cc.src = "CameraController.js";
 document.body.appendChild(cc);
 
 // Load the image files
-player.sprite.src = "../img/characterMale.png";
+player.sprite.src = "../img/Player/characterMale.png";
 updateSprite();
 setInterval(updateSprite, 100);
 
@@ -180,18 +199,24 @@ function updateSprite()
 	switch(currentSprite)
 	{
 		case SpriteState.Boy:
-			player.sprite.src = "../img/characterMale.png";
+			player.sprite.src = "../img/Player/characterMale.png";
 		break;
 		
 		case SpriteState.Girl:
-			player.sprite.src = "../img/characterFemale.png";
+			player.sprite.src = "../img/Player/characterFemale.png";
 		break;	
 	}
 }
 
+<<<<<<< HEAD
 observationInstance.sprite.src = "../img/exclamationPoint.png";
 blueCoin.sprite.src=  "../img/waterToken.png";
-grayCoin.sprite.src=  "../img/cat.png";
+grayCoin.sprite.src=  "../img/rockToken.png";
+=======
+observationInstance.sprite.src = "../img/Tokens/exclamationPoint.png";
+blueCoin.sprite.src=  "../img/Tokens/waterToken.png";
+grayCoin.sprite.src=  "../img/Tokens/cat.png";
+>>>>>>> 2c6b3fe1325f2679347de90bca2544ba943f5ea9
 
 
 //Arrow key codes
@@ -313,45 +338,61 @@ function update()
 		//check for collisions with collidables.
 		if(cameraLoaded)
 		{
-			for( i=0; i<collidables.length; i++)
+			if (!screensLoaded[ScreenState.WorldEvent])
 			{
-					var wCount=0;
-				if ( collisionDetection(player, collidables[i]) && collidables[i].name=="water" && skillBook.swim==false)
+				for( i=0; i<collidables.length; i++)
 				{
+<<<<<<< HEAD
 					
 					collide();
-			
-					if(wCount===0)
-					{
-						message("water");
-						
-					}
-					wCount++;
-					if(wCount===3000)
-					{
-						wCount=0;
-					}
+					message("water");
+					
 				}
 				if ( collisionDetection(player, collidables[i]) && collidables[i].name=="tree")
 				{
 					collide();
-				}	
-					if ( collisionDetection(player, blueCoin) && blueCoin.visible==true)
-					
-				{
-					skillBook.swim=true;
-					blueCoin.visible=false;
-					message("swim")
-				
 				}
-				if ( collisionDetection(player, grayCoin) && grayCoin.visible==true)
-					
+				if ( collisionDetection(player, collidables[i]) && collidables[i].name=="rock" && skillBook.climb==false)
 				{
-					skillBook.climb=true;
-					grayCoin.visible=false;
-					message("climb");
+					collide();
+				}		
+=======
+					var wCount=0;
+					if ( collisionDetection(player, collidables[i]) && collidables[i].name=="water" && skillBook.swim==false)
+					{
+						collide();
 				
-				}				
+						if(wCount===0)
+						{
+							message("water");
+							
+						}
+						wCount++;
+						if(wCount===3000)
+						{
+							wCount=0;
+						}
+					}
+					if ( collisionDetection(player, collidables[i]) && collidables[i].name=="tree")
+					{
+						collide();
+					}	
+>>>>>>> 2c6b3fe1325f2679347de90bca2544ba943f5ea9
+					if ( collisionDetection(player, blueCoin) && blueCoin.visible==true)
+					{
+						skillBook.swim=true;
+						blueCoin.visible=false;
+						message("swim")
+					
+					}
+					if ( collisionDetection(player, grayCoin) && grayCoin.visible==true)
+					{
+						skillBook.climb=true;
+						grayCoin.visible=false;
+						message("climb");
+					
+					}				
+				}
 			}
 		}
 		
@@ -419,9 +460,9 @@ function message(name)
 	
 	if(name === "water" )
 	{	
-		if( levelCounter ===0)
-		
-		window.alert("OH no you dont want to die! You need a magical blue spining coin to guide you across the waters...hmmmm wonder if there is one on this map.");	
+		var tempArray=[];
+		tempArray.push("you have ran into water..collect a blue coin to move on");
+	 	writeText(menuSurface, tempArray , 256 , 256, 256,20);
 	}
 	 else if(name === "swim" )
 	{	
@@ -432,6 +473,10 @@ function message(name)
 	else if(name ==="climb")
 	{
 		window.alert(" man...you can climb now thanks to this cat you collected....hopefully the artists will make it..idk..not a cat");	
+	}
+	else if (name ==="wall")
+	{
+		window.alert(" you hit your face on the near by mountain..maybe you should learn to climb I bet you can find a skill coin or something of value to make this possible")
 	}
 	else
 	{
@@ -449,6 +494,7 @@ function updateAnimation()
 	player.updateAnimation();
 	observationInstance.updateAnimation();
 	blueCoin.updateAnimation();
+	grayCoin.updateAnimation();
 }
 
 function checkMovement()
@@ -537,8 +583,16 @@ function render()
 	{
 		backgroundSurface.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
 		drawingSurface.clearRect(0, 0, canvas.width, canvas.height);
-		menuSurface.clearRect(0, 0, canvas.width, canvas.height);
+		menuSurface.clearRect(0, 0, menuCanvas.width, menuCanvas.height);
 		worldEventRender();
+		drawingSurface.drawImage
+		  (
+			player.sprite, 
+			player.sourceX, player.sourceY + player.direction * player.sourceHeight, 
+			player.sourceWidth, player.sourceHeight,
+			Math.floor(player.x), Math.floor(player.y), 
+			player.width, player.height
+		  );
 	}
 	else
 	{
