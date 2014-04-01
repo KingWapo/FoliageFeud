@@ -64,6 +64,26 @@ var utility = {
 		}
 	},
 	
+	// Shuffle array
+	shuffle: function(array)
+	{
+		var curIndex = array.length;
+		var tempVal;
+		var randIndex;
+		
+		while (0 !== curIndex)
+		{
+			randIndex = Math.floor(Math.random() * curIndex);
+			curIndex -= 1;
+			
+			tempVal = array[curIndex];
+			array[curIndex] = array[randIndex];
+			array[randIndex] = tempVal;
+		}
+		
+		return array;
+	},
+	
 	// Write text to screen, wrapping if hits max width
 	writeText: function(context, text, x, y, maxWidth, lineHeight)
 	{

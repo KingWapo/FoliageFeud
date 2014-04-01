@@ -46,17 +46,15 @@ var ispy = {
 			}
 		}
 		
-		/**
-		ADD SHUFFLE FUNCTION TO UTILITY
-		**/
+		curPlants = utility.shuffle(curPlants);
 		
 		// Set number of images on screen
 		var numImgs = 3;
 	
-		if (curPlants.length >= numImgs)
+		if (curPlants.length > numImgs)
 			this.growPlants(curPlants, numImgs);
 		else if (curPlants.length > 0)
-			this.growPlants(curPlants, curPlants.length % numImgs);
+			this.growPlants(curPlants, curPlants.length);
 	},
 	
 	// Draws objects to screen for game mode
@@ -64,6 +62,8 @@ var ispy = {
 	{
 		// Pick requested plant from first i elements in array
 		var requested = Math.floor(Math.random() * i);
+		
+		console.debug(requested, ", ", curPlants.length);
 
 		// Get index of that plant
 		this.requestedPlant = curPlants[requested].index;
@@ -83,6 +83,7 @@ var ispy = {
 		// Draw plants on screen and add them to click handler
 		for (var j = 0; j < i; j++)
 		{
+		//console.debug("loop: ", j, ", ", i);
 			var x = ((this.imgSize  + 32)* j) + (64 * 4.5);
 			var y = 128;
 			
@@ -92,6 +93,8 @@ var ispy = {
 				utility.addClickItem(x, y, this.imgSize, this.imgSize, this.ignorePlant);
 
 			var imgNum = Math.floor(Math.random() * curPlants[j].plant.sprite.length);
+			
+			console.debug("image: ", imgNum, ", ", plantList[curPlants[j].index].name, ", ", curPlants[j].plant.sprite.length);
 			
 			gameplaySurface.drawImage(curPlants[j].plant.sprite[imgNum], x, y, this.imgSize, this.imgSize);
 		}

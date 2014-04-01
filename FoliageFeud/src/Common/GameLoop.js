@@ -7,7 +7,12 @@ window.addEventListener("keydown", function(event)
 	if (event.keyCode >= 48 && event.keyCode <= 57) 
 	{ 
 		switchGamemode(event.keyCode - 48); 
-	} 
+	}
+	if (event.keyCode === 190)
+	{
+		info.debugInfo = !info.debugInfo;
+		console.debug("debugging info");
+	}
 }, false);
 
 // Edit Log:

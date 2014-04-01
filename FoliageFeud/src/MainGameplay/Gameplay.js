@@ -156,7 +156,7 @@ var gameplay = {
 		sprite: new Image()
 		
 	},
-		grayCoin: {
+	grayCoin: {
 		sourceX: 0,
 		sourceY: 0,
 		sourceWidth: 64,
@@ -167,19 +167,19 @@ var gameplay = {
 		update:0,
 		updateAnimation: function()
 		{
-				if(this.update===0)
+			if(this.update===0)
+			{
+				this.sourceX = this.currentFrame * this.sourceWidth;
+			
+				this.currentFrame += 1;
+					
+				if ( this.currentFrame === this.numOfFrames )
 				{
-						this.sourceX = this.currentFrame * this.sourceWidth;
-				
-						this.currentFrame += 1;
-						
-					if ( this.currentFrame === this.numOfFrames )
-					 {
-						this.currentFrame = 0;	
-					 }
-						
+					this.currentFrame = 0;	
 				}
-		this.update = (this.update+1)%2;
+					
+			}
+			this.update = (this.update + 1) % 2;
 		},
 		x: 20,
 		y: 20,
@@ -187,7 +187,6 @@ var gameplay = {
 		height: 64,
 		
 		sprite: new Image()
-		
 	},
 	speedCoin: {
 		sourceX: 0,
@@ -200,19 +199,19 @@ var gameplay = {
 		update:0,
 		updateAnimation: function()
 		{
-				if(this.update===0)
+			if(this.update===0)
+			{
+				this.sourceX = this.currentFrame * this.sourceWidth;
+			
+				this.currentFrame += 1;
+					
+				if ( this.currentFrame === this.numOfFrames )
 				{
-						this.sourceX = this.currentFrame * this.sourceWidth;
-				
-						this.currentFrame += 1;
-						
-					if ( this.currentFrame === this.numOfFrames )
-					 {
-						this.currentFrame = 0;	
-					 }
-						
+					this.currentFrame = 0;	
 				}
-		this.update = (this.update+1)%2;
+					
+			}
+			this.update = (this.update+1)%2;
 		},
 		x: 20,
 		y: 20,
@@ -220,7 +219,6 @@ var gameplay = {
 		height: 64,
 		
 		sprite: new Image()
-		
 	},
 	telePorter: {
 		sourceX: 0,

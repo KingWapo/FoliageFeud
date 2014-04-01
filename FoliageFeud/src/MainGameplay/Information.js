@@ -8,6 +8,7 @@ notFound.src = "../img/Buttons/QuestionMark.png";
 var info = {
 	// Variables
 	tileSize: 128,
+	debugInfo: false,
 
 	// Initialize info wall
 	init: function()
@@ -30,14 +31,17 @@ var info = {
 		gameplaySurface.fillStyle = grd2;
 		gameplaySurface.fillRect(0, 0, 64 * 4, 512);
 		
+		var imgsPerRow = 6;
+		var gapBetween = (1152 - (64 * 4) - (this.tileSize * imgsPerRow)) / (imgsPerRow + 1);
+		
 		// Display appropriate sprite for each plant
 		for (var i = 0; i < plantList.length; i++)
 		{
 			var sprite = new Image();
-			var x = (this.tileSize * (i % 5)) + (this.tileSize * 2) + (4 * i) + 4;
-			var y = ((this.tileSize + 4) * Math.floor(i / 5)) + 4;
+			var x = ((this.tileSize + gapBetween) * (i % imgsPerRow)) + (this.tileSize * 2) + gapBetween;
+			var y = ((this.tileSize + gapBetween) * Math.floor(i / imgsPerRow)) + gapBetween;
 			
-			if (plantList[i].harvested)
+			if (plantList[i].harvested || this.debugInfo)
 			{
 				sprite = plantList[i].sprite[0];
 				utility.addClickItem(x, y, this.tileSize, this.tileSize, this.displayPlantInfo);
