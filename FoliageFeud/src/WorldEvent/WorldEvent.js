@@ -162,9 +162,9 @@ var worldEvent = {
 	renderQuestion: function()
 	{
 		utility.writeText(menuSurface, [this.questions[0].name, this.questions[1].name, this.questions[2].name], gameplayCanvas.width - 480, gameplayCanvas.height / 4 + 32, 256, 16);
-		utility.addClickItem(gameplayCanvas.width - 480, gameplayCanvas.height / 4 + 16, 256, 16, this.answerQuestion(0))
-		utility.addClickItem(gameplayCanvas.width - 480, gameplayCanvas.height / 4 + 48, 256, 16, this.answerQuestion(1))
-		utility.addClickItem(gameplayCanvas.width - 480, gameplayCanvas.height / 4 + 80, 256, 16, this.answerQuestion(2))
+		utility.addClickItem(gameplayCanvas.width - 480, gameplayCanvas.height / 4 + 16, 256, 16, this.answerQuestion, [0])
+		utility.addClickItem(gameplayCanvas.width - 480, gameplayCanvas.height / 4 + 48, 256, 16, this.answerQuestion, [1])
+		utility.addClickItem(gameplayCanvas.width - 480, gameplayCanvas.height / 4 + 80, 256, 16, this.answerQuestion, [2])
 		menuSurface.drawImage(
 			this.correctImage,
 			gameplayCanvas.width / 2 - 64, gameplayCanvas.height / 4,
