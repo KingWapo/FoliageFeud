@@ -143,6 +143,7 @@ function mainUpdate()
 			{
 				switchGamemode(ScreenState.Gameplay);
 			}
+			info.update();
 			break;
 		case ScreenState.Observation: // ISpy Gameplay
 			if (entering[currentScreen])

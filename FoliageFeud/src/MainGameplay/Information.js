@@ -5,6 +5,12 @@
 var notFound = new Image();
 notFound.src = "../img/Buttons/QuestionMark.png";
 
+var curPlant = -1;
+var curImage = 0;
+var plantShown = false;
+var imagePosX = -256;
+var delay = 0;
+
 var info = {
 	// Variables
 	tileSize: 128,
@@ -70,13 +76,8 @@ var info = {
 
 		utility.writeText(menuSurface, strings, 10, 50, 64 * 4 - 10, 25, true);
 		
-		var r = Math.floor(Math.random() * plantList[i].sprite.length);
-		menuSurface.drawImage
-		(
-			plantList[i].sprite[r], 0, 0,
-			plantList[i].sprite[r].width, plantList[i].sprite[r].height,
-			0, 256, 256, 256
-		); // SET TO PICK RANDOM
+		curPlant = i;
+		plantShown = true;
 	},
 
 	// Display unharvested text
@@ -89,6 +90,33 @@ var info = {
 					 
 		utility.writeText(menuSurface, strings, 10, 50, 64 * 4, 25, true);
 		
-		this.curPlant = -1;
+		curPlant = -1;
+		curImage = 0;
+		plantShown = false;
+		imagePosX = -256;
+	},
+	
+	update: function()
+	{
+		if (curPlant >= 0)
+		{
+			if (delay % 60 === 0)
+			{
+				curImage = (curImage + 1) % plantList[curPlant].sprite.length;
+				imagePosX = -256;
+			}
+			
+			delay += 1;
+		
+			menuSurface.drawImage
+			(
+				plantList[curPlant].sprite[curImage], 0, 0,
+				plantList[curPlant].sprite[curImage].width, plantList[curPlant].sprite[curImage].height,
+				imagePosX, 256, 256, 256
+			);
+			
+			if (imagePosX < 0)
+				imagePosX += 16;
+		}
 	}
 };
