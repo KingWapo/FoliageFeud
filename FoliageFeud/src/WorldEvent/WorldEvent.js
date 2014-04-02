@@ -21,6 +21,8 @@ var worldEvent = {
 	questionBeingAsked: false,
 	questionImageIndex: -1,
 	correctImage: new Image(),
+	speedBoost: 0,
+	speedCooldown: 30,
 	questions: [
 		{
 			name: "",
@@ -37,7 +39,9 @@ var worldEvent = {
 	
 	wall: {
 		x: 0,
+		y: 0,
 		width: 128,
+		height: 512,
 		sprite: new Image()
 	},
 	
@@ -79,12 +83,27 @@ var worldEvent = {
 	{
 		if (!this.questionBeingAsked)
 		{
+			gameplay.player.x += this.speedBoost;
 			gameplay.player.updateAnimation();
 			createScenery.update();
 			if (Math.random() * 1000 < 10)
 			{
 				this.askQuestion();
 			}
+			if (this.speedBoost != 0)
+			{
+				this.speedCooldown--;
+				if (this.speedCooldown <= 0)
+				{
+					this.speedBoost = 0;
+					this.speedCooldown = 30;
+				}
+			}
+			
+		}
+		if (utility.collisionDetection(this.wall, gameplay.player))
+		{
+			console.debug("You lose");
 		}
 	},
 	
@@ -139,10 +158,12 @@ var worldEvent = {
 	{
 		if (worldEvent.questions[index].correct)
 		{
+			worldEvent.speedBoost = 5;
 			console.debug("Congrats!!");
 		}
 		else
 		{
+			worldEvent.speedBoost = -5;
 			console.debug("Awww darn");
 		}
 		worldEvent.questionBeingAsked = false;
@@ -171,5 +192,4 @@ var worldEvent = {
 			128, 128
 			);
 	}
-
 }
