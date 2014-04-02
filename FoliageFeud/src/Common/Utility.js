@@ -7,7 +7,8 @@ var clickObj = {
 	y: 0,
 	w: 0,
 	h: 0,
-	func: ""
+	func: "",
+	param: ""
 };
 
 // Click Handler
@@ -26,7 +27,7 @@ var utility = {
 	},
 	
 	// Add item to the list
-	addClickItem: function(x, y, width, height, func)
+	addClickItem: function(x, y, width, height, func, param)
 	{
 		var item = Object.create(clickObj);
 		item.x = x;
@@ -34,6 +35,7 @@ var utility = {
 		item.width = width;
 		item.height = height;
 		item.func = func;
+		item.param = param;
 		
 		this.clickable.push(item);
 	},
@@ -59,7 +61,7 @@ var utility = {
 			if (posx >= utility.clickable[i].x && posx <= utility.clickable[i].x + utility.clickable[i].width &&
 				posy >= utility.clickable[i].y && posy <= utility.clickable[i].y + utility.clickable[i].height)
 			{
-				utility.clickable[i].func(i);
+				utility.clickable[i].func(utility.clickable[i].param);
 			}
 		}
 	},

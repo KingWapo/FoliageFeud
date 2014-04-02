@@ -44,12 +44,12 @@ var info = {
 			if (plantList[i].harvested || this.debugInfo)
 			{
 				sprite = plantList[i].sprite[0];
-				utility.addClickItem(x, y, this.tileSize, this.tileSize, this.displayPlantInfo);
+				utility.addClickItem(x, y, this.tileSize, this.tileSize, this.displayPlantInfo, [i]);
 			}
 			else
 			{
 				sprite = notFound;
-				utility.addClickItem(x, y, this.tileSize, this.tileSize, this.displayPlantNotFound);
+				utility.addClickItem(x, y, this.tileSize, this.tileSize, this.displayPlantNotFound, [i]);
 			}
 
 			gameplaySurface.drawImage

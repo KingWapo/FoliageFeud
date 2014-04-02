@@ -88,13 +88,11 @@ var ispy = {
 			var y = 128;
 			
 			if (curPlants[j].index === this.requestedPlant)
-				utility.addClickItem(x, y, this.imgSize, this.imgSize, this.harvestPlant);
+				utility.addClickItem(x, y, this.imgSize, this.imgSize, this.harvestPlant, [j]);
 			else
-				utility.addClickItem(x, y, this.imgSize, this.imgSize, this.ignorePlant);
+				utility.addClickItem(x, y, this.imgSize, this.imgSize, this.ignorePlant, [j]);
 
 			var imgNum = Math.floor(Math.random() * curPlants[j].plant.sprite.length);
-			
-			console.debug("image: ", imgNum, ", ", plantList[curPlants[j].index].name, ", ", curPlants[j].plant.sprite.length);
 			
 			gameplaySurface.drawImage(curPlants[j].plant.sprite[imgNum], x, y, this.imgSize, this.imgSize);
 		}
