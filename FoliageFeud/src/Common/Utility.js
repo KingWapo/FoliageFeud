@@ -87,12 +87,15 @@ var utility = {
 	},
 	
 	// Write text to screen, wrapping if hits max width
-	writeText: function(context, text, x, y, maxWidth, fontSize)
+	writeText: function(context, text, x, y, maxWidth, fontSize, isOutlined)
 	{
 		context.clearRect(0, 0, 1152, 512);
 		
-		context.fillStyle = "#000";
-		context.font = fontSize + "px Arial";
+		context.fillStyle = "white";
+		context.font = fontSize + "px Evilgreen";
+		
+		context.lineWidth = 1;
+		context.strokeStyle = "black";
 		
 		for (var j = 0; j < text.length; j++)
 		{
@@ -108,6 +111,10 @@ var utility = {
 				if (testWidth > maxWidth && i > 0)
 				{
 					context.fillText(line, x, y);
+					
+					if (isOutlined)
+						context.strokeText(line, x, y);
+						
 					line = words[i] + ' ';
 					y += fontSize;
 				}
@@ -118,6 +125,9 @@ var utility = {
 			}
 			
 			context.fillText(line, x, y);
+			
+			if (isOutlined)
+				context.strokeText(line, x, y);
 			
 			y += fontSize * 2;
 		}

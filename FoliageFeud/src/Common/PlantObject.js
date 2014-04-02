@@ -30,6 +30,19 @@ var plant = {
 	getName: function(index)
 	{
 		return plantList[index].name;
+	},
+	
+	getHarvested: function()
+	{
+		var harvestList = [];
+		
+		for (var i = 0; i < plantList.length; i++)
+		{
+			if (!plantList[i].harvested)
+				harvestList.push(i);
+		}
+		
+		return harvestList;
 	}
 }
 

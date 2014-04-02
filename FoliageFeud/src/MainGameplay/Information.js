@@ -68,7 +68,7 @@ var info = {
 		
 		strings.push("Name: ".concat(plantList[i].name));
 
-		utility.writeText(menuSurface, strings, 10, 50, 64 * 4, 20);
+		utility.writeText(menuSurface, strings, 10, 50, 64 * 4 - 10, 25, true);
 		
 		var r = Math.floor(Math.random() * plantList[i].sprite.length);
 		menuSurface.drawImage
@@ -87,7 +87,7 @@ var info = {
 		strings.push("This plant has not been found yet.");
 		strings.push("To find this plant, explore more regions.");
 					 
-		utility.writeText(menuSurface, strings, 10, 50, 64 * 4, 20);
+		utility.writeText(menuSurface, strings, 10, 50, 64 * 4, 25, true);
 		
 		this.curPlant = -1;
 	}

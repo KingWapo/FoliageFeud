@@ -31,20 +31,7 @@ var ispy = {
 		gameplaySurface.fillRect(0, 0, 64 * 4, 512);
 		
 		// Add unharvested plants to ispy pool
-		var curPlants = [];
-		
-		for (var i = 0; i < plantList.length; i++)
-		{
-			if (!plantList[i].harvested)
-			{
-				var listObject = {
-					plant: plantList[i],
-					index: i
-				};
-				
-				curPlants.push(listObject);
-			}
-		}
+		var curPlants = plant.getHarvested();
 		
 		curPlants = utility.shuffle(curPlants);
 		
@@ -66,7 +53,7 @@ var ispy = {
 		console.debug(requested, ", ", curPlants.length);
 
 		// Get index of that plant
-		this.requestedPlant = curPlants[requested].index;
+		this.requestedPlant = curPlants[requested];
 		
 		// Write plant name and traits to screen
 		var strings = [];
@@ -78,7 +65,7 @@ var ispy = {
 			strings.push("Trait[".concat(j, "]: ", plantList[this.requestedPlant].traits[j]));
 		}
 		
-		utility.writeText(menuSurface, strings, 10, 50, 64 * 4, 20);
+		utility.writeText(menuSurface, strings, 10, 50, 64 * 4 - 10, 25, true);
 		
 		// Draw plants on screen and add them to click handler
 		for (var j = 0; j < i; j++)
@@ -87,14 +74,14 @@ var ispy = {
 			var x = ((this.imgSize  + 32)* j) + (64 * 4.5);
 			var y = 128;
 			
-			if (curPlants[j].index === this.requestedPlant)
+			if (curPlants[j] === this.requestedPlant)
 				utility.addClickItem(x, y, this.imgSize, this.imgSize, this.harvestPlant, [j]);
 			else
 				utility.addClickItem(x, y, this.imgSize, this.imgSize, this.ignorePlant, [j]);
 
-			var imgNum = Math.floor(Math.random() * curPlants[j].plant.sprite.length);
+			var imgNum = Math.floor(Math.random() * plantList[curPlants[j]].sprite.length);
 			
-			gameplaySurface.drawImage(curPlants[j].plant.sprite[imgNum], x, y, this.imgSize, this.imgSize);
+			gameplaySurface.drawImage(plantList[curPlants[j]].sprite[imgNum], x, y, this.imgSize, this.imgSize);
 		}
 	},
 
