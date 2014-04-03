@@ -221,16 +221,16 @@ var gameplay = {
 		sprite: new Image()
 	},
 	telePorter: {
+	
+		visible: true,
 		sourceX: 0,
 		sourceY: 0,
-		sourceWidth: 64,
-		sourceHeight: 64,
-		visible: true,
-		x: 20,
-		y: 20,
-		width: 64,
-		height: 64,
-		
+		sourceWidth:154,
+		sourceHeight:122,
+		x: 0,
+		y: 0,
+		width: 154,
+		height: 122,	
 		sprite: new Image()
 		
 	},
@@ -252,12 +252,16 @@ var gameplay = {
 		this.blueCoin.sprite.src=  "../img/Tokens/waterToken.png";
 		this.grayCoin.sprite.src=  "../img/Tokens/rockToken.png";
 		this.speedCoin.sprite.src="../img/Tokens/speedToken.png";
+		//load the teleporter
+		this.telePorter.sprite.src="../img/Tiles/telelporter.png";
 		//place the coins and objects 
 		
 		this.placeObservationEvent();
 		this.placeBlue();
 		this.placeGray();
 		this.placeSpeed();
+		this.placeTeleporter();
+		
 		
 	},
 	
@@ -480,6 +484,8 @@ var gameplay = {
 				
 						if(wCount===0)
 						{
+							
+							
 							this.message("water");
 							
 						}
@@ -519,7 +525,28 @@ var gameplay = {
 						this.message("speed");
 						skillBook.sprint = true;
 					
-					}							
+					}	
+					if ( utility.collisionDetection(gameplay.player, gameplay.speedCoin) && gameplay.speedCoin.visible==true)
+					{
+						
+						this.speedCoin.visible=false;
+						this.message("speed");
+						skillBook.sprint = true;
+					
+					}	
+					if ( utility.collisionDetection(gameplay.player, gameplay.telePorter))
+					{
+						if(skillBook.teleporter==true)
+						{
+							message("teleport");
+							
+						}
+						else
+						{
+							this.collide();
+						}
+					
+					}											
 				}
 			}
 			this.updateAnimation();
@@ -591,6 +618,22 @@ var gameplay = {
 					this.speedCoin.width, this.speedCoin.height
 				 );
 			}
+				if(this.telePorter.visible==true)
+					{
+						gameplaySurface.drawImage	
+						(
+							this.telePorter.sprite, 
+							this.telePorter.sourceX, this.telePorter.sourceY, 
+							this.telePorter.sourceWidth, this.telePorter.sourceHeight,
+							Math.floor(this.telePorter.x), Math.floor(this.telePorter.y), 
+							this.telePorter.width, 
+							this.telePorter.height
+							
+						
+							
+					   );
+			
+				    }
 			
 			gameplaySurface.drawImage
 			(
@@ -601,6 +644,7 @@ var gameplay = {
 				Math.floor(this.observationInstance.x), Math.floor(this.observationInstance.y), 
 				this.observationInstance.width, this.observationInstance.height
 			);
+	
 			gameplaySurface.drawImage
 			(
 				this.player.sprite, 
@@ -608,11 +652,8 @@ var gameplay = {
 				this.player.sourceWidth, this.player.sourceHeight,
 				Math.floor(this.player.x), Math.floor(this.player.y), 
 				this.player.width, this.player.height
-			);
-			 
-			 
 			
-			  
+			);		  
 		}
 	},
 	
@@ -644,6 +685,12 @@ var gameplay = {
 	{
 		this.speedCoin.x=1000;
 		this.speedCoin.y=1500;
+	},
+	placeTeleporter:function()
+	{	
+		this.telePorter.x=300;
+		this.telePorter.y=300;
+		console.debug("x: " + this.telePorter.width + " y: " + this.telePorter.height);
 	}
 	
 }
