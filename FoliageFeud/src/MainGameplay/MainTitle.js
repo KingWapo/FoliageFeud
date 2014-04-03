@@ -40,7 +40,7 @@ var title = {
 		this.playAsGirl.width = 256;
 		this.playAsGirl.height = 128;
 		this.playAsGirl.x = (menuCanvas.width - this.playAsGirl.width) / 2;
-		this.playAsGirl.y = (menuCanvas.height - this.playAsGirl.height) / 2 - 96;
+		this.playAsGirl.y = (menuCanvas.height - this.playAsGirl.height) / 2 - 32;
 		utility.addClickItem(this.playAsGirl.x, this.playAsGirl.y, this.playAsGirl.width, this.playAsGirl.height, this.playAsGirlClicked);
 		
 		this.playAsBoy.sourceWidth = 256;
