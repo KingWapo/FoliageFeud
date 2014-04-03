@@ -106,7 +106,7 @@ var info = {
 				imagePosX = -256;
 			}
 			
-			delay += 1;
+			delay = (delay + 1) % 60;
 		
 			menuSurface.drawImage
 			(
