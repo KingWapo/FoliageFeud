@@ -17,7 +17,7 @@ var worldEvent = {
 	xMovement: 0,
 	playerVars: [],
 	cameraPosition: [],
-	offset: 10,
+	offset: 32,
 	questionBeingAsked: false,
 	questionImageIndex: -1,
 	correctImage: new Image(),
@@ -74,8 +74,9 @@ var worldEvent = {
 		cameraController.camera.x = this.cameraPosition[0];
 		cameraController.camera.y = this.cameraPosition[1];
 		
-		
-		
+		cameraController.buildMap(cameraController.levelMaps[cameraController.levelCounter]);
+		cameraController.buildMap(cameraController.levelGameObjects[cameraController.levelCounter]);
+		gameplay.render();
 		currentScreen = ScreenState.Gameplay;
 	},
 	
@@ -103,7 +104,7 @@ var worldEvent = {
 		}
 		if (utility.collisionDetection(this.wall, gameplay.player))
 		{
-			console.debug("You lose");
+			exiting[currentScreen] = true;
 		}
 	},
 	
@@ -182,7 +183,7 @@ var worldEvent = {
 	
 	renderQuestion: function()
 	{
-		utility.writeText(menuSurface, [this.questions[0].name, this.questions[1].name, this.questions[2].name], gameplayCanvas.width - 480, gameplayCanvas.height / 4 + 32, 256, 16);
+		utility.writeText(menuSurface, [this.questions[0].name, this.questions[1].name, this.questions[2].name], gameplayCanvas.width - 480, gameplayCanvas.height / 4 + 32, 256, 16, false);
 		utility.addClickItem(gameplayCanvas.width - 480, gameplayCanvas.height / 4 + 16, 256, 16, this.answerQuestion, 0)
 		utility.addClickItem(gameplayCanvas.width - 480, gameplayCanvas.height / 4 + 48, 256, 16, this.answerQuestion, 1)
 		utility.addClickItem(gameplayCanvas.width - 480, gameplayCanvas.height / 4 + 80, 256, 16, this.answerQuestion, 2)

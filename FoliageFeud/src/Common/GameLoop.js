@@ -43,6 +43,7 @@ entering = [true, // Title
 		 true, // SkillBook
 		 true, // TrainingMode
 		 true, // WorldEvent
+		 true, // BaseCamp
 		 true // End
 		 ];
 // Bool list for the loaded positions
@@ -53,6 +54,7 @@ screensLoaded = [true, // Title
 				 false, // SkillBook
 				 false, // TrainingMode
 				 false, // WorldEvent
+				 false, // BaseCamp
 				 false // End
 				 ];
 
@@ -64,6 +66,7 @@ exiting = [false, // Title
 			 false, // SkillBook
 			 false, // TrainingMode
 			 false, // WorldEvent
+			 false, // BaseCamp
 			 false // End
 			 ];
 
@@ -76,7 +79,8 @@ ScreenState = {
 	SkillBook: 4,
 	TrainingMode: 5,
 	WorldEvent: 6,
-	End: 7
+	BaseCamp: 7,
+	End: 8
 };
 
 // Instances of the Screens 
@@ -122,7 +126,13 @@ function mainUpdate()
 				utility.clearClickHandler();
 			}
 			break;
+		case ScreenState.BaseCamp: // BaseCamp Screen
+			if (entering[currentScreen])
+			{
+			}
 			
+			
+			break;
 		case ScreenState.Gameplay: // Gameplay Screen
 			if (entering[currentScreen])
 			{
@@ -172,9 +182,9 @@ function mainUpdate()
 			if (exiting[currentScreen])
 			{
 				screensLoaded[currentScreen] = false;
-				worldEvent.onExit();
 				entering[currentScreen] = true;
 				exiting[currentScreen] = false;
+				worldEvent.onExit();
 			}
 			break;
 		case ScreenState.End:

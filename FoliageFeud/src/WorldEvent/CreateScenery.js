@@ -20,11 +20,11 @@ var createScenery = {
 				sprite.x = Math.floor(Math.random() * (gameplayCanvas.width - 128)) + 128;
 				if (i < this.treeCount/2)
 				{
-					sprite.y = Math.floor(Math.random() * 20) - 54 + gameplay.player.y;
+					sprite.y = Math.floor(Math.random() * 40) + gameplay.player.y;
 				}
 				else
 				{
-					sprite.y = Math.floor(Math.random() * 20) - 69 + gameplay.player.y;
+					sprite.y = Math.floor(Math.random() * 20) - 90 + gameplay.player.y;
 				}
 				sprite.width = 128;
 				sprite.height = 128;
