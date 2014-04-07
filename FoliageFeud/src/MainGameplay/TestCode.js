@@ -1,14 +1,7 @@
 var test = {
 	tileSheet: new Image(),
 	waterTiles: [],
-	map: [[1,1,1,1,1,1,1],
-		  [1,2,2,2,1,2,1],
-		  [1,1,1,1,1,1,1],
-		  [1,2,2,2,1,2,1],
-		  [1,2,2,2,1,2,1],
-		  [1,2,2,2,1,2,1],
-		  [1,1,1,1,1,1,1]],
-		  
+	map: new Array(7),
 	mapTiles: new Array(7),
 	
 	init: function()
@@ -18,7 +11,13 @@ var test = {
 		
 		for (var i = 0; i < 7; i++)
 		{
+			this.map[i] = new Array(7);
 			this.mapTiles[i] = new Array(7);
+			
+			for (var j = 0; j < 7; j++)
+			{
+				this.map[i][j] = Math.floor(Math.random() * 2) + 1;
+			}
 		}
 		
 		for (var i = 0; i < 16; i++)
