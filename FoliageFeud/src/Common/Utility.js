@@ -15,6 +15,7 @@ var clickObj = {
 var utility = {
 	// List of clickable objects in current screen
 	clickable: [],
+	colors: [],
 	
 	// Clear screen and all objects from clickable
 	clearAll: function()

@@ -44,7 +44,8 @@ entering = [true, // Title
 		 true, // TrainingMode
 		 true, // WorldEvent
 		 true, // BaseCamp
-		 true // End
+		 true, // End
+		 true, // TestCode
 		 ];
 // Bool list for the loaded positions
 screensLoaded = [true, // Title
@@ -55,7 +56,8 @@ screensLoaded = [true, // Title
 				 false, // TrainingMode
 				 false, // WorldEvent
 				 false, // BaseCamp
-				 false // End
+				 false, // End
+				 false, // TestCode
 				 ];
 
 // Bool list for the loaded positions
@@ -67,7 +69,8 @@ exiting = [false, // Title
 			 false, // TrainingMode
 			 false, // WorldEvent
 			 false, // BaseCamp
-			 false // End
+			 false, // End
+			 false  // TestCode
 			 ];
 
 // Enum to determine the screen the game is currently at
@@ -80,7 +83,8 @@ ScreenState = {
 	TrainingMode: 5,
 	WorldEvent: 6,
 	BaseCamp: 7,
-	End: 8
+	End: 8,
+	TestCode: 9
 };
 
 // Instances of the Screens 
@@ -188,6 +192,17 @@ function mainUpdate()
 			}
 			break;
 		case ScreenState.End:
+			break;
+		case ScreenState.TestCode:
+			if (entering[currentScreen])
+			{
+				test.init();
+				entering[currentScreen] = false;
+			}
+			if (exiting[currentScreen])
+			{
+				switchGamemode(ScreenState.Gameplay);
+			}
 			break;
 	}
 	//The animation loop
