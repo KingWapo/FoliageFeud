@@ -243,13 +243,18 @@ var gameplay = {
 		console.debug("Map Orientation: " + this.mapOrientation);
 		
 		// Initialize collisions
-		
+		var collider = {
+			x: 0,
+			y: 0,
+			width: 0,
+			height: 0
+		};
 		for (var i = 0; i < 50; i++)
 		{
 			var tempCollision = [];
 			for (var j = 0; j < 75; j++)
 			{
-				var colliderObject = Object.create(spriteObject);
+				var colliderObject = Object.create(collider);
 				tempCollision.push(colliderObject);
 			}
 			gameplay.collisionTiles.push(tempCollision);
@@ -488,12 +493,13 @@ var gameplay = {
 			//check for collisions with collidables.
 			if (!screensLoaded[ScreenState.WorldEvent] && cameraController.mapBuilt)
 			{
-				for( i = utility.clamp(this.player.y - 3, 0, cameraController.gameWorld.height); i < utility.clamp(this.player.y + 3, 0, cameraController.gameWorld.height); i ++)
+				for( row = Math.min(0, gameplay.player.y - 3); row < Math.max(gameplay.player.y + 3, cameraController.gameWorld.height); row++)
 				{
-					for( j = utility.clamp(this.player.x - 3, 0, cameraController.gameWorld.width); j < utility.clamp(this.player.x + 3, 0, cameraController.gameWorld.width); j ++)
+					for( col = Math.min(0, gameplay.player.x - 3); col < Math.max(gameplay.player.x + 3, cameraController.gameWorld.width); col++)
 					{
 						var wCount=0;
-						var collider = gameplay.collisionTiles[i][j];
+						console.debug(row + ", " + col);
+						var collider = gameplay.collisionTiles[row][col];
 						if ( utility.collisionDetection(gameplay.player, collider) && collider.name=="water" && skillBook.swim==false)
 						{
 							this.collide();
