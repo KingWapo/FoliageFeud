@@ -1,20 +1,20 @@
 var test = {
 	tileSheet: new Image(),
 	waterTiles: [],
-	map: new Array(7),
-	mapTiles: new Array(7),
+	map: new Array(8),
+	mapTiles: new Array(8),
 	
 	init: function()
 	{
 		utility.clearAll();
 		this.tileSheet.src = "../img/Tiles/tilesheet.png";
 		
-		for (var i = 0; i < 7; i++)
+		for (var i = 0; i < 8; i++)
 		{
-			this.map[i] = new Array(7);
-			this.mapTiles[i] = new Array(7);
+			this.map[i] = new Array(18);
+			this.mapTiles[i] = new Array(18);
 			
-			for (var j = 0; j < 7; j++)
+			for (var j = 0; j < 18; j++)
 			{
 				this.map[i][j] = Math.floor(Math.random() * 2) + 1;
 			}
@@ -56,9 +56,9 @@ var test = {
 					
 					if (r > 0 && this.map[r-1][c] === WATER)
 						variant += 8;
-					if (c < 6 && this.map[r][c+1] === WATER)
+					if (c < this.map[r].length - 1 && this.map[r][c+1] === WATER)
 						variant += 4;
-					if (r < 6 && this.map[r+1][c] === WATER)
+					if (r < this.map.length - 1 && this.map[r+1][c] === WATER)
 						variant += 2;
 					if (c > 0 && this.map[r][c-1] === WATER)
 						variant += 1;

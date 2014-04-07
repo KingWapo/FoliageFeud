@@ -423,16 +423,19 @@ var gameplay = {
 		}
 		
 		// Set the velocity to zero if no direction is pressed.
-		if (!moveRight && !moveLeft)
+		if ((!moveRight && !moveLeft) || (moveRight && moveLeft))
 		{
 			this.player.vx = 0;
 		}
-		if (!moveDown && !moveUp)
+		if ((!moveDown && !moveUp) || (moveDown && moveUp))
 		{
 			this.player.vy = 0;
 		}
 		
-		if (!moveRight && !moveLeft && !moveDown && !moveUp)
+		if ((!moveRight && !moveLeft && !moveDown && !moveUp) ||
+			(moveRight && moveLeft && !moveDown && !moveUp) ||
+			(moveDown && moveUp && !moveRight && !moveLeft) ||
+			(moveRight && moveLeft && moveDown && moveUp))
 		{
 			if (this.player.animation !== Animation.Idle) {
 				if (this.player.animation == Animation.Right) {
