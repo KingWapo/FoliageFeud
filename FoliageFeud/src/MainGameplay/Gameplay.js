@@ -493,13 +493,14 @@ var gameplay = {
 			//check for collisions with collidables.
 			if (!screensLoaded[ScreenState.WorldEvent] && cameraController.mapBuilt)
 			{
-				for( row = Math.min(0, gameplay.player.y - 3); row < Math.max(gameplay.player.y + 3, cameraController.gameWorld.height); row++)
+				for( row = Math.max(0, gameplay.player.y - 3); row < Math.min(gameplay.player.y + 3, this.collisionTiles.length - 1); row++)
 				{
-					for( col = Math.min(0, gameplay.player.x - 3); col < Math.max(gameplay.player.x + 3, cameraController.gameWorld.width); col++)
+					for( col = Math.max(0, gameplay.player.x - 3); col < Math.min(gameplay.player.x + 3, this.collisionTiles.length - 1); col++)
 					{
 						var wCount=0;
-						console.debug(row + ", " + col);
+						//console.debug(row + ", " + col);
 						var collider = gameplay.collisionTiles[row][col];
+						console.debug(collider);
 						if ( utility.collisionDetection(gameplay.player, collider) && collider.name=="water" && skillBook.swim==false)
 						{
 							this.collide();
