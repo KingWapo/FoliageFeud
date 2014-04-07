@@ -24,7 +24,7 @@ var createScenery = {
 				}
 				else
 				{
-					sprite.y = Math.floor(Math.random() * 20) - 90 + gameplay.player.y;
+					sprite.y = Math.floor(Math.random() * 20) - 88 + gameplay.player.y;
 				}
 				sprite.width = 128;
 				sprite.height = 128;
@@ -107,5 +107,11 @@ var createScenery = {
 					);
 			}
 		}
+	},
+	
+	onExit: function()
+	{
+		this.trees = [];
+		this.grass = [];
 	}
 }

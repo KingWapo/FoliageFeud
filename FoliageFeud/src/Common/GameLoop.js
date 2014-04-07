@@ -219,6 +219,10 @@ function switchGamemode(newScreen)
 {
 	screensLoaded[currentScreen] = false;
 	exiting[currentScreen] = false;
+	if (currentScreen == ScreenState.WorldEvent)
+	{
+		worldEvent.onExit();
+	}
 	currentScreen = newScreen;
 	screensLoaded[currentScreen] = true;
 	entering[currentScreen] = true;

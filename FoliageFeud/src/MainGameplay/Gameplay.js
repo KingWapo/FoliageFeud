@@ -29,7 +29,7 @@ var gameplay = {
 	mapOrientation: 0,
 	mapBuilt: false,
 	onPause: false,
-	
+	collisionTiles: [],
 	
 	player: {
 		// Sprite Located on sheet
@@ -242,6 +242,19 @@ var gameplay = {
 		this.mapOrientation = Math.floor(Math.random() * 4);
 		console.debug("Map Orientation: " + this.mapOrientation);
 		
+		// Initialize collisions
+		
+		for (var i = 0; i < 50; i++)
+		{
+			var tempCollision = [];
+			for (var j = 0; j < 75; j++)
+			{
+				var colliderObject = Object.create(spriteObject);
+				tempCollision.push(colliderObject);
+			}
+			gameplay.collisionTiles.push(tempCollision);
+		}
+		
 		cameraController.init();
 		
 		// Load the image files
@@ -282,7 +295,6 @@ var gameplay = {
 	collide: function()
 	{
 		playerSpeed=0;
-		/*
 		if(player.animation==Animation.Right)
 		{
 			player.x=player.x-16;
@@ -302,7 +314,6 @@ var gameplay = {
 			player.y=player.y-16;
 			
 		}
-		*/
 		if (moveRight && !moveLeft)
 		{
 			this.player.x = this.player.x-16;
@@ -323,6 +334,7 @@ var gameplay = {
 	
 	message: function(name)
 	{
+		/*
 		if(name === "water" )
 		{	
 			if( cameraController.levelCounter ===0)
@@ -358,6 +370,7 @@ var gameplay = {
 		moveLeft = false;
 		moveRight = false;
 		moveUp = false;
+		*/
 	},
 	
 	updateAnimation: function()
@@ -463,7 +476,7 @@ var gameplay = {
 			{	
 				if(skillBook.swim==true && skillBook.climb ==true && skillBook.sprint==true)
 					{
-						currentScreen = ScreenState.Observation;
+						switchGamemode(ScreenState.Observation);
 					}
 					else
 					{
@@ -473,80 +486,76 @@ var gameplay = {
 			}
 				
 			//check for collisions with collidables.
-			if (!screensLoaded[ScreenState.WorldEvent])
+			if (!screensLoaded[ScreenState.WorldEvent] && cameraController.mapBuilt)
 			{
-				for( i=0; i<cameraController.collidables.length; i++)
+				for( i = utility.clamp(this.player.y - 3, 0, cameraController.gameWorld.height); i < utility.clamp(this.player.y + 3, 0, cameraController.gameWorld.height); i ++)
 				{
-					var wCount=0;
-					if ( utility.collisionDetection(gameplay.player, cameraController.collidables[i]) && cameraController.collidables[i].name=="water" && skillBook.swim==false)
+					for( j = utility.clamp(this.player.x - 3, 0, cameraController.gameWorld.width); j < utility.clamp(this.player.x + 3, 0, cameraController.gameWorld.width); j ++)
 					{
-						this.collide();
-				
-						if(wCount===0)
-						{
-							
-							
-							this.message("water");
-							
-						}
-						wCount++;
-						if(wCount===3000)
-						{
-							wCount=0;
-						}
-					}
-					if ( utility.collisionDetection(gameplay.player, cameraController.collidables[i]) && cameraController.collidables[i].name=="tree")
-					{
-						this.collide();
-					}	
-					if ( utility.collisionDetection(gameplay.player, cameraController.collidables[i]) && cameraController.collidables[i].name=="rock" && skillBook.climb===false)
-					{
-						this.collide();
-						this.message("rock");
-					}
-					if ( utility.collisionDetection(gameplay.player, gameplay.blueCoin) && gameplay.blueCoin.visible==true)
-					{
-						skillBook.swim=true;
-						this.blueCoin.visible=false;
-						this.message("swim");
-					
-					}
-					if ( utility.collisionDetection(gameplay.player, gameplay.grayCoin) && gameplay.grayCoin.visible==true)
-					{
-						skillBook.climb=true;
-						this.grayCoin.visible=false;
-						this.message("climb");
-					
-					}
-					if ( utility.collisionDetection(gameplay.player, gameplay.speedCoin) && gameplay.speedCoin.visible==true)
-					{
-						
-						this.speedCoin.visible=false;
-						this.message("speed");
-						skillBook.sprint = true;
-					
-					}	
-					if ( utility.collisionDetection(gameplay.player, gameplay.speedCoin) && gameplay.speedCoin.visible==true)
-					{
-						
-						this.speedCoin.visible=false;
-						this.message("speed");
-						skillBook.sprint = true;
-					
-					}	
-					if ( utility.collisionDetection(gameplay.player, gameplay.telePorter))
-					{
-						if(skillBook.teleporter==true)
-						{
-							message("teleport");
-							
-						}
-						else
+						var wCount=0;
+						var collider = gameplay.collisionTiles[i][j];
+						if ( utility.collisionDetection(gameplay.player, collider) && collider.name=="water" && skillBook.swim==false)
 						{
 							this.collide();
-						}
 					
-					}											
+							if(wCount===0)
+							{
+								
+								
+								this.message("water");
+								
+							}
+							wCount++;
+							if(wCount===3000)
+							{
+								wCount=0;
+							}
+						}
+						if ( utility.collisionDetection(gameplay.player, collider) && collider.name=="tree")
+						{
+							this.collide();
+						}	
+						if ( utility.collisionDetection(gameplay.player, collider) && collider.name=="rock" && skillBook.climb===false)
+						{
+							this.collide();
+							this.message("rock");
+						}
+						if ( utility.collisionDetection(gameplay.player, gameplay.blueCoin) && gameplay.blueCoin.visible==true)
+						{
+							skillBook.swim=true;
+							this.blueCoin.visible=false;
+							this.message("swim");
+						
+						}
+						if ( utility.collisionDetection(gameplay.player, gameplay.grayCoin) && gameplay.grayCoin.visible==true)
+						{
+							skillBook.climb=true;
+							this.grayCoin.visible=false;
+							this.message("climb");
+						
+						}
+						if ( utility.collisionDetection(gameplay.player, gameplay.speedCoin) && gameplay.speedCoin.visible==true)
+						{
+							
+							this.speedCoin.visible=false;
+							this.message("speed");
+							skillBook.sprint = true;
+						
+						}	
+						if ( utility.collisionDetection(gameplay.player, gameplay.telePorter))
+						{
+							if(skillBook.teleporter==true)
+							{
+								message("teleport");
+								
+							}
+							else
+							{
+								this.collide();
+							}
+						
+						}
+					}
 				}
 			}
 			this.updateAnimation();
@@ -700,7 +709,7 @@ var gameplay = {
 //Add keyboard listeners
 window.addEventListener("keydown", function(event)
 {
-	if (event.keyCode == 16 && skillBook.sprint== true)
+	if (event.keyCode == 16)// && skillBook.sprint== true)
 	{
 		gameplay.player.speed = gameplay.player.runSpeed;
 	}

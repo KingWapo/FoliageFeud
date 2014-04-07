@@ -23,6 +23,12 @@ var worldEvent = {
 	correctImage: new Image(),
 	speedBoost: 0,
 	speedCooldown: 30,
+	countdown: 300,
+	countdownFull: 300,
+	timer: new Image(),
+	timerBackground: new Image(),
+	checkmarks: [],
+	checkmarkSprite: new Image(),
 	questions: [
 		{
 			name: "",
@@ -50,7 +56,7 @@ var worldEvent = {
 		this.playerVars = [gameplay.player.x, gameplay.player.y, gameplay.player.speed, gameplay.player.animation];
 		this.cameraPosition = [cameraController.camera.x, cameraController.camera.y];
 		
-		cameraController.buildMap(this.worldEventMap);
+		cameraController.buildMap(this.worldEventMap, 0);
 		
 		cameraController.camera.x = 0;
 		cameraController.camera.y = 0;
@@ -61,6 +67,9 @@ var worldEvent = {
 		gameplay.player.animation = Animation.WorldEventRight;
 		
 		this.wall.sprite.src = "../img/WorldEvent/WALL.png";
+		this.timer.src = "../img/WorldEvent/timer.png";
+		this.timerBackground.src = "../img/WorldEvent/timerBackground.png";
+		this.checkmarkSprite.src = "../img/WorldEvent/checkmark.png";
 		
 		createScenery.init();
 	},
@@ -73,9 +82,10 @@ var worldEvent = {
 		gameplay.player.animation = this.playerVars[3];
 		cameraController.camera.x = this.cameraPosition[0];
 		cameraController.camera.y = this.cameraPosition[1];
+		createScenery.onExit();
 		
-		cameraController.buildMap(cameraController.levelMaps[cameraController.levelCounter]);
-		cameraController.buildMap(cameraController.levelGameObjects[cameraController.levelCounter]);
+		cameraController.buildMap(allLevelMaps[cameraController.levelCounter], 0);
+		cameraController.buildMap(allObjectMaps[cameraController.levelCounter], 1);
 		gameplay.render();
 		currentScreen = ScreenState.Gameplay;
 	},
@@ -87,11 +97,11 @@ var worldEvent = {
 			gameplay.player.x += this.speedBoost;
 			gameplay.player.updateAnimation();
 			createScenery.update();
-			if (Math.random() * 1000 < 10)
+			if (this.speedBoost == 0 && Math.random() * 1000 < 10) // .1% chance of question being asked and only when the player doesn't have a speedBoost
 			{
 				this.askQuestion();
 			}
-			if (this.speedBoost != 0)
+			else if (this.speedBoost != 0)
 			{
 				this.speedCooldown--;
 				if (this.speedCooldown <= 0)
@@ -103,6 +113,10 @@ var worldEvent = {
 			
 		}
 		if (utility.collisionDetection(this.wall, gameplay.player))
+		{
+			exiting[currentScreen] = true;
+		}
+		if (this.checkmarks.length >= 5)
 		{
 			exiting[currentScreen] = true;
 		}
@@ -122,7 +136,25 @@ var worldEvent = {
 		
 		if (this.questionBeingAsked)
 		{
-			this.renderQuestion();
+			if (this.countdown > 0)
+			{
+				this.renderQuestion();
+				this.countdown -= 1;
+			}
+			else
+			{
+				this.questions[0].correct = false;
+				this.answerQuestion(0);
+			}
+		}
+		
+		for (var i = 0; i < this.checkmarks.length; i++)
+		{
+			menuSurface.drawImage(
+				this.checkmarkSprite,
+				i * 64, 0,
+				64, 64
+				);
 		}
 		
 	},
@@ -160,6 +192,7 @@ var worldEvent = {
 		if (worldEvent.questions[index].correct)
 		{
 			worldEvent.speedBoost = 5;
+			worldEvent.summonCheckmark();
 			console.debug("Congrats!!");
 		}
 		else
@@ -172,6 +205,11 @@ var worldEvent = {
 		worldEvent.resetQuestions();
 	},
 	
+	summonCheckmark: function()
+	{
+		this.checkmarks.push(Object.create(this.checkmarkSprite));
+	},
+	
 	resetQuestions: function()
 	{
 		for (var i = 0; i < 3; i++)
@@ -179,6 +217,7 @@ var worldEvent = {
 			this.questions[i].name = "";
 			this.questions[i].correct = false;
 		}
+		this.countdown = this.countdownFull;
 	},
 	
 	renderQuestion: function()
@@ -191,6 +230,17 @@ var worldEvent = {
 			this.correctImage,
 			gameplayCanvas.width / 2 - 64, gameplayCanvas.height / 4,
 			128, 128
+			);
+			
+		menuSurface.drawImage(
+			this.timerBackground,
+			gameplayCanvas.width / 2 - 64, gameplayCanvas.height / 4 - 64,
+			256, 32
+			);
+		menuSurface.drawImage(
+			this.timer,
+			gameplayCanvas.width / 2 - 62, gameplayCanvas.height / 4 - 62,
+			Math.floor(256*this.countdown/this.countdownFull), 32
 			);
 	}
 }

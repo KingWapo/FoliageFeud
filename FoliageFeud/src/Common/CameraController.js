@@ -17,6 +17,10 @@ var WATER = 2;
 var ROCK = 3;
 var SKY = 4;
 var TREE = 5;
+var BIRCHTREE = 7;
+var ENDOFTREES = 12;
+var WATERBOUNDRARYBEGIN = 13
+var WATERBOUNDRARYEND = 24
 
 // Size of each tile
 var SIZE = 64;
@@ -27,18 +31,16 @@ var tilesheetColumns = 4;
 var cameraController = {
 	//Game Level Maps
 	//Arrays to store the level maps
-	levelMaps: [],
-	levelGameObjects: [],
 	levelCounter: 0,
 	tilesheet: new Image(),
 	baseTiles: [],
 	foregroundTiles: [],
 	sprites: [],
-	collidables: [],
 	ROWS: 0,
 	COLUMNS: 0,
 	WIDTH: 0,
 	HEIGHT: 0,
+	mapBuilt: false,
 	
 	gameWorld: {
 		x: 0,
@@ -81,99 +83,17 @@ var cameraController = {
 	{
 		this.tilesheet.src = "../img/Tiles/tilesheet.png";
 		
-		var map0 = [];
-		for (var i = 0; i < 50; i++)
-		{
-			var tempList = [];
-			for (var j = 0; j < 75; j++)
-			{
-				if (j == 23)
-				{
-					tempList.push(2); // Push water
-				}
-				else if (i==10)
-				{
-					tempList.push(2); // push water
-				}
-				else if (i==5 && j==5 || i==5 && j==6||i==6&&j==5||i==6&&j==6)
-				{
-					tempList.push(2); // push water
-				}
-				else if(i==20)
-				{
-					tempList.push(3); // push rocksss
-				}
-				else
-				{
-					tempList.push(1);
-				}
-			}
-			map0.push(tempList);
-		}
-		this.levelMaps.push(map0);
-
-		var gameObjects0 = [];
-
-		for (var i = 0; i < 50; i++)
-		{
-			var tempList = [];
-			for (var j = 0; j < 75; j++)
-			{
-				if ((i == 0 && j % 2 == 0) || (i == 49 && j % 2 == 0) || (j == 0 && i % 2 == 0) || (j == 74 && i % 2 == 0))
-				{
-					tempList.push(5); // Push Tree
-				}
-				else {
-					tempList.push(0); // Push Empty
-				}
-			}
-			gameObjects0.push(tempList);
-		}
-		this.levelGameObjects.push(gameObjects0);
-
-		var map1 = [];
-		for (var i = 0; i < 50; i++)
-		{
-			var tempList = [];
-			for (var j = 0; j < 75; j++)
-			{
-				tempList.push(1);
-			}
-			map1.push(tempList);
-		}
-
-		this.levelMaps.push(map1);
-
-
-		var gameObjects1 = [];
-
-		for (var i = 0; i < 50; i++)
-		{
-			var tempList = [];
-			for (var j = 0; j < 75; j++)
-			{
-				if ((i == 0 && j % 2 == 0) || (i == 49 && j % 2 == 0) || (j == 0 && i % 2 == 0) || (j == 74 && i % 2 == 0))
-				{
-					tempList.push(2);
-				}
-				else {
-					tempList.push(0);
-				}
-			}
-			gameObjects1.push(tempList);
-		}
-
-		this.levelGameObjects.push(gameObjects1);
-		
 		//The number of rows and columns
-		this.ROWS = map1.length;
-		this.COLUMNS = map1[0].length;
+		var curMap = allLevelMaps[this.levelCounter];
+		this.ROWS = curMap.length;
+		this.COLUMNS = curMap[0].length;
 		
 		this.WIDTH = this.COLUMNS * SIZE;
 		this.HEIGHT = this.ROWS * SIZE;
 		
 		this.gameWorld.width = this.WIDTH;
 		this.gameWorld.height = this.HEIGHT;
+		
 		
 		for (var i = 0; i < 50; i++)
 		{
@@ -189,8 +109,8 @@ var cameraController = {
 			this.foregroundTiles.push(foregroundTemp);
 		}
 		
-		this.buildMap(this.levelMaps[0]);
-		this.buildMap(this.levelGameObjects[0]);
+		this.buildMap(allLevelMaps[this.levelCounter], 0);
+		this.buildMap(allObjectMaps[this.levelCounter], 1);
 	},
 	
 	update: function()
@@ -263,7 +183,7 @@ var cameraController = {
 					}
 					catch(err){ console.debug("Error: " + err);}
 					 
-					var gameObjectMap = this.levelGameObjects[this.levelCounter];
+					var gameObjectMap = objectMap1;// this.levelGameObjects[this.levelCounter];
 					if (currentScreen != ScreenState.WorldEvent)
 					{
 						if (gameObjectMap[row][column] != EMPTY)
@@ -287,7 +207,7 @@ var cameraController = {
 		}
 	},
 	
-	buildMap: function(levelMap)
+	buildMap: function(levelMap, tier)
 	{
 		for(var row = 0; row < levelMap.length; row++) 
 		{	
@@ -301,9 +221,95 @@ var cameraController = {
 				var tilesheetX = Math.floor((currentTile - 1) % tilesheetColumns) * SIZE; 
 				var tilesheetY = Math.floor((currentTile - 1) / tilesheetColumns) * SIZE;
 				
+				var sprite = Object.create(spriteObject);
+				sprite.sourceX = tilesheetX;
+				sprite.sourceY = tilesheetY;
+				sprite.x = column * SIZE;
+				sprite.y = row * SIZE;
+				if (tier == 0) // Base tiles
+				{
+					this.baseTiles[row][column] = sprite;
+					if (currentTile >= WATERBOUNDRARYBEGIN && currentTile <= WATERBOUNDRARYEND)
+					{
+						sprite.name = "water";
+						gameplay.collisionTiles[row][column] = sprite;
+						//this.collidables.push(sprite);
+					}
+					if (currentTile == ROCK)
+					{
+						sprite.name = "rock";
+						gameplay.collisionTiles[row][column] = sprite;
+						//this.collidables.push(sprite);
+					}
+				}
+				else if (tier == 1) // Object tiles
+				{
+					if (currentTile == TREE || currentTile == BIRCHTREE)
+					{
+						sprite.sourceWidth = 128;
+						sprite.sourceHeight = 128;
+						sprite.width = 128;
+						sprite.height = 128;
+						sprite.name = "tree";
+						this.foregroundTiles[row][column] = sprite;
+						gameplay.collisionTiles[row][column] = sprite;
+						//this.collidables.push(sprite);
+					}
+				}
+				
+				/*
 				switch (currentTile)
 				{
-					case GRASS:
+					case TREE:
+						sprite.sourceWidth = 128;
+						sprite.sourceHeight = 128;
+						sprite.width = 128;
+						sprite.height = 128;
+						sprite.name = "tree";
+						if (row + 1 < levelMap.length && column + 1 < levelMap.length)
+						{
+							levelMap[row + 1][column] = EMPTY;
+							levelMap[row][column + 1] = EMPTY;
+							levelMap[row + 1][column + 1] = EMPTY;
+						}
+						else if (row + 1 < levelMap.length)
+						{
+							levelMap[row + 1][column] = EMPTY;
+						}
+						else if (column + 1 < levelMap.length)
+						{
+							levelMap[row][column + 1] = EMPTY;
+						}
+						this.foregroundTiles[row][column] = sprite;
+						this.collidables.push(sprite);
+						break;
+					case BIRCHTREE:
+						sprite.sourceWidth = 128;
+						sprite.sourceHeight = 128;
+						sprite.width = 128;
+						sprite.height = 128;
+						sprite.name = "tree";
+						if (row + 1 < levelMap.length && column + 1 < levelMap.length)
+						{
+							levelMap[row + 1][column] = EMPTY;
+							levelMap[row][column + 1] = EMPTY;
+							levelMap[row + 1][column + 1] = EMPTY;
+						}
+						else if (row + 1 < levelMap.length)
+						{
+							levelMap[row + 1][column] = EMPTY;
+						}
+						else if (column + 1 < levelMap.length)
+						{
+							levelMap[row][column + 1] = EMPTY;
+						}
+						this.foregroundTiles[row][column] = sprite;
+						this.collidables.push(sprite);
+						break;
+					default:
+						this.baseTiles[row][column] = sprite;
+						break;
+					/*case GRASS:
 						var grass = Object.create(spriteObject);
 						grass.sourceX = tilesheetX;
 						grass.sourceY = tilesheetY;
@@ -346,7 +352,6 @@ var cameraController = {
 						sky.y = row * SIZE;
 						this.baseTiles[row][column] = sky;
 						sky.name="sky";
-						this.collidables.push(sky);
 						break;
 						
 					case ROCK:
@@ -359,10 +364,11 @@ var cameraController = {
 						this.baseTiles[row][column] = rock;
 						this.collidables.push(rock);
 						break;
-				}
+				}*/
 			  }
 			}
 		}
+		this.mapBuilt = true;
 	}
 	
 	
