@@ -300,25 +300,25 @@ var gameplay = {
 	collide: function()
 	{
 		playerSpeed=0;
-		if(player.animation==Animation.Right)
+		/*if(gamplay.player.animation==Animation.Right)
 		{
-			player.x=player.x-16;
+			gamplay.player.x=player.x-16;
 			
 		}
-		if(player.animation==Animation.Left)
+		if(gamplay.player.animation==Animation.Left)
 		{
-			player.x=player.x+16;
+			gamplay.player.x=player.x+16;
 		}
 		
-		if(player.animation==Animation.Up)
+		if(gamplay.player.animation==Animation.Up)
 		{
-			player.y=player.y+16;
+			gamplay.player.y=player.y+16;
 		}
-		if(player.animation==Animation.Down)
+		if(gamplay.player.animation==Animation.Down)
 		{
-			player.y=player.y-16;
+			gamplay.player.y=player.y-16;
 			
-		}
+		}*/
 		if (moveRight && !moveLeft)
 		{
 			this.player.x = this.player.x-16;
@@ -493,14 +493,13 @@ var gameplay = {
 			//check for collisions with collidables.
 			if (!screensLoaded[ScreenState.WorldEvent] && cameraController.mapBuilt)
 			{
-				for( row = Math.max(0, gameplay.player.y - 3); row < Math.min(gameplay.player.y + 3, this.collisionTiles.length - 1); row++)
+				//console.debug(Math.max(0, (gameplay.player.y - 3)/64) + " -- " + Math.min(gameplay.player.y + 3, this.collisionTiles.length - 1));
+				for( row = Math.max(0, Math.floor((gameplay.player.y)/64) - 3); row < Math.min(Math.floor((gameplay.player.y)/64) + 3, this.collisionTiles.length - 1); row++)
 				{
-					for( col = Math.max(0, gameplay.player.x - 3); col < Math.min(gameplay.player.x + 3, this.collisionTiles.length - 1); col++)
+					for( col = Math.max(0, Math.floor((gameplay.player.x)/64) - 3); col < Math.min(Math.floor((gameplay.player.x)/64) + 3, this.collisionTiles[row].length - 1); col++)
 					{
 						var wCount=0;
-						//console.debug(row + ", " + col);
 						var collider = gameplay.collisionTiles[row][col];
-						console.debug(collider);
 						if ( utility.collisionDetection(gameplay.player, collider) && collider.name=="water" && skillBook.swim==false)
 						{
 							this.collide();
