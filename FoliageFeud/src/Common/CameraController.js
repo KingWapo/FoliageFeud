@@ -84,7 +84,7 @@ var cameraController = {
 		this.tilesheet.src = "../img/Tiles/tilesheet.png";
 		
 		//The number of rows and columns
-		var curMap = allLevelMaps[gameplay.currentLevel];
+		var curMap = allLevelMaps[this.levelCounter];
 		this.ROWS = curMap.length;
 		this.COLUMNS = curMap[0].length;
 		
@@ -109,8 +109,8 @@ var cameraController = {
 			this.foregroundTiles.push(foregroundTemp);
 		}
 		
-		this.buildMap(allLevelMaps[gameplay.currentLevel], 0);
-		this.buildMap(allObjectMaps[gameplay.currentLevel], 1);
+		this.buildMap(allLevelMaps[this.levelCounter], 0);
+		this.buildMap(allObjectMaps[this.levelCounter], 1);
 	},
 	
 	update: function()
