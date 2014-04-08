@@ -35,6 +35,8 @@ window.requestAnimFrame = (function() {
 
 var playerBePlayin = false;
 
+quests.addQuest("Horsetail", 0);
+
 // Bool list for the loaded positions
 entering = [true, // Title
 		 true, // Gameplay
@@ -46,6 +48,9 @@ entering = [true, // Title
 		 true, // BaseCamp
 		 true, // End
 		 true, // TestCode
+		 true, // Shop
+		 true, // SNA
+		 true, // Sibling
 		 ];
 // Bool list for the loaded positions
 screensLoaded = [true, // Title
@@ -58,6 +63,9 @@ screensLoaded = [true, // Title
 				 false, // BaseCamp
 				 false, // End
 				 false, // TestCode
+				 false, // Shop
+				 false, // SNA
+				 false, // Sibling
 				 ];
 
 // Bool list for the loaded positions
@@ -70,7 +78,10 @@ exiting = [false, // Title
 			 false, // WorldEvent
 			 false, // BaseCamp
 			 false, // End
-			 false  // TestCode
+			 false, // TestCode
+			 false, // Shop
+			 false, // SNA
+			 false, // Sibling
 			 ];
 
 // Enum to determine the screen the game is currently at
@@ -84,7 +95,10 @@ ScreenState = {
 	WorldEvent: 6,
 	BaseCamp: 7,
 	End: 8,
-	TestCode: 9
+	TestCode: 9,
+	ShopScreen: 10,
+	SNASelectionScreen: 11,
+	SiblingInteraction: 12,
 };
 
 // Instances of the Screens 
@@ -168,6 +182,7 @@ function mainUpdate()
 			if (exiting[currentScreen])
 			{
 				switchGamemode(ScreenState.Gameplay);
+				utility.clearClickHandler();
 			}
 			break;
 		case ScreenState.SkillBook:
@@ -203,6 +218,12 @@ function mainUpdate()
 			{
 				switchGamemode(ScreenState.Gameplay);
 			}
+			break;
+		case ScreenState.ShopScreen:
+			break;
+		case ScreenState.SNASelectionScreen:
+			break;
+		case ScreenState.SiblingInteraction:
 			break;
 	}
 	//The animation loop

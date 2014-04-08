@@ -161,6 +161,7 @@ var cameraController = {
 		{
 			for (var column = Math.floor(this.camera.x / 64) - 2; column < Math.floor((this.camera.x + this.camera.width)/64) + 2; column++)
 			{
+				//console.debug(row + ", " + column);
 				if (row >= 0 && row < this.ROWS && column >= 0 && column < this.COLUMNS)
 				{
 					var sprite = this.baseTiles[row][column];
@@ -183,7 +184,7 @@ var cameraController = {
 					}
 					catch(err){ console.debug("Error: " + err);}
 					 
-					var gameObjectMap = objectMap1;// this.levelGameObjects[this.levelCounter];
+					var gameObjectMap = allObjectMaps[gameplay.currentLevel];
 					if (currentScreen != ScreenState.WorldEvent)
 					{
 						if (gameObjectMap[row][column] != EMPTY)
