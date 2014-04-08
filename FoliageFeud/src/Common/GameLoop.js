@@ -164,6 +164,7 @@ function mainUpdate()
 		case ScreenState.Information: // Information Screen
 			if (entering[currentScreen])
 			{
+				info.page = 0;
 				info.init();
 				entering[currentScreen] = false;
 			}

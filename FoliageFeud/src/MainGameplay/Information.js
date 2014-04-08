@@ -5,6 +5,12 @@
 var notFound = new Image();
 notFound.src = "../img/Buttons/QuestionMark.png";
 
+var prevPageButton = new Image();
+prevPageButton.src = "../img/Buttons/arrowLeft.png";
+
+var nextPageButton = new Image();
+nextPageButton.src = "../img/Buttons/arrowRight.png";
+
 var curPlant = -1;
 var curImage = 0;
 var plantShown = false;
@@ -15,11 +21,14 @@ var info = {
 	// Variables
 	tileSize: 128,
 	debugInfo: false,
+	page: 0,
+	plantsPerPage: 18,
 
 	// Initialize info wall
 	init: function()
 	{
 		utility.clearAll();
+		curPlant = -1;
 		
 		// Blue gradient bg
 		var grd = backgroundSurface.createLinearGradient(0, 0, 0, 512);
@@ -30,22 +39,22 @@ var info = {
 		backgroundSurface.fillRect(0, 0, 1152, 512);
 		
 		// Grey side panel
-		var grd2 = gameplaySurface.createLinearGradient(0, 0, 0, 512);
+		var grd2 = backgroundSurface.createLinearGradient(0, 0, 0, 512);
 		grd2.addColorStop(0, "darkgrey");
 		grd2.addColorStop(1, "black");
 		
-		gameplaySurface.fillStyle = grd2;
-		gameplaySurface.fillRect(0, 0, 64 * 4, 512);
+		backgroundSurface.fillStyle = grd2;
+		backgroundSurface.fillRect(0, 0, 64 * 4, 512);
 		
 		var imgsPerRow = 6;
 		var gapBetween = (1152 - (64 * 4) - (this.tileSize * imgsPerRow)) / (imgsPerRow + 1);
 		
 		// Display appropriate sprite for each plant
-		for (var i = 0; i < plantList.length; i++)
+		for (var i = this.plantsPerPage * this.page; i < Math.min(this.plantsPerPage * (this.page + 1), plantList.length); i++)
 		{
 			var sprite = new Image();
 			var x = ((this.tileSize + gapBetween) * (i % imgsPerRow)) + (this.tileSize * 2) + gapBetween;
-			var y = ((this.tileSize + gapBetween) * Math.floor(i / imgsPerRow)) + gapBetween;
+			var y = ((this.tileSize + gapBetween) * Math.floor((i % this.plantsPerPage) / imgsPerRow)) + gapBetween;
 			
 			if (plantList[i].harvested || this.debugInfo)
 			{
@@ -65,6 +74,26 @@ var info = {
 				this.tileSize, this.tileSize
 			);
 		}
+		
+		var xOffset = 32;
+		var yOffset = 48;
+		
+		utility.addClickItem(256 + xOffset, 512 - yOffset, 64, 32, this.prevPage, '');
+		utility.addClickItem(1152 - xOffset * 3, 512 - yOffset, 64, 32, this.nextPage, '');
+		
+		gameplaySurface.drawImage
+		(
+			prevPageButton,
+			0, 0, prevPageButton.width, prevPageButton.height,
+			256 + xOffset, 512 - yOffset, 64, 32
+		);
+		
+		gameplaySurface.drawImage
+		(
+			nextPageButton,
+			0, 0, nextPageButton.width, nextPageButton.height,
+			1152 - xOffset * 3, 512 - yOffset, 64, 32
+		);
 	},
 
 	// Display plant info if harvested
@@ -94,6 +123,28 @@ var info = {
 		curImage = 0;
 		plantShown = false;
 		imagePosX = -256;
+	},
+	
+	nextPage: function(i)
+	{
+		if (info.page < (plantList.length / info.plantsPerPage) - 1)
+		{
+			info.page += 1;
+			info.init();
+		}
+		else
+			console.debug("Already on last page");
+	},
+	
+	prevPage: function(i)
+	{
+		if (info.page > 0)
+		{
+			info.page -= 1;
+			info.init();
+		}
+		else
+			console.debug("Already on first page");
 	},
 	
 	update: function()
