@@ -12,6 +12,15 @@ Animation = {
 	WorldEventRight: 5
 };
 
+Level = {
+	Tutorial: 0,
+	BaseCamp: 1,
+	Map1: 2,
+	Map2: 3,
+	Map3: 4,
+	Map4: 5
+}
+
 //Arrow key codes
 var LEFT = 37;
 var UP = 38;
@@ -30,7 +39,15 @@ var gameplay = {
 	mapBuilt: false,
 	onPause: false,
 	collisionTiles: [],
+	currentLevel: Level.Tutorial,
+	oneShotObservation: false,
+	canTeleport: false,
 	
+	// Buildings
+	store: Object.create(spriteObject),
+	mainCamp: Object.create(spriteObject),
+	training: Object.create(spriteObject),
+
 	player: {
 		// Sprite Located on sheet
 		sourceX: 0,
@@ -272,15 +289,30 @@ var gameplay = {
 		this.speedCoin.sprite.src="../img/Tokens/speedToken.png";
 		//load the teleporter
 		this.telePorter.sprite.src="../img/Tiles/telelporter.png";
-		//place the coins and objects 
 		
+		//place the coins and objects 
 		this.placeObservationEvent();
 		this.placeBlue();
 		this.placeGray();
 		this.placeSpeed();
 		this.placeTeleporter();
 		
+		// Init the stores
+		this.training.width = 256;
+		this.training.height = 128;
+		this.training.sprite = new Image();
+		this.training.sprite.src = "../img/Tiles/training.png"
 		
+		this.store.width = 256;
+		this.store.height = 128;
+		this.store.sprite = new Image();
+		this.store.sprite.src = "../img/Tiles/shop.png";
+		
+		this.mainCamp.width = 256;
+		this.mainCamp.height = 128;
+		this.mainCamp.sprite = new Image();
+		this.mainCamp.sprite.src = "../img/Tiles/mainCamp.png";
+
 	},
 	
 	updateSprite: function()
@@ -482,15 +514,19 @@ var gameplay = {
 		
 			if (utility.collisionDetection(gameplay.player, gameplay.observationInstance))
 			{	
-				if(skillBook.swim==true && skillBook.climb ==true && skillBook.sprint==true)
-					{
-						switchGamemode(ScreenState.Observation);
-					}
-					else
-					{
-						this.collide();
-						this.message("!")
-					}
+				if(skillBook.swim==true && skillBook.climb ==true)
+				{
+					this.removeObservationPoint();
+					switchGamemode(ScreenState.Observation);
+				}
+				else
+				{
+					this.collide();
+					this.message("!")
+				}
+				this.canTeleport = true;
+
+
 			}
 				
 			//check for collisions with collidables.
@@ -553,15 +589,20 @@ var gameplay = {
 						}	
 						if ( utility.collisionDetection(gameplay.player, gameplay.telePorter))
 						{
-							if(skillBook.teleporter==true)
+							if(this.canTeleport)
 							{
-								message("teleport");
-								
+								if (this.currentLevel != Level.BaseCamp)
+								{
+									this.nextLevel(Level.BaseCamp);
+								}
+
 							}
 							else
 							{
 								this.collide();
+								this.message("!")
 							}
+
 						
 						}
 					}
@@ -570,6 +611,71 @@ var gameplay = {
 			this.updateAnimation();
 		}
 	},
+	
+		nextLevel: function(map)
+	{
+		this.currentLevel = map;
+		backgroundSurface.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
+		gameplaySurface.clearRect(0, 0, gameplayCanvas.width, gameplayCanvas.height);
+		switch(map)
+		{
+			case Level.BaseCamp:
+				this.drawBaseCamp();
+				break;
+			case Level.Map1:
+				this.drawMap1();
+				break;
+			case Level.Map2:
+				this.drawMap2();
+				break;
+			case Level.Map3:
+				this.drawMap3();
+				break;
+			case Level.Map4:
+				this.drawMap4();
+				break;
+		}
+		cameraController.buildMap(allLevelMaps[gameplay.currentLevel], 0);
+		cameraController.buildMap(allObjectMaps[gameplay.currentLevel], 1);
+		console.debug("Building level");
+	},
+	
+	// Functions to set up the smart positions of the player,
+	// observation, teleporter, and other buildings of importance
+	drawBaseCamp: function() // Draw the Store, Training Building, Teleporter, and Main Camp
+	{
+		this.player.x = 300;
+		this.player.y = 300;
+		
+		this.telePorter.x = 300;
+		this.telePorter.y = 300;
+		
+		this.training.x = 3 * 64;
+		this.training.y = 2 * 64;
+		
+		this.mainCamp.x = 7 * 64;
+		this.mainCamp.y = 2 * 64;
+		
+		this.store.x = 11 * 64;
+		this.store.y = 2 * 64;
+	},
+	
+	drawMap1: function()
+	{
+	},
+	
+	drawMap2: function()
+	{
+	},
+	
+	drawMap3: function()
+	{
+	},
+	
+	drawMap4: function()
+	{
+	},
+
 	
 	render: function()
 	{
@@ -636,22 +742,39 @@ var gameplay = {
 					this.speedCoin.width, this.speedCoin.height
 				 );
 			}
-				if(this.telePorter.visible==true)
-					{
-						gameplaySurface.drawImage	
-						(
-							this.telePorter.sprite, 
-							this.telePorter.sourceX, this.telePorter.sourceY, 
-							this.telePorter.sourceWidth, this.telePorter.sourceHeight,
-							Math.floor(this.telePorter.x), Math.floor(this.telePorter.y), 
-							this.telePorter.width, 
-							this.telePorter.height
-							
-						
-							
-					   );
-			
-				    }
+			if(this.telePorter.visible==true)
+			{
+				gameplaySurface.drawImage	
+				(
+					this.telePorter.sprite, 
+					this.telePorter.sourceX, this.telePorter.sourceY, 
+					this.telePorter.sourceWidth, this.telePorter.sourceHeight,
+					Math.floor(this.telePorter.x), Math.floor(this.telePorter.y), 
+					this.telePorter.width, this.telePorter.height
+			   );
+			}
+			if (this.currentLevel == Level.BaseCamp)
+			{
+				gameplaySurface.drawImage
+				(
+					this.training.sprite,
+					this.training.x, this.training.y
+				);
+				
+				gameplaySurface.drawImage
+				(
+					this.mainCamp.sprite,
+					this.mainCamp.x, this.mainCamp.y
+				);
+				
+				gameplaySurface.drawImage
+				(
+					this.store.sprite,
+					this.store.x, this.store.y
+				);
+			}
+
+
 			
 			gameplaySurface.drawImage
 			(
@@ -678,26 +801,43 @@ var gameplay = {
 	// Randomly places the observationInstance on the map
 	placeObservationEvent: function()
 	{
-		var obsX = Math.random() * (cameraController.gameWorld.width - 128) - this.observationInstance.width + 128;
-		var obsY = Math.random() * (cameraController.gameWorld.height - 128) - this.observationInstance.height + 128;
-		
-		this.observationInstance.x = obsX;
-		this.observationInstance.y = obsY;
-		this.observationInstance.lowestPos = obsY;
-		
-		console.debug("x: " + obsX + " y: " + obsY);
+		if (this.currentLevel == Level.Tutorial)
+		{
+			if (!this.oneShotObservation)
+			{
+				this.observationInstance.x = 1000;
+				this.observationInstance.y = 100;
+				this.observationInstance.lowestPos = 100;
+				this.oneShotObservation = true;
+			}
+		}
+		else if (this.currentLevel == Level.BaseCamp)
+		{
+		}
+		else
+		{
+			var obsX = Math.random() * (cameraController.gameWorld.width - 128) - this.observationInstance.width + 128;
+			var obsY = Math.random() * (cameraController.gameWorld.height - 128) - this.observationInstance.height + 128;
+			
+			this.observationInstance.x = obsX;
+			this.observationInstance.y = obsY;
+			this.observationInstance.lowestPos = obsY;
+			
+			console.debug("x: " + obsX + " y: " + obsY);
+		}
+
 	},
 	
 	placeBlue: function()
 	{
-		this.blueCoin.x=1000;
-		this.blueCoin.y=128*2;
+		this.blueCoin.x=300;
+		this.blueCoin.y=400;
 	},
 	
 	placeGray: function()
 	{
-		this.grayCoin.x=2000;
-		this.grayCoin.y=1000;
+		this.grayCoin.x=600;
+		this.grayCoin.y=100;
 	},
 	placeSpeed:function()
 	{
@@ -706,11 +846,15 @@ var gameplay = {
 	},
 	placeTeleporter:function()
 	{	
-		this.telePorter.x=300;
+		this.telePorter.x=1000;
 		this.telePorter.y=300;
 		console.debug("x: " + this.telePorter.width + " y: " + this.telePorter.height);
-	}
+	},
 	
+	removeObservationPoint: function()
+	{
+		this.observationInstance.x = -64;
+	}
 }
 
 
