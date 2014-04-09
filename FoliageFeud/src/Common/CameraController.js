@@ -15,10 +15,10 @@ var EMPTY = 0;
 var GRASS = 1;
 var WATER = 2;
 var ROCK = 3;
-var SKY = 4;
 var TREE = 5;
 var BIRCHTREE = 7;
-var ENDOFTREES = 12;
+var SKY = 8;
+var ENDOFTREES = 11;
 var WATERBOUNDRARYBEGIN = 13
 var WATERBOUNDRARYEND = 32
 
@@ -234,138 +234,34 @@ var cameraController = {
 					{
 						sprite.name = "water";
 						gameplay.collisionTiles[row][column] = sprite;
-						//this.collidables.push(sprite);
 					}
 					if (currentTile == ROCK)
 					{
 						sprite.name = "rock";
 						gameplay.collisionTiles[row][column] = sprite;
-						//this.collidables.push(sprite);
 					}
 				}
 				else if (tier == 1) // Object tiles
 				{
 					if (currentTile == TREE || currentTile == BIRCHTREE)
 					{
-						sprite.sourceWidth = 128;
+						if (currentTile == BIRCHTREE)
+						{
+							sprite.sourceWidth = 64;
+							sprite.width = 64;
+						}
+						else
+						{
+							sprite.sourceWidth = 128;
+							sprite.width = 128;
+						}
 						sprite.sourceHeight = 128;
-						sprite.width = 128;
 						sprite.height = 128;
 						sprite.name = "tree";
 						this.foregroundTiles[row][column] = sprite;
 						gameplay.collisionTiles[row][column] = sprite;
-						//this.collidables.push(sprite);
 					}
 				}
-				
-				/*
-				switch (currentTile)
-				{
-					case TREE:
-						sprite.sourceWidth = 128;
-						sprite.sourceHeight = 128;
-						sprite.width = 128;
-						sprite.height = 128;
-						sprite.name = "tree";
-						if (row + 1 < levelMap.length && column + 1 < levelMap.length)
-						{
-							levelMap[row + 1][column] = EMPTY;
-							levelMap[row][column + 1] = EMPTY;
-							levelMap[row + 1][column + 1] = EMPTY;
-						}
-						else if (row + 1 < levelMap.length)
-						{
-							levelMap[row + 1][column] = EMPTY;
-						}
-						else if (column + 1 < levelMap.length)
-						{
-							levelMap[row][column + 1] = EMPTY;
-						}
-						this.foregroundTiles[row][column] = sprite;
-						this.collidables.push(sprite);
-						break;
-					case BIRCHTREE:
-						sprite.sourceWidth = 128;
-						sprite.sourceHeight = 128;
-						sprite.width = 128;
-						sprite.height = 128;
-						sprite.name = "tree";
-						if (row + 1 < levelMap.length && column + 1 < levelMap.length)
-						{
-							levelMap[row + 1][column] = EMPTY;
-							levelMap[row][column + 1] = EMPTY;
-							levelMap[row + 1][column + 1] = EMPTY;
-						}
-						else if (row + 1 < levelMap.length)
-						{
-							levelMap[row + 1][column] = EMPTY;
-						}
-						else if (column + 1 < levelMap.length)
-						{
-							levelMap[row][column + 1] = EMPTY;
-						}
-						this.foregroundTiles[row][column] = sprite;
-						this.collidables.push(sprite);
-						break;
-					default:
-						this.baseTiles[row][column] = sprite;
-						break;
-					/*case GRASS:
-						var grass = Object.create(spriteObject);
-						grass.sourceX = tilesheetX;
-						grass.sourceY = tilesheetY;
-						grass.x = column * SIZE;
-						grass.y = row * SIZE;
-						this.baseTiles[row][column] = grass;
-						break;
-					  
-					case TREE:
-						var tree = Object.create(spriteObject);
-						tree.sourceX = tilesheetX;
-						tree.sourceY = tilesheetY;
-						tree.sourceWidth = 128;
-						tree.sourceHeight = 128;
-						tree.x = column * SIZE;
-						tree.y = row * SIZE;
-						tree.width = 128;
-						tree.height = 128;
-						tree.name="tree";
-						this.foregroundTiles[row][column] = tree;
-						this.collidables.push(tree);
-						break;
-						
-					case WATER:
-						var water = Object.create(spriteObject);
-						water.sourceX = tilesheetX;
-						water.sourceY = tilesheetY;
-						water.x = column * SIZE;
-						water.y = row * SIZE;
-						this.baseTiles[row][column] = water;
-						water.name="water";
-						this.collidables.push(water);
-						break;
-						
-					case SKY:
-						var sky = Object.create(spriteObject);
-						sky.sourceX = tilesheetX;
-						sky.sourceY = tilesheetY;
-						sky.x = column * SIZE;
-						sky.y = row * SIZE;
-						this.baseTiles[row][column] = sky;
-						sky.name="sky";
-						break;
-						
-					case ROCK:
-						var rock = Object.create(spriteObject);
-						rock.sourceX = tilesheetX;
-						rock.sourceY = tilesheetY;
-						rock.x = column * SIZE;
-						rock.y = row * SIZE;
-						rock.name="rock";
-						this.baseTiles[row][column] = rock;
-						this.collidables.push(rock);
-						break;
-				}*/
 			  }
 			}
 		}

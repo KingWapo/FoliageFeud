@@ -5,6 +5,7 @@
 var quests = {
 	plantsToIdentify: [],
 	regionsToVisit: [],
+	finishedQuests: [],
 	
 	hasQuest: function()
 	{
@@ -20,11 +21,14 @@ var quests = {
 	removeQuest:function(plant, region)
 	{
 		var plantIndex = this.plantsToIdentify.indexOf(plant);
+		console.debug(plantIndex);
 		if (plantIndex > -1)
 		{
-			this.plantsToIdentify = this.plantsToIdentify.splice(plantIndex, 1);
-			this.regionsToVisit = this.regionsToVisit.splice(plantIndex, 1);
+			this.finishedQuests.push(this.plantsToIdentify[plantIndex]);
+			this.plantsToIdentify.splice(plantIndex, 1);
+			this.regionsToVisit.splice(plantIndex, 1);
 		}
+		console.debug(this.plantsToIdentify);
 	},
 	
 	plantsInARegion: function(region)
@@ -32,9 +36,10 @@ var quests = {
 		var plants = [];
 		for (var i = 0; i < this.plantsInARegion.length; i++)
 		{
-			if (regionsToVisit[i] == region)
+			if (this.regionsToVisit[i] == region)
 			{
-				plants.push(plantsToIdentify[i]);
+				plants.push(this.plantsToIdentify[i]);
+				
 			}
 		}
 		return plants;

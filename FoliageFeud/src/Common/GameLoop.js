@@ -225,6 +225,12 @@ function mainUpdate()
 		case ScreenState.SNASelectionScreen:
 			break;
 		case ScreenState.SiblingInteraction:
+			if (entering[currentScreen])
+			{
+				mainCamp.init();
+				entering[currentScreen] = false;
+			}
+			mainCamp.render();
 			break;
 	}
 	//The animation loop

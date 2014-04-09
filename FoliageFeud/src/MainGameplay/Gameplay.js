@@ -42,6 +42,7 @@ var gameplay = {
 	currentLevel: Level.Tutorial,
 	oneShotObservation: false,
 	canTeleport: false,
+	onMainCamp: false,
 	
 	// Buildings
 	store: Object.create(spriteObject),
@@ -128,7 +129,7 @@ var gameplay = {
 			}
 		},
 		
-		x: 0,
+		x: -64,
 		y: 0,
 		vy: 0,
 		width: 64,
@@ -139,6 +140,8 @@ var gameplay = {
 		
 		sprite: new Image()
 	},
+	
+	observationInstances: [],
 	
 	blueCoin: {
 		sourceX: 0,
@@ -261,8 +264,8 @@ var gameplay = {
 		
 		// Initialize collisions
 		var collider = {
-			x: 0,
-			y: 0,
+			x: -64,
+			y: -64,
 			width: 0,
 			height: 0
 		};
@@ -413,7 +416,10 @@ var gameplay = {
 	updateAnimation: function()
 	{
 		this.player.updateAnimation();
-		this.observationInstance.updateAnimation();
+		for (var i = 0; i < this.observationInstances.length; i++)
+		{
+			this.observationInstances[i].updateAnimation();
+		}
 		this.blueCoin.updateAnimation();
 		this.grayCoin.updateAnimation();
 		this.speedCoin.updateAnimation();
@@ -511,22 +517,24 @@ var gameplay = {
 		else if (currentScreen == ScreenState.Gameplay)
 		{
 			this.checkMovement();
-		
-			if (utility.collisionDetection(gameplay.player, gameplay.observationInstance))
-			{	
-				if(skillBook.swim==true && skillBook.climb ==true)
-				{
-					this.removeObservationPoint();
-					switchGamemode(ScreenState.Observation);
+			
+			for (var i = 0; i < this.observationInstances.length; i++)
+			{
+				var obs = this.observationInstances[i];
+				if (utility.collisionDetection(gameplay.player, obs))
+				{	
+					if(skillBook.swim==true && skillBook.climb ==true)
+					{
+						this.removeObservationPoint(i);
+						switchGamemode(ScreenState.Observation);
+					}
+					else
+					{
+						this.collide();
+						this.message("!")
+					}
+					this.canTeleport = true;
 				}
-				else
-				{
-					this.collide();
-					this.message("!")
-				}
-				this.canTeleport = true;
-
-
 			}
 				
 			//check for collisions with collidables.
@@ -595,6 +603,10 @@ var gameplay = {
 								{
 									this.nextLevel(Level.BaseCamp);
 								}
+								else
+								{
+									//Level Select
+								}
 
 							}
 							else
@@ -609,14 +621,28 @@ var gameplay = {
 				}
 			}
 			this.updateAnimation();
+			
+			if (this.currentLevel == Level.BaseCamp)
+			{
+				if (utility.collisionDetection(gameplay.player, gameplay.mainCamp) && !this.onMainCamp)
+				{
+					currentScreen = ScreenState.SiblingInteraction;
+					this.onMainCamp = true;
+				}
+				else if (this.onMainCamp)
+				{
+					this.onMainCamp = false;
+				}
+			}
 		}
 	},
 	
-		nextLevel: function(map)
+	nextLevel: function(map)
 	{
 		this.currentLevel = map;
 		backgroundSurface.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
 		gameplaySurface.clearRect(0, 0, gameplayCanvas.width, gameplayCanvas.height);
+		this.observationInstances = [];
 		switch(map)
 		{
 			case Level.BaseCamp:
@@ -775,17 +801,18 @@ var gameplay = {
 			}
 
 
-			
-			gameplaySurface.drawImage
-			(
-			  
-				this.observationInstance.sprite, 
-				this.observationInstance.sourceX, this.observationInstance.sourceY, 
-				this.observationInstance.sourceWidth, this.observationInstance.sourceHeight,
-				Math.floor(this.observationInstance.x), Math.floor(this.observationInstance.y), 
-				this.observationInstance.width, this.observationInstance.height
-			);
-	
+			for (var i = 0; i < this.observationInstances.length; i++)
+			{
+				gameplaySurface.drawImage
+				(
+				  
+					this.observationInstances[i].sprite, 
+					this.observationInstances[i].sourceX, this.observationInstances[i].sourceY, 
+					this.observationInstances[i].sourceWidth, this.observationInstances[i].sourceHeight,
+					Math.floor(this.observationInstances[i].x), Math.floor(this.observationInstances[i].y), 
+					this.observationInstances[i].width, this.observationInstances[i].height
+				);
+			}
 			gameplaySurface.drawImage
 			(
 				this.player.sprite, 
@@ -801,31 +828,31 @@ var gameplay = {
 	// Randomly places the observationInstance on the map
 	placeObservationEvent: function()
 	{
-		if (this.currentLevel == Level.Tutorial)
+		for (var i = this.observationInstances.length; i < quests.plantsInARegion(this.currentLevel).length; i++)
 		{
-			if (!this.oneShotObservation)
+			var obsPoint = Object.create(this.observationInstance);
+			if (this.currentLevel == Level.Tutorial)
 			{
-				this.observationInstance.x = 1000;
-				this.observationInstance.y = 100;
-				this.observationInstance.lowestPos = 100;
-				this.oneShotObservation = true;
+				if (!this.oneShotObservation)
+				{
+					obsPoint.x = 1000;
+					obsPoint.y = 100;
+					obsPoint.lowestPos = 100;
+				}
 			}
+			else
+			{
+				var obsX = Math.random() * (cameraController.gameWorld.width - 128) - obsPoint.width + 128;
+				var obsY = Math.random() * (cameraController.gameWorld.height - 128) - obsPoint.height + 128;
+				
+				obsPoint.x = obsX;
+				obsPoint.y = obsY;
+				obsPoint.lowestPos = obsY;
+				
+				console.debug("x: " + obsX + " y: " + obsY);
+			}
+			this.observationInstances.push(obsPoint);
 		}
-		else if (this.currentLevel == Level.BaseCamp)
-		{
-		}
-		else
-		{
-			var obsX = Math.random() * (cameraController.gameWorld.width - 128) - this.observationInstance.width + 128;
-			var obsY = Math.random() * (cameraController.gameWorld.height - 128) - this.observationInstance.height + 128;
-			
-			this.observationInstance.x = obsX;
-			this.observationInstance.y = obsY;
-			this.observationInstance.lowestPos = obsY;
-			
-			console.debug("x: " + obsX + " y: " + obsY);
-		}
-
 	},
 	
 	placeBlue: function()
@@ -851,9 +878,10 @@ var gameplay = {
 		console.debug("x: " + this.telePorter.width + " y: " + this.telePorter.height);
 	},
 	
-	removeObservationPoint: function()
+	removeObservationPoint: function(index)
 	{
-		this.observationInstance.x = -64;
+		this.observationInstances.splice(index, 1);
+		quests.removeQuest(quests.plantsToIdentify[index], quests.regionsToVisit[index]);
 	}
 }
 
