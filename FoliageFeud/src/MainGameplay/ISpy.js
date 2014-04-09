@@ -121,12 +121,8 @@ var ispy = {
 		console.debug("You selected the wrong flower");
 	},
 	
-	setRequested: function(plantName)
+	setRequested: function(plantIndex)
 	{
-		for (var i = 0; i < plantList.length; i++)
-		{
-			if (plantList[i].name == plantName)
-				ispy.requestedPlant = i;
-		}
+		ispy.requestedPlant = plantIndex;
 	}
 };
