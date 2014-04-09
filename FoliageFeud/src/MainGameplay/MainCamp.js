@@ -11,6 +11,8 @@ var mainCamp = {
 		this.background.src = "../img/Backgrounds/iSpyMenu.png";
 		this.exitButton.src = "../img/Buttons/exitButton.png";
 		
+		this.listOfQuests = [];
+		
 		for (var i = quests.plantsToIdentify.length; i < quests.questLimit; i++)
 		{
 			var newPlant;
@@ -18,10 +20,17 @@ var mainCamp = {
 			do
 			{
 				newPlant = Math.floor(Math.random() * plantList.length);
-			} while (utility.contains(quests.plantsToIdentify, newPlant) || plantList[newPlant].harvested)
+			} while (utility.contains(quests.plantsToIdentify, newPlant) || plantList[newPlant].harvested);
 			
 			this.listOfQuests.push(newPlant);
 		}
+		
+		this.updateQuests();
+	},
+	
+	updateQuests: function()
+	{
+		utility.clearAll();
 		
 		menuSurface.drawImage(
 			this.background,
@@ -32,7 +41,7 @@ var mainCamp = {
 		{
 			var plantName = plantList[this.listOfQuests[i]].name;
 			
-			utility.writeForClick(menuSurface, [plantName], .45 * menuCanvas.width, .25 * menuCanvas.height + (60 * i), menuCanvas.width / 2, 30, true, [quests.addQuest, this.listOfQuests[i]]);
+			utility.writeForClick(menuSurface, [plantName], .45 * menuCanvas.width, .25 * menuCanvas.height + (60 * i), menuCanvas.width / 2, 30, true, [quests.addQuestFromSibling, this.listOfQuests[i]]);
 		}
 		
 		menuSurface.drawImage(
@@ -40,7 +49,7 @@ var mainCamp = {
 			menuCanvas.width - 320, menuCanvas.height - 160
 		);
 		
-		utility.addClickItem(menuCanvas.width - 320, menuCanvas.height - 160, this.exitButton.width, this.exitButton.height, this.exitToGameplay, "")
+		utility.addClickItem(menuCanvas.width - 320, menuCanvas.height - 160, this.exitButton.width, this.exitButton.height, this.exitToGameplay, "");
 	},
 	
 	render: function()
@@ -55,6 +64,7 @@ var mainCamp = {
 	
 	exitToGameplay: function(empty)
 	{
+		entering[currentScreen] = true;
 		currentScreen = ScreenState.Gameplay;
 	}
 };

@@ -43,7 +43,7 @@ var plant = {
 		do
 		{
 			i = Math.floor(Math.random() * plantList.length);
-		} while (plantList[i].harvested)
+		} while (plantList[i].harvested);
 		
 		return i;
 	}
