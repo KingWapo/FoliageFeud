@@ -223,6 +223,12 @@ function mainUpdate()
 		case ScreenState.ShopScreen:
 			break;
 		case ScreenState.SNASelectionScreen:
+			if (entering[currentScreen])
+			{
+				snaSelect.init();
+				entering[currentScreen] = false;
+			}
+			snaSelect.render();
 			break;
 		case ScreenState.SiblingInteraction:
 			if (entering[currentScreen])

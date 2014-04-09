@@ -161,7 +161,6 @@ var cameraController = {
 		{
 			for (var column = Math.floor(this.camera.x / 64) - 2; column < Math.floor((this.camera.x + this.camera.width)/64) + 2; column++)
 			{
-				//console.debug(row + ", " + column);
 				if (row >= 0 && row < this.ROWS && column >= 0 && column < this.COLUMNS)
 				{
 					var sprite = this.baseTiles[row][column];
@@ -171,7 +170,6 @@ var cameraController = {
 					{
 						if(sprite.visible && sprite.scrollable)
 						{
-						//console.debug("Source x, y: " + sprite.sourceX + ", " + sprite.sourceY);
 						 backgroundSurface.drawImage
 						 (
 						   this.tilesheet, 
@@ -210,6 +208,11 @@ var cameraController = {
 	
 	buildMap: function(levelMap, tier)
 	{
+		this.gameWorld.width = levelMap[0].length * 64;
+		this.gameWorld.height = levelMap.length * 64;
+		this.ROWS = levelMap.length;
+		this.COLUMNS = levelMap[0].length;
+		console.debug(this.gameWorld.width + " " + this.gameWorld.height);
 		for(var row = 0; row < levelMap.length; row++) 
 		{	
 			for(var column = 0; column < levelMap[row].length; column++) 

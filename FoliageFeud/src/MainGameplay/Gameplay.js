@@ -43,6 +43,8 @@ var gameplay = {
 	oneShotObservation: false,
 	canTeleport: false,
 	onMainCamp: false,
+	onTeleport: false,
+	onTraining: false,
 	
 	// Buildings
 	store: Object.create(spriteObject),
@@ -334,26 +336,6 @@ var gameplay = {
 	
 	collide: function()
 	{
-		playerSpeed=0;
-		/*if(gamplay.player.animation==Animation.Right)
-		{
-			gamplay.player.x=player.x-16;
-			
-		}
-		if(gamplay.player.animation==Animation.Left)
-		{
-			gamplay.player.x=player.x+16;
-		}
-		
-		if(gamplay.player.animation==Animation.Up)
-		{
-			gamplay.player.y=player.y+16;
-		}
-		if(gamplay.player.animation==Animation.Down)
-		{
-			gamplay.player.y=player.y-16;
-			
-		}*/
 		if (moveRight && !moveLeft)
 		{
 			this.player.x = this.player.x-16;
@@ -540,7 +522,6 @@ var gameplay = {
 			//check for collisions with collidables.
 			if (!screensLoaded[ScreenState.WorldEvent] && cameraController.mapBuilt)
 			{
-				//console.debug(Math.max(0, (gameplay.player.y - 3)/64) + " -- " + Math.min(gameplay.player.y + 3, this.collisionTiles.length - 1));
 				for( row = Math.max(0, Math.floor((gameplay.player.y)/64) - 3); row < Math.min(Math.floor((gameplay.player.y)/64) + 3, this.collisionTiles.length - 1); row++)
 				{
 					for( col = Math.max(0, Math.floor((gameplay.player.x)/64) - 3); col < Math.min(Math.floor((gameplay.player.x)/64) + 3, this.collisionTiles[row].length - 1); col++)
@@ -599,23 +580,28 @@ var gameplay = {
 						{
 							if(this.canTeleport)
 							{
-								if (this.currentLevel != Level.BaseCamp)
+								if (!this.onTeleport)
 								{
-									this.nextLevel(Level.BaseCamp);
+									this.onTeleport = true;
+									if (this.currentLevel != Level.BaseCamp)
+									{
+										this.nextLevel(Level.BaseCamp);
+									}
+									else
+									{
+										currentScreen = ScreenState.SNASelectionScreen;
+									}
 								}
-								else
-								{
-									//Level Select
-								}
-
 							}
 							else
 							{
 								this.collide();
 								this.message("!")
 							}
-
-						
+						}
+						else if (this.onTeleport)
+						{
+							this.onTeleport = false;
 						}
 					}
 				}
@@ -631,10 +617,10 @@ var gameplay = {
 						this.onMainCamp = true;
 						currentScreen = ScreenState.SiblingInteraction;
 					}
-					else
-					{
-						this.onMainCamp = false;
-					}
+				}
+				else if(this.onMainCamp)
+				{
+					this.onMainCamp = false;
 				}
 			}
 		}
@@ -645,6 +631,7 @@ var gameplay = {
 		this.currentLevel = map;
 		backgroundSurface.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
 		gameplaySurface.clearRect(0, 0, gameplayCanvas.width, gameplayCanvas.height);
+		this.clearCollision();
 		this.observationInstances = [];
 		switch(map)
 		{
@@ -691,6 +678,7 @@ var gameplay = {
 	
 	drawMap1: function()
 	{
+		
 	},
 	
 	drawMap2: function()
@@ -704,7 +692,21 @@ var gameplay = {
 	drawMap4: function()
 	{
 	},
-
+	
+	clearCollision: function()
+	{
+		for (var i = 0; i < this.collisionTiles.length; i++)
+		{
+			for (var j = 0; j < this.collisionTiles[i].length; j++)
+			{
+				if (this.collisionTiles[i][j].x != -64)
+				{
+					this.collisionTiles[i][j].x = -64;
+					this.collisionTiles[i][j].width = 0;
+				}
+			}
+		}
+	},
 	
 	render: function()
 	{
@@ -878,13 +880,11 @@ var gameplay = {
 	{	
 		this.telePorter.x=1000;
 		this.telePorter.y=300;
-		console.debug("x: " + this.telePorter.width + " y: " + this.telePorter.height);
 	},
 	
 	removeObservationPoint: function(index)
 	{
 		this.observationInstances.splice(index, 1);
-		console.debug("Plant: " + quests.plantsToIdentify[index]);
 		ispy.setRequested(quests.plantsToIdentify[index]);
 		quests.removeQuest(quests.plantsToIdentify[index], quests.regionsToVisit[index]);
 	}
