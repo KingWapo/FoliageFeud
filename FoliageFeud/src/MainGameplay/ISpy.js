@@ -52,7 +52,7 @@ var ispy = {
 				do
 				{
 					plantIndex = plant.getRandUnHarvested();
-				} while (utility.contains(curPlants, plantIndex))
+				} while (utility.contains(curPlants, plantIndex));
 			}
 				
 			curPlants.push(plantIndex);

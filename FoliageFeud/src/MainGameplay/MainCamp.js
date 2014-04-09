@@ -17,10 +17,20 @@ var mainCamp = {
 		{
 			var newPlant;
 			
-			do
+			if (this.listOfQuests.length < 1)
 			{
-				newPlant = Math.floor(Math.random() * plantList.length);
-			} while (utility.contains(quests.plantsToIdentify, newPlant) || plantList[newPlant].harvested);
+				do
+				{
+					newPlant = plant.getRandUnHarvested();
+				} while (utility.contains(quests.plantsToIdentify, newPlant));
+			}
+			else
+			{
+				do
+				{
+					newPlant = plant.getRandUnHarvested();
+				} while (utility.contains(this.listOfQuests, newPlant) || utility.contains(quests.plantsToIdentify, newPlant));
+			}
 			
 			this.listOfQuests.push(newPlant);
 		}
