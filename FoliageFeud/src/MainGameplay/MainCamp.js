@@ -13,25 +13,39 @@ var mainCamp = {
 		
 		for (var i = quests.plantsToIdentify.length; i < quests.questLimit; i++)
 		{
-			this.listOfQuests.push("Horsetail");
+			var newPlant;
+			
+			do
+			{
+				newPlant = Math.floor(Math.random() * plantList.length);
+			} while (utility.contains(quests.plantsToIdentify, newPlant) || plantList[newPlant].harvested)
+			
+			this.listOfQuests.push(newPlant);
 		}
+		
+		menuSurface.drawImage(
+			this.background,
+			0, 0
+		);
+		
+		for (var i = 0; i < this.listOfQuests.length; i++)
+		{
+			var plantName = plantList[this.listOfQuests[i]].name;
+			
+			utility.writeForClick(menuSurface, [plantName], .45 * menuCanvas.width, .25 * menuCanvas.height + (60 * i), menuCanvas.width / 2, 30, true, [quests.addQuest, this.listOfQuests[i]]);
+		}
+		
+		menuSurface.drawImage(
+			this.exitButton,
+			menuCanvas.width - 320, menuCanvas.height - 160
+		);
 		
 		utility.addClickItem(menuCanvas.width - 320, menuCanvas.height - 160, this.exitButton.width, this.exitButton.height, this.exitToGameplay, "")
 	},
 	
 	render: function()
 	{
-		menuSurface.drawImage(
-			this.background,
-			0, 0
-		);
-		
-		utility.writeText(menuSurface, this.listOfQuests, .45 * menuCanvas.width, .25 * menuCanvas.height, menuCanvas.width / 2, 30, true);
-		
-		menuSurface.drawImage(
-			this.exitButton,
-			menuCanvas.width - 320, menuCanvas.height - 160
-		);
+	
 	},
 	
 	giveQuest: function()

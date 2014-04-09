@@ -15,14 +15,14 @@ var quests = {
 	
 	addQuest: function(plant, region)
 	{
-		this.plantsToIdentify.push(plant);
-		this.regionsToVisit.push(region);
+		quests.plantsToIdentify.push(plant);
+		quests.regionsToVisit.push(region);
 	},
 	
 	removeQuest:function(plant, region)
 	{
 		var plantIndex = this.plantsToIdentify.indexOf(plant);
-		console.debug(plantIndex);
+		console.debug('remove quests: ', plantIndex);
 		if (plantIndex > -1)
 		{
 			this.finishedQuests.push(this.plantsToIdentify[plantIndex]);

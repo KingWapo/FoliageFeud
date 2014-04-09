@@ -71,6 +71,7 @@ var ispy = {
 		// Write plant name and traits to screen
 		var strings = [];
 		
+		console.debug('requested plant: ', this.requestedPlant);
 		strings.push("Requested Plant: ".concat(plantList[this.requestedPlant].name));
 		
 		for (var j = 0; j < plantList[this.requestedPlant].traits.length; j++)
