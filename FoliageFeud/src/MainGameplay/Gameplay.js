@@ -624,14 +624,17 @@ var gameplay = {
 			
 			if (this.currentLevel == Level.BaseCamp)
 			{
-				if (utility.collisionDetection(gameplay.player, gameplay.mainCamp) && !this.onMainCamp)
+				if (utility.collisionDetection(gameplay.player, gameplay.mainCamp))
 				{
-					currentScreen = ScreenState.SiblingInteraction;
-					this.onMainCamp = true;
-				}
-				else if (this.onMainCamp)
-				{
-					this.onMainCamp = false;
+					if (!this.onMainCamp)
+					{
+						this.onMainCamp = true;
+						currentScreen = ScreenState.SiblingInteraction;
+					}
+					else
+					{
+						this.onMainCamp = false;
+					}
 				}
 			}
 		}

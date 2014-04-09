@@ -6,6 +6,7 @@ var quests = {
 	plantsToIdentify: [],
 	regionsToVisit: [],
 	finishedQuests: [],
+	questLimit: 5,
 	
 	hasQuest: function()
 	{
