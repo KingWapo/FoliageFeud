@@ -96,12 +96,8 @@ var utility = {
 	// Write text to screen, wrapping if hits max width
 	writeText: function(context, text, x, y, maxWidth, fontSize, isOutlined)
 	{
-<<<<<<< HEAD
-		//context.clearRect(0, 0, 1152, 512);
-=======
 		context.fillStyle = "white";
 		context.font = fontSize + "px Evilgreen";
->>>>>>> 2d9faef39a9a26fadf1fe14488ba8e21f4b8ddf6
 		
 		context.lineWidth = 1;
 		context.strokeStyle = "black";
