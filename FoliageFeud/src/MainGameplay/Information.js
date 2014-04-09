@@ -99,9 +99,14 @@ var info = {
 	// Display plant info if harvested
 	displayPlantInfo: function(i)
 	{
+		menuSurface.clearRect(0, 0, menuCanvas.width, menuCanvas.height);
 		var strings = [];
 		
-		strings.push("Name: ".concat(plantList[i].name));
+		strings.push("Name: " + plantList[i].name);
+		strings.push("Latin Name: " + plantList[i].lname);
+		
+		if (plantList[i].invasive)
+			strings.push("Invasive species");
 
 		utility.writeText(menuSurface, strings, 10, 50, 64 * 4 - 10, 25, true);
 		

@@ -19,12 +19,12 @@ var quests = {
 		quests.regionsToVisit.push(region);
 	},
 	
-	addQuestFromSibling: function(plant, region)
+	addQuestFromSibling: function(plantInfo)
 	{
-		mainCamp.listOfQuests.splice(mainCamp.listOfQuests.indexOf(plant), 1);
+		mainCamp.listOfQuests.splice(mainCamp.listOfQuests.indexOf(plantInfo[0]), 1);
 		mainCamp.updateQuests();
 	
-		quests.addQuest(plant, region);
+		quests.addQuest(plantInfo[0], plantInfo[1]);
 	},
 	
 	removeQuest:function(plant, region)

@@ -41,7 +41,7 @@ var mainCamp = {
 		{
 			var plantName = plantList[this.listOfQuests[i]].name;
 			
-			utility.writeForClick(menuSurface, [plantName], .45 * menuCanvas.width, .25 * menuCanvas.height + (60 * i), menuCanvas.width / 2, 30, true, [quests.addQuestFromSibling, this.listOfQuests[i]]);
+			utility.writeForClick(menuSurface, [plantName], .45 * menuCanvas.width, .25 * menuCanvas.height + (60 * i), menuCanvas.width / 2, 30, true, [quests.addQuestFromSibling, [this.listOfQuests[i], 2]]);
 		}
 		
 		menuSurface.drawImage(
