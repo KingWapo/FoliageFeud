@@ -192,7 +192,7 @@ var utility = {
 			y += fontSize * 2;
 		}
 	},
-	
+	 
 	contains: function(array, element)
 	{
 		for (var i = 0; i < array.length; i++)
