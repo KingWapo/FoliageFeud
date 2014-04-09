@@ -38,6 +38,12 @@ var utility = {
 		item.func = func;
 		item.param = param;
 		
+		// Debug location of click items
+		/*
+		menuSurface.rect(x, y, width, height);
+		menuSurface.stroke();
+		*/
+		
 		this.clickable.push(item);
 	},
 	
@@ -90,10 +96,12 @@ var utility = {
 	// Write text to screen, wrapping if hits max width
 	writeText: function(context, text, x, y, maxWidth, fontSize, isOutlined)
 	{
+<<<<<<< HEAD
 		//context.clearRect(0, 0, 1152, 512);
-		
+=======
 		context.fillStyle = "white";
 		context.font = fontSize + "px Evilgreen";
+>>>>>>> 2d9faef39a9a26fadf1fe14488ba8e21f4b8ddf6
 		
 		context.lineWidth = 1;
 		context.strokeStyle = "black";
@@ -132,6 +140,72 @@ var utility = {
 			
 			y += fontSize * 2;
 		}
+	},
+	
+	// Write text to screen, wrapping if hits max width, and adding a click handler
+	// clickHandler[0] is function
+	// clickHandler[1] is array of parameters
+	writeForClick: function(context, text, x, y, maxWidth, fontSize, isOutlined, clickHandler)
+	{
+		context.fillStyle = "white";
+		context.font = fontSize + "px Evilgreen";
+		
+		context.lineWidth = 1;
+		context.strokeStyle = "black";
+		
+		var height = 0;
+		
+		for (var j = 0; j < text.length; j++)
+		{
+			var words = text[j].split(' ');
+			var line = '';
+			
+			for (var i = 0; i < words.length; i++)
+			{
+				var testLine = line + words[i] + ' ';
+				var metrics = context.measureText(testLine);
+				var testWidth = metrics.width;
+				
+				if (testWidth > maxWidth && i > 0)
+				{
+					context.fillText(line, x, y);
+					
+					if (isOutlined)
+						context.strokeText(line, x, y);
+						
+					line = words[i] + ' ';
+					y += fontSize;
+					
+					height += fontSize;
+				}
+				else
+				{
+					line = testLine;
+				}
+			}
+			
+			context.fillText(line, x, y);
+			
+			if (isOutlined)
+				context.strokeText(line, x, y);
+			
+			height += fontSize;
+			
+			utility.addClickItem(x, y - height, testWidth, height, clickHandler[0], clickHandler[1]);
+			
+			y += fontSize * 2;
+		}
+	},
+	
+	contains: function(array, element)
+	{
+		for (var i = 0; i < array.length; i++)
+		{
+			if (array[i] == element)
+				return true;
+		}
+		
+		return false;
 	},
 	
 	clamp: function(val, minVal, maxVal)

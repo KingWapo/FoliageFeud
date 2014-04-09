@@ -36,17 +36,16 @@ var plant = {
 		return plantList[index].name;
 	},
 	
-	getHarvested: function()
+	getRandUnHarvested: function()
 	{
-		var harvestList = [];
+		var i;
 		
-		for (var i = 0; i < plantList.length; i++)
+		do
 		{
-			if (!plantList[i].harvested)
-				harvestList.push(i);
-		}
+			i = Math.floor(Math.random() * plantList.length);
+		} while (plantList[i].harvested)
 		
-		return harvestList;
+		return i;
 	}
 }
 
