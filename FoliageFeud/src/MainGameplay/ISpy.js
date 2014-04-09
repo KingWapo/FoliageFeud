@@ -123,6 +123,10 @@ var ispy = {
 	
 	setRequested: function(plantName)
 	{
-		ispy.requestedPlant = plantList.indexOf(planeName);
+		for (var i = 0; i < plantList.length; i++)
+		{
+			if (plantList[i].name == plantName)
+				ispy.requestedPlant = i;
+		}
 	}
 };
