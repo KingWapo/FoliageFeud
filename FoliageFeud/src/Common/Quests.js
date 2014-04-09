@@ -30,7 +30,6 @@ var quests = {
 	removeQuest:function(plant, region)
 	{
 		var plantIndex = this.plantsToIdentify.indexOf(plant);
-		console.debug('remove quests: ', plantIndex);
 		if (plantIndex > -1)
 		{
 			this.finishedQuests.push(this.plantsToIdentify[plantIndex]);

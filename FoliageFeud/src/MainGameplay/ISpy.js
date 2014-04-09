@@ -7,14 +7,22 @@ var ispy = {
 	imgSize: 256,
 	// Index of requested plant
 	requestedPlant: 0,
+	background: new Image(),
 	
 	// Initialize game mode
 	init: function()
 	{
+		this.background.src = "../img/Backgrounds/iSpyMenu.png";
 		// Clear canvases and click handler
 		utility.clearAll();
 		
+		backgroundSurface.drawImage(
+			this.background,
+			0, 0
+		);
+		
 		// Green gradient bg
+		/*
 		var grd = backgroundSurface.createLinearGradient(0, 0, 0, 512);
 		grd.addColorStop(0, "darkgreen");
 		grd.addColorStop(1, "limegreen");
@@ -29,6 +37,7 @@ var ispy = {
 		
 		gameplaySurface.fillStyle = grd2;
 		gameplaySurface.fillRect(0, 0, 64 * 4, 512);
+		*/
 		
 		// Add unharvested plants to ispy pool
 		var curPlants = [];
@@ -71,15 +80,14 @@ var ispy = {
 		// Write plant name and traits to screen
 		var strings = [];
 		
-		console.debug('requested plant: ', this.requestedPlant);
 		strings.push("Requested Plant: ".concat(plantList[this.requestedPlant].name));
 		
-		for (var j = 0; j < plantList[this.requestedPlant].traits.length; j++)
+		for (var j = 0; j < 3; j++)
 		{
-			strings.push("Trait[".concat(j, "]: ", plantList[this.requestedPlant].traits[j]));
+			strings.push("Trait[".concat(j, "]: ", plant.getRandTrait(this.requestedPlant)));
 		}
 		
-		utility.writeText(menuSurface, strings, 10, 50, 64 * 4 - 10, 25, true);
+		utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, true);
 		
 		// Draw plants on screen and add them to click handler
 		for (var j = 0; j < i; j++)
