@@ -41,12 +41,11 @@ var quests = {
 	plantsInARegion: function(region)
 	{
 		var plants = [];
-		for (var i = 0; i < this.plantsInARegion.length; i++)
+		for (var i = 0; i < this.plantsToIdentify.length; i++)
 		{
 			if (this.regionsToVisit[i] == region)
 			{
 				plants.push(this.plantsToIdentify[i]);
-				
 			}
 		}
 		return plants;

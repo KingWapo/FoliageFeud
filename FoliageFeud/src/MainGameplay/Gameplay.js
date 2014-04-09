@@ -629,10 +629,11 @@ var gameplay = {
 	nextLevel: function(map)
 	{
 		this.currentLevel = map;
-		backgroundSurface.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
-		gameplaySurface.clearRect(0, 0, gameplayCanvas.width, gameplayCanvas.height);
 		this.clearCollision();
+		utility.clearAll();
 		this.observationInstances = [];
+		cameraController.buildMap(allLevelMaps[gameplay.currentLevel], 0);
+		cameraController.buildMap(allObjectMaps[gameplay.currentLevel], 1);
 		switch(map)
 		{
 			case Level.BaseCamp:
@@ -651,8 +652,6 @@ var gameplay = {
 				this.drawMap4();
 				break;
 		}
-		cameraController.buildMap(allLevelMaps[gameplay.currentLevel], 0);
-		cameraController.buildMap(allObjectMaps[gameplay.currentLevel], 1);
 		console.debug("Building level");
 	},
 	
@@ -678,7 +677,7 @@ var gameplay = {
 	
 	drawMap1: function()
 	{
-		
+		this.placeObservationEvent();
 	},
 	
 	drawMap2: function()

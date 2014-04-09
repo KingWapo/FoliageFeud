@@ -212,7 +212,6 @@ var cameraController = {
 		this.gameWorld.height = levelMap.length * 64;
 		this.ROWS = levelMap.length;
 		this.COLUMNS = levelMap[0].length;
-		console.debug(this.gameWorld.width + " " + this.gameWorld.height);
 		for(var row = 0; row < levelMap.length; row++) 
 		{	
 			for(var column = 0; column < levelMap[row].length; column++) 
