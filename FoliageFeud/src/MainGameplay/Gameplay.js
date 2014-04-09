@@ -884,6 +884,8 @@ var gameplay = {
 	removeObservationPoint: function(index)
 	{
 		this.observationInstances.splice(index, 1);
+		console.debug("Plant: " + quests.plantsToIdentify[index]);
+		ispy.setRequested(quests.plantsToIdentify[index]);
 		quests.removeQuest(quests.plantsToIdentify[index], quests.regionsToVisit[index]);
 	}
 }

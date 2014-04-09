@@ -29,7 +29,6 @@ var quests = {
 			this.plantsToIdentify.splice(plantIndex, 1);
 			this.regionsToVisit.splice(plantIndex, 1);
 		}
-		console.debug(this.plantsToIdentify);
 	},
 	
 	plantsInARegion: function(region)
