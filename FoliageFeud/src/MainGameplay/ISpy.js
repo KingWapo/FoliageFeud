@@ -6,7 +6,7 @@ var ispy = {
 	// Size of image on screen
 	imgSize: 256,
 	// Index of requested plant
-	requestedPlant: -1,
+	requestedPlant: 0,
 	
 	// Initialize game mode
 	init: function()
@@ -31,7 +31,25 @@ var ispy = {
 		gameplaySurface.fillRect(0, 0, 64 * 4, 512);
 		
 		// Add unharvested plants to ispy pool
-		var curPlants = plant.getHarvested();
+		var curPlants = [];
+		
+		for (var i = 0; i < 2; i++){
+			var plantIndex;
+			
+			if (curPlants.length < 1)
+				plantIndex = plant.getRandUnHarvested();
+			else
+			{
+				do
+				{
+					plantIndex = plant.getRandUnHarvested();
+				} while (utility.contains(curPlants, plantIndex))
+			}
+				
+			curPlants.push(plantIndex);
+		}
+		
+		curPlants.push(this.requestedPlant);
 		
 		curPlants = utility.shuffle(curPlants);
 		
@@ -47,13 +65,8 @@ var ispy = {
 	// Draws objects to screen for game mode
 	growPlants: function(curPlants, i)
 	{
-		// Pick requested plant from first i elements in array
-		var requested = Math.floor(Math.random() * i);
-		
+		var requested = curPlants.indexOf(this.requestedPlant);
 		console.debug(requested, ", ", curPlants.length);
-
-		// Get index of that plant
-		this.requestedPlant = curPlants[requested];
 		
 		// Write plant name and traits to screen
 		var strings = [];
@@ -106,5 +119,10 @@ var ispy = {
 	ignorePlant: function(i)
 	{
 		console.debug("You selected the wrong flower");
+	},
+	
+	setRequested: function(plantName)
+	{
+		ispy.requestedPlant = plantList.indexOf(planeName);
 	}
 };

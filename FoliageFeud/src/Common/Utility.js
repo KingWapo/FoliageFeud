@@ -134,6 +134,17 @@ var utility = {
 		}
 	},
 	
+	contains: function(array, element)
+	{
+		for (var i = 0; i < array.length; i++)
+		{
+			if (array[i] == element)
+				return true;
+		}
+		
+		return false;
+	},
+	
 	clamp: function(val, minVal, maxVal)
 	{
 		return Math.max(minVal, Math.min(val, maxVal));
