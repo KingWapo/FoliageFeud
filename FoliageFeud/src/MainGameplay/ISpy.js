@@ -7,37 +7,17 @@ var ispy = {
 	imgSize: 256,
 	// Index of requested plant
 	requestedPlant: 0,
-	background: new Image(),
 	
 	// Initialize game mode
 	init: function()
 	{
-		this.background.src = "../img/Backgrounds/iSpyMenu.png";
 		// Clear canvases and click handler
 		utility.clearAll();
 		
 		backgroundSurface.drawImage(
-			this.background,
+			imgCommonBg,
 			0, 0
 		);
-		
-		// Green gradient bg
-		/*
-		var grd = backgroundSurface.createLinearGradient(0, 0, 0, 512);
-		grd.addColorStop(0, "darkgreen");
-		grd.addColorStop(1, "limegreen");
-		
-		backgroundSurface.fillStyle = grd;
-		backgroundSurface.fillRect(0, 0, 1152, 512);
-		
-		// Grey side panel
-		var grd2 = gameplaySurface.createLinearGradient(0, 0, 0, 512);
-		grd2.addColorStop(0, "darkgrey");
-		grd2.addColorStop(1, "grey");
-		
-		gameplaySurface.fillStyle = grd2;
-		gameplaySurface.fillRect(0, 0, 64 * 4, 512);
-		*/
 		
 		// Add unharvested plants to ispy pool
 		var curPlants = [];

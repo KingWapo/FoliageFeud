@@ -86,7 +86,7 @@ var gameplay = {
 		speed: 4,
 		walkSpeed: 4,
 		runSpeed: 10,
-		sprite: new Image(),
+		sprite: '',
 		animation: Animation.Idle
 	}, 
 	
@@ -140,7 +140,7 @@ var gameplay = {
 		lowestPos: 0,
 		atLowestPos: true,
 		
-		sprite: new Image()
+		sprite: ''
 	},
 	
 	observationInstances: [],
@@ -175,7 +175,7 @@ var gameplay = {
 		width: 64,
 		height: 64,
 		
-		sprite: new Image()
+		sprite: ''
 		
 	},
 	grayCoin: {
@@ -208,7 +208,7 @@ var gameplay = {
 		width: 64,
 		height: 64,
 		
-		sprite: new Image()
+		sprite: ''
 	},
 	speedCoin: {
 		sourceX: 0,
@@ -240,9 +240,9 @@ var gameplay = {
 		width: 64,
 		height: 64,
 		
-		sprite: new Image()
+		sprite: ''
 	},
-	telePorter: {
+	teleporter: {
 	
 		visible: true,
 		sourceX: 0,
@@ -253,7 +253,7 @@ var gameplay = {
 		y: 0,
 		width: 154,
 		height: 122,	
-		sprite: new Image()
+		sprite: ''
 		
 	},
 	
@@ -284,17 +284,6 @@ var gameplay = {
 		
 		cameraController.init();
 		
-		// Load the image files
-		this.player.sprite.src = "../img/Player/characterMale.png";
-		this.updateSprite();
-		this.observationInstance.sprite.src = "../img/Tokens/exclamationPoint.png";
-		//load the coin files
-		this.blueCoin.sprite.src=  "../img/Tokens/waterToken.png";
-		this.grayCoin.sprite.src=  "../img/Tokens/rockToken.png";
-		this.speedCoin.sprite.src="../img/Tokens/speedToken.png";
-		//load the teleporter
-		this.telePorter.sprite.src="../img/Tiles/telelporter.png";
-		
 		//place the coins and objects 
 		this.placeObservationEvent();
 		this.placeBlue();
@@ -305,18 +294,12 @@ var gameplay = {
 		// Init the stores
 		this.training.width = 256;
 		this.training.height = 128;
-		this.training.sprite = new Image();
-		this.training.sprite.src = "../img/Tiles/training.png"
 		
 		this.store.width = 256;
 		this.store.height = 128;
-		this.store.sprite = new Image();
-		this.store.sprite.src = "../img/Tiles/shop.png";
 		
 		this.mainCamp.width = 256;
 		this.mainCamp.height = 128;
-		this.mainCamp.sprite = new Image();
-		this.mainCamp.sprite.src = "../img/Tiles/mainCamp.png";
 
 	},
 	
@@ -325,11 +308,11 @@ var gameplay = {
 		switch(currentSprite)
 		{
 			case SpriteState.Boy:
-				this.player.sprite.src = "../img/Player/characterMale.png";
+				this.player.sprite = imgMaleSprite;
 			break;
 			
 			case SpriteState.Girl:
-				this.player.sprite.src = "../img/Player/characterFemale.png";
+				this.player.sprite = imgFemaleSprite;
 			break;	
 		}
 	},
@@ -576,7 +559,7 @@ var gameplay = {
 							skillBook.sprint = true;
 						
 						}	
-						if ( utility.collisionDetection(gameplay.player, gameplay.telePorter))
+						if ( utility.collisionDetection(gameplay.player, gameplay.teleporter))
 						{
 							if(this.canTeleport)
 							{
@@ -662,8 +645,8 @@ var gameplay = {
 		this.player.x = 300;
 		this.player.y = 300;
 		
-		this.telePorter.x = 300;
-		this.telePorter.y = 300;
+		this.teleporter.x = 300;
+		this.teleporter.y = 300;
 		
 		this.training.x = 3 * 64;
 		this.training.y = 2 * 64;
@@ -772,15 +755,15 @@ var gameplay = {
 					this.speedCoin.width, this.speedCoin.height
 				 );
 			}
-			if(this.telePorter.visible==true)
+			if(this.teleporter.visible==true)
 			{
 				gameplaySurface.drawImage	
 				(
-					this.telePorter.sprite, 
-					this.telePorter.sourceX, this.telePorter.sourceY, 
-					this.telePorter.sourceWidth, this.telePorter.sourceHeight,
-					Math.floor(this.telePorter.x), Math.floor(this.telePorter.y), 
-					this.telePorter.width, this.telePorter.height
+					this.teleporter.sprite, 
+					this.teleporter.sourceX, this.teleporter.sourceY, 
+					this.teleporter.sourceWidth, this.teleporter.sourceHeight,
+					Math.floor(this.teleporter.x), Math.floor(this.teleporter.y), 
+					this.teleporter.width, this.teleporter.height
 			   );
 			}
 			if (this.currentLevel == Level.BaseCamp)
@@ -877,8 +860,8 @@ var gameplay = {
 	},
 	placeTeleporter:function()
 	{	
-		this.telePorter.x=1000;
-		this.telePorter.y=300;
+		this.teleporter.x=1000;
+		this.teleporter.y=300;
 	},
 	
 	removeObservationPoint: function(index)

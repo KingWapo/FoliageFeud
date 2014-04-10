@@ -5,7 +5,7 @@
 var createScenery = {
 	trees: [],
 	grass: [],
-	tilesheet: new Image(),
+	tilesheet: '',
 	treeCount: 10,
 	x: 0,
 	vx: 5,
@@ -45,7 +45,6 @@ var createScenery = {
 			grassSprite.sourceHeight = 64;
 			this.grass.push(grassSprite);
 		}
-		this.tilesheet.src = "../img/Tiles/tilesheet.png";
 	},
 	
 	update: function()

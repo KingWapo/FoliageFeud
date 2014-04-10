@@ -3,14 +3,9 @@
 
 var mainCamp = {
 	listOfQuests: [],
-	background: new Image(),
-	exitButton: new Image(),
 	
 	init: function()
 	{
-		this.background.src = "../img/Backgrounds/iSpyMenu.png";
-		this.exitButton.src = "../img/Buttons/exitButton.png";
-		
 		this.listOfQuests = [];
 		
 		for (var i = quests.plantsToIdentify.length; i < quests.questLimit; i++)
@@ -43,7 +38,7 @@ var mainCamp = {
 		utility.clearAll();
 		
 		menuSurface.drawImage(
-			this.background,
+			imgCommonBg,
 			0, 0
 		);
 		
@@ -55,11 +50,11 @@ var mainCamp = {
 		}
 		
 		menuSurface.drawImage(
-			this.exitButton,
+			imgExitButton,
 			menuCanvas.width - 320, menuCanvas.height - 160
 		);
 		
-		utility.addClickItem(menuCanvas.width - 320, menuCanvas.height - 160, this.exitButton.width, this.exitButton.height, this.exitToGameplay, "");
+		utility.addClickItem(menuCanvas.width - 320, menuCanvas.height - 160, imgExitButton.width, imgExitButton.height, this.exitToGameplay, "");
 	},
 	
 	render: function()

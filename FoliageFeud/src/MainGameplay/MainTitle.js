@@ -7,34 +7,11 @@
 // The Main Title Screen
 
 var title = {
-	girlImage: new Image(),
-	boyImage: new Image(),
-	menuScreen: new Image(),
 	playAsGirl: Object.create(spriteObject),
 	playAsBoy: Object.create(spriteObject),
-	girlLoaded: false,
-	boyLoaded: false,
-	menuLoaded: false,
 	
 	init: function()
 	{
-		this.girlImage.src = "../img/Buttons/playButtonGirl.png";
-		this.boyImage.src="../img/Buttons/playButtonBoy.png";
-		this.menuScreen.src = "../img/Backgrounds/menuscreen.png";
-		
-		this.girlImage.onload = function()
-		{
-			this.girlLoaded = true;
-		}
-		this.boyImage.onload = function()
-		{
-			this.boyLoaded = true;
-		}
-		this.menuScreen.onload = function()
-		{
-			this.menuLoaded = true;
-		}
-		
 		this.playAsGirl.sourceWidth = 256;
 		this.playAsGirl.sourceHeight = 128;
 		this.playAsGirl.width = 256;
@@ -71,15 +48,15 @@ var title = {
 		menuSurface.clearRect(0, 0, menuCanvas.width, menuCanvas.height);
 		
 		menuSurface.drawImage(
-			this.girlImage,
+			imgGirlButton,
 			this.playAsGirl.x, this.playAsGirl.y
 			);
 		menuSurface.drawImage(
-			this.boyImage,
+			imgBoyButton,
 			this.playAsBoy.x, this.playAsBoy.y
 			);
 		backgroundSurface.drawImage(
-			this.menuScreen,
+			imgMenuBg,
 			0, 0
 			);
 	}
