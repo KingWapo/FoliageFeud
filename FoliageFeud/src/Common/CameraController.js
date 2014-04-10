@@ -29,7 +29,7 @@ var SIZE = 64;
 var tilesheetColumns = 4;
 
 var cameraController = {
-	//Game Level Maps
+	//Game Level Mapsbuil
 	//Arrays to store the level maps
 	levelCounter: 0,
 	tilesheet: new Image(),
@@ -272,7 +272,7 @@ var cameraController = {
 							levelMap[row][column + 1] = EMPTY;
 							levelMap[row + 1][column + 1] = EMPTY;
 						}
-						else if (row + 1 < levelMap.length)
+						else if (row + 1 < level Map.length)
 						{
 							levelMap[row + 1][column] = EMPTY;
 						}

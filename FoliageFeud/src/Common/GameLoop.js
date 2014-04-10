@@ -46,6 +46,7 @@ entering = [true, // Title
 		 true, // BaseCamp
 		 true, // End
 		 true, // TestCode
+		 true, //Intro
 		 ];
 // Bool list for the loaded positions
 screensLoaded = [true, // Title
@@ -58,6 +59,7 @@ screensLoaded = [true, // Title
 				 false, // BaseCamp
 				 false, // End
 				 false, // TestCode
+				 false, //Intro
 				 ];
 
 // Bool list for the loaded positions
@@ -70,7 +72,8 @@ exiting = [false, // Title
 			 false, // WorldEvent
 			 false, // BaseCamp
 			 false, // End
-			 false  // TestCode
+			 false,  // TestCode
+			 false// Intro
 			 ];
 
 // Enum to determine the screen the game is currently at
@@ -84,7 +87,8 @@ ScreenState = {
 	WorldEvent: 6,
 	BaseCamp: 7,
 	End: 8,
-	TestCode: 9
+	TestCode: 9,
+	Intro:10
 };
 
 // Instances of the Screens 
@@ -123,11 +127,7 @@ function mainUpdate()
 			title.render();
 			if (exiting[currentScreen])
 			{
-				screensLoaded[currentScreen] = false;
-				currentScreen = ScreenState.Gameplay;
-				screensLoaded[currentScreen] = true;
-				exiting[currentScreen] = false;
-				utility.clearClickHandler();
+				switchGamemode(ScreenState.Gameplay);
 			}
 			break;
 		case ScreenState.BaseCamp: // BaseCamp Screen
@@ -199,6 +199,18 @@ function mainUpdate()
 				test.init();
 				entering[currentScreen] = false;
 			}
+			if (exiting[currentScreen])
+			{
+				switchGamemode(ScreenState.Gameplay);
+			}
+			break;
+			case ScreenState.Intro:
+			if (entering[currentScreen])
+			{
+				Intro.init();
+				entering[currentScreen] = false;
+			}
+			title.render();
 			if (exiting[currentScreen])
 			{
 				switchGamemode(ScreenState.Gameplay);

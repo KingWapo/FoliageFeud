@@ -56,11 +56,13 @@ var title = {
 	{
 		currentSprite = SpriteState.Boy;
 		exiting[currentScreen] = true;
+		
 	},
 	
 	playAsGirlClicked: function()
 	{
 		currentSprite = SpriteState.Girl;
+		console.debug(" button " );
 		exiting[currentScreen] = true;
 	},
 	
@@ -73,6 +75,7 @@ var title = {
 		menuSurface.drawImage(
 			this.girlImage,
 			this.playAsGirl.x, this.playAsGirl.y
+			
 			);
 		menuSurface.drawImage(
 			this.boyImage,
