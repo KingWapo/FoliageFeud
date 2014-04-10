@@ -122,7 +122,7 @@ var utility = {
 		
 		return array;
 	},
-	
+	 
 	// Write text to screen, wrapping if hits max width
 	writeText: function(context, text, x, y, maxWidth, fontSize, isOutlined)
 	{

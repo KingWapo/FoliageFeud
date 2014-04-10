@@ -300,6 +300,8 @@ var gameplay = {
 		
 		this.mainCamp.width = 256;
 		this.mainCamp.height = 128;
+		
+		this.updateSprite();
 
 	},
 	
