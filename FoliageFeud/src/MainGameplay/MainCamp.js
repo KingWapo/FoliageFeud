@@ -69,7 +69,7 @@ var mainCamp = {
 	
 	exitToGameplay: function(empty)
 	{
-		entering[currentScreen] = true;
+		entering[ScreenState.SiblingInteraction] = true;
 		currentScreen = ScreenState.Gameplay;
 	}
 };

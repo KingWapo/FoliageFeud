@@ -6,7 +6,7 @@ var snaSelect = {
 	
 	init: function()
 	{
-		utility.addClickItem(128, 128, this.Map1.width, this.Map1.height, this.goToMap1, "");
+		utility.addClickItem(128, 128, imgMap1.width, imgMap1.height, this.goToMap1, "");
 	},
 	
 	render: function()
@@ -25,6 +25,7 @@ var snaSelect = {
 	goToMap1: function(empty)
 	{
 		gameplay.nextLevel(Level.Map1);
+		entering[ScreenState.SNASelectionScreen] = true;
 		currentScreen = ScreenState.Gameplay;
 	}
 
