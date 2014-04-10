@@ -257,7 +257,7 @@ window.addEventListener("click", utility.handleClick, false);
 
 var imgCommonBg = utility.loadImage("../img/Backgrounds/commonBackground.png");
 var imgMenuBg = utility.loadImage("../img/Backgrounds/menuscreen.png");
-var imgMap1 = utility.loadImage("../img/Tokens/cat.png");
+var imgMap1 = utility.loadImage("../img/Buttons/MapButton.jpg");
 var imgMapTilesheet = utility.loadImage("../img/Tiles/MapTilesheet.png");
 var imgGirlButton = utility.loadImage("../img/Buttons/playButtonGirl.png");
 var imgBoyButton = utility.loadImage("../img/Buttons/playButtonBoy.png");
