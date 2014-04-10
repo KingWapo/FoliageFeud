@@ -2,6 +2,7 @@
 
 // Information Screen
 
+/*
 var notFound = new Image();
 notFound.src = "../img/Buttons/QuestionMark.png";
 
@@ -10,6 +11,7 @@ prevPageButton.src = "../img/Buttons/arrowLeft.png";
 
 var nextPageButton = new Image();
 nextPageButton.src = "../img/Buttons/arrowRight.png";
+*/
 
 var curPlant = -1;
 var curImage = 0;
@@ -63,7 +65,7 @@ var info = {
 			}
 			else
 			{
-				sprite = notFound;
+				sprite = imgQuestionMark;
 				utility.addClickItem(x, y, this.tileSize, this.tileSize, this.displayPlantNotFound, [i]);
 			}
 
@@ -83,15 +85,15 @@ var info = {
 		
 		gameplaySurface.drawImage
 		(
-			prevPageButton,
-			0, 0, prevPageButton.width, prevPageButton.height,
+			imgLeftArrow,
+			0, 0, imgLeftArrow.width, imgLeftArrow.height,
 			256 + xOffset, 512 - yOffset, 64, 32
 		);
 		
 		gameplaySurface.drawImage
 		(
-			nextPageButton,
-			0, 0, nextPageButton.width, nextPageButton.height,
+			imgRightArrow,
+			0, 0, imgRightArrow.width, imgRightArrow.height,
 			1152 - xOffset * 3, 512 - yOffset, 64, 32
 		);
 	},
@@ -117,6 +119,7 @@ var info = {
 	// Display unharvested text
 	displayPlantNotFound: function(i)
 	{
+		menuSurface.clearRect(0, 0, menuCanvas.width, menuCanvas.height);
 		var strings = [];
 		
 		strings.push("This plant has not been found yet.");

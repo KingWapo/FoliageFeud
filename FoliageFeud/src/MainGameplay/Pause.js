@@ -8,14 +8,16 @@ var MAPHEIGHT = 10;
 
 var pause = {
 	pauseMap: [],
+<<<<<<< HEAD
 	pauseObjectMap: [],
 	mapTilesheet: new Image(),
+=======
+>>>>>>> 764312f02f80dd03f39ab05ac3cc474917189a2e
 	mapSprites: [],
 	
 	
 	buildInGameMap: function()
 	{
-		this.mapTilesheet.src = "../img/Tiles/MapTilesheet.png";
 		var playerLocation = [
 			Math.floor(gameplay.player.x / SIZE),
 			Math.floor(gameplay.player.y / SIZE)
@@ -106,7 +108,7 @@ var pause = {
 		{
 			menuSurface.drawImage
 			(
-				this.mapTilesheet, 
+				imgMapTilesheet, 
 				this.mapSprites[i].sourceX, this.mapSprites[i].sourceY, 
 				this.mapSprites[i].sourceWidth, this.mapSprites[i].sourceHeight,
 				Math.floor(this.mapSprites[i].x) + 13, Math.floor(this.mapSprites[i].y) + 6, 

@@ -16,6 +16,8 @@ var utility = {
 	// List of clickable objects in current screen
 	clickable: [],
 	colors: [],
+	totalNumImages: 0,
+	curNumImages: 0,
 	
 	// Clear screen and all objects from clickable
 	clearAll: function()
@@ -71,6 +73,34 @@ var utility = {
 				utility.clickable[i].func(utility.clickable[i].param);
 			}
 		}
+	},
+	
+	loadImage: function(source)
+	{
+		utility.totalNumImages += 1;
+		
+		var tempImage = new Image();
+		tempImage.src = source;
+		
+		tempImage.addEventListener("load", utility.loadedImage, false);
+		
+		return tempImage;
+	},
+	
+	loadedImage: function()
+	{
+		utility.curNumImages += 1;
+		
+		console.debug('total: ', utility.totalNumImages, ' - loaded: ', utility.curNumImages);
+		
+		menuSurface.rect(76, 206, 1000, 100);
+		menuSurface.stroke();
+		
+		menuSurface.fillStyle = "#006600";
+		menuSurface.fillRect(76, 206, 1000 * (utility.curNumImages / utility.totalNumImages), 100);
+		
+		if (utility.curNumImages === utility.totalNumImages)
+			mainUpdate();
 	},
 	
 	// Shuffle array
@@ -224,3 +254,33 @@ var utility = {
 };
 
 window.addEventListener("click", utility.handleClick, false);
+
+var imgCommonBg = utility.loadImage("../img/Backgrounds/commonBackground.png");
+var imgMenuBg = utility.loadImage("../img/Backgrounds/menuscreen.png");
+var imgMap1 = utility.loadImage("../img/Tokens/cat.png");
+var imgMapTileSheet = utility.loadImage("../img/Tiles/MapTilesheet.png");
+var imgGirlButton = utility.loadImage("../img/Buttons/playButtonGirl.png");
+var imgBoyButton = utility.loadImage("../img/Buttons/playButtonBoy.png");
+var imgExitButton = utility.loadImage("../img/Buttons/exitButton.png");
+var imgLeftArrow = utility.loadImage("../img/Buttons/arrowLeft.png");
+var imgRightArrow = utility.loadImage("../img/Buttons/arrowRight.png");
+var imgQuestionMark = utility.loadImage("../img/Buttons/QuestionMark.png");
+var imgMaleSprite = utility.loadImage("../img/Player/characterMale.png");
+var imgFemaleSprite = utility.loadImage("../img/Player/characterFemale.png");
+var imgTimer = utility.loadImage("../img/WorldEvent/timer.png");
+var imgTimerBg = utility.loadImage("../img/WorldEvent/timerBackground.png");
+var imgCheckmark = utility.loadImage("../img/WorldEvent/checkmark.png");
+
+createScenery.tilesheet = utility.loadImage("../img/Tiles/tilesheet.png");
+
+worldEvent.wall.sprite = utility.loadImage("../img/WorldEvent/WALL.png");
+
+gameplay.player.sprite = utility.loadImage("../img/Player/characterMale.png");
+gameplay.observationInstance.sprite = utility.loadImage("../img/Tokens/exclamationPoint.png");
+gameplay.blueCoin.sprite = utility.loadImage("../img/Tokens/waterToken.png");
+gameplay.grayCoin.sprite = utility.loadImage("../img/Tokens/rockToken.png");
+gameplay.speedCoin.sprite = utility.loadImage("../img/Tokens/speedToken.png");
+gameplay.teleporter.sprite = utility.loadImage("../img/Tiles/telelporter.png");
+gameplay.training.sprite = utility.loadImage("../img/Tiles/training.png");
+gameplay.store.sprite = utility.loadImage("../img/Tiles/shop.png");
+gameplay.mainCamp.sprite = utility.loadImage("../img/Tiles/mainCamp.png");

@@ -25,10 +25,7 @@ var worldEvent = {
 	speedCooldown: 30,
 	countdown: 300,
 	countdownFull: 300,
-	timer: new Image(),
-	timerBackground: new Image(),
 	checkmarks: [],
-	checkmarkSprite: new Image(),
 	questions: [
 		{
 			name: "",
@@ -67,11 +64,6 @@ var worldEvent = {
 		gameplay.player.y = 5 * gameplay.player.height + this.offset;
 		gameplay.player.speed = gameplay.player.runSpeed;
 		gameplay.player.animation = Animation.WorldEventRight;
-		
-		this.wall.sprite.src = "../img/WorldEvent/WALL.png";
-		this.timer.src = "../img/WorldEvent/timer.png";
-		this.timerBackground.src = "../img/WorldEvent/timerBackground.png";
-		this.checkmarkSprite.src = "../img/WorldEvent/checkmark.png";
 		
 		createScenery.init();
 	},
@@ -153,7 +145,7 @@ var worldEvent = {
 		for (var i = 0; i < this.checkmarks.length; i++)
 		{
 			menuSurface.drawImage(
-				this.checkmarkSprite,
+				imgCheckmark,
 				i * 64, 0,
 				64, 64
 				);
@@ -209,7 +201,7 @@ var worldEvent = {
 	
 	summonCheckmark: function()
 	{
-		this.checkmarks.push(Object.create(this.checkmarkSprite));
+		this.checkmarks.push(Object.create(imgCheckmark));
 	},
 	
 	resetQuestions: function()
@@ -242,12 +234,12 @@ var worldEvent = {
 			);
 			
 		menuSurface.drawImage(
-			this.timerBackground,
+			imgTimerBg,
 			gameplayCanvas.width / 2 - 64, gameplayCanvas.height / 4 - 64,
 			256, 32
 			);
 		menuSurface.drawImage(
-			this.timer,
+			imgTimer,
 			gameplayCanvas.width / 2 - 62, gameplayCanvas.height / 4 - 62,
 			Math.floor(256*this.countdown/this.countdownFull), 32
 			);

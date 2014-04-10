@@ -118,7 +118,7 @@ var fps = 60;
 
 var counter = 0;
 
-mainUpdate();
+//mainUpdate();
 
 function mainUpdate()
 {
