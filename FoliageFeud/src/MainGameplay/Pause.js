@@ -8,11 +8,8 @@ var MAPHEIGHT = 10;
 
 var pause = {
 	pauseMap: [],
-<<<<<<< HEAD
 	pauseObjectMap: [],
 	mapTilesheet: new Image(),
-=======
->>>>>>> 764312f02f80dd03f39ab05ac3cc474917189a2e
 	mapSprites: [],
 	
 	
