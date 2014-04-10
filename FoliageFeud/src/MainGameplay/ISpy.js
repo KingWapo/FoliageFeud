@@ -82,7 +82,8 @@ var ispy = {
 		
 		strings.push("Requested Plant: ".concat(plantList[this.requestedPlant].name));
 		
-		for (var j = 0; j < 3; j++)
+		// 3 can go off screen
+		for (var j = 0; j < 2; j++)
 		{
 			strings.push("Trait[".concat(j, "]: ", plant.getRandTrait(this.requestedPlant)));
 		}
