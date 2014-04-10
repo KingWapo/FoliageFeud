@@ -8,6 +8,7 @@ var MAPHEIGHT = 10;
 
 var pause = {
 	pauseMap: [],
+	pauseObjectMap: [],
 	mapTilesheet: new Image(),
 	mapSprites: [],
 	
@@ -19,49 +20,66 @@ var pause = {
 			Math.floor(gameplay.player.x / SIZE),
 			Math.floor(gameplay.player.y / SIZE)
 			];
-			
-		var objective = [
-			Math.floor(gameplay.observationInstance.x / SIZE),
-			Math.floor(gameplay.observationInstance.y / SIZE)
-			];
+		var objectives = [];
+		for (var i = 0; i < gameplay.observationInstances.length; i++)
+		{
+			objectives.push([
+				Math.floor(gameplay.observationInstances[i].x / SIZE),
+				Math.floor(gameplay.observationInstances[i].y / SIZE)
+				]);
+			console.debug("(" + objectives[i][0] + ", " + objectives[i][1] + ")");
+		}
 		console.debug("(" + playerLocation[0] + ", " + playerLocation[1] + ")");
-		console.debug("(" + objective[0] + ", " + objective[1] + ")");
-		this.pauseMap = cameraController.levelGameObjects[cameraController.levelCounter];
+		this.pauseMap = allLevelMaps[gameplay.currentLevel];
+		this.pauseObjectMap = allObjectMaps[gameplay.currentLevel];
 		for (var row = 0; row < cameraController.ROWS; row++)
 		{
 			for (var column = 0; column < cameraController.COLUMNS; column++)
 			{
-				var tile = this.pauseMap[row][column];
+				var tile = this.pauseObjectMap[row][column];
+				if (tile != TREE && tile != BIRCHTREE)
+				{
+					var tile = this.pauseMap[row][column];
+				}
 				var tempSprite;
+				var objective = false;
+				for (var i = 0; i < objectives.length; i++)
+				{
+					if (column == objectives[i][0] && row == objectives[i][1])
+					{
+						tempSprite = this.createSprite(1, column, row);
+						this.mapSprites.push(tempSprite);
+						objective = true;
+					}
+				}
 				if (column == playerLocation[0] && row == playerLocation[1])
 				{
 					tempSprite = this.createSprite(2, column, row);
 					this.mapSprites.push(tempSprite);
 				}
-				else if (column == objective[0] && row == objective[1])
+				else if (!objective)
 				{
-					tempSprite = this.createSprite(1, column, row);
-					this.mapSprites.push(tempSprite);
-				}
-				else
-				{
-					// Use the switch for now. Rearrange mapTilesheet
-					// to be the same as the regular tilesheet so we can just use:
-					//
-					// tempSprite = createSprite(tile, column, row);
-					// mapSprites.push(tempSprite);
 					switch(tile)
 					{
-						case BLANK:
+						case GRASS:
 							tempSprite = this.createSprite(0, column, row);
 							this.mapSprites.push(tempSprite);
 							break;
 						case TREE:
+						case BIRCHTREE:
 							tempSprite = this.createSprite(3, column, row);
 							this.mapSprites.push(tempSprite);
 							break;
+						case ROCK:
+							tempSprite = this.createSprite(6, column, row);
+							this.mapSprites.push(tempSprite);
+							break;
 					}
-					
+					if (tile >= WATERBOUNDRARYBEGIN && tile <= WATERBOUNDRARYEND)
+					{
+						tempSprite = this.createSprite(4, column, row);
+						this.mapSprites.push(tempSprite);
+					}
 				}
 			}
 		}
