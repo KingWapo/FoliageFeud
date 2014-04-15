@@ -16,6 +16,10 @@ var utility = {
 	// List of clickable objects in current screen
 	clickable: [],
 	colors: [],
+	totalNumImages: 0,
+	curNumImages: 0,
+	writting:false,
+	
 	
 	// Clear screen and all objects from clickable
 	clearAll: function()
@@ -37,6 +41,12 @@ var utility = {
 		item.height = height;
 		item.func = func;
 		item.param = param;
+		
+		// Debug location of click items
+		/*
+		menuSurface.rect(x, y, width, height);
+		menuSurface.stroke();
+		*/
 		
 		this.clickable.push(item);
 	},
@@ -67,6 +77,34 @@ var utility = {
 		}
 	},
 	
+	loadImage: function(source)
+	{
+		utility.totalNumImages += 1;
+		
+		var tempImage = new Image();
+		tempImage.src = source;
+		
+		tempImage.addEventListener("load", utility.loadedImage, false);
+		
+		return tempImage;
+	},
+	
+	loadedImage: function()
+	{
+		utility.curNumImages += 1;
+		
+		console.debug('total: ', utility.totalNumImages, ' - loaded: ', utility.curNumImages);
+		
+		menuSurface.rect(76, 206, 1000, 100);
+		menuSurface.stroke();
+		
+		menuSurface.fillStyle = "#006600";
+		menuSurface.fillRect(76, 206, 1000 * (utility.curNumImages / utility.totalNumImages), 100);
+		
+		if (utility.curNumImages === utility.totalNumImages)
+			mainUpdate();
+	},
+	
 	// Shuffle array
 	shuffle: function(array)
 	{
@@ -86,12 +124,10 @@ var utility = {
 		
 		return array;
 	},
-	
+	 
 	// Write text to screen, wrapping if hits max width
 	writeText: function(context, text, x, y, maxWidth, fontSize, isOutlined)
 	{
-		context.clearRect(0, 0, 1152, 512);
-		
 		context.fillStyle = "white";
 		context.font = fontSize + "px Evilgreen";
 		
@@ -134,6 +170,72 @@ var utility = {
 		}
 	},
 	
+	// Write text to screen, wrapping if hits max width, and adding a click handler
+	// clickHandler[0] is function
+	// clickHandler[1] is array of parameters
+	writeForClick: function(context, text, x, y, maxWidth, fontSize, isOutlined, clickHandler)
+	{
+		context.fillStyle = "white";
+		context.font = fontSize + "px Evilgreen";
+		
+		context.lineWidth = 1;
+		context.strokeStyle = "black";
+		
+		var height = 0;
+		
+		for (var j = 0; j < text.length; j++)
+		{
+			var words = text[j].split(' ');
+			var line = '';
+			
+			for (var i = 0; i < words.length; i++)
+			{
+				var testLine = line + words[i] + ' ';
+				var metrics = context.measureText(testLine);
+				var testWidth = metrics.width;
+				
+				if (testWidth > maxWidth && i > 0)
+				{
+					context.fillText(line, x, y);
+					
+					if (isOutlined)
+						context.strokeText(line, x, y);
+						
+					line = words[i] + ' ';
+					y += fontSize;
+					
+					height += fontSize;
+				}
+				else
+				{
+					line = testLine;
+				}
+			}
+			
+			context.fillText(line, x, y);
+			
+			if (isOutlined)
+				context.strokeText(line, x, y);
+			
+			height += fontSize;
+			
+			utility.addClickItem(x, y - height, testWidth, height, clickHandler[0], clickHandler[1]);
+			
+			y += fontSize * 2;
+		}
+	},
+	
+	contains: function(array, element)
+	{
+		for (var i = 0; i < array.length; i++)
+		{
+			if (array[i] == element)
+				return true;
+		}
+		
+		return false;
+	},
+	
 	clamp: function(val, minVal, maxVal)
 	{
 		return Math.max(minVal, Math.min(val, maxVal));
@@ -154,3 +256,37 @@ var utility = {
 };
 
 window.addEventListener("click", utility.handleClick, false);
+
+var imgCommonBg = utility.loadImage("../img/Backgrounds/commonBackground.png");
+var imgMenuBg = utility.loadImage("../img/Backgrounds/menuscreen.png");
+var imgMap1 = utility.loadImage("../img/Tokens/cat.png");
+var imgMapTilesheet = utility.loadImage("../img/Tiles/MapTilesheet.png");
+var imgGirlButton = utility.loadImage("../img/Buttons/playButtonGirl.png");
+var imgBoyButton = utility.loadImage("../img/Buttons/playButtonBoy.png");
+var imgExitButton = utility.loadImage("../img/Buttons/exitButton.png");
+var imgLeftArrow = utility.loadImage("../img/Buttons/arrowLeft.png");
+var imgRightArrow = utility.loadImage("../img/Buttons/arrowRight.png");
+var imgQuestionMark = utility.loadImage("../img/Buttons/QuestionMark.png");
+var imgMaleSprite = utility.loadImage("../img/Player/characterMale.png");
+var imgFemaleSprite = utility.loadImage("../img/Player/characterFemale.png");
+var imgTimer = utility.loadImage("../img/WorldEvent/timer.png");
+var imgTimerBg = utility.loadImage("../img/WorldEvent/timerBackground.png");
+var imgCheckmark = utility.loadImage("../img/WorldEvent/checkmark.png");
+var imgShopBg = utility.loadImage(" ../img/Backgrounds/shopscreen.png");
+
+
+createScenery.tilesheet = utility.loadImage("../img/Tiles/tilesheet.png");
+
+worldEvent.wall.sprite = utility.loadImage("../img/WorldEvent/WALL.png");
+
+gameplay.player.sprite = utility.loadImage("../img/Player/characterMale.png");
+gameplay.observationInstance.sprite = utility.loadImage("../img/Tokens/exclamationPoint.png");
+gameplay.blueCoin.sprite = utility.loadImage("../img/Tokens/waterToken.png");
+gameplay.grayCoin.sprite = utility.loadImage("../img/Tokens/rockToken.png");
+gameplay.speedCoin.sprite = utility.loadImage("../img/Tokens/speedToken.png");
+gameplay.teleporter.sprite = utility.loadImage("../img/Tiles/telelporter.png");
+gameplay.training.sprite = utility.loadImage("../img/Tiles/training.png");
+gameplay.store.sprite = utility.loadImage("../img/Tiles/shop.png");
+gameplay.mainCamp.sprite = utility.loadImage("../img/Tiles/mainCamp.png");
+baseCamp.shop();
+shop.drawShop();

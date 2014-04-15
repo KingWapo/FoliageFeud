@@ -6,7 +6,7 @@ var ispy = {
 	// Size of image on screen
 	imgSize: 256,
 	// Index of requested plant
-	requestedPlant: -1,
+	requestedPlant: 0,
 	
 	// Initialize game mode
 	init: function()
@@ -14,24 +14,31 @@ var ispy = {
 		// Clear canvases and click handler
 		utility.clearAll();
 		
-		// Green gradient bg
-		var grd = backgroundSurface.createLinearGradient(0, 0, 0, 512);
-		grd.addColorStop(0, "darkgreen");
-		grd.addColorStop(1, "limegreen");
-		
-		backgroundSurface.fillStyle = grd;
-		backgroundSurface.fillRect(0, 0, 1152, 512);
-		
-		// Grey side panel
-		var grd2 = gameplaySurface.createLinearGradient(0, 0, 0, 512);
-		grd2.addColorStop(0, "darkgrey");
-		grd2.addColorStop(1, "grey");
-		
-		gameplaySurface.fillStyle = grd2;
-		gameplaySurface.fillRect(0, 0, 64 * 4, 512);
+		backgroundSurface.drawImage(
+			imgCommonBg,
+			0, 0
+		);
 		
 		// Add unharvested plants to ispy pool
-		var curPlants = plant.getHarvested();
+		var curPlants = [];
+		
+		for (var i = 0; i < 2; i++){
+			var plantIndex;
+			
+			if (curPlants.length < 1)
+				plantIndex = plant.getRandUnHarvested();
+			else
+			{
+				do
+				{
+					plantIndex = plant.getRandUnHarvested();
+				} while (utility.contains(curPlants, plantIndex));
+			}
+				
+			curPlants.push(plantIndex);
+		}
+		
+		curPlants.push(this.requestedPlant);
 		
 		curPlants = utility.shuffle(curPlants);
 		
@@ -47,25 +54,21 @@ var ispy = {
 	// Draws objects to screen for game mode
 	growPlants: function(curPlants, i)
 	{
-		// Pick requested plant from first i elements in array
-		var requested = Math.floor(Math.random() * i);
-		
+		var requested = curPlants.indexOf(this.requestedPlant);
 		console.debug(requested, ", ", curPlants.length);
-
-		// Get index of that plant
-		this.requestedPlant = curPlants[requested];
 		
 		// Write plant name and traits to screen
 		var strings = [];
 		
 		strings.push("Requested Plant: ".concat(plantList[this.requestedPlant].name));
 		
-		for (var j = 0; j < plantList[this.requestedPlant].traits.length; j++)
+		// 3 can go off screen
+		for (var j = 0; j < 2; j++)
 		{
-			strings.push("Trait[".concat(j, "]: ", plantList[this.requestedPlant].traits[j]));
+			strings.push("Trait[".concat(j, "]: ", plant.getRandTrait(this.requestedPlant)));
 		}
 		
-		utility.writeText(menuSurface, strings, 10, 50, 64 * 4 - 10, 25, true);
+		utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, true);
 		
 		// Draw plants on screen and add them to click handler
 		for (var j = 0; j < i; j++)
@@ -106,5 +109,10 @@ var ispy = {
 	ignorePlant: function(i)
 	{
 		console.debug("You selected the wrong flower");
+	},
+	
+	setRequested: function(plantIndex)
+	{
+		ispy.requestedPlant = plantIndex;
 	}
 };

@@ -4,4 +4,7 @@
 
 var baseCamp = {
 	
+	shop:function()
+	{
+	}
 };
