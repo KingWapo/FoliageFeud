@@ -21,7 +21,7 @@ var delay = 0;
 
 var info = {
 	// Variables
-	tileSize: 128,
+	tileSize: 105,
 	debugInfo: false,
 	page: 0,
 	plantsPerPage: 18,
@@ -33,7 +33,7 @@ var info = {
 		curPlant = -1;
 		
 		// Blue gradient bg
-		var grd = backgroundSurface.createLinearGradient(0, 0, 0, 512);
+		/*var grd = backgroundSurface.createLinearGradient(0, 0, 0, 512);
 		grd.addColorStop(0, "darkblue");
 		grd.addColorStop(1, "blue");
 		
@@ -46,17 +46,22 @@ var info = {
 		grd2.addColorStop(1, "black");
 		
 		backgroundSurface.fillStyle = grd2;
-		backgroundSurface.fillRect(0, 0, 64 * 4, 512);
+		backgroundSurface.fillRect(0, 0, 64 * 4, 512);*/
+		
+		backgroundSurface.drawImage(
+			imgISpyBg,
+			0, 0
+		);
 		
 		var imgsPerRow = 6;
-		var gapBetween = (1152 - (64 * 4) - (this.tileSize * imgsPerRow)) / (imgsPerRow + 1);
+		var gapBetween = 32;//(1152 - (64 * 4) - (this.tileSize * imgsPerRow)) / (imgsPerRow + 1);
 		
 		// Display appropriate sprite for each plant
 		for (var i = this.plantsPerPage * this.page; i < Math.min(this.plantsPerPage * (this.page + 1), plantList.length); i++)
 		{
 			var sprite = new Image();
-			var x = ((this.tileSize + gapBetween) * (i % imgsPerRow)) + (this.tileSize * 2) + gapBetween;
-			var y = ((this.tileSize + gapBetween) * Math.floor((i % this.plantsPerPage) / imgsPerRow)) + gapBetween;
+			var x = ((this.tileSize + gapBetween - 12) * (i % imgsPerRow)) + (this.tileSize * 2) + gapBetween + 112;
+			var y = ((this.tileSize + gapBetween + 4) * Math.floor((i % this.plantsPerPage) / imgsPerRow)) + gapBetween + 10;
 			
 			if (plantList[i].harvested || this.debugInfo)
 			{
@@ -76,6 +81,11 @@ var info = {
 				this.tileSize, this.tileSize
 			);
 		}
+		
+		gameplaySurface.drawImage(
+			imgInfoOverlay,
+			0, 0
+		);
 		
 		var xOffset = 32;
 		var yOffset = 48;
