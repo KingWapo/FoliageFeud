@@ -262,6 +262,7 @@ var imgMenuBg = utility.loadImage("../img/Backgrounds/menuscreen.png");
 var imgISpyBg = utility.loadImage("../img/Backgrounds/iSpyScreen.png");
 var imgISpyOverlay = utility.loadImage("../img/Backgrounds/iSpyOverlay.png");
 var imgMap1 = utility.loadImage("../img/Buttons/MapButton.png");
+var imgMapBackground = utility.loadImage("../img/UI/mapSelectionBackground.png");
 var imgMapTilesheet = utility.loadImage("../img/Tiles/MapTilesheet.png");
 var imgGirlButton = utility.loadImage("../img/Buttons/playButtonGirl.png");
 var imgBoyButton = utility.loadImage("../img/Buttons/playButtonBoy.png");

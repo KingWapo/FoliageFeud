@@ -1,8 +1,6 @@
 // Script to select the SNA level to go to
 
 var snaSelect = {
-	background: new Image(),
-	Map1: new Image(),
 	
 	init: function()
 	{
@@ -11,14 +9,30 @@ var snaSelect = {
 	
 	render: function()
 	{
+		
 		menuSurface.drawImage(
-			imgCommonBg,
-			0, 0
+			imgMapBackground,
+			96, 32
+		);
+		
+		menuSurface.drawImage(
+			imgMapBackground,
+			imgMapBackground.width + 128, 32
+		);
+		
+		menuSurface.drawImage(
+			imgMapBackground,
+			96, imgMapBackground.height + 64
+		);
+		
+		menuSurface.drawImage(
+			imgMapBackground,
+			imgMapBackground.width + 128, imgMapBackground.height + 64
 		);
 		
 		menuSurface.drawImage(
 			imgMap1,
-			128, 128
+			128, 64
 		);
 	},
 	
