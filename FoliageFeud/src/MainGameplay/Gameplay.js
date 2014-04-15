@@ -637,9 +637,13 @@ var gameplay = {
 				{
 					if (!this.onMainCamp)
 					{
-						//this.onMainCamp = true;
-						//currentScreen = ScreenState.SiblingInteraction;
+						this.onMainCamp = true;
+						currentScreen = ScreenState.SiblingInteraction;
 					}
+				}
+				else
+				{
+					this.onMainCamp = false;
 				}
 				if (utility.collisionDetection(gameplay.player, gameplay.store))
 				{

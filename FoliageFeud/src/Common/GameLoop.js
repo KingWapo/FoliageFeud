@@ -249,8 +249,8 @@ function mainUpdate()
 				entering[currentScreen] = false;
 			}
 			mainCamp.render();
-
-			case ScreenState.Intro:
+			break;
+		case ScreenState.Intro:
 			if (entering[currentScreen])
 			{
 				Intro.init();

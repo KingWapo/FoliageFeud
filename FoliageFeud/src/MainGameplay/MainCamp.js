@@ -71,5 +71,6 @@ var mainCamp = {
 	{
 		entering[ScreenState.SiblingInteraction] = true;
 		currentScreen = ScreenState.Gameplay;
+		utility.clearAll();
 	}
 };
