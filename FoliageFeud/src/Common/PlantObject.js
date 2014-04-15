@@ -71,11 +71,11 @@ var plant = {
 		return i;
 	},
 	
-	getMultipleUnHarvested: function()
+	getMultipleUnHarvested: function(n)
 	{
 		var curPlants = [];
 		
-		for (var i = 0; i < 2; i++){
+		for (var i = 0; i < n; i++){
 			var plantIndex;
 			
 			if (curPlants.length < 1)
@@ -103,7 +103,7 @@ plantList.push(new PlantObject("Purple Loosestrife", "Lythrum salcaria", "Looses
 plantList.push(new PlantObject("Reed Canary Grass", "Phalaris arundinaceae", "Grass", "Early summer", true, ["Can grow 2 to 6 feet tall", "Stems are hairless", "Leaves can be 3 to 10 inches long", "Leaves have a rough texture", "Flowers are in dense clusters", "Can have green to purple flower", "Has a tan seed"], 5));
 plantList.push(new PlantObject("Phragmites", "Phragmites autralis", "Grass", "Late summer", true, ["Can grow 3 to 20 feet tall", "Has hollow stems", "Has smooth leaves", "Leaves are 6 to 24 inches long", "Flowers are in spikelets", "Flowers are light brown to purple"], 4));
 plantList.push(new PlantObject("Buckthorn", "Rhamnus cathartica or Frangula alnus", "Buckthorn", "Spring", true, ["Shrubby plant", "Can grow 20 to 25 feet tall", "Grey to brown bark", "Has lenticels", "Has inconspicuous flowers and red berries in summer and fall"], 4));
-plantList.push(new PlantObject("Honeysuckle", "Lonicera", "Honeysuckle", "Mid to late spring", true, ["Shrub", "Can grow to 15 feet tall", "Has papery bark", "Has tubular flowers", "Red fruit"], 4));
+plantList.push(new PlantObject("Honeysuckle", "Lonicera", "Honeysuckle", "Mid to late spring", true, ["Is a shrub", "Can grow to 15 feet tall", "Has papery bark", "Has tubular flowers", "Has red fruit"], 4));
 plantList.push(new PlantObject("Water-Milfoil", "Myriophyllum", "Watermilfoil", "", false, ["Perennial submersed aquatic", "Leaves are whorled and pinnately compound with thread-like leaflets", "Can grow up to 15 feet deep in water"], 4));
 plantList.push(new PlantObject("Common Liverwort", "Marchantia polymorpha", "Liverwort", "", false, ["Has no stems or leaves", "Has flattened, branching thallus held in ground by rhizoids", "Grows mostly in shady regions"], 4));
 plantList.push(new PlantObject("Peat Moss", "Sphagnum", "Peat Moss", "", false, ["Grows in wetlands and forms deep colonies or floating mats", "Usually grows upright and close to its neighboring plant", "Branches are arranged spirally at top or in clusters", "When mature it has sporophyte capsules that are brown to black"], 4));
