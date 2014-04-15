@@ -4,7 +4,7 @@
 
 var ispy = {
 	// Size of image on screen
-	imgSize: 256,
+	imgSize: 170,
 	// Index of requested plant
 	requestedPlant: 0,
 	
@@ -15,40 +15,20 @@ var ispy = {
 		utility.clearAll();
 		
 		backgroundSurface.drawImage(
-			imgCommonBg,
+			imgISpyBg,
 			0, 0
 		);
 		
 		// Add unharvested plants to ispy pool
-		var curPlants = [];
+		var curPlants = plant.getMultipleUnHarvested(3);
 		
-		for (var i = 0; i < 2; i++){
-			var plantIndex;
-			
-			if (curPlants.length < 1)
-				plantIndex = plant.getRandUnHarvested();
-			else
-			{
-				do
-				{
-					plantIndex = plant.getRandUnHarvested();
-				} while (utility.contains(curPlants, plantIndex));
-			}
-				
-			curPlants.push(plantIndex);
-		}
-		
+		// Add requested plant to ispy pool
 		curPlants.push(this.requestedPlant);
 		
+		// Shuffle array
 		curPlants = utility.shuffle(curPlants);
 		
-		// Set number of images on screen
-		var numImgs = 3;
-	
-		if (curPlants.length > numImgs)
-			this.growPlants(curPlants, numImgs);
-		else if (curPlants.length > 0)
-			this.growPlants(curPlants, curPlants.length);
+		this.growPlants(curPlants, curPlants.length);
 	},
 	
 	// Draws objects to screen for game mode
@@ -57,25 +37,54 @@ var ispy = {
 		var requested = curPlants.indexOf(this.requestedPlant);
 		console.debug(requested, ", ", curPlants.length);
 		
+		// Plants in current list
+		console.debug("Current plant list: ", curPlants[0], ", ", curPlants[1], ", ", curPlants[2], ", ", curPlants[3]);
+		
 		// Write plant name and traits to screen
 		var strings = [];
 		
+		// Add plant name to string array
 		strings.push("Requested Plant: ".concat(plantList[this.requestedPlant].name));
 		
-		// 3 can go off screen
-		for (var j = 0; j < 2; j++)
+		// Get 2 random traits for the plant
+		var curTraits = plant.get2Traits(this.requestedPlant);
+		
+		// Add traits to string array
+		for (var j = 0; j < curTraits.length; j++)
 		{
-			strings.push("Trait[".concat(j, "]: ", plant.getRandTrait(this.requestedPlant)));
+			strings.push(curTraits[j]);
 		}
 		
-		utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, true);
+		utility.writeText(menuSurface, strings, 96, 64, 64 * 4, 25, true);
 		
 		// Draw plants on screen and add them to click handler
 		for (var j = 0; j < i; j++)
 		{
-		//console.debug("loop: ", j, ", ", i);
-			var x = ((this.imgSize  + 32)* j) + (64 * 4.5);
-			var y = 128;
+			//console.debug("loop: ", j, ", ", i);
+			var x;
+			var y;
+			
+			switch (j)
+			{
+				case 0:
+					x = 472;
+					y = 54;
+					break;
+				case 1:
+					x = 720;
+					y = 32;
+					break;
+				case 2:
+					x = 528;
+					y = 286;
+					break;
+				case 3:
+					x = 796;
+					y = 260;
+					break;
+			}
+			//var x = 1152 - (256 * (2 - (j % 2))) - 64;
+			//var y = 256 * Math.floor(j / 2);
 			
 			if (curPlants[j] === this.requestedPlant)
 				utility.addClickItem(x, y, this.imgSize, this.imgSize, this.harvestPlant, [j]);
@@ -85,6 +94,7 @@ var ispy = {
 			var imgNum = Math.floor(Math.random() * plantList[curPlants[j]].sprite.length);
 			
 			gameplaySurface.drawImage(plantList[curPlants[j]].sprite[imgNum], x, y, this.imgSize, this.imgSize);
+			gameplaySurface.drawImage(imgISpyOverlay, 0, 0, 1152, 512);
 		}
 	},
 

@@ -93,7 +93,7 @@ var utility = {
 	{
 		utility.curNumImages += 1;
 		
-		console.debug('total: ', utility.totalNumImages, ' - loaded: ', utility.curNumImages);
+		//console.debug('total: ', utility.totalNumImages, ' - loaded: ', utility.curNumImages);
 		
 		menuSurface.rect(76, 206, 1000, 100);
 		menuSurface.stroke();
@@ -229,8 +229,10 @@ var utility = {
 	{
 		for (var i = 0; i < array.length; i++)
 		{
-			if (array[i] == element)
+			if (array[i] === element){
+				console.debug("found dupe");
 				return true;
+			}
 		}
 		
 		return false;
@@ -259,7 +261,10 @@ window.addEventListener("click", utility.handleClick, false);
 
 var imgCommonBg = utility.loadImage("../img/Backgrounds/commonBackground.png");
 var imgMenuBg = utility.loadImage("../img/Backgrounds/menuscreen.png");
-var imgMap1 = utility.loadImage("../img/Tokens/cat.png");
+var imgISpyBg = utility.loadImage("../img/Backgrounds/iSpyScreen.png");
+var imgISpyOverlay = utility.loadImage("../img/Backgrounds/iSpyOverlay.png");
+var imgMap1 = utility.loadImage("../img/Buttons/MapButton.png");
+var imgMapBackground = utility.loadImage("../img/UI/mapSelectionBackground.png");
 var imgMapTilesheet = utility.loadImage("../img/Tiles/MapTilesheet.png");
 var imgGirlButton = utility.loadImage("../img/Buttons/playButtonGirl.png");
 var imgBoyButton = utility.loadImage("../img/Buttons/playButtonBoy.png");
