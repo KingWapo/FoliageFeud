@@ -91,7 +91,7 @@ var utility = {
 	{
 		utility.curNumImages += 1;
 		
-		console.debug('total: ', utility.totalNumImages, ' - loaded: ', utility.curNumImages);
+		//console.debug('total: ', utility.totalNumImages, ' - loaded: ', utility.curNumImages);
 		
 		menuSurface.rect(76, 206, 1000, 100);
 		menuSurface.stroke();
@@ -227,8 +227,10 @@ var utility = {
 	{
 		for (var i = 0; i < array.length; i++)
 		{
-			if (array[i] == element)
+			if (array[i] === element){
+				console.debug("found dupe");
 				return true;
+			}
 		}
 		
 		return false;

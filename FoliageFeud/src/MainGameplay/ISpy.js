@@ -20,26 +20,12 @@ var ispy = {
 		);
 		
 		// Add unharvested plants to ispy pool
-		var curPlants = [];
+		var curPlants = plant.getMultipleUnHarvested();
 		
-		for (var i = 0; i < 2; i++){
-			var plantIndex;
-			
-			if (curPlants.length < 1)
-				plantIndex = plant.getRandUnHarvested();
-			else
-			{
-				do
-				{
-					plantIndex = plant.getRandUnHarvested();
-				} while (utility.contains(curPlants, plantIndex));
-			}
-				
-			curPlants.push(plantIndex);
-		}
-		
+		// Add requested plant to ispy pool
 		curPlants.push(this.requestedPlant);
 		
+		// Shuffle array
 		curPlants = utility.shuffle(curPlants);
 		
 		// Set number of images on screen
@@ -57,15 +43,22 @@ var ispy = {
 		var requested = curPlants.indexOf(this.requestedPlant);
 		console.debug(requested, ", ", curPlants.length);
 		
+		// Plants in current list
+		console.debug("Current plant list: ", curPlants[0], ", ", curPlants[1], ", ", curPlants[2]);
+		
 		// Write plant name and traits to screen
 		var strings = [];
 		
+		// Add plant name to string array
 		strings.push("Requested Plant: ".concat(plantList[this.requestedPlant].name));
 		
-		// 3 can go off screen
-		for (var j = 0; j < 2; j++)
+		// Get 2 random traits for the plant
+		var curTraits = plant.get2Traits(this.requestedPlant);
+		
+		// Add traits to string array
+		for (var j = 0; j < curTraits.length; j++)
 		{
-			strings.push("Trait[".concat(j, "]: ", plant.getRandTrait(this.requestedPlant)));
+			strings.push(curTraits[j]);
 		}
 		
 		utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, true);
@@ -73,7 +66,7 @@ var ispy = {
 		// Draw plants on screen and add them to click handler
 		for (var j = 0; j < i; j++)
 		{
-		//console.debug("loop: ", j, ", ", i);
+			//console.debug("loop: ", j, ", ", i);
 			var x = ((this.imgSize  + 32)* j) + (64 * 4.5);
 			var y = 128;
 			

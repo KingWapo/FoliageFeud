@@ -30,6 +30,29 @@ var plant = {
 		
 		return plantList[index].traits[i];
 	},
+	
+	get2Traits: function(index)
+	{
+		var curTraits = [];
+		
+		for (var i = 0; i < 2; i++){
+			var trait;
+			
+			if (curTraits.length < 1)
+				trait = plant.getRandTrait(index);
+			else
+			{
+				do
+				{
+					trait = plant.getRandTrait(index);
+				} while (utility.contains(curTraits, trait));
+			}
+				
+			curTraits.push(trait);
+		}
+		
+		return curTraits;
+	},
 
 	getName: function(index)
 	{
@@ -46,6 +69,29 @@ var plant = {
 		} while (plantList[i].harvested);
 		
 		return i;
+	},
+	
+	getMultipleUnHarvested: function()
+	{
+		var curPlants = [];
+		
+		for (var i = 0; i < 2; i++){
+			var plantIndex;
+			
+			if (curPlants.length < 1)
+				plantIndex = plant.getRandUnHarvested();
+			else
+			{
+				do
+				{
+					plantIndex = plant.getRandUnHarvested();
+				} while (utility.contains(curPlants, plantIndex) || plantIndex === ispy.requestedPlant);
+			}
+				
+			curPlants.push(plantIndex);
+		}
+		
+		return curPlants;
 	}
 }
 
@@ -80,13 +126,13 @@ plantList.push(new PlantObject("Tamarack", "Larix laricina", "Pine", "", false, 
 plantList.push(new PlantObject("Eastern White Pine", "Pinus strobus", "Pine", "", false, ["Grows up to 100 feet tall", "Needles grow in bundles of 5", "Needles are 3 to 5 inches long and are soft", "Stomata in fine white line on 2 spots of every needle", "Cones are curved and about 4 to 8 inches long with spineless scales", "Bark is gray, smooth when young and matures into broken rectangular blocks"], 4));
 plantList.push(new PlantObject("Red Pine", "Pinus resinosa", "Pine", "", false, ["Grows 50 to 100 feet tall", "Needles are 2 to 4 inchesl long and are in bundles of 2", "Bark is scaly and twigs are yellowish and turn a reddish-brown", "Cones are 1 to 2 1/2 inches long"], 4));
 plantList.push(new PlantObject("Jack Pine", "Pinus banksiana", "Pine", "", false, ["Grows 70 to 80 feet tall", "Needles are 1 to 1 1/2 inches in bunches of 2 and are stiff and dark green", "Bark is dark gray to reddish brown and scaly", "Cones are 1 to 2 inches long and usually curved toward the tip of the branch"], 4));
+plantList.push(new PlantObject("Yew", "Taxus ssp.", "Yew", "", false, ["Evergreen shrubs with needles that are flat, short, and 2-ranked", "Cones are small, red, fleshy, and berry-like"], 4));
+plantList.push(new PlantObject("Northern White Cedar", "Thuja occidentalis", "Cypress", "", false, ["Slender evergreen tree with decay resistant wood", "Leaves are a yellowish green and scale like, alternating in right-angled pairs", "Cones are erect on branchlets and 1/4 to 1/2 inches", "Fibrous bark with reddish brown to gray color", "Found in non-acidic swamps"], 4));
+plantList.push(new PlantObject("Eastern Red-Cedar", "Juniperus virginiana", "Cypress", "", false, ["Dense evergreen tree with round branchlets that are covered in green scales that are closely packed", "Small round cones that are 1/4 inch in diameter", "Fleshy, green cones that turn a waxy blue", "Scaly bark that is ash gray to reddish brown"], 4));
+plantList.push(new PlantObject("American White Water Lily", "Nymphaea odorata", "Water Lily", "Early summer to fall", false, ["Perennial aquatic plants with white or pinkish flowers that are 2 to 8 inches wide", "Leaves are floating and have long petioles that extend down into the substrate", "Found in still, shallow water"], 4));
+plantList.push(new PlantObject("Bullhead Pond Lily", "Nuphar variegata", "Water Lily", "Late spring to early fall", false, ["Perennial aquatic plant with yellow flowers that are above the water with round, heart-shaped leaves that float", "Flowers have 5 or 6 yellow sepals that are large and small, short petals", "Found in ponds and slow streams"], 4));
+plantList.push(new PlantObject("Wild-Ginger", "Asarum canadense", "Birthwort", "Early spring", false, ["Perennial herb that grows 2 to 8 inches tall", "Leaves are either heart or kidney shaped at the base", "Grows with 2 hairy leaves and usually found in colonies", "Has a reddish brown flower that has 3 parts"], 4));
 /*plantList.push(new PlantObject());
-plantList.push(new PlantObject());
-plantList.push(new PlantObject());
-plantList.push(new PlantObject());
-plantList.push(new PlantObject());
-plantList.push(new PlantObject());
-plantList.push(new PlantObject());
 plantList.push(new PlantObject());
 plantList.push(new PlantObject());
 plantList.push(new PlantObject());
