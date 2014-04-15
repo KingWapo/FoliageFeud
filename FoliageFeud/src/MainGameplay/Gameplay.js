@@ -993,6 +993,7 @@ window.addEventListener("keyup", function(event)
 			console.debug("Exit Pause");
 			gameplay.mapBuilt = false;
 			gameplay.onPause = false;
+			utility.clearAll();
 		}
 	}
 	else

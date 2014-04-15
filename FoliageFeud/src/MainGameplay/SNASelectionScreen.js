@@ -4,7 +4,10 @@ var snaSelect = {
 	
 	init: function()
 	{
-		utility.addClickItem(128, 128, imgMap1.width, imgMap1.height, this.goToMap1, "");
+		utility.addClickItem(96, 32, imgMapBackground.width, imgMapBackground.height, this.goToMap1, "");
+		utility.addClickItem(imgMapBackground.width + 128, 32, imgMapBackground.width, imgMapBackground.height, this.goToMap1, "");
+		utility.addClickItem(96, 32, imgMapBackground.width, imgMapBackground.height, this.goToMap1, "");
+		utility.addClickItem(imgMapBackground.width + 128, imgMapBackground.height + 64, imgMapBackground.width, imgMapBackground.height, this.goToMap1, "");
 	},
 	
 	render: function()
