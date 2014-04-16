@@ -269,7 +269,7 @@ imgInfoSmallOverlay.push(utility.loadImage("../img/Backgrounds/infoOverlay01.png
 imgInfoSmallOverlay.push(utility.loadImage("../img/Backgrounds/infoOverlay02.png"));
 var imgInfoOverlay = utility.loadImage("../img/Backgrounds/informationOverlay.png");
 var imgMap1 = utility.loadImage("../img/Buttons/MapButton.png");
-var imgMapBackground = utility.loadImage("../img/UI/mapSelectionBackground.png");
+var imgMapBackground = utility.loadImage("../img/Backgrounds/mapSelectionBackground.png");
 var imgMapTilesheet = utility.loadImage("../img/Tiles/MapTilesheet.png");
 var imgGirlButton = utility.loadImage("../img/Buttons/playButtonGirl.png");
 var imgBoyButton = utility.loadImage("../img/Buttons/playButtonBoy.png");
