@@ -36,22 +36,6 @@ var info = {
 		utility.clearAll();
 		curPlant = -1;
 		
-		// Blue gradient bg
-		/*var grd = backgroundSurface.createLinearGradient(0, 0, 0, 512);
-		grd.addColorStop(0, "darkblue");
-		grd.addColorStop(1, "blue");
-		
-		backgroundSurface.fillStyle = grd;
-		backgroundSurface.fillRect(0, 0, 1152, 512);
-		
-		// Grey side panel
-		var grd2 = backgroundSurface.createLinearGradient(0, 0, 0, 512);
-		grd2.addColorStop(0, "darkgrey");
-		grd2.addColorStop(1, "black");
-		
-		backgroundSurface.fillStyle = grd2;
-		backgroundSurface.fillRect(0, 0, 64 * 4, 512);*/
-		
 		backgroundSurface.drawImage(
 			imgISpyBg,
 			0, 0
@@ -67,6 +51,9 @@ var info = {
 			var x = ((this.tileSize + gapBetween - 12) * (i % imgsPerRow)) + (this.tileSize * 2) + gapBetween + 112;
 			var y = ((this.tileSize + gapBetween + 4) * Math.floor((i % this.plantsPerPage) / imgsPerRow)) + gapBetween + 10;
 			
+			if (i === 0 || i === 3)
+				x += 3;
+				
 			if (plantList[i].harvested || this.debugInfo)
 			{
 				sprite = plantList[i].sprite[0];
@@ -111,7 +98,7 @@ var info = {
 			1152 - xOffset * 3, 512 - yOffset, 64, 32
 		);
 	},
-
+	
 	// Display plant info if harvested
 	displayPlantInfo: function(i)
 	{
@@ -127,6 +114,7 @@ var info = {
 		utility.writeText(gameplaySurface, strings, 96, 64, 64 * 4, 25, true);
 		
 		curPlant = i;
+		curImage = 0;
 		plantShown = true;
 	},
 
@@ -142,7 +130,6 @@ var info = {
 		utility.writeText(gameplaySurface, strings, 10, 50, 64 * 4, 25, true);
 		
 		curPlant = -1;
-		curImage = 0;
 		plantShown = false;
 		imagePosX = -256;
 	},
@@ -173,7 +160,7 @@ var info = {
 	{
 		menuSurface.clearRect(0, 0, 1152, 512);
 		
-		if (curPlant >= 0)
+		if (plantShown)
 		{
 			if (delay % 60 === 0)
 			{
@@ -196,6 +183,7 @@ var info = {
 				
 				curImage = (curImage + 1) % plantList[curPlant].sprite.length;
 				imagePosY = 512;
+				
 			}
 			
 			delay = (delay + 1) % 60;

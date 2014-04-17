@@ -19,8 +19,8 @@ var ispy = {
 			0, 0
 		);
 		
-		// Add unharvested plants to ispy pool
-		var curPlants = plant.getMultipleUnHarvested(3);
+		// Add plants to ispy pool
+		var curPlants = plant.getMultiplePlants(3);
 		
 		// Add requested plant to ispy pool
 		curPlants.push(this.requestedPlant);

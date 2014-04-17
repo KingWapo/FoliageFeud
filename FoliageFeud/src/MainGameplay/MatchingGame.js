@@ -4,7 +4,7 @@ var matching = {
 	
 	init: function()
 	{
-		this.cards = plant.getMultipleUnHarvested(9);
+		this.cards = plant.getMultiplePlants(9);
 		
 		for (var i = 0; i < this.cards.length; i++)
 		{
@@ -16,6 +16,8 @@ var matching = {
 			tempImgCard.createImgCard(this.cards[i]);
 			this.cards.push(tempImgCard);
 		}
+		
+		this.cards.shuffle();
 		
 		console.debug(this.cards);
 	}
