@@ -93,7 +93,7 @@ var plant = {
 		
 		do
 		{
-			i = getRandPlant();
+			i = plant.getRandPlant();
 		} while (plantList[i].harvested);
 		
 		return i;
