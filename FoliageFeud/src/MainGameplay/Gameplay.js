@@ -265,6 +265,8 @@ var gameplay = {
 	
 	init: function()
 	{
+		utility.clearAll();
+		
 		this.mapOrientation = Math.floor(Math.random() * 4);
 		console.debug("Map Orientation: " + this.mapOrientation);
 		

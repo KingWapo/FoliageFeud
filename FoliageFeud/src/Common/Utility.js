@@ -133,53 +133,7 @@ var utility = {
 		context.lineWidth = 1;
 		context.strokeStyle = "black";
 		
-		for (var j = 0; j < text.length; j++)
-		{
-			var words = text[j].split(' ');
-			var line = '';
-			
-			for (var i = 0; i < words.length; i++)
-			{
-				var testLine = line + words[i] + ' ';
-				var metrics = context.measureText(testLine);
-				var testWidth = metrics.width;
-				
-				if (testWidth > maxWidth && i > 0)
-				{
-					context.fillText(line, x, y);
-					
-					if (isOutlined)
-						context.strokeText(line, x, y);
-						
-					line = words[i] + ' ';
-					y += fontSize;
-				}
-				else
-				{
-					line = testLine;
-				}
-			}
-			
-			context.fillText(line, x, y);
-			
-			if (isOutlined)
-				context.strokeText(line, x, y);
-			
-			y += fontSize * 2;
-		}
-	},
-	
-	// Write text to screen, wrapping if hits max width, and adding a click handler
-	// clickHandler[0] is function
-	// clickHandler[1] is array of parameters
-	writeForClick: function(context, text, x, y, maxWidth, fontSize, isOutlined, clickHandler)
-	{
-		context.fillStyle = "white";
-		context.font = fontSize + "px Evilgreen";
-		
-		context.lineWidth = 1;
-		context.strokeStyle = "black";
-		
+		var width = 0;
 		var height = 0;
 		
 		for (var j = 0; j < text.length; j++)
@@ -195,6 +149,7 @@ var utility = {
 				
 				if (testWidth > maxWidth && i > 0)
 				{
+						
 					context.fillText(line, x, y);
 					
 					if (isOutlined)
@@ -202,13 +157,16 @@ var utility = {
 						
 					line = words[i] + ' ';
 					y += fontSize;
-					
-					height += fontSize;
 				}
 				else
 				{
+					if (testWidth > width)
+						width = testWidth;
+						
 					line = testLine;
 				}
+				
+				height = y;
 			}
 			
 			context.fillText(line, x, y);
@@ -216,12 +174,21 @@ var utility = {
 			if (isOutlined)
 				context.strokeText(line, x, y);
 			
-			height += fontSize;
-			
-			utility.addClickItem(x, y - height, testWidth, height, clickHandler[0], clickHandler[1]);
-			
 			y += fontSize * 2;
 		}
+		
+		height += fontSize;
+		
+		return [width, height];
+	},
+	
+	// Write text to screen, wrapping if hits max width, and adding a click handler
+	// clickHandler[0] is function
+	// clickHandler[1] is array of parameters
+	writeForClick: function(context, text, x, y, maxWidth, fontSize, isOutlined, clickHandler)
+	{
+		var size = utility.writeText(context, text, x, y, maxWidth, fontSize, isOutlined);
+		utility.addClickItem(x, y - fontSize, size[0], size[1], clickHandler[0], clickHandler[1]);
 	},
 	
 	contains: function(array, element)

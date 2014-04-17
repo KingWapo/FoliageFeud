@@ -127,7 +127,7 @@ var info = {
 		strings.push("This plant has not been found yet.");
 		strings.push("To find this plant, explore more regions.");
 					 
-		utility.writeText(gameplaySurface, strings, 10, 50, 64 * 4, 25, true);
+		utility.writeText(gameplaySurface, strings, 96, 64, 64 * 4, 25, true);
 		
 		curPlant = -1;
 		plantShown = false;
@@ -140,6 +140,7 @@ var info = {
 		{
 			info.page += 1;
 			info.init();
+			plantShown = false;
 		}
 		else
 			console.debug("Already on last page");
@@ -150,6 +151,7 @@ var info = {
 		if (info.page > 0)
 		{
 			info.page -= 1;
+			plantShown = false;
 			info.init();
 		}
 		else

@@ -223,7 +223,7 @@ function mainUpdate()
 		case ScreenState.TestCode:
 			if (entering[currentScreen])
 			{
-				test.init();
+				matching.init();
 				entering[currentScreen] = false;
 			}
 			if (exiting[currentScreen])
