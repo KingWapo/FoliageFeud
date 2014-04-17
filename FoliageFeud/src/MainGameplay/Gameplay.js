@@ -9,7 +9,11 @@ Animation = {
 	Left: 2,
 	Down: 3,
 	Up: 4,
-	WorldEventRight: 5
+	WorldEventRight: 5,
+	SwimmingRight: 6,
+	SwimmingLeft: 7,
+	SwimmingDown: 8,
+	SwimmingUp: 9
 };
 
 Level = {
