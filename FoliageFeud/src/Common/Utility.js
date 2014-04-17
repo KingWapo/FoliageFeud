@@ -43,9 +43,9 @@ var utility = {
 		item.param = param;
 		
 		// Debug location of click items
-		menuSurface.fillStyle = "black";
+		/*menuSurface.fillStyle = "black";
 		menuSurface.rect(x, y, width, height);
-		menuSurface.stroke();
+		menuSurface.stroke();*/
 		
 		this.clickable.push(item);
 	},
