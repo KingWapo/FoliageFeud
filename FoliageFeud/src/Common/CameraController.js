@@ -56,26 +56,28 @@ var cameraController = {
 		height: gameplayCanvas.height,
 		vx: 0,
 		previousX: 0,
+		xBounds: .8,
+		yBounds: .7,
 
 		//The camera's inner scroll boundaries
 		rightInnerBoundary: function()
 		{
-		return this.x + (this.width * 0.95);
+		return this.x + (this.width * this.xBounds);
 		},
 
 		leftInnerBoundary: function()
 		{
-		return this.x + (this.width * 0.05);
+		return this.x + (this.width * (1 - this.xBounds));
 		},
 
 		upperInnerBoundary: function()
 		{
-		return this.y + (this.height * 0.05);
+		return this.y + (this.height * (1 - this.yBounds));
 		},
 
 		lowerInnerBoundary: function()
 		{
-		return this.y + (this.height * 0.95);
+		return this.y + (this.height * this.yBounds);
 		}
 	},
 	

@@ -15,7 +15,6 @@ nextPageButton.src = "../img/Buttons/arrowRight.png";
 
 var curPlant = -1;
 var curImage = 0;
-var plantShown = false;
 var imagePosX = 96;
 var imagePosY = 528;
 var delay = 0;
@@ -115,7 +114,6 @@ var info = {
 		
 		curPlant = i;
 		curImage = 0;
-		plantShown = true;
 	},
 
 	// Display unharvested text
@@ -130,7 +128,6 @@ var info = {
 		utility.writeText(gameplaySurface, strings, 96, 64, 64 * 4, 25, true);
 		
 		curPlant = -1;
-		plantShown = false;
 		imagePosX = -256;
 	},
 	
@@ -140,7 +137,6 @@ var info = {
 		{
 			info.page += 1;
 			info.init();
-			plantShown = false;
 		}
 		else
 			console.debug("Already on last page");
@@ -151,7 +147,6 @@ var info = {
 		if (info.page > 0)
 		{
 			info.page -= 1;
-			plantShown = false;
 			info.init();
 		}
 		else
@@ -162,7 +157,7 @@ var info = {
 	{
 		menuSurface.clearRect(0, 0, 1152, 512);
 		
-		if (plantShown)
+		if (curPlant >= 0)
 		{
 			if (delay % 60 === 0)
 			{

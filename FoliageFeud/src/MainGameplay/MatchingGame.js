@@ -1,47 +1,46 @@
 var matching = {
-	tileSize: 128,
+	tileSize: 105,
 	cards: [],
 	
 	init: function()
 	{
-		this.cards = plant.getMultiplePlants(9);
+		utility.clearAll();
 		
-		console.debug(this.cards);
+		this.cards = [];
 		
-		for (var i = 0; i < this.cards.length; i++)
+		var plantCards = plant.getMultiplePlants(9);
+		
+		for (var i = 0; i < plantCards.length; i++)
 		{
 			var tempNameCard = Object.create(cardObj);
-			tempNameCard = matching.createNameCard(this.cards[i]);
-			this.cards[i] = tempNameCard;
+			tempNameCard = matching.createNameCard(plantCards[i]);
+			this.cards.push(tempNameCard);
 			
 			var tempImgCard = Object.create(cardObj);
-			tempImgCard = matching.createImgCard(this.cards[i]);
+			tempImgCard = matching.createImgCard(plantCards[i]);
 			this.cards.push(tempImgCard);
 		}
 		
-		this.cards.shuffle();
+		utility.shuffle(this.cards);
 		
 		
 		var imgsPerRow = 6;
 		var gapBetween = 32;
 		
-		for (var i = this.plantsPerPage * this.page; i < Math.min(this.plantsPerPage * (this.page + 1), plantList.length); i++)
+		for (var i = 0; i < this.cards.length; i++)
 		{
-			var sprite = new Image();
 			var x = ((this.tileSize + gapBetween - 12) * (i % imgsPerRow)) + (this.tileSize * 2) + gapBetween + 112;
-			var y = ((this.tileSize + gapBetween + 4) * Math.floor((i % this.plantsPerPage) / imgsPerRow)) + gapBetween + 10;
+			var y = ((this.tileSize + gapBetween + 4) * Math.floor((i) / imgsPerRow)) + gapBetween + 10;
 			
 			if (i === 0 || i === 3)
 				x += 3;
 				
-			sprite = imgQuestionMark;
 			utility.addClickItem(x, y, this.tileSize, this.tileSize, this.flipCard, [i]);
 
-			utility.writeText(menuSurface, [i], x, y, 50, 20, true);
 			backgroundSurface.drawImage
 			(
-				sprite,
-				0, 0, sprite.width, sprite.height, x, y,
+				imgQuestionMark,
+				0, 0, this.tileSize, this.tileSize, x, y,
 				this.tileSize, this.tileSize
 			);
 		}
@@ -50,6 +49,11 @@ var matching = {
 			imgInfoOverlay,
 			0, 0
 		);
+	},
+	
+	flipCard: function(i)
+	{
+		console.debug(plantList[matching.cards[i].index].name);
 	},
 	
 	createNameCard: function(index)
