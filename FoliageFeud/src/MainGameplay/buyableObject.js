@@ -14,11 +14,16 @@ var buyableObject = {
 			utility.writeText(menuSurface, strings, 240, 50, 64 * 4 - 10, 25, true);
 			gameplay.gold=gameplay.gold-this.price;
 			this.purchased=true;
+			this.init();
+		
 			
 		}
+	
 		
-		
-			if(this.purchased==true)
+	},
+	init:function()
+	{
+				if(this.purchased==true)
 		{
 			menuSurface.drawImage
 			(
@@ -28,8 +33,10 @@ var buyableObject = {
 
 				
 		}
+	}
 		
-	},
+	
+	
 	
 	
 

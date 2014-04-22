@@ -715,13 +715,13 @@ var gameplay = {
 		this.player.y = 300; 
 		
 		this.teleporter.x = 300;
-		this.teleporter.y = 300;
+		this.teleporter.y = 350;
 		
 		this.training.x = 3 * 64;
 		this.training.y = 2 * 64;
 		
 		this.mainCamp.x = 7 * 64;
-		this.mainCamp.y = 2 * 64;
+		this.mainCamp.y =  64;
 		
 		this.store.x = 11 * 64;
 		this.store.y = 2 * 64;
