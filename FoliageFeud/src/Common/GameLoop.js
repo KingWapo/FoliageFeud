@@ -189,6 +189,7 @@ function mainUpdate()
 			{
 				ispy.init();
 				entering[currentScreen] = false;
+				
 			}
 			if (exiting[currentScreen])
 			{

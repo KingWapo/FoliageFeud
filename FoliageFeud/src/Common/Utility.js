@@ -278,12 +278,14 @@ var imgTimer = utility.loadImage("../img/WorldEvent/timer.png");
 var imgTimerBg = utility.loadImage("../img/WorldEvent/timerBackground.png");
 var imgCheckmark = utility.loadImage("../img/WorldEvent/checkmark.png");
 var imgShopBg = utility.loadImage(" ../img/Backgrounds/shopscreen.png");
+var imgCatHat =utility.loadImage("../img/Tokens/cat.png");
+
 
 
 createScenery.tilesheet = utility.loadImage("../img/Tiles/tilesheet.png");
 
 worldEvent.wall.sprite = utility.loadImage("../img/WorldEvent/WALL.png");
-
+gameplay.mainCamp.sprite = utility.loadImage("../img/Tiles/mainCamp.png");
 gameplay.player.sprite = utility.loadImage("../img/Player/characterMale.png");
 gameplay.observationInstance.sprite = utility.loadImage("../img/Tokens/exclamationPoint.png");
 gameplay.blueCoin.sprite = utility.loadImage("../img/Tokens/waterToken.png");
@@ -292,6 +294,5 @@ gameplay.speedCoin.sprite = utility.loadImage("../img/Tokens/speedToken.png");
 gameplay.teleporter.sprite = utility.loadImage("../img/Tiles/telelporter.png");
 gameplay.training.sprite = utility.loadImage("../img/Tiles/training.png");
 gameplay.store.sprite = utility.loadImage("../img/Tiles/shop.png");
-gameplay.mainCamp.sprite = utility.loadImage("../img/Tiles/mainCamp.png");
-baseCamp.shop();
-shop.drawShop();
+
+

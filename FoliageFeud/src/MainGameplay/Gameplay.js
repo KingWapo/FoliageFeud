@@ -817,11 +817,7 @@ var gameplay = {
 					this.training.x, this.training.y
 				);
 				
-				gameplaySurface.drawImage
-				(
-					this.mainCamp.sprite,
-					this.mainCamp.x, this.mainCamp.y
-				);
+				
 				
 				gameplaySurface.drawImage
 				(
