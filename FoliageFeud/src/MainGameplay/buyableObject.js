@@ -11,7 +11,7 @@ var buyableObject = {
 		{
 			var strings = [];
 			strings.push("you purchased the " + this.name + " item! ");
-			utility.writeText(menuSurface, strings, 240, 50, 64 * 4 - 10, 25, true);
+			utility.writeText(menuSurface, strings, 240, 25, 64 * 4 - 10, 25, true);
 			gameplay.gold=gameplay.gold-this.price;
 			this.purchased=true;
 			this.init();

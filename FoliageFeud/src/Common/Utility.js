@@ -63,6 +63,7 @@ var utility = {
 		var rect = gameplayCanvas.getBoundingClientRect();
 		var posx = event.clientX - rect.left;
 		var posy = event.clientY - rect.top;
+		console.debug(posx+" "+posy)
 		
 		// Checks each object to see if it was clicked
 		for (var i = 0; i < utility.clickable.length; i++)
@@ -249,7 +250,7 @@ var imgTimer = utility.loadImage("../img/WorldEvent/timer.png");
 var imgTimerBg = utility.loadImage("../img/WorldEvent/timerBackground.png");
 var imgCheckmark = utility.loadImage("../img/WorldEvent/checkmark.png");
 var imgShopBg = utility.loadImage(" ../img/Backgrounds/shopscreen.png");
-var imgCatHat =utility.loadImage("../img/Tokens/cat.png");
+var imgAdventure =utility.loadImage("../img/Hats/explorer.png");
 var imgSold = utility.loadImage("../img/Tokens/purchased.png")
 
 
