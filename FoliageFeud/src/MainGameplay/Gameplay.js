@@ -255,12 +255,31 @@ var gameplay = {
 		visible: true,
 		sourceX: 0,
 		sourceY: 0,
-		sourceWidth:154,
-		sourceHeight:122,
+		sourceWidth:128,
+		sourceHeight:128,
+		numOfFrames: 4,
+		currentFrame: 0,
+		update:0,
+		updateAnimation: function()
+		{
+			
+			
+				this.sourceX = this.currentFrame * this.sourceWidth;
+			
+				this.currentFrame += 1;
+					
+				if ( this.currentFrame === this.numOfFrames )
+				{
+					this.currentFrame = 0;	
+				}
+					
+			
+		
+		},
 		x: 0,
 		y: 0,
-		width: 154,
-		height: 122,	
+		width: 128,
+		height: 128,	
 		sprite: ''
 		
 	},
@@ -292,19 +311,16 @@ var gameplay = {
 			gameplay.collisionTiles.push(tempCollision);
 		}
 		cameraController.init();
-	
-		
 		//place the coins and objects 
 		this.placeObservationEvent();
 		this.placeBlue();
 		this.placeGray();
 		this.placeSpeed();
 		this.placeTeleporter();
-		
 		// Init the stores
 		this.training.width = 256;
 		this.training.height = 128;
-		
+	
 		this.store.width = 256;
 		this.store.height = 128;
 		
@@ -428,6 +444,7 @@ var gameplay = {
 		this.blueCoin.updateAnimation();
 		this.grayCoin.updateAnimation();
 		this.speedCoin.updateAnimation();
+		this.teleporter.updateAnimation();
 	},
 	
 	checkMovement: function()

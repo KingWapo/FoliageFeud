@@ -18,14 +18,14 @@ drawShop:function()
 		);
 		menuSurface.drawImage(
 			imgCatHat,
-			50, 50
+			125, 125
 		);
 		
 			this.initShop();
 		
 		
 		utility.addClickItem(menuCanvas.width - 320, menuCanvas.height - 160, imgExitButton.width, imgExitButton.height, gameplay.writtingClear, "");
-		utility.addClickItem( 50,50,imgCatHat.width,imgCatHat.height,this.buyCat,"");
+		utility.addClickItem( 125,125,imgCatHat.width,imgCatHat.height,this.buyCat,"");
 		
 	
 		
@@ -34,6 +34,10 @@ drawShop:function()
 initShop:function()
 {
 	shop.catHat.price=1;
+	shop.catHat.name="Cat hat";
+	shop.catHat.x=125;
+	shop.catHat.y=125;
+	
 },
 buyCat:function()
 {
