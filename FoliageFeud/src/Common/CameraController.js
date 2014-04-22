@@ -56,26 +56,28 @@ var cameraController = {
 		height: gameplayCanvas.height,
 		vx: 0,
 		previousX: 0,
+		xBounds: .8,
+		yBounds: .7,
 
 		//The camera's inner scroll boundaries
 		rightInnerBoundary: function()
 		{
-		return this.x + (this.width * 0.95);
+		return this.x + (this.width * this.xBounds);
 		},
 
 		leftInnerBoundary: function()
 		{
-		return this.x + (this.width * 0.05);
+		return this.x + (this.width * (1 - this.xBounds));
 		},
 
 		upperInnerBoundary: function()
 		{
-		return this.y + (this.height * 0.05);
+		return this.y + (this.height * (1 - this.yBounds));
 		},
 
 		lowerInnerBoundary: function()
 		{
-		return this.y + (this.height * 0.95);
+		return this.y + (this.height * this.yBounds);
 		}
 	},
 	
@@ -166,7 +168,8 @@ var cameraController = {
 					var sprite = this.baseTiles[row][column];
 					
 					//display the scrolling sprites
-					try
+					currentLevelMap = allLevelMaps[gameplay.currentLevel];
+					if (currentLevelMap[row][column] != EMPTY)
 					{
 						if(sprite.visible && sprite.scrollable)
 						{
@@ -180,7 +183,6 @@ var cameraController = {
 						 ); 
 						}
 					}
-					catch(err){ console.debug("Error: " + err);}
 					 
 					var gameObjectMap = allObjectMaps[gameplay.currentLevel];
 					if (currentScreen != ScreenState.WorldEvent)
@@ -252,10 +254,7 @@ var cameraController = {
 							sprite.sourceWidth = 64;
 							sprite.width = 64;
 						}
-
-					
 						else
-
 						{
 							sprite.sourceWidth = 128;
 							sprite.width = 128;
@@ -265,6 +264,10 @@ var cameraController = {
 						sprite.name = "tree";
 						this.foregroundTiles[row][column] = sprite;
 						gameplay.collisionTiles[row][column] = sprite;
+					}
+					else
+					{
+						levelMap[row][column] = EMPTY;
 					}
 				}
 			  }

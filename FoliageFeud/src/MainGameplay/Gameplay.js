@@ -9,7 +9,11 @@ Animation = {
 	Left: 2,
 	Down: 3,
 	Up: 4,
-	WorldEventRight: 5
+	WorldEventRight: 5,
+	SwimmingRight: 6,
+	SwimmingLeft: 7,
+	SwimmingDown: 8,
+	SwimmingUp: 9
 };
 
 Level = {
@@ -265,6 +269,8 @@ var gameplay = {
 	
 	init: function()
 	{
+		utility.clearAll();
+		
 		this.mapOrientation = Math.floor(Math.random() * 4);
 		console.debug("Map Orientation: " + this.mapOrientation);
 		
@@ -637,9 +643,13 @@ var gameplay = {
 				{
 					if (!this.onMainCamp)
 					{
-						//this.onMainCamp = true;
-						//currentScreen = ScreenState.SiblingInteraction;
+						this.onMainCamp = true;
+						currentScreen = ScreenState.SiblingInteraction;
 					}
+				}
+				else
+				{
+					this.onMainCamp = false;
 				}
 				if (utility.collisionDetection(gameplay.player, gameplay.store))
 				{
@@ -985,6 +995,7 @@ window.addEventListener("keyup", function(event)
 			console.debug("Exit Pause");
 			gameplay.mapBuilt = false;
 			gameplay.onPause = false;
+			utility.clearAll();
 		}
 	}
 	else

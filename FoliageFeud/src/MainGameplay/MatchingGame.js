@@ -1,39 +1,81 @@
 var matching = {
-	tileSize: 128,
+	tileSize: 105,
 	cards: [],
 	
 	init: function()
 	{
-		this.cards = plant.getMultipleUnHarvested(9);
+		utility.clearAll();
 		
-		for (var i = 0; i < this.cards.length; i++)
+		this.cards = [];
+		
+		var plantCards = plant.getMultiplePlants(9);
+		
+		for (var i = 0; i < plantCards.length; i++)
 		{
 			var tempNameCard = Object.create(cardObj);
-			tempNameCard.createNameCard(this.cards[i]);
-			this.cards[i] = tempCard;
+			tempNameCard = matching.createNameCard(plantCards[i]);
+			this.cards.push(tempNameCard);
 			
 			var tempImgCard = Object.create(cardObj);
-			tempImgCard.createImgCard(this.cards[i]);
+			tempImgCard = matching.createImgCard(plantCards[i]);
 			this.cards.push(tempImgCard);
 		}
 		
-		console.debug(this.cards);
+		utility.shuffle(this.cards);
+		
+		
+		var imgsPerRow = 6;
+		var gapBetween = 32;
+		
+		for (var i = 0; i < this.cards.length; i++)
+		{
+			var x = ((this.tileSize + gapBetween - 12) * (i % imgsPerRow)) + (this.tileSize * 2) + gapBetween + 112;
+			var y = ((this.tileSize + gapBetween + 4) * Math.floor((i) / imgsPerRow)) + gapBetween + 10;
+			
+			if (i === 0 || i === 3)
+				x += 3;
+				
+			utility.addClickItem(x, y, this.tileSize, this.tileSize, this.flipCard, [i]);
+
+			backgroundSurface.drawImage
+			(
+				imgQuestionMark,
+				0, 0, this.tileSize, this.tileSize, x, y,
+				this.tileSize, this.tileSize
+			);
+		}
+		
+		backgroundSurface.drawImage(
+			imgInfoOverlay,
+			0, 0
+		);
+	},
+	
+	flipCard: function(i)
+	{
+		console.debug(plantList[matching.cards[i].index].name);
+	},
+	
+	createNameCard: function(index)
+	{
+		var card = Object.create(cardObj);
+		card.index = index;
+		card.isImg = false;
+		
+		return card;
+	},
+	
+	createImgCard: function(index)
+	{
+		var card = Object.create(cardObj);
+		card.index = index;
+		card.isImg = true;
+		
+		return card;
 	}
 };
 
 var cardObj = {
 	index: -1,
 	isImg: false,
-	
-	createNameCard: function(index)
-	{
-		this.index = index;
-		this.isImg = false;
-	},
-	
-	createImgCard: function(index)
-	{
-		this.index = index;
-		this.isImg = true;
-	}
 };

@@ -224,7 +224,7 @@ function mainUpdate()
 		case ScreenState.TestCode:
 			if (entering[currentScreen])
 			{
-				test.init();
+				matching.init();
 				entering[currentScreen] = false;
 			}
 			if (exiting[currentScreen])
@@ -250,8 +250,8 @@ function mainUpdate()
 				entering[currentScreen] = false;
 			}
 			mainCamp.render();
-
-			case ScreenState.Intro:
+			break;
+		case ScreenState.Intro:
 			if (entering[currentScreen])
 			{
 				Intro.init();

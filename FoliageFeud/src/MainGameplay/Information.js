@@ -15,13 +15,16 @@ nextPageButton.src = "../img/Buttons/arrowRight.png";
 
 var curPlant = -1;
 var curImage = 0;
-var plantShown = false;
-var imagePosX = -256;
+var imagePosX = 96;
+var imagePosY = 528;
 var delay = 0;
+var curPolaroid = 0;
+var polaroidOffset = 15;
 
 var info = {
 	// Variables
-	tileSize: 128,
+	tileSize: 105,
+	curImgSize: 168,
 	debugInfo: false,
 	page: 0,
 	plantsPerPage: 18,
@@ -32,32 +35,24 @@ var info = {
 		utility.clearAll();
 		curPlant = -1;
 		
-		// Blue gradient bg
-		var grd = backgroundSurface.createLinearGradient(0, 0, 0, 512);
-		grd.addColorStop(0, "darkblue");
-		grd.addColorStop(1, "blue");
-		
-		backgroundSurface.fillStyle = grd;
-		backgroundSurface.fillRect(0, 0, 1152, 512);
-		
-		// Grey side panel
-		var grd2 = backgroundSurface.createLinearGradient(0, 0, 0, 512);
-		grd2.addColorStop(0, "darkgrey");
-		grd2.addColorStop(1, "black");
-		
-		backgroundSurface.fillStyle = grd2;
-		backgroundSurface.fillRect(0, 0, 64 * 4, 512);
+		backgroundSurface.drawImage(
+			imgISpyBg,
+			0, 0
+		);
 		
 		var imgsPerRow = 6;
-		var gapBetween = (1152 - (64 * 4) - (this.tileSize * imgsPerRow)) / (imgsPerRow + 1);
+		var gapBetween = 32;//(1152 - (64 * 4) - (this.tileSize * imgsPerRow)) / (imgsPerRow + 1);
 		
 		// Display appropriate sprite for each plant
 		for (var i = this.plantsPerPage * this.page; i < Math.min(this.plantsPerPage * (this.page + 1), plantList.length); i++)
 		{
 			var sprite = new Image();
-			var x = ((this.tileSize + gapBetween) * (i % imgsPerRow)) + (this.tileSize * 2) + gapBetween;
-			var y = ((this.tileSize + gapBetween) * Math.floor((i % this.plantsPerPage) / imgsPerRow)) + gapBetween;
+			var x = ((this.tileSize + gapBetween - 12) * (i % imgsPerRow)) + (this.tileSize * 2) + gapBetween + 112;
+			var y = ((this.tileSize + gapBetween + 4) * Math.floor((i % this.plantsPerPage) / imgsPerRow)) + gapBetween + 10;
 			
+			if (i === 0 || i === 3)
+				x += 3;
+				
 			if (plantList[i].harvested || this.debugInfo)
 			{
 				sprite = plantList[i].sprite[0];
@@ -69,7 +64,7 @@ var info = {
 				utility.addClickItem(x, y, this.tileSize, this.tileSize, this.displayPlantNotFound, [i]);
 			}
 
-			gameplaySurface.drawImage
+			backgroundSurface.drawImage
 			(
 				sprite,
 				0, 0, sprite.width, sprite.height, x, y,
@@ -77,31 +72,36 @@ var info = {
 			);
 		}
 		
-		var xOffset = 32;
+		backgroundSurface.drawImage(
+			imgInfoOverlay,
+			0, 0
+		);
+		
+		var xOffset = 48;
 		var yOffset = 48;
 		
-		utility.addClickItem(256 + xOffset, 512 - yOffset, 64, 32, this.prevPage, '');
+		utility.addClickItem(324 + xOffset, 512 - yOffset, 64, 32, this.prevPage, '');
 		utility.addClickItem(1152 - xOffset * 3, 512 - yOffset, 64, 32, this.nextPage, '');
 		
-		gameplaySurface.drawImage
+		backgroundSurface.drawImage
 		(
 			imgLeftArrow,
 			0, 0, imgLeftArrow.width, imgLeftArrow.height,
-			256 + xOffset, 512 - yOffset, 64, 32
+			324 + xOffset, 512 - yOffset, 64, 32
 		);
 		
-		gameplaySurface.drawImage
+		backgroundSurface.drawImage
 		(
 			imgRightArrow,
 			0, 0, imgRightArrow.width, imgRightArrow.height,
 			1152 - xOffset * 3, 512 - yOffset, 64, 32
 		);
 	},
-
+	
 	// Display plant info if harvested
 	displayPlantInfo: function(i)
 	{
-		menuSurface.clearRect(0, 0, menuCanvas.width, menuCanvas.height);
+		gameplaySurface.clearRect(0, 0, gameplayCanvas.width, gameplayCanvas.height);
 		var strings = [];
 		
 		strings.push("Name: " + plantList[i].name);
@@ -110,26 +110,24 @@ var info = {
 		if (plantList[i].invasive)
 			strings.push("Invasive species");
 
-		utility.writeText(menuSurface, strings, 10, 50, 64 * 4 - 10, 25, true);
+		utility.writeText(gameplaySurface, strings, 96, 64, 64 * 4, 25, true);
 		
 		curPlant = i;
-		plantShown = true;
+		curImage = 0;
 	},
 
 	// Display unharvested text
 	displayPlantNotFound: function(i)
 	{
-		menuSurface.clearRect(0, 0, menuCanvas.width, menuCanvas.height);
+		gameplaySurface.clearRect(0, 0, gameplayCanvas.width, gameplayCanvas.height);
 		var strings = [];
 		
 		strings.push("This plant has not been found yet.");
 		strings.push("To find this plant, explore more regions.");
 					 
-		utility.writeText(menuSurface, strings, 10, 50, 64 * 4, 25, true);
+		utility.writeText(gameplaySurface, strings, 96, 64, 64 * 4, 25, true);
 		
 		curPlant = -1;
-		curImage = 0;
-		plantShown = false;
 		imagePosX = -256;
 	},
 	
@@ -157,12 +155,32 @@ var info = {
 	
 	update: function()
 	{
+		menuSurface.clearRect(0, 0, 1152, 512);
+		
 		if (curPlant >= 0)
 		{
 			if (delay % 60 === 0)
 			{
+				gameplaySurface.drawImage
+				(
+					plantList[curPlant].sprite[curImage], 0, 0,
+					plantList[curPlant].sprite[curImage].width, plantList[curPlant].sprite[curImage].height,
+					imagePosX, imagePosY, this.curImgSize, this.curImgSize
+				);
+			
+				gameplaySurface.drawImage
+				(
+					imgInfoSmallOverlay[curPolaroid], 0, 0,
+					imgInfoSmallOverlay[curPolaroid].width, imgInfoSmallOverlay[curPolaroid].height,
+					imagePosX - polaroidOffset, imagePosY - polaroidOffset,
+					imgInfoSmallOverlay[curPolaroid].width, imgInfoSmallOverlay[curPolaroid].height
+				);
+				
+				curPolaroid = Math.floor(Math.random() * imgInfoSmallOverlay.length);
+				
 				curImage = (curImage + 1) % plantList[curPlant].sprite.length;
-				imagePosX = -256;
+				imagePosY = 512;
+				
 			}
 			
 			delay = (delay + 1) % 60;
@@ -171,11 +189,19 @@ var info = {
 			(
 				plantList[curPlant].sprite[curImage], 0, 0,
 				plantList[curPlant].sprite[curImage].width, plantList[curPlant].sprite[curImage].height,
-				imagePosX, 256, 256, 256
+				imagePosX, imagePosY, this.curImgSize, this.curImgSize
 			);
 			
-			if (imagePosX < 0)
-				imagePosX += 16;
+			menuSurface.drawImage
+			(
+				imgInfoSmallOverlay[curPolaroid], 0, 0,
+				imgInfoSmallOverlay[curPolaroid].width, imgInfoSmallOverlay[curPolaroid].height,
+				imagePosX - polaroidOffset, imagePosY - polaroidOffset,
+				imgInfoSmallOverlay[curPolaroid].width, imgInfoSmallOverlay[curPolaroid].height
+			);
+			
+			if (imagePosY > 256)
+				imagePosY -= 16;
 		}
 	}
 };

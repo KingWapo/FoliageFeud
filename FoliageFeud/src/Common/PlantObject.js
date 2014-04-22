@@ -59,13 +59,41 @@ var plant = {
 		return plantList[index].name;
 	},
 	
+	getRandPlant: function()
+	{
+		return Math.floor(Math.random() * plantList.length);
+	},
+	
+	getMultiplePlants: function(n)
+	{
+		var curPlants = [];
+		
+		for (var i = 0; i < n; i++){
+			var plantIndex;
+			
+			if (curPlants.length < 1)
+				plantIndex = plant.getRandPlant();
+			else
+			{
+				do
+				{
+					plantIndex = plant.getRandPlant();
+				} while (utility.contains(curPlants, plantIndex) || plantIndex === ispy.requestedPlant);
+			}
+				
+			curPlants.push(plantIndex);
+		}
+		
+		return curPlants;
+	},
+	
 	getRandUnHarvested: function()
 	{
 		var i;
 		
 		do
 		{
-			i = Math.floor(Math.random() * plantList.length);
+			i = plant.getRandPlant();
 		} while (plantList[i].harvested);
 		
 		return i;
