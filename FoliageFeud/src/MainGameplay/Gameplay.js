@@ -257,13 +257,13 @@ var gameplay = {
 		sourceY: 0,
 		sourceWidth:128,
 		sourceHeight:128,
-		numOfFrames: 4,
+		numOfFrames: 16,
 		currentFrame: 0,
 		update:0,
 		updateAnimation: function()
 		{
-			
-			
+			if(this.update===0)
+			{
 				this.sourceX = this.currentFrame * this.sourceWidth;
 			
 				this.currentFrame += 1;
@@ -273,8 +273,8 @@ var gameplay = {
 					this.currentFrame = 0;	
 				}
 					
-			
-		
+			}
+			this.update = (this.update+1)%2;
 		},
 		x: 0,
 		y: 0,
@@ -714,8 +714,8 @@ var gameplay = {
 		this.player.x = 300;
 		this.player.y = 300; 
 		
-		this.teleporter.x = 300;
-		this.teleporter.y = 350;
+		this.teleporter.x = 358;
+		this.teleporter.y = 390;
 		
 		this.training.x = 3 * 64;
 		this.training.y = 2 * 64;

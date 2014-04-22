@@ -264,7 +264,7 @@ gameplay.observationInstance.sprite = utility.loadImage("../img/Tokens/exclamati
 gameplay.blueCoin.sprite = utility.loadImage("../img/Tokens/waterToken.png");
 gameplay.grayCoin.sprite = utility.loadImage("../img/Tokens/rockToken.png");
 gameplay.speedCoin.sprite = utility.loadImage("../img/Tokens/speedToken.png");
-gameplay.teleporter.sprite = utility.loadImage("../img/Tiles/telelporterfinal.png");
+gameplay.teleporter.sprite = utility.loadImage("../img/Tiles/teleporterfinal.png");
 gameplay.training.sprite = utility.loadImage("../img/Tiles/training.png");
 gameplay.store.sprite = utility.loadImage("../img/Tiles/shop.png");
 
