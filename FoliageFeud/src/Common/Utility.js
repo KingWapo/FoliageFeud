@@ -190,6 +190,7 @@ var utility = {
 	{
 		var size = utility.writeText(context, text, x, y, maxWidth, fontSize, isOutlined);
 		utility.addClickItem(x, y - fontSize, size[0], size[1], clickHandler[0], clickHandler[1]);
+		//console.debug(clickHandler[1]);
 	},
 	
 	contains: function(array, element)
