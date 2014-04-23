@@ -93,7 +93,7 @@ var gameplay = {
 		vy: 0,
 		speed: 4,
 		walkSpeed: 4,
-		runSpeed: 10,
+		runSpeed: 8,
 		sprite: '',
 		animation: Animation.Idle
 	}, 
@@ -790,8 +790,12 @@ var gameplay = {
 				menuSurface.clearRect(0, 0, menuCanvas.width, menuCanvas.height);
 			}
 			var strings=[];
-			 strings.push(" total gold: " + this.gold);	
-				utility.writeText(menuSurface, strings, 32, 500, 64 * 4 - 10, 25, true);
+			 strings.push(" gold: " + this.gold);	
+				menuSurface.drawImage(
+						imgChest,
+						21, 463
+					);
+					utility.writeText(menuSurface, strings, 75,485, 64 * 4 - 10, 25, true);
 				if(skillBook.display===true)
 				{
 					this.message("skill")
@@ -961,7 +965,8 @@ window.addEventListener("keydown", function(event)
 {
 	if (event.keyCode == 16)// && skillBook.sprint== true)
 	{
-		gameplay.player.speed = gameplay.player.runSpeed;
+		gameplay.player.speed = gameplay.player.runSpeed*skillBook.sprintLevel;
+		
 	}
 	if (event.keyCode == 75)// && skillBook.sprint== true)
 	{		

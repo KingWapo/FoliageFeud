@@ -252,7 +252,13 @@ var imgTimerBg = utility.loadImage("../img/WorldEvent/timerBackground.png");
 var imgCheckmark = utility.loadImage("../img/WorldEvent/checkmark.png");
 var imgShopBg = utility.loadImage(" ../img/Backgrounds/shopscreen.png");
 var imgAdventure =utility.loadImage("../img/Hats/explorer.png");
-var imgSold = utility.loadImage("../img/Tokens/purchased.png")
+var imgSold = utility.loadImage("../img/Tokens/purchased.png");
+var imgWater= utility.loadImage("../img/Tokens/purchased.png");
+var imgRock= utility.loadImage("../img/Tokens/rockCoin.png");
+var imgChest=utility.loadImage("../img/moneyicon.png");
+var imgWater=utility.loadImage("../img/Tokens/waterCoin.png");
+var imgNip=utility.loadImage("../img/ParsnipToken.png");
+
 
 
 
