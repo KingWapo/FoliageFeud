@@ -3,6 +3,8 @@
 CANVAS_WIDTH = 1152
 CANVAS_HEIGHT = 512
 
+var clickOnThisPrick = false;
+
 // Clickable object
 // Stores location, size, and function to run when clicked
 var clickObj = {
@@ -120,6 +122,8 @@ var utility = {
 		var posx = event.clientX - rect.left;
 		var posy = event.clientY - rect.top;
 		
+		console.debug("Clicked at: " + posx + ", " + posy);
+		
 		// Checks each object to see if it was clicked
 		for (var i = 0; i < utility.clickable.length; i++)
 		{
@@ -127,6 +131,7 @@ var utility = {
 			var y = utility.clickable[i].y * utility.scale;
 			var w = utility.clickable[i].width * utility.scale;
 			var h = utility.clickable[i].height * utility.scale;
+			
 			
 			// If image was clicked, runs specified function
 			if (posx >= x && posx <= x + w &&
@@ -322,7 +327,11 @@ var utility = {
 	}
 };
 
-window.addEventListener("click", utility.handleClick, false);
+if (!clickOnThisPrick)
+{
+	clickOnThisPrick = true;
+	window.addEventListener("click", utility.handleClick, false);
+}
 window.addEventListener("resize", utility.handleScale, false);
 //window.addEventListener("mouseover",utility.handleMouseOver,false);
 
@@ -356,7 +365,7 @@ var imgWater= utility.loadImage("../img/Tokens/purchased.png");
 var imgRock= utility.loadImage("../img/Tokens/rockCoin.png");
 var imgChest=utility.loadImage("../img/moneyicon.png");
 var imgWater=utility.loadImage("../img/Tokens/waterCoin.png");
-var imgNip=utility.loadImage("../img/ParsnipToken.png");
+var imgNip=utility.loadImage("../img/Tokens/drparsniptoken.png");
 
 
 
