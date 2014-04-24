@@ -1,5 +1,8 @@
 // Created by Batman
 
+CANVAS_WIDTH = 1152
+CANVAS_HEIGHT = 512
+
 // Clickable object
 // Stores location, size, and function to run when clicked
 var clickObj = {
@@ -61,7 +64,7 @@ var utility = {
 		menuCanvas.setAttribute('width', utility.originalWidth * utility.scale);
 		menuCanvas.setAttribute('height', utility.originalHeight * utility.scale);
 		
-		console.debug(utility.scale);
+		//console.debug(utility.scale);
 	},
 	
 	// Add item to the list
