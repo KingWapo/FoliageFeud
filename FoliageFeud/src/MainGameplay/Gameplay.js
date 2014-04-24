@@ -675,7 +675,7 @@ var gameplay = {
 				}
 				if (utility.collisionDetection(gameplay.player, gameplay.store))
 				{
-					shop.drawShop();
+					switchGamemode(ScreenState.ShopScreen);
 					this.collide();
 				}
 				
