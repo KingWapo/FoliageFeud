@@ -45,16 +45,16 @@ var mainCamp = {
 		{
 			var plantName = plantList[this.listOfQuests[i]].name;
 			
-			utility.writeForClick(menuSurface, [plantName], .45 * menuCanvas.width, .25 * menuCanvas.height + (60 * i), menuCanvas.width / 2, 30, true, [quests.addQuestFromSibling, [this.listOfQuests[i], 2]]);
+			utility.writeForClick(menuSurface, [plantName], .45 * 1152, .25 * 512 + (60 * i), 1152 / 2, 30, true, [quests.addQuestFromSibling, [this.listOfQuests[i], 2]]);
 		}
 		
 		utility.drawImage(
 			menuSurface, imgExitButton,
 			0, 0, imgExitButton.width, imgExitButton.height,
-			menuCanvas.width - 320, menuCanvas.height - 160, imgExitButton.width, imgExitButton.height
+			1152 - 320, 512 - 160, imgExitButton.width, imgExitButton.height
 		);
 		
-		utility.addClickItem(menuCanvas.width - 320, menuCanvas.height - 160, imgExitButton.width, imgExitButton.height, this.exitToGameplay, "");
+		utility.addClickItem(1152 - 320, 512 - 160, imgExitButton.width, imgExitButton.height, this.exitToGameplay, "");
 	},
 	
 	giveQuest: function()

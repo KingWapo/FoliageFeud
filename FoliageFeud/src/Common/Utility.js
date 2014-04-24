@@ -60,8 +60,6 @@ var utility = {
 		gameplayCanvas.setAttribute('height', utility.originalHeight * utility.scale);
 		menuCanvas.setAttribute('width', utility.originalWidth * utility.scale);
 		menuCanvas.setAttribute('height', utility.originalHeight * utility.scale);
-		
-		console.debug(utility.scale);
 	},
 	
 	// Add item to the list
@@ -116,7 +114,6 @@ var utility = {
 		var rect = gameplayCanvas.getBoundingClientRect();
 		var posx = event.clientX - rect.left;
 		var posy = event.clientY - rect.top;
-		console.debug(posx+" "+posy)
 		
 		// Checks each object to see if it was clicked
 		for (var i = 0; i < utility.clickable.length; i++)
@@ -130,7 +127,9 @@ var utility = {
 			if (posx >= x && posx <= x + w &&
 				posy >= y && posy <= y + h )
 			{
+				console.debug('click[', i, ']: ', x, ', ', y, ', ', w, ', ', h);
 				utility.clickable[i].func(utility.clickable[i].param);
+				//utility.clickable.splice(i, 1);
 			}
 		}
 	},
@@ -215,8 +214,11 @@ var utility = {
 		maxWidth = maxWidth * utility.scale;
 		fontSize = Math.floor(fontSize * utility.scale);
 		
-		context.fillStyle = "white";
-		context.font = fontSize + "px Evilgreen";
+		//if (!isOutlined)
+			context.fillStyle = "black";
+		//else
+			//context.fillStyle = "white";
+		context.font = fontSize + "px ComingSoon";
 		
 		context.lineWidth = 1;
 		context.strokeStyle = "black";
@@ -240,8 +242,8 @@ var utility = {
 						
 					context.fillText(line, x, y);
 					
-					if (isOutlined)
-						context.strokeText(line, x, y);
+					//if (isOutlined)
+						//context.strokeText(line, x, y);
 						
 					line = words[i] + ' ';
 					y += fontSize;
@@ -253,21 +255,19 @@ var utility = {
 						
 					line = testLine;
 				}
-				
-				height = y;
 			}
 			
 			context.fillText(line, x, y);
 			
-			if (isOutlined)
-				context.strokeText(line, x, y);
+			//if (isOutlined)
+				//context.strokeText(line, x, y);
+			
+			height = y;
 			
 			y += fontSize * 2;
 		}
 		
-		height += fontSize;
-		
-		return [width, height];
+		return [width, fontSize];
 	},
 	
 	// Write text to screen, wrapping if hits max width, and adding a click handler
@@ -276,7 +276,12 @@ var utility = {
 	writeForClick: function(context, text, x, y, maxWidth, fontSize, isOutlined, clickHandler)
 	{
 		var size = utility.writeText(context, text, x, y, maxWidth, fontSize, isOutlined);
+		console.debug('fontsize ', fontSize, ' height ', size[1]);
 		utility.addClickItem(x, y - fontSize, size[0], size[1], clickHandler[0], clickHandler[1]);
+		
+		menuSurface.fillStyle="black";
+		menuSurface.rect(x, y-fontSize, size[0], size[1]);
+		menuSurface.stroke();
 		//console.debug(clickHandler[1]);
 	},
 	

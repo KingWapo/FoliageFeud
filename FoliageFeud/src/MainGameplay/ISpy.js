@@ -43,11 +43,12 @@ var ispy = {
 	// Draws objects to screen for game mode
 	render: function()
 	{
+		utility.clearAll();
 		var requested = this.curPlants.indexOf(this.requestedPlant);
 		console.debug(requested, ", ", this.curPlants.length);
 		
 		// Plants in current list
-		console.debug("Current plant list: ", this.curPlants[0], ", ", this.curPlants[1], ", ", this.curPlants[2], ", ", this.curPlants[3]);
+		//console.debug("Current plant list: ", this.curPlants[0], ", ", this.curPlants[1], ", ", this.curPlants[2], ", ", this.curPlants[3]);
 		
 		// Write plant name and traits to screen
 		var strings = [];
@@ -61,7 +62,7 @@ var ispy = {
 			strings.push(this.curTraits[j]);
 		}
 		
-		utility.writeText(menuSurface, strings, 96, 64, 64 * 4, 25, true);
+		utility.writeText(menuSurface, strings, 96, 64, 64 * 4, 25, false);
 		
 		// Draw plants on screen and add them to click handler
 		for (var j = 0; j < this.curPlants.length; j++)

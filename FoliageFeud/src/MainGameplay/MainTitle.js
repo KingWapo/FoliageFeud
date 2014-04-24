@@ -13,6 +13,7 @@ var title = {
 	
 	init: function()
 	{
+		utility.clearAll();
 		this.playAsGirl.sourceWidth = imgGirlButton.width;
 		this.playAsGirl.sourceHeight = imgGirlButton.height;
 		this.playAsGirl.width = 276;
@@ -40,15 +41,12 @@ var title = {
 	playAsGirlClicked: function()
 	{
 		currentSprite = SpriteState.Girl;
-		console.debug(" button " );
 		exiting[currentScreen] = true;
 	},
 	
 	render: function()
 	{
-		backgroundSurface.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
-		gameplaySurface.clearRect(0, 0, gameplayCanvas.width, gameplayCanvas.height);
-		menuSurface.clearRect(0, 0, menuCanvas.width, menuCanvas.height);
+		utility.clearSurfaces();
 		
 		utility.drawImage(
 			menuSurface, imgGirlButton,

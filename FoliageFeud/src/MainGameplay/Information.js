@@ -120,7 +120,7 @@ var info = {
 				if (plantList[i].invasive)
 					strings.push("Invasive species");
 
-				utility.writeText(gameplaySurface, strings, 96, 64, 64 * 4, 25, true);
+				utility.writeText(gameplaySurface, strings, 96, 64, 64 * 4, 25, false);
 			}
 			else
 			{
@@ -130,7 +130,7 @@ var info = {
 				strings.push("This plant has not been found yet.");
 				strings.push("To find this plant, explore more regions.");
 							 
-				utility.writeText(gameplaySurface, strings, 96, 64, 64 * 4, 25, true);
+				utility.writeText(gameplaySurface, strings, 96, 64, 64 * 4, 25, false);
 			}
 		}
 	},

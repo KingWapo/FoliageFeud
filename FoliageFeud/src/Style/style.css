@@ -3,3 +3,9 @@
 	font-family: Evilgreen;
 	src: url("./evilgreenplant1.ttf");
 }
+
+@font-face
+{
+	font-family: ComingSoon;
+	src: url("./ComingSoon.ttf");
+}
