@@ -848,17 +848,12 @@ var gameplay = {
 					0, 0, this.training.sprite.width, this.training.sprite.height,
 					this.training.x, this.training.y, this.training.sprite.width, this.training.sprite.height
 				);
-				
-<<<<<<< HEAD
 				utility.drawImage
 				(
 					gameplaySurface, this.mainCamp.sprite,
 					0, 0, this.mainCamp.sprite.width, this.mainCamp.sprite.height,
 					this.mainCamp.x, this.mainCamp.y, this.mainCamp.sprite.width, this.mainCamp.sprite.height
 				);
-=======
-				
->>>>>>> ec0544643252dc7180cc6ac9a6087f05eaa3e258
 				
 				utility.drawImage
 				(

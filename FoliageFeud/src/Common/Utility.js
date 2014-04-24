@@ -313,11 +313,8 @@ var utility = {
 };
 
 window.addEventListener("click", utility.handleClick, false);
-<<<<<<< HEAD
 window.addEventListener("resize", utility.handleScale, false);
-=======
 //window.addEventListener("mouseover",utility.handleMouseOver,false);
->>>>>>> ec0544643252dc7180cc6ac9a6087f05eaa3e258
 
 var imgCommonBg = utility.loadImage("../img/Backgrounds/commonBackground.png");
 var imgMenuBg = utility.loadImage("../img/Backgrounds/menuscreen.png");

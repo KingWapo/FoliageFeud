@@ -15,12 +15,11 @@ gameplay.writtingClear();
 			0, 0, imgShopBg.width, imgShopBg.height,
 			0, 0, imgShopBg.width, imgShopBg.height
 		);
-<<<<<<< HEAD
 		utility.drawImage(
 			menuSurface, imgExitButton,
 			0, 0, imgExitButton.width, imgExitButton.height,
 			1152 - 320, 512 - 160, imgExitButton.width, imgExitButton.height
-=======
+		);
 		menuSurface.drawImage(
 			imgExitButton,
 			932, 304
@@ -36,7 +35,6 @@ gameplay.writtingClear();
 		menuSurface.drawImage(
 			imgWater,
 			429, 140
->>>>>>> ec0544643252dc7180cc6ac9a6087f05eaa3e258
 		);
 		menuSurface.drawImage(
 			imgNip,
@@ -140,7 +138,7 @@ drawInfo:function()
 			imgWater,
 			97, 306
 			);
-			menuSurface.drawImage(
+		menuSurface.drawImage(
 			imgNip,
 			433, 306
 		);
