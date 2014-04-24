@@ -63,11 +63,8 @@ var utility = {
 		gameplayCanvas.setAttribute('height', utility.originalHeight * utility.scale);
 		menuCanvas.setAttribute('width', utility.originalWidth * utility.scale);
 		menuCanvas.setAttribute('height', utility.originalHeight * utility.scale);
-<<<<<<< HEAD
-=======
 		
 		//console.debug(utility.scale);
->>>>>>> 3d7dc962bdcc666646cf7c230de7c2c3ba62de96
 	},
 	
 	// Add item to the list
