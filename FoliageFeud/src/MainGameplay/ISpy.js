@@ -7,6 +7,10 @@ var ispy = {
 	imgSize: 170,
 	// Index of requested plant
 	requestedPlant: 0,
+	// Arrays of current plants and their sprites
+	curPlants: [],
+	curTraits: [],
+	curSprites: [],
 	
 	// Initialize game mode
 	init: function()
@@ -14,31 +18,36 @@ var ispy = {
 		// Clear canvases and click handler
 		utility.clearAll();
 		
-		backgroundSurface.drawImage(
-			imgISpyBg,
-			0, 0
-		);
-		
 		// Add plants to ispy pool
-		var curPlants = plant.getMultiplePlants(3);
+		this.curPlants = plant.getMultiplePlants(3);
+		this.curTraits = [];
+		this.curSprites = [];
 		
 		// Add requested plant to ispy pool
-		curPlants.push(this.requestedPlant);
+		this.curPlants.push(this.requestedPlant);
 		
 		// Shuffle array
-		curPlants = utility.shuffle(curPlants);
+		this.curPlants = utility.shuffle(this.curPlants);
 		
-		this.growPlants(curPlants, curPlants.length);
+		// Get 2 random traits for the plant
+		this.curTraits = plant.get2Traits(this.requestedPlant);
+
+		for (var i = 0; i < this.curPlants.length; i++)
+		{
+			var imgNum = Math.floor(Math.random() * plantList[this.curPlants[i]].sprite.length);
+			
+			this.curSprites.push(plantList[this.curPlants[i]].sprite[imgNum]);
+		}
 	},
 	
 	// Draws objects to screen for game mode
-	growPlants: function(curPlants, i)
+	render: function()
 	{
-		var requested = curPlants.indexOf(this.requestedPlant);
-		console.debug(requested, ", ", curPlants.length);
+		var requested = this.curPlants.indexOf(this.requestedPlant);
+		console.debug(requested, ", ", this.curPlants.length);
 		
 		// Plants in current list
-		console.debug("Current plant list: ", curPlants[0], ", ", curPlants[1], ", ", curPlants[2], ", ", curPlants[3]);
+		console.debug("Current plant list: ", this.curPlants[0], ", ", this.curPlants[1], ", ", this.curPlants[2], ", ", this.curPlants[3]);
 		
 		// Write plant name and traits to screen
 		var strings = [];
@@ -46,19 +55,16 @@ var ispy = {
 		// Add plant name to string array
 		strings.push("Requested Plant: ".concat(plantList[this.requestedPlant].name));
 		
-		// Get 2 random traits for the plant
-		var curTraits = plant.get2Traits(this.requestedPlant);
-		
 		// Add traits to string array
-		for (var j = 0; j < curTraits.length; j++)
+		for (var j = 0; j < this.curTraits.length; j++)
 		{
-			strings.push(curTraits[j]);
+			strings.push(this.curTraits[j]);
 		}
 		
 		utility.writeText(menuSurface, strings, 96, 64, 64 * 4, 25, true);
 		
 		// Draw plants on screen and add them to click handler
-		for (var j = 0; j < i; j++)
+		for (var j = 0; j < this.curPlants.length; j++)
 		{
 			//console.debug("loop: ", j, ", ", i);
 			var x;
@@ -83,18 +89,30 @@ var ispy = {
 					y = 260;
 					break;
 			}
-			//var x = 1152 - (256 * (2 - (j % 2))) - 64;
-			//var y = 256 * Math.floor(j / 2);
 			
-			if (curPlants[j] === this.requestedPlant)
+			if (this.curPlants[j] === this.requestedPlant)
 				utility.addClickItem(x, y, this.imgSize, this.imgSize, this.harvestPlant, [j]);
 			else
 				utility.addClickItem(x, y, this.imgSize, this.imgSize, this.ignorePlant, [j]);
-
-			var imgNum = Math.floor(Math.random() * plantList[curPlants[j]].sprite.length);
+		
+			utility.drawImage(
+				backgroundSurface, imgISpyBg,
+				0, 0, imgISpyBg.width, imgISpyBg.height,
+				0, 0, imgISpyBg.width, imgISpyBg.height
+			);
 			
-			gameplaySurface.drawImage(plantList[curPlants[j]].sprite[imgNum], x, y, this.imgSize, this.imgSize);
-			gameplaySurface.drawImage(imgISpyOverlay, 0, 0, 1152, 512);
+			utility.drawImage
+			(
+				gameplaySurface, this.curSprites[j],
+				0, 0, this.curSprites[j].width, this.curSprites[j].height,
+				x, y, this.imgSize, this.imgSize
+			);
+			utility.drawImage
+			(
+				gameplaySurface, imgISpyOverlay,
+				0, 0, imgISpyOverlay.width, imgISpyOverlay.height,
+				0, 0, 1152, 512
+			);
 		}
 	},
 

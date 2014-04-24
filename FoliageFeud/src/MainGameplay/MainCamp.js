@@ -29,17 +29,16 @@ var mainCamp = {
 			
 			this.listOfQuests.push(newPlant);
 		}
-		
-		this.updateQuests();
 	},
 	
-	updateQuests: function()
+	render: function()
 	{
 		utility.clearAll();
 		
-		menuSurface.drawImage(
-			imgCommonBg,
-			0, 0
+		utility.drawImage(
+			menuSurface, imgCommonBg,
+			0, 0, imgCommonBg.width, imgCommonBg.height,
+			0, 0, imgCommonBg.width, imgCommonBg.height
 		);
 		
 		for (var i = 0; i < this.listOfQuests.length; i++)
@@ -49,17 +48,13 @@ var mainCamp = {
 			utility.writeForClick(menuSurface, [plantName], .45 * menuCanvas.width, .25 * menuCanvas.height + (60 * i), menuCanvas.width / 2, 30, true, [quests.addQuestFromSibling, [this.listOfQuests[i], 2]]);
 		}
 		
-		menuSurface.drawImage(
-			imgExitButton,
-			menuCanvas.width - 320, menuCanvas.height - 160
+		utility.drawImage(
+			menuSurface, imgExitButton,
+			0, 0, imgExitButton.width, imgExitButton.height,
+			menuCanvas.width - 320, menuCanvas.height - 160, imgExitButton.width, imgExitButton.height
 		);
 		
 		utility.addClickItem(menuCanvas.width - 320, menuCanvas.height - 160, imgExitButton.width, imgExitButton.height, this.exitToGameplay, "");
-	},
-	
-	render: function()
-	{
-	
 	},
 	
 	giveQuest: function()

@@ -173,9 +173,9 @@ var cameraController = {
 					{
 						if(sprite.visible && sprite.scrollable)
 						{
-						 backgroundSurface.drawImage
+						 utility.drawImage
 						 (
-						   this.tilesheet, 
+						   backgroundSurface, this.tilesheet, 
 						   sprite.sourceX, sprite.sourceY, 
 						   sprite.sourceWidth, sprite.sourceHeight,
 						   Math.floor(sprite.x), Math.floor(sprite.y), 
@@ -191,9 +191,9 @@ var cameraController = {
 						{
 							var foregroundSprite = this.foregroundTiles[row][column];
 							try {
-							gameplaySurface.drawImage
+							utility.drawImage
 							 (
-							   this.tilesheet, 
+							   gameplaySurface, this.tilesheet, 
 							   foregroundSprite.sourceX, foregroundSprite.sourceY, 
 							   foregroundSprite.sourceWidth, foregroundSprite.sourceHeight,
 							   Math.floor(foregroundSprite.x), Math.floor(foregroundSprite.y), 

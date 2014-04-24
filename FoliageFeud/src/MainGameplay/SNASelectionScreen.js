@@ -13,29 +13,34 @@ var snaSelect = {
 	render: function()
 	{
 		
-		menuSurface.drawImage(
-			imgMapBackground,
-			96, 32
+		utility.drawImage(
+			menuSurface, imgMapBackground,
+			0, 0, imgMapBackground.width, imgMapBackground.height,
+			96, 32, imgMapBackground.width, imgMapBackground.height
 		);
 		
-		menuSurface.drawImage(
-			imgMapBackground,
-			imgMapBackground.width + 128, 32
+		utility.drawImage(
+			menuSurface, imgMapBackground,
+			0, 0, imgMapBackground.width, imgMapBackground.height,
+			imgMapBackground.width + 128, 32, imgMapBackground.width, imgMapBackground.height
 		);
 		
-		menuSurface.drawImage(
-			imgMapBackground,
-			96, imgMapBackground.height + 64
+		utility.drawImage(
+			menuSurface, imgMapBackground,
+			0, 0, imgMapBackground.width, imgMapBackground.height,
+			96, imgMapBackground.height + 64, imgMapBackground.width, imgMapBackground.height
 		);
 		
-		menuSurface.drawImage(
-			imgMapBackground,
-			imgMapBackground.width + 128, imgMapBackground.height + 64
+		utility.drawImage(
+			menuSurface, imgMapBackground,
+			0, 0, imgMapBackground.width, imgMapBackground.height,
+			imgMapBackground.width + 128, imgMapBackground.height + 64, imgMapBackground.width, imgMapBackground.height
 		);
 		
-		menuSurface.drawImage(
-			imgMap1,
-			128, 64
+		utility.drawImage(
+			menuSurface, imgMap1,
+			0, 0, imgMap1.width, imgMap1.height,
+			128, 64, imgMap1.width, imgMap1.height
 		);
 	},
 	

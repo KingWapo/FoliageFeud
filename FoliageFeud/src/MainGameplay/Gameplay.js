@@ -754,9 +754,9 @@ var gameplay = {
 			backgroundSurface.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
 			gameplaySurface.clearRect(0, 0, gameplayCanvas.width, gameplayCanvas.height);
 			menuSurface.clearRect(0, 0, menuCanvas.width, menuCanvas.height);
-			gameplaySurface.drawImage
+			utility.drawImage
 			  (
-				this.player.sprite, 
+				gameplaySurface, this.player.sprite, 
 				this.player.sourceX, this.player.sourceY + this.player.animation * this.player.sourceHeight, 
 				this.player.sourceWidth, this.player.sourceHeight,
 				Math.floor(this.player.x), Math.floor(this.player.y), 
@@ -784,10 +784,10 @@ var gameplay = {
 			
 			if(this.blueCoin.visible==true)
 			{
-				gameplaySurface.drawImage
+				utility.drawImage
 				(
 				
-					this.blueCoin.sprite, 
+					gameplaySurface, this.blueCoin.sprite, 
 					this.blueCoin.sourceX, this.blueCoin.sourceY, 
 					this.blueCoin.sourceWidth, this.blueCoin.sourceHeight,
 					Math.floor(this.blueCoin.x), Math.floor(this.blueCoin.y), 
@@ -797,10 +797,10 @@ var gameplay = {
 			
 			if(this.grayCoin.visible==true)
 			{
-				gameplaySurface.drawImage
+				utility.drawImage
 				(
 				
-					this.grayCoin.sprite, 
+					gameplaySurface, this.grayCoin.sprite, 
 					this.grayCoin.sourceX, this.grayCoin.sourceY, 
 					this.grayCoin.sourceWidth, this.grayCoin.sourceHeight,
 					Math.floor(this.grayCoin.x), Math.floor(this.grayCoin.y), 
@@ -810,9 +810,9 @@ var gameplay = {
 			}
 			if(this.teleporter.visible==true)
 			{
-				gameplaySurface.drawImage	
+				utility.drawImage	
 				(
-					this.teleporter.sprite, 
+					gameplaySurface, this.teleporter.sprite, 
 					this.teleporter.sourceX, this.teleporter.sourceY, 
 					this.teleporter.sourceWidth, this.teleporter.sourceHeight,
 					Math.floor(this.teleporter.x), Math.floor(this.teleporter.y), 
@@ -821,31 +821,34 @@ var gameplay = {
 			}
 			if (this.currentLevel == Level.BaseCamp)
 			{
-				gameplaySurface.drawImage
+				utility.drawImage
 				(
-					this.training.sprite,
-					this.training.x, this.training.y
+					gameplaySurface, this.training.sprite,
+					0, 0, this.training.sprite.width, this.training.sprite.height,
+					this.training.x, this.training.y, this.training.sprite.width, this.training.sprite.height
 				);
 				
-				gameplaySurface.drawImage
+				utility.drawImage
 				(
-					this.mainCamp.sprite,
-					this.mainCamp.x, this.mainCamp.y
+					gameplaySurface, this.mainCamp.sprite,
+					0, 0, this.mainCamp.sprite.width, this.mainCamp.sprite.height,
+					this.mainCamp.x, this.mainCamp.y, this.mainCamp.sprite.width, this.mainCamp.sprite.height
 				);
 				
-				gameplaySurface.drawImage
+				utility.drawImage
 				(
-					this.store.sprite,
-					this.store.x, this.store.y
+					gameplaySurface, this.store.sprite,
+					0, 0, this.store.sprite.width, this.store.sprite.height,
+					this.store.x, this.store.y, this.store.sprite.width, this.store.sprite.height
 				);
 				if(gameplay.trainning==true)
 				{
 					if(this.speedCoin.visible==true)
 				{	
-				gameplaySurface.drawImage
+				utility.drawImage
 				(
 				
-					this.speedCoin.sprite, 
+					gameplaySurface, this.speedCoin.sprite, 
 					this.speedCoin.sourceX, this.speedCoin.sourceY, 
 					this.speedCoin.sourceWidth, this.speedCoin.sourceHeight,
 					Math.floor(this.speedCoin.x), Math.floor(this.speedCoin.y), 
@@ -859,19 +862,19 @@ var gameplay = {
 
 			for (var i = 0; i < this.observationInstances.length; i++)
 			{
-				gameplaySurface.drawImage
+				utility.drawImage
 				(
 				  
-					this.observationInstances[i].sprite, 
+					gameplaySurface, this.observationInstances[i].sprite, 
 					this.observationInstances[i].sourceX, this.observationInstances[i].sourceY, 
 					this.observationInstances[i].sourceWidth, this.observationInstances[i].sourceHeight,
 					Math.floor(this.observationInstances[i].x), Math.floor(this.observationInstances[i].y), 
 					this.observationInstances[i].width, this.observationInstances[i].height
 				);
 			}
-			gameplaySurface.drawImage
+			utility.drawImage
 			(
-				this.player.sprite, 
+				gameplaySurface, this.player.sprite, 
 				this.player.sourceX, this.player.sourceY + this.player.animation * this.player.sourceHeight, 
 				this.player.sourceWidth, this.player.sourceHeight,
 				Math.floor(this.player.x), Math.floor(this.player.y), 

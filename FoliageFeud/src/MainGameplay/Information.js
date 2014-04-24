@@ -14,10 +14,13 @@ nextPageButton.src = "../img/Buttons/arrowRight.png";
 */
 
 var curPlant = -1;
+var plantDisplayed = false;
 var curImage = 0;
+var moveUp = true;
 var imagePosX = 96;
 var imagePosY = 528;
 var delay = 0;
+var period = 30;
 var curPolaroid = 0;
 var polaroidOffset = 15;
 
@@ -34,14 +37,20 @@ var info = {
 	{
 		utility.clearAll();
 		curPlant = -1;
+	},
+	
+	render: function()
+	{
+		utility.clearAll();
 		
-		backgroundSurface.drawImage(
-			imgISpyBg,
-			0, 0
+		utility.drawImage(
+			backgroundSurface, imgISpyBg,
+			0, 0, imgISpyBg.width, imgISpyBg.height,
+			0, 0, imgISpyBg.width, imgISpyBg.height
 		);
 		
 		var imgsPerRow = 6;
-		var gapBetween = 32;//(1152 - (64 * 4) - (this.tileSize * imgsPerRow)) / (imgsPerRow + 1);
+		var gapBetween = 32;
 		
 		// Display appropriate sprite for each plant
 		for (var i = this.plantsPerPage * this.page; i < Math.min(this.plantsPerPage * (this.page + 1), plantList.length); i++)
@@ -64,17 +73,18 @@ var info = {
 				utility.addClickItem(x, y, this.tileSize, this.tileSize, this.displayPlantNotFound, [i]);
 			}
 
-			backgroundSurface.drawImage
+			utility.drawImage
 			(
-				sprite,
+				backgroundSurface, sprite,
 				0, 0, sprite.width, sprite.height, x, y,
 				this.tileSize, this.tileSize
 			);
 		}
 		
-		backgroundSurface.drawImage(
-			imgInfoOverlay,
-			0, 0
+		utility.drawImage(
+			backgroundSurface, imgInfoOverlay,
+			0, 0, imgInfoOverlay.width, imgInfoOverlay.height,
+			0, 0, imgInfoOverlay.width, imgInfoOverlay.height
 		);
 		
 		var xOffset = 48;
@@ -83,51 +93,61 @@ var info = {
 		utility.addClickItem(324 + xOffset, 512 - yOffset, 64, 32, this.prevPage, '');
 		utility.addClickItem(1152 - xOffset * 3, 512 - yOffset, 64, 32, this.nextPage, '');
 		
-		backgroundSurface.drawImage
+		utility.drawImage
 		(
-			imgLeftArrow,
+			backgroundSurface, imgLeftArrow,
 			0, 0, imgLeftArrow.width, imgLeftArrow.height,
 			324 + xOffset, 512 - yOffset, 64, 32
 		);
 		
-		backgroundSurface.drawImage
+		utility.drawImage
 		(
-			imgRightArrow,
+			backgroundSurface, imgRightArrow,
 			0, 0, imgRightArrow.width, imgRightArrow.height,
 			1152 - xOffset * 3, 512 - yOffset, 64, 32
 		);
+		
+		if (plantDisplayed)
+		{
+			if (curPlant != -1)
+			{
+				gameplaySurface.clearRect(0, 0, gameplayCanvas.width, gameplayCanvas.height);
+				var strings = [];
+				
+				strings.push("Name: " + plantList[i].name);
+				strings.push("Latin Name: " + plantList[i].lname);
+				
+				if (plantList[i].invasive)
+					strings.push("Invasive species");
+
+				utility.writeText(gameplaySurface, strings, 96, 64, 64 * 4, 25, true);
+			}
+			else
+			{
+				gameplaySurface.clearRect(0, 0, gameplayCanvas.width, gameplayCanvas.height);
+				var strings = [];
+				
+				strings.push("This plant has not been found yet.");
+				strings.push("To find this plant, explore more regions.");
+							 
+				utility.writeText(gameplaySurface, strings, 96, 64, 64 * 4, 25, true);
+			}
+		}
 	},
 	
 	// Display plant info if harvested
 	displayPlantInfo: function(i)
 	{
-		gameplaySurface.clearRect(0, 0, gameplayCanvas.width, gameplayCanvas.height);
-		var strings = [];
-		
-		strings.push("Name: " + plantList[i].name);
-		strings.push("Latin Name: " + plantList[i].lname);
-		
-		if (plantList[i].invasive)
-			strings.push("Invasive species");
-
-		utility.writeText(gameplaySurface, strings, 96, 64, 64 * 4, 25, true);
-		
 		curPlant = i;
+		plantDisplayed = true;
 		curImage = 0;
 	},
 
 	// Display unharvested text
 	displayPlantNotFound: function(i)
 	{
-		gameplaySurface.clearRect(0, 0, gameplayCanvas.width, gameplayCanvas.height);
-		var strings = [];
-		
-		strings.push("This plant has not been found yet.");
-		strings.push("To find this plant, explore more regions.");
-					 
-		utility.writeText(gameplaySurface, strings, 96, 64, 64 * 4, 25, true);
-		
 		curPlant = -1;
+		plantDisplayed = false;
 		imagePosX = -256;
 	},
 	
@@ -159,9 +179,9 @@ var info = {
 		
 		if (curPlant >= 0)
 		{
-			if (delay % 60 === 0)
+			if (delay % period === 0)
 			{
-				gameplaySurface.drawImage
+				/*gameplaySurface.drawImage
 				(
 					plantList[curPlant].sprite[curImage], 0, 0,
 					plantList[curPlant].sprite[curImage].width, plantList[curPlant].sprite[curImage].height,
@@ -174,34 +194,42 @@ var info = {
 					imgInfoSmallOverlay[curPolaroid].width, imgInfoSmallOverlay[curPolaroid].height,
 					imagePosX - polaroidOffset, imagePosY - polaroidOffset,
 					imgInfoSmallOverlay[curPolaroid].width, imgInfoSmallOverlay[curPolaroid].height
-				);
+				);*/
+				if (delay < period || delay === period * 3)
+					moveUp = true;
+				else if (delay >= period * 2)
+					moveUp = false;
 				
-				curPolaroid = Math.floor(Math.random() * imgInfoSmallOverlay.length);
+				if (delay === 0)
+				{
+					curPolaroid = Math.floor(Math.random() * imgInfoSmallOverlay.length);
 				
-				curImage = (curImage + 1) % plantList[curPlant].sprite.length;
-				imagePosY = 512;
-				
+					curImage = (curImage + 1) % plantList[curPlant].sprite.length;
+					imagePosY = 512;
+				}
 			}
 			
-			delay = (delay + 1) % 60;
+			delay = (delay + 1) % (period * 3);
 		
-			menuSurface.drawImage
+			utility.drawImage
 			(
-				plantList[curPlant].sprite[curImage], 0, 0,
+				menuSurface, plantList[curPlant].sprite[curImage], 0, 0,
 				plantList[curPlant].sprite[curImage].width, plantList[curPlant].sprite[curImage].height,
 				imagePosX, imagePosY, this.curImgSize, this.curImgSize
 			);
 			
-			menuSurface.drawImage
+			utility.drawImage
 			(
-				imgInfoSmallOverlay[curPolaroid], 0, 0,
+				menuSurface, imgInfoSmallOverlay[curPolaroid], 0, 0,
 				imgInfoSmallOverlay[curPolaroid].width, imgInfoSmallOverlay[curPolaroid].height,
 				imagePosX - polaroidOffset, imagePosY - polaroidOffset,
 				imgInfoSmallOverlay[curPolaroid].width, imgInfoSmallOverlay[curPolaroid].height
 			);
 			
-			if (imagePosY > 256)
-				imagePosY -= 16;
+			if (imagePosY > 256 && moveUp)
+				imagePosY -= (256 + 32) / period;
+			else if (!moveUp)
+				imagePosY += (256 + 32) / period;
 		}
 	}
 };

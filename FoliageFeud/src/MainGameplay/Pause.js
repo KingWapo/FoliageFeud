@@ -103,9 +103,9 @@ var pause = {
 	{
 		for(var i = 0; i < this.mapSprites.length; i++)
 		{
-			menuSurface.drawImage
+			utility.drawImage
 			(
-				imgMapTilesheet, 
+				menuSurface, imgMapTilesheet, 
 				this.mapSprites[i].sourceX, this.mapSprites[i].sourceY, 
 				this.mapSprites[i].sourceWidth, this.mapSprites[i].sourceHeight,
 				Math.floor(this.mapSprites[i].x) + 13, Math.floor(this.mapSprites[i].y) + 6, 

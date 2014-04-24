@@ -37,17 +37,18 @@ var matching = {
 				
 			utility.addClickItem(x, y, this.tileSize, this.tileSize, this.flipCard, [i]);
 
-			backgroundSurface.drawImage
+			utility.drawImage
 			(
-				imgQuestionMark,
+				backgroundSurface, imgQuestionMark,
 				0, 0, this.tileSize, this.tileSize, x, y,
 				this.tileSize, this.tileSize
 			);
 		}
 		
-		backgroundSurface.drawImage(
-			imgInfoOverlay,
-			0, 0
+		utility.drawImage(
+			backgroundSurface, imgInfoOverlay,
+			0, 0, imgInfoOverlay.width, imgInfoOverlay.height,
+			0, 0, imgInfoOverlay.width, imgInfoOverlay.height
 		);
 	},
 	

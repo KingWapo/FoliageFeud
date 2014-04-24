@@ -19,16 +19,48 @@ var utility = {
 	totalNumImages: 0,
 	curNumImages: 0,
 	writting:false,
-	
+	scale: 1,
+	originalWidth: 1152,
+	originalHeight: 512,
 	
 	// Clear screen and all objects from clickable
 	clearAll: function()
 	{
 		this.clearClickHandler();
-		
+		this.clearSurfaces();
+	},
+	
+	clearSurfaces: function()
+	{
 		backgroundSurface.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
 		gameplaySurface.clearRect(0, 0, gameplayCanvas.width, gameplayCanvas.height);
 		menuSurface.clearRect(0, 0, menuCanvas.width, menuCanvas.height);
+	},
+	
+	drawImage: function(context, sprite, xSrc, ySrc, wSrc, hSrc, x, y, w, h)
+	{
+		context.drawImage
+		(
+			sprite,
+			xSrc, ySrc, wSrc, hSrc,
+			x * utility.scale, y * utility.scale, w * utility.scale, h * utility.scale
+		);
+	},
+	
+	handleScale: function()
+	{
+		var offset = 20;
+		
+		utility.scale = Math.min(1, Math.min(((window.innerWidth - offset) / utility.originalWidth), ((window.innerHeight - offset) / utility.originalHeight)));
+		
+		backgroundCanvas.setAttribute('width', utility.originalWidth * utility.scale);
+		backgroundCanvas.setAttribute('height', utility.originalHeight * utility.scale);
+		gameplayCanvas.setAttribute('width', utility.originalWidth * utility.scale);
+		gameplayCanvas.setAttribute('height', utility.originalHeight * utility.scale);
+		menuCanvas.setAttribute('width', utility.originalWidth * utility.scale);
+		menuCanvas.setAttribute('height', utility.originalHeight * utility.scale);
+		
+		console.debug(utility.scale);
 	},
 	
 	// Add item to the list
@@ -67,9 +99,14 @@ var utility = {
 		// Checks each object to see if it was clicked
 		for (var i = 0; i < utility.clickable.length; i++)
 		{
+			var x = utility.clickable[i].x * utility.scale;
+			var y = utility.clickable[i].y * utility.scale;
+			var w = utility.clickable[i].width * utility.scale;
+			var h = utility.clickable[i].height * utility.scale;
+			
 			// If image was clicked, runs specified function
-			if (posx >= utility.clickable[i].x && posx <= utility.clickable[i].x + utility.clickable[i].width &&
-				posy >= utility.clickable[i].y && posy <= utility.clickable[i].y + utility.clickable[i].height)
+			if (posx >= x && posx <= x + w &&
+				posy >= y && posy <= y + h )
 			{
 				utility.clickable[i].func(utility.clickable[i].param);
 			}
@@ -93,12 +130,16 @@ var utility = {
 		utility.curNumImages += 1;
 		
 		//console.debug('total: ', utility.totalNumImages, ' - loaded: ', utility.curNumImages);
+		var x = 76 * utility.scale;
+		var y = 206 * utility.scale;
+		var w = 1000 * utility.scale;
+		var h = 100 * utility.scale;
 		
-		menuSurface.rect(76, 206, 1000, 100);
+		menuSurface.rect(x, y, w, h);
 		menuSurface.stroke();
 		
 		menuSurface.fillStyle = "#006600";
-		menuSurface.fillRect(76, 206, 1000 * (utility.curNumImages / utility.totalNumImages), 100);
+		menuSurface.fillRect(x, y, w * (utility.curNumImages / utility.totalNumImages), h);
 		
 		if (utility.curNumImages === utility.totalNumImages)
 			mainUpdate();
@@ -127,6 +168,11 @@ var utility = {
 	// Write text to screen, wrapping if hits max width
 	writeText: function(context, text, x, y, maxWidth, fontSize, isOutlined)
 	{
+		x = x * utility.scale;
+		y = y * utility.scale;
+		maxWidth = maxWidth * utility.scale;
+		fontSize = Math.floor(fontSize * utility.scale);
+		
 		context.fillStyle = "white";
 		context.font = fontSize + "px Evilgreen";
 		
@@ -224,6 +270,7 @@ var utility = {
 };
 
 window.addEventListener("click", utility.handleClick, false);
+window.addEventListener("resize", utility.handleScale, false);
 
 var imgCommonBg = utility.loadImage("../img/Backgrounds/commonBackground.png");
 var imgMenuBg = utility.loadImage("../img/Backgrounds/menuscreen.png");

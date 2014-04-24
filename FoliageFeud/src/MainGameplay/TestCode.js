@@ -63,9 +63,9 @@ var test = {
 					if (c > 0 && this.map[r][c-1] === WATER)
 						variant += 1;
 					
-					backgroundSurface.drawImage
+					utility.drawImage
 					(
-						this.waterTiles[variant],
+						backgroundSurface, this.waterTiles[variant],
 						0, 0, 64, 64,
 						Math.floor(sprite.x), Math.floor(sprite.y),
 						sprite.width, sprite.height
@@ -73,9 +73,9 @@ var test = {
 				}
 				else
 				{
-					backgroundSurface.drawImage
+					utility.drawImage
 					(
-						this.tileSheet,
+						backgroundSurface, this.tileSheet,
 						sprite.sourceX, sprite.sourceY,
 						sprite.sourceWidth, sprite.sourceHeight,
 						Math.floor(sprite.x), Math.floor(sprite.y),

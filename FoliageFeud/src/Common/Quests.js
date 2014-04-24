@@ -22,7 +22,6 @@ var quests = {
 	addQuestFromSibling: function(plantInfo)
 	{
 		mainCamp.listOfQuests.splice(mainCamp.listOfQuests.indexOf(plantInfo[0]), 1);
-		mainCamp.updateQuests();
 	
 		quests.addQuest(plantInfo[0], plantInfo[1]);
 	},

@@ -139,6 +139,8 @@ function mainUpdate()
 	backgroundSurface.save();
 	gameplaySurface.save();
 	
+	utility.handleScale();
+	
 	// Find the screen currently being used and update it.
 	switch(currentScreen)
 	{
@@ -182,6 +184,7 @@ function mainUpdate()
 			{
 				switchGamemode(ScreenState.Gameplay);
 			}
+			info.render();
 			info.update();
 			break;
 		case ScreenState.Observation: // ISpy Gameplay
@@ -196,6 +199,8 @@ function mainUpdate()
 				switchGamemode(ScreenState.Gameplay);
 				utility.clearClickHandler();
 			}
+			else
+				ispy.render();
 			break;
 		case ScreenState.SkillBook:
 			break;
