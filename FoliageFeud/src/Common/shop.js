@@ -78,7 +78,7 @@ initShop:function()
 buyAdventure:function()
 {
 	shop.adventure.buy();
-	if(gameplay.gold>=adventure.price)
+	if(gameplay.gold>=shop.adventure.price)
 		{
 			skillBook.sprintLevel=2;	
 		}
