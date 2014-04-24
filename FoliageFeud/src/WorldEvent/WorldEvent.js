@@ -70,6 +70,10 @@ var worldEvent = {
 	
 	onExit: function()
 	{
+		this.speedBoost = 0;
+		this.speedCooldown = 30;
+		this.checkmarks = [];
+		
 		gameplay.player.x = this.playerVars[0];
 		gameplay.player.y = this.playerVars[1];
 		gameplay.player.walkSpeed = this.playerVars[2];
@@ -88,10 +92,10 @@ var worldEvent = {
 	{
 		if (!this.questionBeingAsked)
 		{
-			gameplay.player.x += this.speedBoost;
+			gameplay.player.x = utility.clamp(gameplay.player.x + this.speedBoost, 0, gameplayCanvas.width);
 			gameplay.player.updateAnimation();
 			createScenery.update();
-			if (this.speedBoost == 0 && Math.random() * 1000 < 10) // .1% chance of question being asked and only when the player doesn't have a speedBoost
+			if (this.speedBoost == 0 && Math.random() * 1000 < 10 && !this.questionBeingAsked) // .1% chance of question being asked and only when the player doesn't have a speedBoost
 			{
 				this.askQuestion();
 			}
@@ -167,13 +171,17 @@ var worldEvent = {
 			var index = Math.floor(Math.random() * plantList.length);
 			if (index == numsChosen[0] ||
 				index == numsChosen[1] ||
-				index == numsChosen[2]){ }
+				index == numsChosen[2]){ 
+					continue;
+				}
 			else
 			{
 				this.questions[curQuestion].name = plantList[index].name;
 				if (this.questions[curQuestion].correct)
 				{
 					this.correctImage = plantList[index].sprite[0];
+					console.debug(curQuestion + ": " + this.questions[curQuestion].name);
+					
 				}
 				curQuestion++;
 			}
@@ -183,6 +191,7 @@ var worldEvent = {
 	
 	answerQuestion: function(index)
 	{
+		console.debug("Answer guessed is: " + index + ": " + worldEvent.questions[index].name);
 		if (worldEvent.questions[index].correct)
 		{
 			worldEvent.speedBoost = 5;
@@ -221,6 +230,8 @@ var worldEvent = {
 		var x = gameplayCanvas.width - 480;
 		var y = gameplayCanvas.height / 4;
 		var maxWidth = 256;
+		
+		utility.clearClickHandler();
 		
 		for (var i = 0; i < this.questions.length; i++)
 		{

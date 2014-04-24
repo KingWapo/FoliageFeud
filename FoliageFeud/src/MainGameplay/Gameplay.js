@@ -93,7 +93,7 @@ var gameplay = {
 		vy: 0,
 		speed: 4,
 		walkSpeed: 4,
-		runSpeed: 10,
+		runSpeed: 8,
 		sprite: '',
 		animation: Animation.Idle
 	}, 
@@ -255,12 +255,31 @@ var gameplay = {
 		visible: true,
 		sourceX: 0,
 		sourceY: 0,
-		sourceWidth:154,
-		sourceHeight:122,
+		sourceWidth:128,
+		sourceHeight:128,
+		numOfFrames: 16,
+		currentFrame: 0,
+		update:0,
+		updateAnimation: function()
+		{
+			if(this.update===0)
+			{
+				this.sourceX = this.currentFrame * this.sourceWidth;
+			
+				this.currentFrame += 1;
+					
+				if ( this.currentFrame === this.numOfFrames )
+				{
+					this.currentFrame = 0;	
+				}
+					
+			}
+			this.update = (this.update+1)%2;
+		},
 		x: 0,
 		y: 0,
-		width: 154,
-		height: 122,	
+		width: 128,
+		height: 128,	
 		sprite: ''
 		
 	},
@@ -292,19 +311,16 @@ var gameplay = {
 			gameplay.collisionTiles.push(tempCollision);
 		}
 		cameraController.init();
-	
-		
 		//place the coins and objects 
 		this.placeObservationEvent();
 		this.placeBlue();
 		this.placeGray();
 		this.placeSpeed();
 		this.placeTeleporter();
-		
 		// Init the stores
 		this.training.width = 256;
 		this.training.height = 128;
-		
+	
 		this.store.width = 256;
 		this.store.height = 128;
 		
@@ -428,6 +444,7 @@ var gameplay = {
 		this.blueCoin.updateAnimation();
 		this.grayCoin.updateAnimation();
 		this.speedCoin.updateAnimation();
+		this.teleporter.updateAnimation();
 	},
 	
 	checkMovement: function()
@@ -697,14 +714,14 @@ var gameplay = {
 		this.player.x = 300;
 		this.player.y = 300; 
 		
-		this.teleporter.x = 300;
-		this.teleporter.y = 300;
+		this.teleporter.x = 358;
+		this.teleporter.y = 390;
 		
 		this.training.x = 3 * 64;
 		this.training.y = 2 * 64;
 		
 		this.mainCamp.x = 7 * 64;
-		this.mainCamp.y = 2 * 64;
+		this.mainCamp.y =  64;
 		
 		this.store.x = 11 * 64;
 		this.store.y = 2 * 64;
@@ -773,8 +790,12 @@ var gameplay = {
 				menuSurface.clearRect(0, 0, menuCanvas.width, menuCanvas.height);
 			}
 			var strings=[];
-			 strings.push(" total gold: " + this.gold);	
-				utility.writeText(menuSurface, strings, 32, 500, 64 * 4 - 10, 25, true);
+			 strings.push(" gold: " + this.gold);	
+				menuSurface.drawImage(
+						imgChest,
+						21, 463
+					);
+					utility.writeText(menuSurface, strings, 75,485, 64 * 4 - 10, 25, true);
 				if(skillBook.display===true)
 				{
 					this.message("skill")
@@ -828,12 +849,16 @@ var gameplay = {
 					this.training.x, this.training.y, this.training.sprite.width, this.training.sprite.height
 				);
 				
+<<<<<<< HEAD
 				utility.drawImage
 				(
 					gameplaySurface, this.mainCamp.sprite,
 					0, 0, this.mainCamp.sprite.width, this.mainCamp.sprite.height,
 					this.mainCamp.x, this.mainCamp.y, this.mainCamp.sprite.width, this.mainCamp.sprite.height
 				);
+=======
+				
+>>>>>>> ec0544643252dc7180cc6ac9a6087f05eaa3e258
 				
 				utility.drawImage
 				(
@@ -951,7 +976,8 @@ window.addEventListener("keydown", function(event)
 {
 	if (event.keyCode == 16)// && skillBook.sprint== true)
 	{
-		gameplay.player.speed = gameplay.player.runSpeed;
+		gameplay.player.speed = gameplay.player.runSpeed*skillBook.sprintLevel;
+		
 	}
 	if (event.keyCode == 75)// && skillBook.sprint== true)
 	{		

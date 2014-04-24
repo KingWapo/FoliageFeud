@@ -15,6 +15,7 @@ var clickObj = {
 var utility = {
 	// List of clickable objects in current screen
 	clickable: [],
+	mouseOver:[],
 	colors: [],
 	totalNumImages: 0,
 	curNumImages: 0,
@@ -81,6 +82,26 @@ var utility = {
 		
 		this.clickable.push(item);
 	},
+	// Add item to the list
+	addMouseOver: function(x, y, width, height, func, param)
+	{
+		var item = Object.create(clickObj);
+		item.x = x;
+		item.y = y;
+		item.width = width;
+		item.height = height;
+		item.func = func;
+		item.param = param;
+		
+		// Debug location of click items
+		/*menuSurface.fillStyle = "black";
+		menuSurface.rect(x, y, width, height);
+		menuSurface.stroke();*/
+		
+		utility.mouseOver.push(item);
+		console.debug(utility.mouseOver[0].x);
+		console.debug(item.x +" cheese  "+ item.y );
+	},
 	
 	// Clear list
 	clearClickHandler: function()
@@ -95,6 +116,7 @@ var utility = {
 		var rect = gameplayCanvas.getBoundingClientRect();
 		var posx = event.clientX - rect.left;
 		var posy = event.clientY - rect.top;
+		console.debug(posx+" "+posy)
 		
 		// Checks each object to see if it was clicked
 		for (var i = 0; i < utility.clickable.length; i++)
@@ -112,7 +134,27 @@ var utility = {
 			}
 		}
 	},
-	
+		/*handleMouseOver: function(event)
+	{
+		// Gets position of click
+		var rect = gameplayCanvas.getBoundingClientRect();
+		var posx = event.clientX;
+		var posy = event.clientY;
+		// Checks each object to see if it was clicked
+		for (var i = 0; i < utility.mouseOver.length; i++)
+		{
+			if (posx >= utility.clickable[i].x && posx <= utility.clickable[i].x + utility.clickable[i].width &&
+				posy >= utility.clickable[i].y && posy <= utility.clickable[i].y + utility.clickable[i].height)
+			{
+				console.debug("this is working I guess");
+				utility.mouseOver[i].func(utility.mouseOver[i].param);
+			}
+				
+				
+			
+		}
+	},
+	*/
 	loadImage: function(source)
 	{
 		utility.totalNumImages += 1;
@@ -235,6 +277,7 @@ var utility = {
 	{
 		var size = utility.writeText(context, text, x, y, maxWidth, fontSize, isOutlined);
 		utility.addClickItem(x, y - fontSize, size[0], size[1], clickHandler[0], clickHandler[1]);
+		//console.debug(clickHandler[1]);
 	},
 	
 	contains: function(array, element)
@@ -270,7 +313,11 @@ var utility = {
 };
 
 window.addEventListener("click", utility.handleClick, false);
+<<<<<<< HEAD
 window.addEventListener("resize", utility.handleScale, false);
+=======
+//window.addEventListener("mouseover",utility.handleMouseOver,false);
+>>>>>>> ec0544643252dc7180cc6ac9a6087f05eaa3e258
 
 var imgCommonBg = utility.loadImage("../img/Backgrounds/commonBackground.png");
 var imgMenuBg = utility.loadImage("../img/Backgrounds/menuscreen.png");
@@ -296,20 +343,29 @@ var imgTimer = utility.loadImage("../img/WorldEvent/timer.png");
 var imgTimerBg = utility.loadImage("../img/WorldEvent/timerBackground.png");
 var imgCheckmark = utility.loadImage("../img/WorldEvent/checkmark.png");
 var imgShopBg = utility.loadImage(" ../img/Backgrounds/shopscreen.png");
+var imgAdventure =utility.loadImage("../img/Hats/explorer.png");
+var imgSold = utility.loadImage("../img/Tokens/purchased.png");
+var imgWater= utility.loadImage("../img/Tokens/purchased.png");
+var imgRock= utility.loadImage("../img/Tokens/rockCoin.png");
+var imgChest=utility.loadImage("../img/moneyicon.png");
+var imgWater=utility.loadImage("../img/Tokens/waterCoin.png");
+var imgNip=utility.loadImage("../img/ParsnipToken.png");
+
+
+
 
 
 createScenery.tilesheet = utility.loadImage("../img/Tiles/tilesheet.png");
 
 worldEvent.wall.sprite = utility.loadImage("../img/WorldEvent/WALL.png");
-
+gameplay.mainCamp.sprite = utility.loadImage("../img/Tiles/mainCamp.png");
 gameplay.player.sprite = utility.loadImage("../img/Player/characterMale.png");
 gameplay.observationInstance.sprite = utility.loadImage("../img/Tokens/exclamationPoint.png");
 gameplay.blueCoin.sprite = utility.loadImage("../img/Tokens/waterToken.png");
 gameplay.grayCoin.sprite = utility.loadImage("../img/Tokens/rockToken.png");
 gameplay.speedCoin.sprite = utility.loadImage("../img/Tokens/speedToken.png");
-gameplay.teleporter.sprite = utility.loadImage("../img/Tiles/telelporter.png");
+gameplay.teleporter.sprite = utility.loadImage("../img/Tiles/teleporterfinal.png");
 gameplay.training.sprite = utility.loadImage("../img/Tiles/training.png");
 gameplay.store.sprite = utility.loadImage("../img/Tiles/shop.png");
-gameplay.mainCamp.sprite = utility.loadImage("../img/Tiles/mainCamp.png");
-baseCamp.shop();
-shop.drawShop();
+
+
