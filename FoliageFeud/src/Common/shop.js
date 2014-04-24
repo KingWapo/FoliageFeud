@@ -36,10 +36,11 @@ gameplay.writtingClear();
 			imgWater,
 			429, 140
 		);
-		menuSurface.drawImage(
+		/*menuSurface.drawImage(
 			imgNip,
 			599, 140
 		);
+		*/
 		menuSurface.drawImage(
 		imgQuestionMark,
 			766,307
@@ -48,7 +49,7 @@ gameplay.writtingClear();
 		
 		
 		shop.initShop();
-		utility.addClickItem(932, 304, imgExitButton.width, imgExitButton.height, gameplay.writtingClear, "");
+		utility.addClickItem(932, 304, imgExitButton.width, imgExitButton.height,this.exitShop, "");
 		utility.addClickItem( 96,138,imgAdventure.width,imgAdventure.height,this.buyAdventure,"");
 		utility.addClickItem( 265,140,imgRock.width,imgRock.height,this.buyRock,"");
 		utility.addClickItem( 429,140,imgWater.width,imgWater.height,this.buyWater,"");
@@ -173,10 +174,10 @@ drawInfo:function()
 	
 	
 },
-redrawShop:function()
+exitShop:function()
 {
 	utility.clearClickHandler();
-	shop.drawShop();
+	switchGamemode(ScreenState.Gameplay);
 	
 }
 };
