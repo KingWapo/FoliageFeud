@@ -127,11 +127,14 @@ var worldEvent = {
 		
 		createScenery.render();
 		
-		gameplaySurface.drawImage(
+		utility.drawImage( gameplaySurface,
 			this.wall.sprite,
-			this.wall.x, 0
-		);
-		
+			0, 0,
+			this.wall.width, this.wall.height,
+			0, 0,
+			this.wall.width, this.wall.height
+			);
+			
 		if (this.questionBeingAsked)
 		{
 			if (this.countdown > 0)
@@ -148,11 +151,20 @@ var worldEvent = {
 		
 		for (var i = 0; i < this.checkmarks.length; i++)
 		{
+			utility.drawImage(menuSurface,
+				imgCheckmark,
+				0, 0,
+				64, 64,
+				i * 64, 0,
+				64, 64
+				);
+			/*
 			menuSurface.drawImage(
 				imgCheckmark,
 				i * 64, 0,
 				64, 64
 				);
+			*/
 		}
 		
 	},
@@ -227,8 +239,8 @@ var worldEvent = {
 	{
 		var textSize = 16;
 		var topOffset = 32;
-		var x = gameplayCanvas.width - 480;
-		var y = gameplayCanvas.height / 4;
+		var x = CANVAS_WIDTH - 480;
+		var y = CANVAS_HEIGHT / 4;
 		var maxWidth = 256;
 		
 		utility.clearClickHandler();
@@ -238,20 +250,25 @@ var worldEvent = {
 			utility.writeForClick(menuSurface, [this.questions[i].name], x, y + topOffset + (textSize * i * 2), maxWidth, textSize, false, [this.answerQuestion, i]);
 		}
 		
-		menuSurface.drawImage(
+		utility.drawImage(menuSurface,
 			this.correctImage,
-			gameplayCanvas.width / 2 - 64, gameplayCanvas.height / 4,
+			0, 0,
+			this.correctImage.width, this.correctImage.height,
+			CANVAS_WIDTH / 2 - 64, CANVAS_HEIGHT / 4,
 			128, 128
 			);
-			
-		menuSurface.drawImage(
+		utility.drawImage(menuSurface,
 			imgTimerBg,
-			gameplayCanvas.width / 2 - 64, gameplayCanvas.height / 4 - 64,
+			0, 0,
+			imgTimerBg.width, imgTimerBg.height,
+			CANVAS_WIDTH / 2 - 64, CANVAS_HEIGHT / 4 - 64,
 			256, 32
 			);
-		menuSurface.drawImage(
+		utility.drawImage(menuSurface,
 			imgTimer,
-			gameplayCanvas.width / 2 - 62, gameplayCanvas.height / 4 - 62,
+			0, 0,
+			imgTimer.width, imgTimer.height,
+			CANVAS_WIDTH / 2 - 62, CANVAS_HEIGHT / 4 - 62,
 			Math.floor(256*this.countdown/this.countdownFull), 32
 			);
 	}

@@ -4,9 +4,9 @@ var shop ={
 	adventure: Object.create(buyableObject),
 	rockCoin: Object.create(buyableObject),
 	waterCoin: Object.create(buyableObject),
+	isOpen:false,
 	
-	
-drawShop:function()
+render:function()
 {
 gameplay.writtingClear();	
 		

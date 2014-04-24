@@ -74,7 +74,8 @@ var createScenery = {
 		for (var i = 0; i < this.grass.length; i++)
 		{
 			var grassSprite = this.grass[i];
-			backgroundSurface.drawImage(
+			
+			utility.drawImage(backgroundSurface,
 				this.tilesheet,
 				grassSprite.sourceX * 64, grassSprite.sourceY * 64,
 				grassSprite.sourceWidth, grassSprite.sourceHeight,
@@ -87,7 +88,8 @@ var createScenery = {
 			var sprite = this.trees[i]
 			if (i < this.treeCount/2)
 			{
-				gameplaySurface.drawImage(
+				utility.drawImage(
+					gameplaySurface,
 					this.tilesheet,
 					sprite.sourceX * 64, sprite.sourceY * 64,
 					sprite.sourceWidth, sprite.sourceHeight,
@@ -97,7 +99,8 @@ var createScenery = {
 			}
 			else
 			{
-				backgroundSurface.drawImage(
+				utility.drawImage(
+					backgroundSurface,
 					this.tilesheet,
 					sprite.sourceX * 64, sprite.sourceY * 64,
 					sprite.sourceWidth, sprite.sourceHeight,

@@ -328,6 +328,11 @@ var gameplay = {
 		this.mainCamp.height = 128;
 		
 		this.updateSprite();
+		
+		moveUp = false;
+		moveDown = false;
+		moveLeft = false;
+		moveRight = false;
 
 	},
 	
@@ -525,7 +530,7 @@ var gameplay = {
 	update: function()
 	{
 		
-	
+		
 		if (this.onPause)
 		{
 			if (!this.mapBuilt)
@@ -670,7 +675,7 @@ var gameplay = {
 				}
 				if (utility.collisionDetection(gameplay.player, gameplay.store))
 				{
-					shop.drawShop();
+					switchGamemode(ScreenState.ShopScreen);
 					this.collide();
 				}
 				

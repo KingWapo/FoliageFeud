@@ -239,6 +239,12 @@ function mainUpdate()
 			break;
 
 		case ScreenState.ShopScreen:
+		if (entering[currentScreen])
+			{
+				shop.initShop();
+				entering[currentScreen] = false;
+			}
+			shop.render();
 			break;
 		case ScreenState.SNASelectionScreen:
 			if (entering[currentScreen])
