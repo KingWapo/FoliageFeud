@@ -97,7 +97,7 @@ var utility = {
 			}
 		}
 	},
-		handleMouseOver: function(event)
+		/*handleMouseOver: function(event)
 	{
 		// Gets position of click
 		var rect = gameplayCanvas.getBoundingClientRect();
@@ -117,7 +117,7 @@ var utility = {
 			
 		}
 	},
-	
+	*/
 	loadImage: function(source)
 	{
 		utility.totalNumImages += 1;
@@ -267,7 +267,7 @@ var utility = {
 };
 
 window.addEventListener("click", utility.handleClick, false);
-window.addEventListener("mouseover",utility.handleMouseOver,false);
+//window.addEventListener("mouseover",utility.handleMouseOver,false);
 
 var imgCommonBg = utility.loadImage("../img/Backgrounds/commonBackground.png");
 var imgMenuBg = utility.loadImage("../img/Backgrounds/menuscreen.png");
@@ -300,6 +300,7 @@ var imgRock= utility.loadImage("../img/Tokens/rockCoin.png");
 var imgChest=utility.loadImage("../img/moneyicon.png");
 var imgWater=utility.loadImage("../img/Tokens/waterCoin.png");
 var imgNip=utility.loadImage("../img/ParsnipToken.png");
+
 
 
 
