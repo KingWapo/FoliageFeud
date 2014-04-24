@@ -1,9 +1,7 @@
 // Created by Batman
 
-CANVAS_WIDTH = 1152
-CANVAS_HEIGHT = 512
-
-var clickOnThisPrick = false;
+CANVAS_WIDTH = 1152;
+CANVAS_HEIGHT = 512;
 
 // Clickable object
 // Stores location, size, and function to run when clicked
@@ -327,11 +325,7 @@ var utility = {
 	}
 };
 
-if (!clickOnThisPrick)
-{
-	clickOnThisPrick = true;
-	window.addEventListener("click", utility.handleClick, false);
-}
+window.addEventListener("click", utility.handleClick, false);
 window.addEventListener("resize", utility.handleScale, false);
 //window.addEventListener("mouseover",utility.handleMouseOver,false);
 
