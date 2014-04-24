@@ -8,7 +8,7 @@ var shop ={
 	
 render:function()
 {
-gameplay.writtingClear();	
+	utility.clearAll();	
 		
 		utility.drawImage(
 			menuSurface, imgShopBg,
