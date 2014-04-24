@@ -43,8 +43,8 @@ drawShop:function()
 		utility.addClickItem( 96,138,imgAdventure.width,imgAdventure.height,this.buyAdventure,"");
 		utility.addClickItem( 265,140,imgRock.width,imgRock.height,this.buyRock,"");
 		utility.addClickItem( 429,140,imgWater.width,imgWater.height,this.buyWater,"");
+		utility.addMouseOver( 96,138,imgAdventure.width,imgAdventure.height,this.debug,"" );
 		
-	
 		
 		
 },
@@ -64,8 +64,7 @@ initShop:function()
 	shop.waterCoin.name="Water Coin";
 	shop.waterCoin.x=429;
 	shop.waterCoin.y=140;
-	shop.waterCoin.init();
-	
+	shop.waterCoin.init();	
 },
 buyAdventure:function()
 {
@@ -83,8 +82,14 @@ buyWater:function()
 	shop.waterCoin.buy();
 	skillBook.swimLevel=2;
 	
+},
+debug:function()
+{
+	console.debug("HAT!!!!!!!!!!");
 }
-	
+
+
+
 };
 
 

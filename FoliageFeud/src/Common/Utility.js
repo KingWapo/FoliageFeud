@@ -15,6 +15,7 @@ var clickObj = {
 var utility = {
 	// List of clickable objects in current screen
 	clickable: [],
+	mouseOver:[],
 	colors: [],
 	totalNumImages: 0,
 	curNumImages: 0,
@@ -49,6 +50,26 @@ var utility = {
 		
 		this.clickable.push(item);
 	},
+	// Add item to the list
+	addMouseOver: function(x, y, width, height, func, param)
+	{
+		var item = Object.create(clickObj);
+		item.x = x;
+		item.y = y;
+		item.width = width;
+		item.height = height;
+		item.func = func;
+		item.param = param;
+		
+		// Debug location of click items
+		/*menuSurface.fillStyle = "black";
+		menuSurface.rect(x, y, width, height);
+		menuSurface.stroke();*/
+		
+		utility.mouseOver.push(item);
+		console.debug(utility.mouseOver[0].x);
+		console.debug(item.x +" cheese  "+ item.y );
+	},
 	
 	// Clear list
 	clearClickHandler: function()
@@ -74,6 +95,26 @@ var utility = {
 			{
 				utility.clickable[i].func(utility.clickable[i].param);
 			}
+		}
+	},
+		handleMouseOver: function(event)
+	{
+		// Gets position of click
+		var rect = gameplayCanvas.getBoundingClientRect();
+		var posx = event.clientX;
+		var posy = event.clientY;
+		// Checks each object to see if it was clicked
+		for (var i = 0; i < utility.mouseOver.length; i++)
+		{
+			if (posx >= utility.clickable[i].x && posx <= utility.clickable[i].x + utility.clickable[i].width &&
+				posy >= utility.clickable[i].y && posy <= utility.clickable[i].y + utility.clickable[i].height)
+			{
+				console.debug("this is working I guess");
+				utility.mouseOver[i].func(utility.mouseOver[i].param);
+			}
+				
+				
+			
 		}
 	},
 	
@@ -226,6 +267,7 @@ var utility = {
 };
 
 window.addEventListener("click", utility.handleClick, false);
+window.addEventListener("mouseover",utility.handleMouseOver,false);
 
 var imgCommonBg = utility.loadImage("../img/Backgrounds/commonBackground.png");
 var imgMenuBg = utility.loadImage("../img/Backgrounds/menuscreen.png");
