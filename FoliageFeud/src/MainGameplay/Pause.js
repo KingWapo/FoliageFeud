@@ -112,5 +112,7 @@ var pause = {
 				this.mapSprites[i].width, this.mapSprites[i].height
 			); 
 		}
+		
+		
 	}
 }

@@ -82,8 +82,8 @@ var worldEvent = {
 		cameraController.camera.y = this.cameraPosition[1];
 		createScenery.onExit();
 		
-		cameraController.buildMap(allLevelMaps[cameraController.levelCounter], 0);
-		cameraController.buildMap(allObjectMaps[cameraController.levelCounter], 1);
+		cameraController.buildMap(allLevelMaps[gameplay.currentLevel], 0);
+		cameraController.buildMap(allObjectMaps[gameplay.currentLevel], 1);
 		gameplay.render();
 		currentScreen = ScreenState.Gameplay;
 	},

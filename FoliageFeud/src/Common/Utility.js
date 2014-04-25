@@ -120,8 +120,6 @@ var utility = {
 		var posx = event.clientX - rect.left;
 		var posy = event.clientY - rect.top;
 		
-		console.debug("Clicked at: " + posx + ", " + posy);
-		
 		// Checks each object to see if it was clicked
 		for (var i = 0; i < utility.clickable.length; i++)
 		{
@@ -135,7 +133,7 @@ var utility = {
 			if (posx >= x && posx <= x + w &&
 				posy >= y && posy <= y + h )
 			{
-				console.debug('click[', i, ']: ', x, ', ', y, ', ', w, ', ', h);
+				//console.debug('click[', i, ']: ', x, ', ', y, ', ', w, ', ', h);
 				utility.clickable[i].func(utility.clickable[i].param);
 				//utility.clickable.splice(i, 1);
 			}
