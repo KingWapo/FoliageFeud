@@ -11,6 +11,7 @@ var pause = {
 	pauseObjectMap: [],
 	mapTilesheet: new Image(),
 	mapSprites: [],
+	mapScale: 1,
 	
 	
 	buildInGameMap: function()
@@ -26,9 +27,9 @@ var pause = {
 				Math.floor(gameplay.observationInstances[i].x / SIZE),
 				Math.floor(gameplay.observationInstances[i].y / SIZE)
 				]);
-			console.debug("(" + objectives[i][0] + ", " + objectives[i][1] + ")");
+			//console.debug("(" + objectives[i][0] + ", " + objectives[i][1] + ")");
 		}
-		console.debug("(" + playerLocation[0] + ", " + playerLocation[1] + ")");
+		//console.debug("(" + playerLocation[0] + ", " + playerLocation[1] + ")");
 		this.pauseMap = allLevelMaps[gameplay.currentLevel];
 		this.pauseObjectMap = allObjectMaps[gameplay.currentLevel];
 		for (var row = 0; row < cameraController.ROWS; row++)
@@ -108,9 +109,29 @@ var pause = {
 				menuSurface, imgMapTilesheet, 
 				this.mapSprites[i].sourceX, this.mapSprites[i].sourceY, 
 				this.mapSprites[i].sourceWidth, this.mapSprites[i].sourceHeight,
-				Math.floor(this.mapSprites[i].x) + 13, Math.floor(this.mapSprites[i].y) + 6, 
-				this.mapSprites[i].width, this.mapSprites[i].height
+				(Math.floor(this.mapSprites[i].x) + 13) * this.mapScale, (Math.floor(this.mapSprites[i].y) + 6) * this.mapScale, 
+				this.mapSprites[i].width * this.mapScale, this.mapSprites[i].height * this.mapScale
 			); 
 		}
 	}
 }
+
+
+window.addEventListener("keyup", function(event)
+{
+	if (gameplay.onPause)
+	{
+		switch(event.keyCode)
+		{   
+		  case UP:
+			if (pause.mapScale < 2)
+				pause.mapScale += .2;
+			break;
+			
+		  case DOWN:
+			if (pause.mapScale > 1)
+				pause.mapScale -= .2;
+			break;
+		}
+	}
+}, false);
