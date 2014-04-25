@@ -296,5 +296,6 @@ function switchGamemode(newScreen)
 	}
 	currentScreen = newScreen;
 	screensLoaded[currentScreen] = true;
-	entering[currentScreen] = true;
+	if (currentScreen != ScreenState.Gameplay)
+		entering[currentScreen] = true;
 }

@@ -113,6 +113,8 @@ var pause = {
 				this.mapSprites[i].width * this.mapScale, this.mapSprites[i].height * this.mapScale
 			); 
 		}
+		
+		
 	}
 }
 

@@ -52,6 +52,7 @@ var gameplay = {
 	onTraining: false,
 	writting:false,
 	trainning:true,
+	swimming: false,
 	gold:0,
 	
 	// Buildings
@@ -430,10 +431,12 @@ var gameplay = {
 		 strings.push(" You have gained the ability to swim! The swim ability is now unlocked in your skill book.");	
 				utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, true);
 		}
+		/*
 		moveDown = false;
 		moveLeft = false;
 		moveRight = false;
 		moveUp = false;
+		*/
 	},
 	writtingClear:function()
 	{
@@ -454,19 +457,46 @@ var gameplay = {
 	
 	checkMovement: function()
 	{
+		if (gameplay.collisionTiles[Math.floor(this.player.y/64 + .5)][Math.floor(this.player.x/64 + .5)].name == "water")
+		{
+			this.swimming = true;
+		}
+		else
+		{
+			this.swimming = false;
+		}
 		// Set velocity in the direction of the key that is pressed.
 		if (moveRight && !moveLeft)
 		{
 			this.player.vx = this.player.speed;
-			if (this.player.animation !== Animation.Right) {
-				this.player.animation = Animation.Right;
+			if (this.swimming)
+			{
+				//console.debug("Change to swimming");
+				if (this.player.animation !== Animation.SwimmingRight) {
+					this.player.animation = Animation.SwimmingRight;
+				}
+			}
+			else
+			{
+				if (this.player.animation !== Animation.Right) {
+					this.player.animation = Animation.Right;
+				}
 			}
 		}
 		if (moveLeft && !moveRight)
 		{
 			this.player.vx = -this.player.speed;
-			if (this.player.animation !== Animation.Left) {
-				this.player.animation = Animation.Left;
+			if (this.swimming)
+			{
+				if (this.player.animation !== Animation.SwimmingLeft) {
+					this.player.animation = Animation.SwimmingLeft;
+				}
+			}
+			else
+			{
+				if (this.player.animation !== Animation.Left) {
+					this.player.animation = Animation.Left;
+				}
 			}
 		}
 		if (currentScreen != ScreenState.WorldEvent)
@@ -474,15 +504,33 @@ var gameplay = {
 			if (moveUp && !moveDown)
 			{
 				this.player.vy = -this.player.speed;
-				if (this.player.animation !== Animation.Up) {
-					this.player.animation = Animation.Up;
+				if (this.swimming)
+				{
+					if (this.player.animation !== Animation.SwimmingUp) {
+						this.player.animation = Animation.SwimmingUp;
+					}
+				}
+				else
+				{
+					if (this.player.animation !== Animation.Up) {
+						this.player.animation = Animation.Up;
+					}
 				}
 			}
 			if (moveDown && !moveUp)
 			{
 				this.player.vy = this.player.speed;
-				if (this.player.animation !== Animation.Down) {
-					this.player.animation = Animation.Down;
+				if (this.swimming)
+				{
+					if (this.player.animation !== Animation.SwimmingDown) {
+						this.player.animation = Animation.SwimmingDown;
+					}
+				}
+				else
+				{
+					if (this.player.animation !== Animation.Down) {
+						this.player.animation = Animation.Down;
+					}
 				}
 			}
 		}
@@ -519,6 +567,22 @@ var gameplay = {
 					this.player.currentFrame = 2;
 					this.player.sourceX = 2 * this.player.sourceWidth;
 				}
+				else if (this.player.animation == Animation.SwimmingRight) {
+					this.player.currentFrame = 4;
+					this.player.sourceX = 4 * this.player.sourceWidth;
+				}
+				else if (this.player.animation == Animation.SwimmingLeft) {
+					this.player.currentFrame = 5;
+					this.player.sourceX = 5 * this.player.sourceWidth;
+				}
+				else if (this.player.animation == Animation.SwimmingUp) {
+					this.player.currentFrame = 7;
+					this.player.sourceX = 7 * this.player.sourceWidth;
+				}
+				else if (this.player.animation == Animation.SwimmingDown) {
+					this.player.currentFrame = 6;
+					this.player.sourceX = 6 * this.player.sourceWidth;
+				}
 				this.player.animation = Animation.Idle;
 			}
 		}
@@ -529,8 +593,6 @@ var gameplay = {
 	
 	update: function()
 	{
-		
-		
 		if (this.onPause)
 		{
 			if (!this.mapBuilt)
@@ -575,21 +637,29 @@ var gameplay = {
 					{
 						var wCount=0;
 						var collider = gameplay.collisionTiles[row][col];
-						if ( utility.collisionDetection(gameplay.player, collider) && collider.name=="water" && skillBook.swim==false)
+						if ( utility.collisionDetection(gameplay.player, collider) && collider.name=="water")
 						{
-							this.collide();
-					
-							if(wCount===0)
+							if (!skillBook.swim)
 							{
-								
-								
-								this.message("water");
-								
+								this.collide();
+						
+								if(wCount===0)
+								{
+									
+									
+									this.message("water");
+									
+								}
+								wCount++;
+								if(wCount===3000)
+								{
+									wCount=0;
+								}
 							}
-							wCount++;
-							if(wCount===3000)
+							else
 							{
-								wCount=0;
+								//gameplay.swimming = true;
+								//console.debug("Swimming: " + this.swimming);
 							}
 						}
 						if ( utility.collisionDetection(gameplay.player, collider) && collider.name=="tree")
@@ -719,8 +789,8 @@ var gameplay = {
 		this.player.x = 300;
 		this.player.y = 300; 
 		
-		this.teleporter.x = 358;
-		this.teleporter.y = 390;
+		this.teleporter.x = 4 * 64;
+		this.teleporter.y = 4 * 64;
 		
 		this.training.x = 3 * 64;
 		this.training.y = 2 * 64;
@@ -759,7 +829,8 @@ var gameplay = {
 				if (this.collisionTiles[i][j].x != -64)
 				{
 					this.collisionTiles[i][j].x = -64;
-					this.collisionTiles[i][j].width = 0;
+					this.collisionTiles[i][j].width = 0
+					this.collisionTiles[i][j].name = "";
 				}
 			}
 		}
@@ -767,11 +838,8 @@ var gameplay = {
 	
 	render: function()
 	{
-		if (this.onPause)
-		{
-			pause.render();
-		}
-		else if (currentScreen == ScreenState.WorldEvent)
+		
+		if (currentScreen == ScreenState.WorldEvent)
 		{
 			backgroundSurface.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
 			gameplaySurface.clearRect(0, 0, gameplayCanvas.width, gameplayCanvas.height);
@@ -869,17 +937,16 @@ var gameplay = {
 				if(gameplay.trainning==true)
 				{
 					if(this.speedCoin.visible==true)
-				{	
-				utility.drawImage
-				(
-				
-					gameplaySurface, this.speedCoin.sprite, 
-					this.speedCoin.sourceX, this.speedCoin.sourceY, 
-					this.speedCoin.sourceWidth, this.speedCoin.sourceHeight,
-					Math.floor(this.speedCoin.x), Math.floor(this.speedCoin.y), 
-					this.speedCoin.width, this.speedCoin.height
-				 );
-			}
+					{	
+						utility.drawImage
+						(
+							gameplaySurface, this.speedCoin.sprite, 
+							this.speedCoin.sourceX, this.speedCoin.sourceY, 
+							this.speedCoin.sourceWidth, this.speedCoin.sourceHeight,
+							Math.floor(this.speedCoin.x), Math.floor(this.speedCoin.y), 
+							this.speedCoin.width, this.speedCoin.height
+						 );
+					}
 				}
 				
 			}
@@ -905,7 +972,12 @@ var gameplay = {
 				Math.floor(this.player.x), Math.floor(this.player.y), 
 				this.player.width, this.player.height
 			
-			);		  
+			);		
+			
+			if (this.onPause)
+			{
+				pause.render();
+			}
 		}
 	},
 	
@@ -929,10 +1001,13 @@ var gameplay = {
 				var obsX = Math.random() * (cameraController.gameWorld.width - 128) - obsPoint.width + 128;
 				var obsY = Math.random() * (cameraController.gameWorld.height - 128) - obsPoint.height + 128;
 				
-				while ( collisionTiles[obsX][obsY].x < 0)
+				console.debug(Math.floor(obsX/64) + ", " + Math.floor(obsY/64));
+				console.debug(gameplay.collisionTiles);
+				while ( gameplay.collisionTiles[Math.floor(obsY/64)][Math.floor(obsX/64)].x > 0)
 				{
 					obsX = Math.random() * (cameraController.gameWorld.width - 128) - obsPoint.width + 128;
 					obsY = Math.random() * (cameraController.gameWorld.height - 128) - obsPoint.height + 128;
+					console.debug(Math.floor(obsX/64) + ", " + Math.floor(obsY/64));
 				}
 				
 				obsPoint.x = obsX;
