@@ -213,6 +213,9 @@ var utility = {
 	// Write text to screen, wrapping if hits max width
 	writeText: function(context, text, x, y, maxWidth, fontSize, isOutlined)
 	{
+		var originalWidth = maxWidth;
+		var originalSize = fontSize;
+		
 		x = x * utility.scale;
 		y = y * utility.scale;
 		maxWidth = maxWidth * utility.scale;
@@ -251,11 +254,12 @@ var utility = {
 						
 					line = words[i] + ' ';
 					y += fontSize;
+					height += originalSize;
 				}
 				else
 				{
-					if (testWidth > width)
-						width = testWidth;
+					if (testWidth > width * (maxWidth / originalWidth))
+						width = testWidth * (originalWidth / maxWidth);
 						
 					line = testLine;
 				}
@@ -263,15 +267,15 @@ var utility = {
 			
 			context.fillText(line, x, y);
 			
+			height += originalSize;
+			
 			//if (isOutlined)
 				//context.strokeText(line, x, y);
-			
-			height = y;
 			
 			y += fontSize * 2;
 		}
 		
-		return [width, fontSize];
+		return [width, height];
 	},
 	
 	// Write text to screen, wrapping if hits max width, and adding a click handler
@@ -281,6 +285,12 @@ var utility = {
 	{
 		var size = utility.writeText(context, text, x, y, maxWidth, fontSize, isOutlined);
 		utility.addClickItem(x, y - fontSize, size[0], size[1], clickHandler[0], clickHandler[1]);
+		
+		/*
+		context.fillStyle = "black";
+		context.rect(x, y - fontSize, size[0], size[1]);
+		context.stroke();
+		*/
 	},
 	
 	contains: function(array, element)
