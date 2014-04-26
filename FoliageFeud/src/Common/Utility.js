@@ -360,6 +360,8 @@ var imgRock= utility.loadImage("../img/Tokens/rockCoin.png");
 var imgChest=utility.loadImage("../img/moneyicon.png");
 var imgWater=utility.loadImage("../img/Tokens/waterCoin.png");
 var imgNip=utility.loadImage("../img/Tokens/drparsniptoken.png");
+var imgCompassBackground = utility.loadImage("../img/Backgrounds/compass.png");
+var imgCompassArrow = utility.loadImage("../img/Backgrounds/compassarrow.png");
 
 createScenery.tilesheet = utility.loadImage("../img/Tiles/tilesheet.png");
 worldEvent.wall.sprite = utility.loadImage("../img/WorldEvent/WALL.png");
@@ -372,6 +374,7 @@ gameplay.speedCoin.sprite = utility.loadImage("../img/Tokens/speedToken.png");
 gameplay.teleporter.sprite = utility.loadImage("../img/Tiles/teleporterfinal.png");
 gameplay.training.sprite = utility.loadImage("../img/Tiles/training.png");
 gameplay.store.sprite = utility.loadImage("../img/Tiles/shop.png");
+gameplay.plants.sprite = utility.loadImage("../img/Tiles/plants.png");
 cameraController.tilesheetMain = utility.loadImage("../img/Tiles/tilesheet.png");
 cameraController.tilesheetForest = utility.loadImage("../img/Tiles/tilesheetForest.png");
 cameraController.tilesheetMarsh = utility.loadImage("../img/Tiles/tilesheetMarsh.png");

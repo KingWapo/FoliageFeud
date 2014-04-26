@@ -36,9 +36,9 @@ var pause = {
 		//console.debug("(" + playerLocation[0] + ", " + playerLocation[1] + ")");
 		this.pauseMap = allLevelMaps[gameplay.currentLevel];
 		this.pauseObjectMap = allObjectMaps[gameplay.currentLevel];
-		for (var row = 0; row < cameraController.ROWS; row++)
+		for (var row = 0; row < this.pauseMap.length; row++)
 		{
-			for (var column = 0; column < cameraController.COLUMNS; column++)
+			for (var column = 0; column < this.pauseMap[row].length; column++)
 			{
 				var tile = this.pauseObjectMap[row][column];
 				if (tile != TREE && tile != BIRCHTREE)

@@ -50,6 +50,7 @@ var gameplay = {
 	onMainCamp: false,
 	onTeleport: false,
 	onTraining: false,
+	onPlants: false,
 	writting:false,
 	trainning:true,
 	swimming: false,
@@ -61,6 +62,7 @@ var gameplay = {
 	store: Object.create(spriteObject),
 	mainCamp: Object.create(spriteObject),
 	training: Object.create(spriteObject),
+	plants: Object.create(spriteObject),
 
 	player: {
 		// Sprite Located on sheet
@@ -320,14 +322,17 @@ var gameplay = {
 		this.placeSpeed();
 		this.placeTeleporter();
 		// Init the stores
-		this.training.width = 256;
-		this.training.height = 128;
+		this.training.width = 128;
+		this.training.height = 256;
 	
-		this.store.width = 256;
-		this.store.height = 128;
+		this.store.width = 128;
+		this.store.height = 256;
 		
-		this.mainCamp.width = 256;
-		this.mainCamp.height = 128;
+		this.plants.width = 128;
+		this.plants.height = 256;
+		
+		this.mainCamp.width = 128;
+		this.mainCamp.height = 256;
 		
 		this.updateSprite();
 		
@@ -458,6 +463,7 @@ var gameplay = {
 	
 	checkMovement: function()
 	{
+		try{
 		if (gameplay.collisionTiles[Math.floor(this.player.y/64 + .5)][Math.floor(this.player.x/64 + .5)].name == "water")
 		{
 			this.swimming = true;
@@ -466,6 +472,7 @@ var gameplay = {
 		{
 			this.swimming = false;
 		}
+		} catch(err) {}
 		// Set velocity in the direction of the key that is pressed.
 		if (moveRight && !moveLeft)
 		{
@@ -736,6 +743,18 @@ var gameplay = {
 				{
 					this.onMainCamp = false;
 				}
+				if (utility.collisionDetection(gameplay.player, gameplay.plants))
+				{
+					if (!this.onPlants)
+					{
+						this.onPlants = true;
+						currentScreen = ScreenState.Information;
+					}
+				}
+				else
+				{
+					this.onPlants = false;
+				}
 				if (utility.collisionDetection(gameplay.player, gameplay.store))
 				{
 					switchGamemode(ScreenState.ShopScreen);
@@ -784,22 +803,25 @@ var gameplay = {
 	// observation, teleporter, and other buildings of importance
 	drawBaseCamp: function() // Draw the Store, Training Building, Teleporter, and Main Camp
 	{
-		this.player.x = 4.5 * 64;
+		this.player.x = 3.5 * 64;
 		this.player.y = 2.5 * 64; 
 		
 		cameraController.camera.x = 0;
 		cameraController.camera.y = 0;
 		
-		this.teleporter.x = 4 * 64;
+		this.teleporter.x = 3 * 64;
 		this.teleporter.y = 2 * 64;
 		
-		this.training.x = 7 * 64;
+		this.plants.x = 6 * 64;
+		this.plants.y = 32;
+		
+		this.training.x = 9 * 64;
 		this.training.y = 32;
 		
-		this.mainCamp.x = 10 * 64;
+		this.mainCamp.x = 12 * 64;
 		this.mainCamp.y =  32;
 		
-		this.store.x = 13 * 64;
+		this.store.x = 15 * 64;
 		this.store.y = 32;
 		
 		this.placeSpeed;
@@ -959,41 +981,14 @@ var gameplay = {
 	{
 		this.placeObservationEvent();
 		
-		var rotX = 5;
-		var rotY = 3;
+		var rotX = this.curMap[0].length / 2 - 1;
+		var rotY = this.curMap.length / 2 - 1;
 		
 		var pRotX = rotX + .5;
 		var pRotY = rotY + .5;
 		
-		var cRotX = 0;
-		var cRotY = 0;
-		
-		if (this.mapOrientation == 1)
-		{
-			// x is 4 * 64 from right
-			rotX = this.curMap[0].length - rotX;
-			pRotX = this.curMap[0].length - pRotX;
-			cRotX = this.curMap[0].length * 64 - cameraController.camera.width;
-		}
-		else if (this.mapOrientation == 2) 
-		{
-			// x is 4 * 64 from right
-			// y is 4 * 64 from bottom
-			rotX = this.curMap[0].length - rotX;
-			rotY = this.curMap.length - rotY;
-			pRotX = this.curMap[0].length - pRotX;
-			pRotY = this.curMap.length - pRotY;
-			cRotX = this.curMap[0].length * 64 - cameraController.camera.width;
-			cRotY = this.curMap.length * 64 - cameraController.camera.height;
-		}
-		else if (this.mapOrientation == 3)
-		{
-			// y is 4 * 64 from bottom
-			rotY = this.curMap.length - rotY;
-			pRotY = this.curMap.length - pRotY;
-			cRotY = this.curMap.length * 64 - cameraController.camera.height;
-		}
-		
+		var cRotX = (this.curMap[0].length * 64 - cameraController.camera.width) / 2;
+		var cRotY = (this.curMap.length * 64 - cameraController.camera.height) / 2;
 		
 		this.teleporter.x = rotX * 64;
 		this.teleporter.y = rotY * 64;
@@ -1127,6 +1122,14 @@ var gameplay = {
 					0, 0, this.store.sprite.width, this.store.sprite.height,
 					this.store.x, this.store.y, this.store.sprite.width, this.store.sprite.height
 				);
+				
+				utility.drawImage
+				(
+					gameplaySurface, this.plants.sprite,
+					0, 0, this.plants.sprite.width, this.plants.sprite.height,
+					this.plants.x, this.plants.y, this.plants.sprite.width, this.plants.sprite.height
+				);
+				
 				if(gameplay.trainning==true)
 				{
 					if(this.speedCoin.visible==true)
