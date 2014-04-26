@@ -16,7 +16,7 @@ nextPageButton.src = "../img/Buttons/arrowRight.png";
 var curPlant = -1;
 var plantDisplayed = false;
 var curImage = 0;
-var moveUp = true;
+var movingUp = true;
 var imagePosX = 96;
 var imagePosY = 528;
 var delay = 0;
@@ -114,10 +114,10 @@ var info = {
 				gameplaySurface.clearRect(0, 0, gameplayCanvas.width, gameplayCanvas.height);
 				var strings = [];
 				
-				strings.push("Name: " + plantList[i].name);
-				strings.push("Latin Name: " + plantList[i].lname);
+				strings.push("Name: " + plantList[curPlant].name);
+				strings.push("Latin Name: " + plantList[curPlant].lname);
 				
-				if (plantList[i].invasive)
+				if (plantList[curPlant].invasive)
 					strings.push("Invasive species");
 
 				utility.writeText(gameplaySurface, strings, 96, 64, 64 * 4, 25, false);
@@ -139,16 +139,19 @@ var info = {
 	displayPlantInfo: function(i)
 	{
 		curPlant = i;
+		console.debug(plantList[i].name);
 		plantDisplayed = true;
 		curImage = 0;
+		delay = 0;
+		imagePosY = -256;
 	},
 
 	// Display unharvested text
 	displayPlantNotFound: function(i)
 	{
 		curPlant = -1;
-		plantDisplayed = false;
-		imagePosX = -256;
+		plantDisplayed = true;
+		imagePosY = -256;
 	},
 	
 	nextPage: function(i)
@@ -157,6 +160,7 @@ var info = {
 		{
 			info.page += 1;
 			info.init();
+			plantDisplayed = false;
 		}
 		else
 			console.debug("Already on last page");
@@ -168,6 +172,7 @@ var info = {
 		{
 			info.page -= 1;
 			info.init();
+			plantDisplayed = false;
 		}
 		else
 			console.debug("Already on first page");
@@ -196,9 +201,9 @@ var info = {
 					imgInfoSmallOverlay[curPolaroid].width, imgInfoSmallOverlay[curPolaroid].height
 				);*/
 				if (delay < period || delay === period * 3)
-					moveUp = true;
+					movingUp = true;
 				else if (delay >= period * 2)
-					moveUp = false;
+					movingUp = false;
 				
 				if (delay === 0)
 				{
@@ -226,9 +231,9 @@ var info = {
 				imgInfoSmallOverlay[curPolaroid].width, imgInfoSmallOverlay[curPolaroid].height
 			);
 			
-			if (imagePosY > 256 && moveUp)
+			if (imagePosY > 256 && movingUp)
 				imagePosY -= (256 + 32) / period;
-			else if (!moveUp)
+			else if (!movingUp)
 				imagePosY += (256 + 32) / period;
 		}
 	}

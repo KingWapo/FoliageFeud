@@ -79,9 +79,11 @@ var utility = {
 		item.param = param;
 		
 		// Debug location of click items
-		/*menuSurface.fillStyle = "black";
-		menuSurface.rect(x, y, width, height);
-		menuSurface.stroke();*/
+		/*
+		gameplaySurface.fillStyle = "black";
+		gameplaySurface.rect(x, y, width, height);
+		gameplaySurface.stroke();
+		*/
 		
 		this.clickable.push(item);
 	},
@@ -337,6 +339,7 @@ imgInfoSmallOverlay.push(utility.loadImage("../img/Backgrounds/infoOverlay00.png
 imgInfoSmallOverlay.push(utility.loadImage("../img/Backgrounds/infoOverlay01.png"));
 imgInfoSmallOverlay.push(utility.loadImage("../img/Backgrounds/infoOverlay02.png"));
 var imgInfoOverlay = utility.loadImage("../img/Backgrounds/informationOverlay.png");
+var imgQuestLog = utility.loadImage("../img/Backgrounds/questlog.png");
 var imgMap1 = utility.loadImage("../img/Buttons/MapButton.png");
 var imgMapBackground = utility.loadImage("../img/Backgrounds/mapSelectionBackground.png");
 var imgMapTilesheet = utility.loadImage("../img/Tiles/MapTilesheet.png");
