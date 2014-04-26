@@ -88,25 +88,35 @@ var info = {
 			0, 0, imgInfoOverlay.width, imgInfoOverlay.height
 		);
 		
-		var xOffset = 48;
-		var yOffset = 48;
+		var arrowX = 640;
+		var arrowY = 456;
+		var rightOffset = 96;
 		
-		utility.addClickItem(324 + xOffset, 512 - yOffset, 64, 32, this.prevPage, '');
-		utility.addClickItem(1152 - xOffset * 3, 512 - yOffset, 64, 32, this.nextPage, '');
+		if (info.page > 0)
+		{
+			utility.drawImage
+			(
+				backgroundSurface, imgLeftArrow,
+				0, 0, imgLeftArrow.width, imgLeftArrow.height,
+				arrowX, arrowY, 64, 32
+			);
+			
+			utility.addClickItem(arrowX, arrowY, 64, 32, this.prevPage, '');
+		}
 		
-		utility.drawImage
-		(
-			backgroundSurface, imgLeftArrow,
-			0, 0, imgLeftArrow.width, imgLeftArrow.height,
-			324 + xOffset, 512 - yOffset, 64, 32
-		);
+		if (info.page < (plantList.length / info.plantsPerPage) - 1)
+		{
+			utility.drawImage
+			(
+				backgroundSurface, imgRightArrow,
+				0, 0, imgRightArrow.width, imgRightArrow.height,
+				arrowX + rightOffset, arrowY, 64, 32
+			);
+			
+			utility.addClickItem(arrowX + rightOffset, arrowY, 64, 32, this.nextPage, '');
+		}
 		
-		utility.drawImage
-		(
-			backgroundSurface, imgRightArrow,
-			0, 0, imgRightArrow.width, imgRightArrow.height,
-			1152 - xOffset * 3, 512 - yOffset, 64, 32
-		);
+		utility.writeForClick(backgroundSurface, ["Exit"], arrowX + (rightOffset * 3), arrowY, 60, 20, false, [this.exitInfo, ['']]);
 		
 		gameplaySurface.clearRect(0, 0, gameplayCanvas.width, gameplayCanvas.height);
 		var strings = [];
@@ -181,6 +191,11 @@ var info = {
 		}
 		
 		utility.writeText(gameplaySurface, strings, 96, 64, 64 * 4, 25, false);
+	},
+	
+	exitInfo: function()
+	{
+		exiting[currentScreen] = true;
 	},
 	
 	// Display plant info if harvested

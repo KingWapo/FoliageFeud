@@ -65,7 +65,6 @@ var cameraController = {
 		//The camera's inner scroll boundaries
 		rightInnerBoundary: function()
 		{
-		console.debug(this.x + (this.width * this.xBounds));
 		return this.x + (this.width * this.xBounds);
 		},
 
