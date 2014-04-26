@@ -756,6 +756,9 @@ var gameplay = {
 		console.debug("Map Orientation: " + this.mapOrientation);
 		this.curMap = rotate.RotateMap(allLevelMaps[gameplay.currentLevel], this.mapOrientation);
 		this.curObjMap = rotate.RotateMap(allObjectMaps[gameplay.currentLevel], this.mapOrientation);
+		this.clearCollision();
+		cameraController.buildMap(this.curMap, 0);
+		cameraController.buildMap(this.curObjMap, 1);
 		switch(map)
 		{
 			case Level.BaseCamp:
@@ -774,9 +777,6 @@ var gameplay = {
 				this.drawHilly();
 				break;
 		}
-		this.clearCollision();
-		cameraController.buildMap(this.curMap, 0);
-		cameraController.buildMap(this.curObjMap, 1);
 		console.debug("Building level");
 	},
 	
@@ -808,11 +808,11 @@ var gameplay = {
 	{
 		this.placeObservationEvent();
 		
-		var rotX = 4;
-		var rotY = 4;
+		var rotX = 7;
+		var rotY = 7;
 		
-		var pRotX = 4.5;
-		var pRotY = 4.5
+		var pRotX = 7.5;
+		var pRotY = 7.5
 		
 		var cRotX = 0;
 		var cRotY = 0;
@@ -850,41 +850,158 @@ var gameplay = {
 		this.player.x = pRotX * 64;
 		this.player.y = pRotY * 64;
 		
-		
-		console.debug(cRotX + ", " + cRotY);
 		cameraController.camera.x = cRotX;
 		cameraController.camera.y = cRotY;
 	},
 	
 	drawForest: function()
 	{
-		this.teleporter.x = 2 * 64;
-		this.teleporter.y = 2 * 64;
-		
-		this.player.x = 2.5 * 64;
-		this.player.y = 2.5 * 64;
-		
 		this.placeObservationEvent();
+		
+		var rotX = 2;
+		var rotY = 2;
+		
+		var pRotX = 2.5;
+		var pRotY = 2.5
+		
+		var cRotX = 0;
+		var cRotY = 0;
+		
+		if (this.mapOrientation == 1)
+		{
+			// x is 4 * 64 from right
+			rotX = this.curMap[0].length - rotX;
+			pRotX = this.curMap[0].length - pRotX;
+			cRotX = this.curMap[0].length * 64 - cameraController.camera.width;
+		}
+		else if (this.mapOrientation == 2) 
+		{
+			// x is 4 * 64 from right
+			// y is 4 * 64 from bottom
+			rotX = this.curMap[0].length - rotX;
+			rotY = this.curMap.length - rotY;
+			pRotX = this.curMap[0].length - pRotX;
+			pRotY = this.curMap.length - pRotY;
+			cRotX = this.curMap[0].length * 64 - cameraController.camera.width;
+			cRotY = this.curMap.length * 64 - cameraController.camera.height;
+		}
+		else if (this.mapOrientation == 3)
+		{
+			// y is 4 * 64 from bottom
+			rotY = this.curMap.length - rotY;
+			pRotY = this.curMap.length - pRotY;
+			cRotY = this.curMap.length * 64 - cameraController.camera.height;
+		}
+		
+		
+		this.teleporter.x = rotX * 64;
+		this.teleporter.y = rotY * 64;
+		
+		this.player.x = pRotX * 64;
+		this.player.y = pRotY * 64;
+		
+		cameraController.camera.x = cRotX;
+		cameraController.camera.y = cRotY;
 	},
 	
 	drawMarsh: function()
 	{
-		this.teleporter.x = 2 * 64;
-		this.teleporter.y = 2 * 64;
-		
-		this.player.x = 2.5 * 64;
-		this.player.y = 2.5 * 64;
-		
 		this.placeObservationEvent();
+		
+		var rotX = 2;
+		var rotY = 2;
+		
+		var pRotX = 2.5;
+		var pRotY = 2.5
+		
+		var cRotX = 0;
+		var cRotY = 0;
+		
+		if (this.mapOrientation == 1)
+		{
+			// x is 4 * 64 from right
+			rotX = this.curMap[0].length - rotX;
+			pRotX = this.curMap[0].length - pRotX;
+			cRotX = this.curMap[0].length * 64 - cameraController.camera.width;
+		}
+		else if (this.mapOrientation == 2) 
+		{
+			// x is 4 * 64 from right
+			// y is 4 * 64 from bottom
+			rotX = this.curMap[0].length - rotX;
+			rotY = this.curMap.length - rotY;
+			pRotX = this.curMap[0].length - pRotX;
+			pRotY = this.curMap.length - pRotY;
+			cRotX = this.curMap[0].length * 64 - cameraController.camera.width;
+			cRotY = this.curMap.length * 64 - cameraController.camera.height;
+		}
+		else if (this.mapOrientation == 3)
+		{
+			// y is 4 * 64 from bottom
+			rotY = this.curMap.length - rotY;
+			pRotY = this.curMap.length - pRotY;
+			cRotY = this.curMap.length * 64 - cameraController.camera.height;
+		}
+		
+		
+		this.teleporter.x = rotX * 64;
+		this.teleporter.y = rotY * 64;
+		
+		this.player.x = pRotX * 64;
+		this.player.y = pRotY * 64;
+		
+		cameraController.camera.x = cRotX;
+		cameraController.camera.y = cRotY;
 	},
 	
 	drawHilly: function()
 	{
-		this.teleporter.x = 64;
-		
-		this.player.x = 1.5 * 64;
-		
 		this.placeObservationEvent();
+		
+		var rotX = 5;
+		var rotY = 3;
+		
+		var pRotX = rotX + .5;
+		var pRotY = rotY + .5;
+		
+		var cRotX = 0;
+		var cRotY = 0;
+		
+		if (this.mapOrientation == 1)
+		{
+			// x is 4 * 64 from right
+			rotX = this.curMap[0].length - rotX;
+			pRotX = this.curMap[0].length - pRotX;
+			cRotX = this.curMap[0].length * 64 - cameraController.camera.width;
+		}
+		else if (this.mapOrientation == 2) 
+		{
+			// x is 4 * 64 from right
+			// y is 4 * 64 from bottom
+			rotX = this.curMap[0].length - rotX;
+			rotY = this.curMap.length - rotY;
+			pRotX = this.curMap[0].length - pRotX;
+			pRotY = this.curMap.length - pRotY;
+			cRotX = this.curMap[0].length * 64 - cameraController.camera.width;
+			cRotY = this.curMap.length * 64 - cameraController.camera.height;
+		}
+		else if (this.mapOrientation == 3)
+		{
+			// y is 4 * 64 from bottom
+			rotY = this.curMap.length - rotY;
+			pRotY = this.curMap.length - pRotY;
+			cRotY = this.curMap.length * 64 - cameraController.camera.height;
+		}
+		
+		
+		this.teleporter.x = rotX * 64;
+		this.teleporter.y = rotY * 64;
+		
+		this.player.x = pRotX * 64;
+		this.player.y = pRotY * 64;
+		
+		cameraController.camera.x = cRotX;
+		cameraController.camera.y = cRotY;
 	},
 	
 	clearCollision: function()

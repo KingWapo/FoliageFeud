@@ -47,10 +47,10 @@ var rotate = {
 									newMap[j][n - i] = tile;
 								}
 								break;
-							case 9:
+							case 5:
 								newMap[j][n - i] = tile + 1;
 								break;
-							case 5:
+							case 6:
 							case 13:
 							case 14:
 							case 15:
@@ -68,7 +68,7 @@ var rotate = {
 							case 28:
 								newMap[j][n - i] = tile - 12;
 								break;
-							case 10:
+							case 9:
 							case 19:
 								newMap[j][n - i] = tile - 4;
 								break;
@@ -76,7 +76,7 @@ var rotate = {
 							case 30:
 								newMap[j][n - i] = tile + 2;
 								break;
-							case 6:
+							case 10:
 							case 31:
 								newMap[j][n - i] = tile - 1;
 								break;

@@ -184,8 +184,7 @@ var cameraController = {
 					var sprite = this.baseTiles[row][column];
 					
 					//display the scrolling sprites
-					currentLevelMap = gameplay.curMap;
-					if (currentLevelMap[row][column] != EMPTY)
+					if (gameplay.curMap[row][column] != EMPTY)
 					{
 						if(sprite.visible && sprite.scrollable)
 						{
@@ -200,10 +199,11 @@ var cameraController = {
 						}
 					}
 					 
-					var gameObjectMap = gameplay.curObjMap;
 					if (currentScreen != ScreenState.WorldEvent)
 					{
-						if (gameObjectMap[row][column] != EMPTY)
+						var tile = gameplay.curObjMap[row][column]
+						if (tile != EMPTY &&
+							tile != 6 && tile != 9 && tile != 10 && tile != 11)
 						{
 							var foregroundSprite = this.foregroundTiles[row][column];
 							try {
@@ -302,7 +302,7 @@ var cameraController = {
 					}
 					else
 					{
-						levelMap[row][column] = EMPTY;
+						//levelMap[row][column] = EMPTY;
 					}
 				}
 			  }
