@@ -20,10 +20,6 @@ var pause = {
 	
 	buildInGameMap: function()
 	{
-		var teleporterLocation = [
-			Math.floor(gameplay.teleporter.x / SIZE),
-			Math.floor(gameplay.teleporter.y / SIZE)
-			];
 		var objectives = [];
 		for (var i = 0; i < gameplay.observationInstances.length; i++)
 		{
@@ -56,7 +52,7 @@ var pause = {
 						objective = true;
 					}
 				}
-				if (column == teleporterLocation[0] && row == teleporterLocation[1])
+				if (column == gameplay.teleporterCoords[0] && row == gameplay.teleporterCoords[1])
 				{
 					tempSprite = this.createSprite(5, column, row);
 					this.mapSprites.push(tempSprite);

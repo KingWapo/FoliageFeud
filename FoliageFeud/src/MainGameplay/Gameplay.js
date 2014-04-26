@@ -56,6 +56,7 @@ var gameplay = {
 	swimming: false,
 	curMap: [],
 	curObjMap: [],
+	teleporterCoords: [],
 	gold:0,
 	
 	// Buildings
@@ -812,6 +813,11 @@ var gameplay = {
 		this.teleporter.x = 3 * 64;
 		this.teleporter.y = 2 * 64;
 		
+		this.teleporterCoords = [
+			Math.floor(gameplay.teleporter.x / 64),
+			Math.floor(gameplay.teleporter.y / 64)
+			];
+		
 		this.plants.x = 6 * 64;
 		this.plants.y = 32;
 		
@@ -833,6 +839,11 @@ var gameplay = {
 		
 		var rotX = 7;
 		var rotY = 7;
+		
+		this.teleporterCoords = [
+			Math.floor(rotX),
+			Math.floor(rotY)
+			];
 		
 		var pRotX = 7.5;
 		var pRotY = 7.5
@@ -884,6 +895,11 @@ var gameplay = {
 		var rotX = 2;
 		var rotY = 2;
 		
+		this.teleporterCoords = [
+			Math.floor(rotX),
+			Math.floor(rotY)
+			];
+			
 		var pRotX = 2.5;
 		var pRotY = 2.5
 		
@@ -934,6 +950,11 @@ var gameplay = {
 		var rotX = 2;
 		var rotY = 2;
 		
+		this.teleporterCoords = [
+			Math.floor(rotX),
+			Math.floor(rotY)
+			];
+			
 		var pRotX = 2.5;
 		var pRotY = 2.5
 		
@@ -984,6 +1005,18 @@ var gameplay = {
 		var rotX = this.curMap[0].length / 2 - 1;
 		var rotY = this.curMap.length / 2 - 1;
 		
+		if ( this.mapOrientation % 2 == 0) {
+			this.teleporterCoords = [
+				Math.floor(rotX),
+				Math.floor(rotY)
+				];
+		}
+		else {
+			this.teleporterCoords = [
+				Math.floor(rotY),
+				Math.floor(rotX)
+				];
+		}
 		var pRotX = rotX + .5;
 		var pRotY = rotY + .5;
 		
