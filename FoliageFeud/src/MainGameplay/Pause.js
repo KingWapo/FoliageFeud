@@ -20,9 +20,9 @@ var pause = {
 	
 	buildInGameMap: function()
 	{
-		var playerLocation = [
-			Math.floor(gameplay.player.x / SIZE),
-			Math.floor(gameplay.player.y / SIZE)
+		var teleporterLocation = [
+			Math.floor(gameplay.teleporter.x / SIZE),
+			Math.floor(gameplay.teleporter.y / SIZE)
 			];
 		var objectives = [];
 		for (var i = 0; i < gameplay.observationInstances.length; i++)
@@ -43,7 +43,7 @@ var pause = {
 				var tile = this.pauseObjectMap[row][column];
 				if (tile != TREE && tile != BIRCHTREE)
 				{
-					var tile = this.pauseMap[row][column];
+					tile = this.pauseMap[row][column];
 				}
 				var tempSprite;
 				var objective = false;
@@ -56,9 +56,9 @@ var pause = {
 						objective = true;
 					}
 				}
-				if (column == playerLocation[0] && row == playerLocation[1])
+				if (column == teleporterLocation[0] && row == teleporterLocation[1])
 				{
-					tempSprite = this.createSprite(2, column, row);
+					tempSprite = this.createSprite(5, column, row);
 					this.mapSprites.push(tempSprite);
 				}
 				else if (!objective)

@@ -770,14 +770,14 @@ var gameplay = {
 			case Level.Map1:
 				this.drawMap1();
 				break;
-			case Level.Map2:
-				this.drawMap2();
+			case Level.Forest:
+				this.drawForest();
 				break;
-			case Level.Map3:
-				this.drawMap3();
+			case Level.Marsh:
+				this.drawMarsh();
 				break;
-			case Level.Map4:
-				this.drawMap4();
+			case Level.Hilly:
+				this.drawHilly();
 				break;
 		}
 		console.debug("Building level");
@@ -809,16 +809,35 @@ var gameplay = {
 		this.placeObservationEvent();
 	},
 	
-	drawMap2: function()
+	drawForest: function()
 	{
+		this.teleporter.x = 2 * 64;
+		this.teleporter.y = 2 * 64;
+		
+		this.player.x = 2.5 * 64;
+		this.player.y = 2.5 * 64;
+		
+		this.placeObservationEvent();
 	},
 	
-	drawMap3: function()
+	drawMarsh: function()
 	{
+		this.teleporter.x = 2 * 64;
+		this.teleporter.y = 2 * 64;
+		
+		this.player.x = 2.5 * 64;
+		this.player.y = 2.5 * 64;
+		
+		this.placeObservationEvent();
 	},
 	
-	drawMap4: function()
+	drawHilly: function()
 	{
+		this.teleporter.x = 64;
+		
+		this.player.x = 1.5 * 64;
+		
+		this.placeObservationEvent();
 	},
 	
 	clearCollision: function()
