@@ -65,6 +65,7 @@ var cameraController = {
 		//The camera's inner scroll boundaries
 		rightInnerBoundary: function()
 		{
+		console.debug(this.x + (this.width * this.xBounds));
 		return this.x + (this.width * this.xBounds);
 		},
 
@@ -159,8 +160,8 @@ var cameraController = {
 	render: function()
 	{
 		//Move the drawing surface so that it's positioned relative to the camera
-		backgroundSurface.translate(-this.camera.x, -this.camera.y);
-		gameplaySurface.translate(-this.camera.x, -this.camera.y);
+		backgroundSurface.translate(-this.camera.x * utility.scale, -this.camera.y * utility.scale);
+		gameplaySurface.translate(-this.camera.x * utility.scale, -this.camera.y * utility.scale);
 		
 		var tilesheet = this.tilesheetMain;
 		if (gameplay.currentLevel == Level.Forest)
