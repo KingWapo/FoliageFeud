@@ -863,16 +863,19 @@ var gameplay = {
 				menuSurface.clearRect(0, 0, menuCanvas.width, menuCanvas.height);
 			}
 			var strings=[];
-			 strings.push(" gold: " + this.gold);	
-				menuSurface.drawImage(
-						imgChest,
-						21, 463
-					);
-					utility.writeText(menuSurface, strings, 75,485, 64 * 4 - 10, 25, true);
-				if(skillBook.display===true)
-				{
-					this.message("skill")
-				}
+			strings.push(" gold: " + this.gold);	
+			utility.drawImage(
+				menuSurface, imgChest,
+				0, 0,
+				imgChest.width, imgChest.height,
+				32, CANVAS_HEIGHT - imgChest.height - 32,
+				imgChest.width, imgChest.height
+			);
+			utility.writeText(menuSurface, strings, 96, CANVAS_HEIGHT - imgChest.height + 8, 64 * 4 - 10, 25, true);
+			if(skillBook.display===true)
+			{
+				this.message("skill")
+			}
 			
 			cameraController.render();
 			
