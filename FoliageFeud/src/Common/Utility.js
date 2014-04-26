@@ -318,6 +318,11 @@ var utility = {
 			return false;
 		}
 		else {
+			gameplaySurface.fillStyle = "black";
+			gameplaySurface.rect(brandonTheCollidee.x, brandonTheCollidee.y, brandonTheCollidee.width, brandonTheCollidee.height);
+			gameplaySurface.stroke();
+			
+			console.debug('COLLIDING');
 			return true;
 		}
 	}
@@ -345,6 +350,8 @@ var imgBoyButton = utility.loadImage("../img/Buttons/playButtonBoy.png");
 var imgExitButton = utility.loadImage("../img/Buttons/exitButton.png");
 var imgLeftArrow = utility.loadImage("../img/Buttons/arrowLeft.png");
 var imgRightArrow = utility.loadImage("../img/Buttons/arrowRight.png");
+var imgLeftDrawnArrow = utility.loadImage("../img/Buttons/arrowDrawnLeft.png");
+var imgRightDrawnArrow = utility.loadImage("../img/Buttons/arrowDrawnRight.png");
 var imgQuestionMark = utility.loadImage("../img/Buttons/QuestionMark.png");
 var imgInfoButton = utility.loadImage("../img/Buttons/infoButton.png");
 var imgMaleSprite = utility.loadImage("../img/Player/characterMale.png");

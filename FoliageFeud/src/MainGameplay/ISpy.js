@@ -146,7 +146,7 @@ var ispy = {
 				if (gameplay.currentLevel != Level.Tutorial)
 					responseString.push(this.dingleBotWinResponses[Math.floor(Math.random() * this.dingleBotWinResponses.length)]);
 				else
-					responseString.push("Smart in the ways of plant, you are.");
+					responseString.push("Strong in the ways of plant, you are.");
 			}
 			else
 			{

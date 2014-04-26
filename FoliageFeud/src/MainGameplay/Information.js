@@ -96,8 +96,8 @@ var info = {
 		{
 			utility.drawImage
 			(
-				backgroundSurface, imgLeftArrow,
-				0, 0, imgLeftArrow.width, imgLeftArrow.height,
+				backgroundSurface, imgLeftDrawnArrow,
+				0, 0, imgLeftDrawnArrow.width, imgLeftDrawnArrow.height,
 				arrowX, arrowY, 64, 32
 			);
 			
@@ -108,8 +108,8 @@ var info = {
 		{
 			utility.drawImage
 			(
-				backgroundSurface, imgRightArrow,
-				0, 0, imgRightArrow.width, imgRightArrow.height,
+				backgroundSurface, imgRightDrawnArrow,
+				0, 0, imgRightDrawnArrow.width, imgRightDrawnArrow.height,
 				arrowX + rightOffset, arrowY, 64, 32
 			);
 			
@@ -202,7 +202,6 @@ var info = {
 	displayPlantInfo: function(i)
 	{
 		curPlant = i;
-		console.debug(plantList[i].name);
 		plantDisplayed = true;
 		curImage = 0;
 		delay = 0;
