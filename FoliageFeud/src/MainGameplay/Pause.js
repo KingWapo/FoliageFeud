@@ -20,6 +20,7 @@ var pause = {
 	
 	buildInGameMap: function()
 	{
+		/*
 		var objectives = [];
 		for (var i = 0; i < gameplay.observationInstances.length; i++)
 		{
@@ -28,7 +29,7 @@ var pause = {
 				Math.floor(gameplay.observationInstances[i].y / SIZE)
 				]);
 			//console.debug("(" + objectives[i][0] + ", " + objectives[i][1] + ")");
-		}
+		}*/
 		//console.debug("(" + playerLocation[0] + ", " + playerLocation[1] + ")");
 		this.pauseMap = allLevelMaps[gameplay.currentLevel];
 		this.pauseObjectMap = allObjectMaps[gameplay.currentLevel];
@@ -43,9 +44,9 @@ var pause = {
 				}
 				var tempSprite;
 				var objective = false;
-				for (var i = 0; i < objectives.length; i++)
+				for (var i = 0; i < gameplay.obsCoords.length; i++)
 				{
-					if (column == objectives[i][0] && row == objectives[i][1])
+					if (column == gameplay.obsCoords[i][0] && row == gameplay.obsCoords[i][1])
 					{
 						tempSprite = this.createSprite(1, column, row);
 						this.mapSprites.push(tempSprite);

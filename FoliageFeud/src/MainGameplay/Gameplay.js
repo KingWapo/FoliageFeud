@@ -57,6 +57,7 @@ var gameplay = {
 	curMap: [],
 	curObjMap: [],
 	teleporterCoords: [],
+	obsCoords: [],
 	gold:0,
 	
 	// Buildings
@@ -769,6 +770,7 @@ var gameplay = {
 	nextLevel: function(map)
 	{
 		this.currentLevel = map;
+		this.obsCoords = [];
 		utility.clearAll();
 		this.observationInstances = [];
 		this.mapOrientation = Math.floor(Math.random() * 4);
@@ -1260,6 +1262,37 @@ var gameplay = {
 				
 				//console.debug("x: " + obsX + " y: " + obsY);
 			}
+			
+			var fromX = Math.floor(obsPoint.x / 64);
+			var fromY = Math.floor(obsPoint.y / 64);
+			
+			if (this.mapOrientation == 1) // x changes
+			{
+				// 90 degree Transpose then Reverse row
+				fromX = this.curMap[0].length - 1 - fromX;
+				
+				var temp = fromX;
+				fromX = fromY;
+				fromY = temp;
+			}
+			else if (this.mapOrientation == 2) // both change
+			{
+				// 180 degrees Reverse row then col
+				fromX = this.curMap[0].length - 1 - fromX;
+				fromY = this.curMap.length - 1 - fromY;
+			}
+			else if (this.mapOrientation == 3) // y changes
+			{
+				// 270 degrees Transpose then reverse col
+				fromY = this.curMap.length - 1 - fromY;
+				
+				var temp = fromY;
+				fromY = fromX;
+				fromX = temp;
+			}
+			
+			this.obsCoords.push([fromX, fromY]);
+			
 			this.observationInstances.push(obsPoint);
 		}
 	},

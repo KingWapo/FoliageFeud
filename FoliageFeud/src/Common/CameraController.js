@@ -284,21 +284,39 @@ var cameraController = {
 				{
 					if (currentTile == TREE || currentTile == BIRCHTREE)
 					{
+						var hitBox = {
+							x: -64,
+							y: -64,
+							width: 0,
+							height: 0
+						};
+						sprite.sourceHeight = 128;
+						sprite.height = 128;
 						if (currentTile == BIRCHTREE)
 						{
 							sprite.sourceWidth = 64;
 							sprite.width = 64;
+							hitBox.x = sprite.x;
+							hitBox.y = sprite.y;
+							hitBox.width = sprite.width;
+							hitBox.height = sprite.height;
 						}
 						else
 						{
 							sprite.sourceWidth = 128;
 							sprite.width = 128;
+							hitBox.x = sprite.x + 32;
+							hitBox.y = sprite.y + 64;
+							hitBox.width = 32;
+							hitBox.height = 32;
 						}
-						sprite.sourceHeight = 128;
-						sprite.height = 128;
 						sprite.name = "tree";
+						hitBox.name = "tree";
+						
+						console.debug("Sprite--x: " + sprite.x + ", y: " + sprite.y + ", w: " + sprite.width + ", h: " + sprite.height);
+						console.debug("Hit Box--x: " + hitBox.x + ", y: " + hitBox.y + ", w: " + hitBox.width + ", h: " + hitBox.height);
 						this.foregroundTiles[row][column] = sprite;
-						gameplay.collisionTiles[row][column] = sprite;
+						gameplay.collisionTiles[row][column] = hitBox;
 					}
 					else
 					{
