@@ -148,6 +148,7 @@ var info = {
 						traits.push(plantList[curPlant].traits[i]);
 					}
 					
+					utility.writeText(gameplaySurface, [plantList[curPlant].name], 575, 55, 275, 25, false);
 					utility.writeText(gameplaySurface, traits, 575, 110, 360, 20, false);
 					
 					utility.writeForClick(gameplaySurface, ["Exit"], 875, 55, 50, 20, false, [this.lessInfo, ['']]);
