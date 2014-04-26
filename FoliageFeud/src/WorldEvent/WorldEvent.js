@@ -123,7 +123,7 @@ var worldEvent = {
 	render: function()
 	{
 		gameplay.render();
-		cameraController.render();
+		cameraController.renderBackground();
 		
 		createScenery.render();
 		

@@ -1089,7 +1089,7 @@ var gameplay = {
 				this.message("skill")
 			}
 			
-			cameraController.render();
+			cameraController.renderBackground();
 			
 			if(this.blueCoin.visible==true)
 			{
@@ -1187,6 +1187,7 @@ var gameplay = {
 					this.observationInstances[i].width, this.observationInstances[i].height
 				);
 			}
+			/*
 			utility.drawImage
 			(
 				gameplaySurface, this.player.sprite, 
@@ -1195,7 +1196,9 @@ var gameplay = {
 				Math.floor(this.player.x), Math.floor(this.player.y), 
 				this.player.width, this.player.height
 			
-			);		
+			);	
+			*/
+			cameraController.renderForeground();
 			
 			if (this.onPause)
 			{

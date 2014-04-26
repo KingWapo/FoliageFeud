@@ -156,11 +156,10 @@ var cameraController = {
 		}
 	},
 	
-	render: function()
+	renderBackground: function()
 	{
 		//Move the drawing surface so that it's positioned relative to the camera
 		backgroundSurface.translate(-this.camera.x * utility.scale, -this.camera.y * utility.scale);
-		gameplaySurface.translate(-this.camera.x * utility.scale, -this.camera.y * utility.scale);
 		
 		var tilesheet = this.tilesheetMain;
 		if (gameplay.currentLevel == Level.Forest)
@@ -198,15 +197,61 @@ var cameraController = {
 						 ); 
 						}
 					}
-					 
+				}
+			}		
+		}
+	},
+	
+	renderForeground: function()
+	{
+		gameplaySurface.translate(-this.camera.x * utility.scale, -this.camera.y * utility.scale);
+		var tilesheet = this.tilesheetMain;
+		if (gameplay.currentLevel == Level.Forest)
+		{
+			tilesheet = this.tilesheetForest;
+		}
+		else if (gameplay.currentLevel == Level.Marsh)
+		{
+			tilesheet = this.tilesheetMarsh;
+		}
+		else if (gameplay.currentLevel == Level.Hilly)
+		{
+			tilesheet = this.tilesheetHilly;
+		}
+		var first = false;
+		for (var row = Math.floor(this.camera.y / 64) - 2; row < Math.floor((this.camera.y + this.camera.height)/64) + 2; row++)
+		{
+			for (var column = Math.floor(this.camera.x / 64) - 2; column < Math.floor((this.camera.x + this.camera.width)/64) + 2; column++)
+			{
+				if (row >= 0 && row < gameplay.curMap.length && column >= 0 && column < gameplay.curMap[0].length)
+				{
 					if (currentScreen != ScreenState.WorldEvent)
 					{
+						if (gameplay.player.y > row * 64)
+						{
+							first = false;
+						}
+						else
+						{
+							first = true;
+						}
+						if (first)
+						{
+							utility.drawImage
+							(
+								gameplaySurface, gameplay.player.sprite, 
+								gameplay.player.sourceX, gameplay.player.sourceY + gameplay.player.animation * gameplay.player.sourceHeight, 
+								gameplay.player.sourceWidth, gameplay.player.sourceHeight,
+								Math.floor(gameplay.player.x), Math.floor(gameplay.player.y), 
+								gameplay.player.width, gameplay.player.height
+							
+							);
+						}
 						var tile = gameplay.curObjMap[row][column]
 						if (tile != EMPTY &&
 							tile != 6 && tile != 9 && tile != 10 && tile != 11)
 						{
 							var foregroundSprite = this.foregroundTiles[row][column];
-							try {
 							utility.drawImage
 							 (
 							   gameplaySurface, tilesheet, 
@@ -215,12 +260,22 @@ var cameraController = {
 							   Math.floor(foregroundSprite.x), Math.floor(foregroundSprite.y), 
 							   foregroundSprite.width, foregroundSprite.height
 							 ); 
-							}
-							catch(err){console.debug("Error: " + err);}
+						}
+						if (!first)
+						{
+							utility.drawImage
+							(
+								gameplaySurface, gameplay.player.sprite, 
+								gameplay.player.sourceX, gameplay.player.sourceY + gameplay.player.animation * gameplay.player.sourceHeight, 
+								gameplay.player.sourceWidth, gameplay.player.sourceHeight,
+								Math.floor(gameplay.player.x), Math.floor(gameplay.player.y), 
+								gameplay.player.width, gameplay.player.height
+							
+							);
 						}
 					}
 				}
-			}		
+			}
 		}
 	},
 	
