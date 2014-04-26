@@ -349,6 +349,7 @@ var imgExitButton = utility.loadImage("../img/Buttons/exitButton.png");
 var imgLeftArrow = utility.loadImage("../img/Buttons/arrowLeft.png");
 var imgRightArrow = utility.loadImage("../img/Buttons/arrowRight.png");
 var imgQuestionMark = utility.loadImage("../img/Buttons/QuestionMark.png");
+var imgInfoButton = utility.loadImage("../img/Buttons/infoButton.png");
 var imgMaleSprite = utility.loadImage("../img/Player/characterMale.png");
 var imgFemaleSprite = utility.loadImage("../img/Player/characterFemale.png");
 var imgTimer = utility.loadImage("../img/WorldEvent/timer.png");

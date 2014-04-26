@@ -15,6 +15,7 @@ nextPageButton.src = "../img/Buttons/arrowRight.png";
 
 var curPlant = -1;
 var plantDisplayed = false;
+var moreInfoDisplayed = false;
 var curImage = 0;
 var movingUp = true;
 var imagePosX = 96;
@@ -107,32 +108,78 @@ var info = {
 			1152 - xOffset * 3, 512 - yOffset, 64, 32
 		);
 		
+		gameplaySurface.clearRect(0, 0, gameplayCanvas.width, gameplayCanvas.height);
+		var strings = [];
+		
 		if (plantDisplayed)
 		{
 			if (curPlant != -1)
 			{
-				gameplaySurface.clearRect(0, 0, gameplayCanvas.width, gameplayCanvas.height);
-				var strings = [];
-				
 				strings.push("Name: " + plantList[curPlant].name);
 				strings.push("Latin Name: " + plantList[curPlant].lname);
 				
 				if (plantList[curPlant].invasive)
 					strings.push("Invasive species");
-
-				utility.writeText(gameplaySurface, strings, 96, 64, 64 * 4, 25, false);
+				
+				utility.addClickItem(40, 40, 32, 32, this.moreInfo, '');
+				
+				utility.drawImage
+				(
+					backgroundSurface, imgInfoButton,
+					0, 0, imgInfoButton.width, imgInfoButton.height,
+					40, 40, 32, 32
+				);
+				
+				if (moreInfoDisplayed)
+				{
+					utility.clearClickHandler();
+					
+					utility.drawImage
+					(
+						gameplaySurface, imgQuestLog,
+						0, 0, imgQuestLog.width, imgQuestLog.height,
+						500, 0, imgQuestLog.width, imgQuestLog.height
+					);
+					
+					var traits = [];
+					
+					for (var i = 0; i < plantList[curPlant].traits.length; i++)
+					{
+						traits.push(plantList[curPlant].traits[i]);
+					}
+					
+					utility.writeText(gameplaySurface, traits, 575, 110, 360, 20, false);
+					
+					utility.writeForClick(gameplaySurface, ["Exit"], 875, 55, 50, 20, false, [this.lessInfo, ['']]);
+				}
 			}
 			else
 			{
-				gameplaySurface.clearRect(0, 0, gameplayCanvas.width, gameplayCanvas.height);
-				var strings = [];
-				
 				strings.push("This plant has not been found yet.");
 				strings.push("To find this plant, explore more regions.");
-							 
-				utility.writeText(gameplaySurface, strings, 96, 64, 64 * 4, 25, false);
 			}
 		}
+		else
+		{
+			strings.push("Click on an image to view information about that plant.");
+			
+			var plantCount = 0;
+			
+			for (var i = 0; i < plantList.length; i++)
+			{
+				if (plantList[i].harvested)
+					plantCount++;
+			}
+			
+			strings.push("You have discovered " + plantCount + " plant");
+			
+			if (plantCount != 1)
+				strings[1] += "s.";
+				
+			strings[1] += "  Complete more quests to find them all!";
+		}
+		
+		utility.writeText(gameplaySurface, strings, 96, 64, 64 * 4, 25, false);
 	},
 	
 	// Display plant info if harvested
@@ -151,7 +198,18 @@ var info = {
 	{
 		curPlant = -1;
 		plantDisplayed = true;
+		moreInfoDisplayed = false;
 		imagePosY = -256;
+	},
+	
+	moreInfo: function()
+	{
+		moreInfoDisplayed = true;
+	},
+	
+	lessInfo: function()
+	{
+		moreInfoDisplayed = false;
 	},
 	
 	nextPage: function(i)
