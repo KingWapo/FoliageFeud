@@ -785,22 +785,23 @@ var gameplay = {
 	drawBaseCamp: function() // Draw the Store, Training Building, Teleporter, and Main Camp
 	{
 		this.player.x = 4.5 * 64;
-		this.player.y = 4.5 * 64; 
+		this.player.y = 2.5 * 64; 
 		
 		cameraController.camera.x = 0;
 		cameraController.camera.y = 0;
 		
 		this.teleporter.x = 4 * 64;
-		this.teleporter.y = 4 * 64;
+		this.teleporter.y = 2 * 64;
 		
-		this.training.x = 3 * 64;
-		this.training.y = 2 * 64;
+		this.training.x = 7 * 64;
+		this.training.y = 32;
 		
-		this.mainCamp.x = 7 * 64;
-		this.mainCamp.y =  64;
+		this.mainCamp.x = 10 * 64;
+		this.mainCamp.y =  32;
 		
-		this.store.x = 11 * 64;
-		this.store.y = 2 * 64;
+		this.store.x = 13 * 64;
+		this.store.y = 32;
+		
 		this.placeSpeed;
 	},
 	

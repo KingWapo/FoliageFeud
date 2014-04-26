@@ -363,7 +363,7 @@ var imgNip=utility.loadImage("../img/Tokens/drparsniptoken.png");
 
 createScenery.tilesheet = utility.loadImage("../img/Tiles/tilesheet.png");
 worldEvent.wall.sprite = utility.loadImage("../img/WorldEvent/WALL.png");
-gameplay.mainCamp.sprite = utility.loadImage("../img/Tiles/mainCamp.png");
+gameplay.mainCamp.sprite = utility.loadImage("../img/Tiles/missions.png");
 gameplay.player.sprite = utility.loadImage("../img/Player/characterMale.png");
 gameplay.observationInstance.sprite = utility.loadImage("../img/Tokens/exclamationPoint.png");
 gameplay.blueCoin.sprite = utility.loadImage("../img/Tokens/waterToken.png");
