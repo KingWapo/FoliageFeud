@@ -1185,6 +1185,14 @@ var gameplay = {
 			1152 - imgCompassBackground.width - 32, 512 - imgCompassBackground.height - 32,
 			imgCompassBackground.width, imgCompassBackground.height
 		);
+		utility.drawImage
+		(
+			menuSurface, imgCompassArrow,
+			this.mapOrientation * 64, 0,
+			64, 64,
+			1152 - imgCompassBackground.width - 32, 512 - imgCompassBackground.height - 32,
+			64, 64
+		);
 	},
 	
 	// Randomly places the observationInstance on the map
