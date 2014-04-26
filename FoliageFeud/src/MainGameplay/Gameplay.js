@@ -1001,13 +1001,10 @@ var gameplay = {
 				var obsX = Math.random() * (cameraController.gameWorld.width - 128) - obsPoint.width + 128;
 				var obsY = Math.random() * (cameraController.gameWorld.height - 128) - obsPoint.height + 128;
 				
-				console.debug(Math.floor(obsX/64) + ", " + Math.floor(obsY/64));
-				console.debug(gameplay.collisionTiles);
 				while ( gameplay.collisionTiles[Math.floor(obsY/64)][Math.floor(obsX/64)].x > 0)
 				{
 					obsX = Math.random() * (cameraController.gameWorld.width - 128) - obsPoint.width + 128;
 					obsY = Math.random() * (cameraController.gameWorld.height - 128) - obsPoint.height + 128;
-					console.debug(Math.floor(obsX/64) + ", " + Math.floor(obsY/64));
 				}
 				
 				obsPoint.x = obsX;
