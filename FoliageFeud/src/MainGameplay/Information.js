@@ -116,7 +116,7 @@ var info = {
 			utility.addClickItem(arrowX + rightOffset, arrowY, 64, 32, this.nextPage, '');
 		}
 		
-		utility.writeForClick(backgroundSurface, ["Exit"], arrowX + (rightOffset * 3), arrowY, 60, 20, false, [this.exitInfo, ['']]);
+		utility.writeForClick(backgroundSurface, ["Exit"], arrowX + (rightOffset * 4), arrowY + 26, 60, 20, false, [this.exitInfo, ['']]);
 		
 		gameplaySurface.clearRect(0, 0, gameplayCanvas.width, gameplayCanvas.height);
 		var strings = [];

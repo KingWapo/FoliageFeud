@@ -11,12 +11,21 @@ var ispy = {
 	curPlants: [],
 	curTraits: [],
 	curSprites: [],
+	gameEnd: false,
+	isCorrect: false,
+	dingleBotFailResponses: ["Hmmm, not the one I would have chosen.. Oh well, Come back to base and I'll give you a chance to redeem yourself."],
+	dingleBotWinResponses: ["You make this look easy. Come back to base and I'll give you that dubloon I promised you."],
+	responseOffset: 0,
 	
 	// Initialize game mode
 	init: function()
 	{
 		// Clear canvases and click handler
 		utility.clearAll();
+		
+		this.gameEnd = false;
+		this.isCorrect = false;
+		this.responseOffset = 0;
 		
 		// Add plants to ispy pool
 		this.curPlants = plant.getMultiplePlants(3);
@@ -44,6 +53,7 @@ var ispy = {
 	render: function()
 	{
 		utility.clearAll();
+		
 		var requested = this.curPlants.indexOf(this.requestedPlant);
 		console.debug(requested, ", ", this.curPlants.length);
 		
@@ -91,10 +101,13 @@ var ispy = {
 					break;
 			}
 			
-			if (this.curPlants[j] === this.requestedPlant)
-				utility.addClickItem(x, y, this.imgSize, this.imgSize, this.harvestPlant, [j]);
-			else
-				utility.addClickItem(x, y, this.imgSize, this.imgSize, this.ignorePlant, [j]);
+			if (!this.gameEnd)
+			{
+				if (this.curPlants[j] === this.requestedPlant)
+					utility.addClickItem(x, y, this.imgSize, this.imgSize, this.harvestPlant, [j]);
+				else
+					utility.addClickItem(x, y, this.imgSize, this.imgSize, this.ignorePlant, [j]);
+			}
 		
 			utility.drawImage(
 				backgroundSurface, imgISpyBg,
@@ -115,29 +128,81 @@ var ispy = {
 				0, 0, 1152, 512
 			);
 		}
+		
+		if (this.gameEnd)
+		{
+			var textOffset = 128;
+			var responseString = [];
+			
+			utility.drawImage
+			(
+				menuSurface, imgLargeTextBox,
+				0, 0, imgLargeTextBox.width, imgLargeTextBox.height,
+				textOffset, CANVAS_HEIGHT - this.responseOffset, imgLargeTextBox.width, imgLargeTextBox.height
+			);
+			
+			if (this.isCorrect)
+			{
+				if (gameplay.currentLevel != Level.Tutorial)
+					responseString.push(this.dingleBotWinResponses[Math.floor(Math.random() * this.dingleBotWinResponses.length)]);
+				else
+					responseString.push("Smart in the ways of plant, you are.");
+			}
+			else
+			{
+				if (gameplay.currentLevel != Level.Tutorial)
+					responseString.push(this.dingleBotFailResponses[Math.floor(Math.random() * this.dingleBotFailResponses.length)]);
+				else
+					responseString.push("That is not the plant you are looking for.  /space_wizard_brain_manipulation");
+			}
+			
+			utility.writeText(menuSurface, responseString, textOffset + 20, CANVAS_HEIGHT - this.responseOffset + 48, 840, 20, false);
+			utility.writeForClick(menuSurface, ["Close"], 782 + textOffset, CANVAS_HEIGHT - this.responseOffset - 32 + imgLargeTextBox.height, 100, 20, false, [ispy.leaveISpy, ['']]);
+				
+			if (this.responseOffset < 120)
+				this.responseOffset += 12;
+		}
 	},
 
 	// Handle correct guess
 	harvestPlant: function(i)
 	{
-		// Clear image from screen and clickable array
-		gameplaySurface.clearRect(utility.clickable[i].x, utility.clickable[i].y, utility.clickable[i].width, utility.clickable[i].height);
-		utility.clickable.splice(i, 1);
+		quests.finishedQuests.push(ispy.requestedPlant);
+		//console.debug('cur quests: ', quests.plantsToIdentify);
+		//console.debug('harvested : ', ispy.requestedPlant, ', ', plantList[ispy.requestedPlant].name);
 		
 		// Show that plant was harvested
 		plantList[ispy.requestedPlant].harvested = true;
-		
-		// Reset requested plant index
-		ispy.requestedPlant = -1;
 
 		// Exit game mode
-		exiting[currentScreen] = true;
+		ispy.gameEnd = true;
+		ispy.isCorrect = true;
 	},
 
 	// Handle incorrect guess
 	ignorePlant: function(i)
 	{
-		console.debug("You selected the wrong flower");
+		if (gameplay.currentLevel != Level.Tutorial)
+		{
+			quests.addQuest(ispy.requestedPlant, gameplay.currentLevel);
+			//console.debug(quests.plantsToIdentify);
+			//console.debug(ispy.requestedPlant, ', ', plantList[ispy.requestedPlant].name);
+		}
+		
+		//console.debug("You selected the wrong flower");
+		
+		gameplay.placeObservationEvent();
+		
+		ispy.gameEnd = true;
+		ispy.isCorrect = false;
+	},
+	
+	leaveISpy: function()
+	{
+		// Reset requested plant index
+		ispy.requestedPlant = -1;
+		
+		exiting[currentScreen] = true;
 	},
 	
 	setRequested: function(plantIndex)

@@ -362,6 +362,7 @@ var imgWater=utility.loadImage("../img/Tokens/waterCoin.png");
 var imgNip=utility.loadImage("../img/Tokens/drparsniptoken.png");
 var imgCompassBackground = utility.loadImage("../img/Backgrounds/compass.png");
 var imgCompassArrow = utility.loadImage("../img/Backgrounds/compassarrow.png");
+var imgLargeTextBox = utility.loadImage("../img/Backgrounds/textboxbig.png");
 
 createScenery.tilesheet = utility.loadImage("../img/Tiles/tilesheet.png");
 worldEvent.wall.sprite = utility.loadImage("../img/WorldEvent/WALL.png");

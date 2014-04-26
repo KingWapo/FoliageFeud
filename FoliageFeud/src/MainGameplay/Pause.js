@@ -103,13 +103,13 @@ var pause = {
 	render: function()
 	{
 		if (moveLeft && !moveRight)
-			pause.mapXOffset -= pause.mapPanSpeed;
-		else if (moveRight && !moveLeft)
 			pause.mapXOffset += pause.mapPanSpeed;
+		else if (moveRight && !moveLeft)
+			pause.mapXOffset -= pause.mapPanSpeed;
 		if (moveUp && !moveDown)
-			pause.mapYOffset -= pause.mapPanSpeed;
-		else if (moveDown && !moveUp)
 			pause.mapYOffset += pause.mapPanSpeed;
+		else if (moveDown && !moveUp)
+			pause.mapYOffset -= pause.mapPanSpeed;
 			
 		pause.mapXOffset = utility.clamp(pause.mapXOffset, CANVAS_WIDTH - ((pause.pauseObjectMap[0].length * 15) * pause.mapScale) - 14, 13);
 		pause.mapYOffset = utility.clamp(pause.mapYOffset, CANVAS_HEIGHT - ((pause.pauseObjectMap.length * 10) * pause.mapScale) - 6, 6);
