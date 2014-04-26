@@ -32,7 +32,10 @@ var cameraController = {
 	//Game Level Mapsbuil
 	//Arrays to store the level maps
 	levelCounter: 0,
-	tilesheet: new Image(),
+	tilesheetMain: new Image(),
+	tilesheetForest: new Image(),
+	tilesheetMarsh: new Image(),
+	tilesheetHilly: new Image(),
 	baseTiles: [],
 	foregroundTiles: [],
 	sprites: [],
@@ -83,8 +86,6 @@ var cameraController = {
 	
 	init: function()
 	{
-		this.tilesheet.src = "../img/Tiles/tilesheet.png";
-		
 		//The number of rows and columns
 		var curMap = allLevelMaps[gameplay.currentLevel];
 		this.ROWS = curMap.length;
@@ -159,6 +160,20 @@ var cameraController = {
 		//Move the drawing surface so that it's positioned relative to the camera
 		backgroundSurface.translate(-this.camera.x, -this.camera.y);
 		gameplaySurface.translate(-this.camera.x, -this.camera.y);
+		
+		var tilesheet = this.tilesheetMain;
+		if (gameplay.currentLevel == Level.Forest)
+		{
+			tilesheet = this.tilesheetForest;
+		}
+		else if (gameplay.currentLevel == Level.Marsh)
+		{
+			tilesheet = this.tilesheetMarsh;
+		}
+		else if (gameplay.currentLevel == Level.Hilly)
+		{
+			tilesheet = this.tilesheetHilly;
+		}
 		for (var row = Math.floor(this.camera.y / 64) - 2; row < Math.floor((this.camera.y + this.camera.height)/64) + 2; row++)
 		{
 			for (var column = Math.floor(this.camera.x / 64) - 2; column < Math.floor((this.camera.x + this.camera.width)/64) + 2; column++)
@@ -175,7 +190,7 @@ var cameraController = {
 						{
 						 utility.drawImage
 						 (
-						   backgroundSurface, this.tilesheet, 
+						   backgroundSurface, tilesheet, 
 						   sprite.sourceX, sprite.sourceY, 
 						   sprite.sourceWidth, sprite.sourceHeight,
 						   Math.floor(sprite.x), Math.floor(sprite.y), 
@@ -193,7 +208,7 @@ var cameraController = {
 							try {
 							utility.drawImage
 							 (
-							   gameplaySurface, this.tilesheet, 
+							   gameplaySurface, tilesheet, 
 							   foregroundSprite.sourceX, foregroundSprite.sourceY, 
 							   foregroundSprite.sourceWidth, foregroundSprite.sourceHeight,
 							   Math.floor(foregroundSprite.x), Math.floor(foregroundSprite.y), 

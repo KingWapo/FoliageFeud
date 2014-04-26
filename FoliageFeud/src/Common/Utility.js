@@ -363,12 +363,7 @@ var imgChest=utility.loadImage("../img/moneyicon.png");
 var imgWater=utility.loadImage("../img/Tokens/waterCoin.png");
 var imgNip=utility.loadImage("../img/Tokens/drparsniptoken.png");
 
-
-
-
-
 createScenery.tilesheet = utility.loadImage("../img/Tiles/tilesheet.png");
-
 worldEvent.wall.sprite = utility.loadImage("../img/WorldEvent/WALL.png");
 gameplay.mainCamp.sprite = utility.loadImage("../img/Tiles/mainCamp.png");
 gameplay.player.sprite = utility.loadImage("../img/Player/characterMale.png");
@@ -379,5 +374,9 @@ gameplay.speedCoin.sprite = utility.loadImage("../img/Tokens/speedToken.png");
 gameplay.teleporter.sprite = utility.loadImage("../img/Tiles/teleporterfinal.png");
 gameplay.training.sprite = utility.loadImage("../img/Tiles/training.png");
 gameplay.store.sprite = utility.loadImage("../img/Tiles/shop.png");
+cameraController.tilesheetMain = utility.loadImage("../img/Tiles/tilesheet.png");
+cameraController.tilesheetForest = utility.loadImage("../img/Tiles/tilesheetForest.png");
+cameraController.tilesheetMarsh = utility.loadImage("../img/Tiles/tilesheetMarsh.png");
+cameraController.tilesheetHilly = utility.loadImage("../img/Tiles/tilesheetRocky.png");
 
 

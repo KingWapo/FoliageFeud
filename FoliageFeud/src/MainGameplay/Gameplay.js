@@ -20,9 +20,9 @@ Level = {
 	Tutorial: 0,
 	BaseCamp: 1,
 	Map1: 2,
-	Map2: 3,
-	Map3: 4,
-	Map4: 5,
+	Forest: 3,
+	Marsh: 4,
+	Hilly: 5,
 	writting:false,
 }
 
