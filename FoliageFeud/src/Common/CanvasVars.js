@@ -10,3 +10,7 @@ var gameplaySurface = gameplayCanvas.getContext("2d");
 
 var menuCanvas = document.getElementById("menuCanvas");
 var menuSurface = menuCanvas.getContext("2d");
+
+
+CANVAS_WIDTH = 1152;
+CANVAS_HEIGHT = 512;

@@ -53,6 +53,8 @@ var gameplay = {
 	writting:false,
 	trainning:true,
 	swimming: false,
+	curMap: [],
+	curObjMap: [],
 	gold:0,
 	
 	// Buildings
@@ -291,7 +293,6 @@ var gameplay = {
 	{
 		utility.clearAll();
 		
-		this.mapOrientation = Math.floor(Math.random() * 4);
 		console.debug("Map Orientation: " + this.mapOrientation);
 		
 		// Initialize collisions
@@ -632,35 +633,25 @@ var gameplay = {
 			//check for collisions with collidables.
 			if (!screensLoaded[ScreenState.WorldEvent] && cameraController.mapBuilt)
 			{
+				try {
 				for( row = Math.max(0, Math.floor((gameplay.player.y)/64) - 3); row < Math.min(Math.floor((gameplay.player.y)/64) + 3, this.collisionTiles.length - 1); row++)
 				{
 					for( col = Math.max(0, Math.floor((gameplay.player.x)/64) - 3); col < Math.min(Math.floor((gameplay.player.x)/64) + 3, this.collisionTiles[row].length - 1); col++)
 					{
 						var wCount=0;
 						var collider = gameplay.collisionTiles[row][col];
-						if ( utility.collisionDetection(gameplay.player, collider) && collider.name=="water")
+						if ( utility.collisionDetection(gameplay.player, collider) && collider.name=="water" && !skillBook.swim)
 						{
-							if (!skillBook.swim)
+							this.collide();
+					
+							if(wCount===0)
 							{
-								this.collide();
-						
-								if(wCount===0)
-								{
-									
-									
-									this.message("water");
-									
-								}
-								wCount++;
-								if(wCount===3000)
-								{
-									wCount=0;
-								}
+								this.message("water");
 							}
-							else
+							wCount++;
+							if(wCount===3000)
 							{
-								//gameplay.swimming = true;
-								//console.debug("Swimming: " + this.swimming);
+								wCount=0;
 							}
 						}
 						if ( utility.collisionDetection(gameplay.player, collider) && collider.name=="tree")
@@ -727,6 +718,7 @@ var gameplay = {
 						}
 					}
 				}
+				} catch(err) {}
 			}
 			this.updateAnimation();
 			
@@ -757,11 +749,13 @@ var gameplay = {
 	nextLevel: function(map)
 	{
 		this.currentLevel = map;
-		this.clearCollision();
 		utility.clearAll();
 		this.observationInstances = [];
-		cameraController.buildMap(allLevelMaps[gameplay.currentLevel], 0);
-		cameraController.buildMap(allObjectMaps[gameplay.currentLevel], 1);
+		this.mapOrientation = Math.floor(Math.random() * 4);
+		if (map < Level.Map1) this.mapOrientation *= 0;
+		console.debug("Map Orientation: " + this.mapOrientation);
+		this.curMap = rotate.RotateMap(allLevelMaps[gameplay.currentLevel], this.mapOrientation);
+		this.curObjMap = rotate.RotateMap(allObjectMaps[gameplay.currentLevel], this.mapOrientation);
 		switch(map)
 		{
 			case Level.BaseCamp:
@@ -780,6 +774,9 @@ var gameplay = {
 				this.drawHilly();
 				break;
 		}
+		this.clearCollision();
+		cameraController.buildMap(this.curMap, 0);
+		cameraController.buildMap(this.curObjMap, 1);
 		console.debug("Building level");
 	},
 	
@@ -787,8 +784,11 @@ var gameplay = {
 	// observation, teleporter, and other buildings of importance
 	drawBaseCamp: function() // Draw the Store, Training Building, Teleporter, and Main Camp
 	{
-		this.player.x = 300;
-		this.player.y = 300; 
+		this.player.x = 4.5 * 64;
+		this.player.y = 4.5 * 64; 
+		
+		cameraController.camera.x = 0;
+		cameraController.camera.y = 0;
 		
 		this.teleporter.x = 4 * 64;
 		this.teleporter.y = 4 * 64;
@@ -807,6 +807,53 @@ var gameplay = {
 	drawMap1: function()
 	{
 		this.placeObservationEvent();
+		
+		var rotX = 4;
+		var rotY = 4;
+		
+		var pRotX = 4.5;
+		var pRotY = 4.5
+		
+		var cRotX = 0;
+		var cRotY = 0;
+		
+		if (this.mapOrientation == 1)
+		{
+			// x is 4 * 64 from right
+			rotX = this.curMap[0].length - rotX;
+			pRotX = this.curMap[0].length - pRotX;
+			cRotX = this.curMap[0].length * 64 - cameraController.camera.width;
+		}
+		else if (this.mapOrientation == 2) 
+		{
+			// x is 4 * 64 from right
+			// y is 4 * 64 from bottom
+			rotX = this.curMap[0].length - rotX;
+			rotY = this.curMap.length - rotY;
+			pRotX = this.curMap[0].length - pRotX;
+			pRotY = this.curMap.length - pRotY;
+			cRotX = this.curMap[0].length * 64 - cameraController.camera.width;
+			cRotY = this.curMap.length * 64 - cameraController.camera.height;
+		}
+		else if (this.mapOrientation == 3)
+		{
+			// y is 4 * 64 from bottom
+			rotY = this.curMap.length - rotY;
+			pRotY = this.curMap.length - pRotY;
+			cRotY = this.curMap.length * 64 - cameraController.camera.height;
+		}
+		
+		
+		this.teleporter.x = rotX * 64;
+		this.teleporter.y = rotY * 64;
+		
+		this.player.x = pRotX * 64;
+		this.player.y = pRotY * 64;
+		
+		
+		console.debug(cRotX + ", " + cRotY);
+		cameraController.camera.x = cRotX;
+		cameraController.camera.y = cRotY;
 	},
 	
 	drawForest: function()
@@ -842,17 +889,22 @@ var gameplay = {
 	
 	clearCollision: function()
 	{
-		for (var i = 0; i < this.collisionTiles.length; i++)
+		this.collisionTiles = [];
+		var collider = {
+			x: -64,
+			y: -64,
+			width: 0,
+			height: 0,
+			name: ""
+		};
+		for (var i = 0; i < this.curMap.length; i++)
 		{
-			for (var j = 0; j < this.collisionTiles[i].length; j++)
+			tempCollision = [];
+			for (var j = 0; j < this.curMap[i].length; j++)
 			{
-				if (this.collisionTiles[i][j].x != -64)
-				{
-					this.collisionTiles[i][j].x = -64;
-					this.collisionTiles[i][j].width = 0
-					this.collisionTiles[i][j].name = "";
-				}
+				tempCollision.push(Object.create(collider));
 			}
+			this.collisionTiles.push(tempCollision);
 		}
 	},
 	

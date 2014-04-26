@@ -55,8 +55,8 @@ var cameraController = {
 	camera: {
 		x: 0,
 		y: 0,
-		width: gameplayCanvas.width,
-		height: gameplayCanvas.height,
+		width: CANVAS_WIDTH,
+		height: CANVAS_HEIGHT,
 		vx: 0,
 		previousX: 0,
 		xBounds: .8,
@@ -111,9 +111,10 @@ var cameraController = {
 			this.baseTiles.push(tempList);
 			this.foregroundTiles.push(foregroundTemp);
 		}
-		
-		this.buildMap(allLevelMaps[gameplay.currentLevel], 0);
-		this.buildMap(allObjectMaps[gameplay.currentLevel], 1);
+		gameplay.curMap = allLevelMaps[gameplay.currentLevel];
+		gameplay.curObjMap = allObjectMaps[gameplay.currentLevel];
+		this.buildMap(gameplay.curMap, 0);
+		this.buildMap(gameplay.curObjMap, 1);
 	},
 	
 	update: function()
@@ -178,12 +179,12 @@ var cameraController = {
 		{
 			for (var column = Math.floor(this.camera.x / 64) - 2; column < Math.floor((this.camera.x + this.camera.width)/64) + 2; column++)
 			{
-				if (row >= 0 && row < this.ROWS && column >= 0 && column < this.COLUMNS)
+				if (row >= 0 && row < gameplay.curMap.length && column >= 0 && column < gameplay.curMap[0].length)
 				{
 					var sprite = this.baseTiles[row][column];
 					
 					//display the scrolling sprites
-					currentLevelMap = allLevelMaps[gameplay.currentLevel];
+					currentLevelMap = gameplay.curMap;
 					if (currentLevelMap[row][column] != EMPTY)
 					{
 						if(sprite.visible && sprite.scrollable)
@@ -199,7 +200,7 @@ var cameraController = {
 						}
 					}
 					 
-					var gameObjectMap = allObjectMaps[gameplay.currentLevel];
+					var gameObjectMap = gameplay.curObjMap;
 					if (currentScreen != ScreenState.WorldEvent)
 					{
 						if (gameObjectMap[row][column] != EMPTY)
@@ -225,10 +226,29 @@ var cameraController = {
 	
 	buildMap: function(levelMap, tier)
 	{
-		this.gameWorld.width = levelMap[0].length * 64;
-		this.gameWorld.height = levelMap.length * 64;
-		this.ROWS = levelMap.length;
-		this.COLUMNS = levelMap[0].length;
+		this.ROWS = gameplay.curMap.length;
+		this.COLUMNS = gameplay.curMap[0].length;
+		
+		this.WIDTH = this.COLUMNS * SIZE;
+		this.HEIGHT = this.ROWS * SIZE;
+		
+		this.gameWorld.width = this.WIDTH;
+		this.gameWorld.height = this.HEIGHT;
+		
+		for (var i = 0; i < gameplay.curMap.length; i++)
+		{
+			var tempList = [];
+			var foregroundTemp = [];
+			for (var j = 0; j < gameplay.curMap[i].length; j++)
+			{
+				var sprite = Object.create(spriteObject);
+				tempList.push(sprite);
+				foregroundTemp.push(sprite);
+			}
+			this.baseTiles.push(tempList);
+			this.foregroundTiles.push(foregroundTemp);
+		}
+		
 		for(var row = 0; row < levelMap.length; row++) 
 		{	
 			for(var column = 0; column < levelMap[row].length; column++) 
