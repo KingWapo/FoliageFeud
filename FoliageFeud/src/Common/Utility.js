@@ -311,10 +311,10 @@ var utility = {
 	
 	collisionDetection: function(chaseTheCollider, brandonTheCollidee)
 	{
-		if ( chaseTheCollider.x > brandonTheCollidee.x + brandonTheCollidee.width ||
-			 chaseTheCollider.x + chaseTheCollider.width < brandonTheCollidee.x ||
-			 chaseTheCollider.y > brandonTheCollidee.y + brandonTheCollidee.height ||
-			 chaseTheCollider.y + chaseTheCollider.height < brandonTheCollidee.y) {
+		if ( chaseTheCollider.x + 8 > brandonTheCollidee.x + brandonTheCollidee.width ||
+			 chaseTheCollider.x + 8 + 48 < brandonTheCollidee.x ||
+			 chaseTheCollider.y + 32 > brandonTheCollidee.y + brandonTheCollidee.height ||
+			 chaseTheCollider.y + 32 + 32< brandonTheCollidee.y) {
 			return false;
 		}
 		else {
@@ -322,7 +322,7 @@ var utility = {
 			gameplaySurface.rect(brandonTheCollidee.x, brandonTheCollidee.y, brandonTheCollidee.width, brandonTheCollidee.height);
 			gameplaySurface.stroke();
 			
-			console.debug('COLLIDING');
+			//console.debug('COLLIDING');
 			return true;
 		}
 	}

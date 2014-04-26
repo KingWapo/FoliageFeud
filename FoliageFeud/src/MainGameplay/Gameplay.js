@@ -361,21 +361,13 @@ var gameplay = {
 	
 	collide: function()
 	{
-		if (moveRight && !moveLeft)
+		if (moveRight || moveLeft)
 		{
-			this.player.x = this.player.x-16;
+			this.player.x = this.player.x-this.player.vx;
 		}
-		if (moveLeft && !moveRight)
+		if (moveUp || moveDown)
 		{
-			this.player.x = this.player.x+16;
-		}
-		if (moveUp && !moveDown)
-		{
-			this.player.y = this.player.y+16;
-		}
-		if (moveDown && !moveUp)
-		{
-			this.player.y = this.player.y-16;
+			this.player.y = this.player.y-this.player.vy;
 		}
 	},
 	

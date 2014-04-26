@@ -296,25 +296,25 @@ var cameraController = {
 						{
 							sprite.sourceWidth = 64;
 							sprite.width = 64;
-							hitBox.x = sprite.x;
-							hitBox.y = sprite.y;
-							hitBox.width = sprite.width;
-							hitBox.height = sprite.height;
+							hitBox.x = sprite.x + 24;
+							hitBox.y = sprite.y + 104;
+							hitBox.width = 16;
+							hitBox.height = 8;
 						}
 						else
 						{
 							sprite.sourceWidth = 128;
 							sprite.width = 128;
-							hitBox.x = sprite.x + 32;
-							hitBox.y = sprite.y + 64;
+							hitBox.x = sprite.x + 48;
+							hitBox.y = sprite.y + 96;
 							hitBox.width = 32;
-							hitBox.height = 32;
+							hitBox.height = 16;
 						}
 						sprite.name = "tree";
 						hitBox.name = "tree";
 						
-						console.debug("Sprite--x: " + sprite.x + ", y: " + sprite.y + ", w: " + sprite.width + ", h: " + sprite.height);
-						console.debug("Hit Box--x: " + hitBox.x + ", y: " + hitBox.y + ", w: " + hitBox.width + ", h: " + hitBox.height);
+						//console.debug("Sprite--x: " + sprite.x + ", y: " + sprite.y + ", w: " + sprite.width + ", h: " + sprite.height);
+						//console.debug("Hit Box--x: " + hitBox.x + ", y: " + hitBox.y + ", w: " + hitBox.width + ", h: " + hitBox.height);
 						this.foregroundTiles[row][column] = sprite;
 						gameplay.collisionTiles[row][column] = hitBox;
 					}
