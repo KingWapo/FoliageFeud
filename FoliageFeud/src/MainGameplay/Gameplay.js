@@ -586,6 +586,7 @@ var gameplay = {
 				this.player.animation = Animation.Idle;
 			}
 		}
+		
 		this.player.x = utility.clamp(this.player.x + this.player.vx, 0, cameraController.gameWorld.width - this.player.width);
 		this.player.y = utility.clamp(this.player.y + this.player.vy, 0, cameraController.gameWorld.height - this.player.height);
 		cameraController.update();
@@ -1065,27 +1066,24 @@ window.addEventListener("keydown", function(event)
 		
 			skillBook.display=true;
 	}
-	if (!gameplay.onPause)
+	switch(event.keyCode)
 	{
-	  switch(event.keyCode)
-	  {
-		  case LEFT:
+		case LEFT:
 			moveLeft = true;
 			break;  
 		
-		  case UP:
+		case UP:
 			moveUp = true;
 			break;
 			
-		  case RIGHT:
+		case RIGHT:
 			moveRight = true;
 			break; 
 		
-		  case DOWN:
+		case DOWN:
 			moveDown = true;
 			break;
 		
-	  }
 	}
 	
 }, false);
@@ -1102,46 +1100,45 @@ window.addEventListener("keyup", function(event)
 			skillBook.display=false;
 			gameplay.writtingClear();
 	}
-	if (gameplay.onPause)
-	{
-		if (event.keyCode == ENTER)
-		{
-			console.debug("Exit Pause");
-			gameplay.mapBuilt = false;
-			gameplay.onPause = false;
-			utility.clearAll();
-		}
-	}
-	else
-	{
-		switch(event.keyCode)
-		{   
-		  case LEFT:
+	switch(event.keyCode)
+	{   
+		case LEFT:
 			moveLeft = false;
 			break;  
 			
-		  case UP:
+		case UP:
 			moveUp = false;
 			break;
 			
-		  case RIGHT:
+		case RIGHT:
 			moveRight = false;
 			break; 
 
-		  case DOWN:
+		case DOWN:
 			moveDown = false;
 			break;
 
 		  
-		  case ENTER:
-			console.debug("Enter Pause");
-			gameplay.onPause = true;
-			moveDown = false;
-			moveLeft = false;
-			moveRight = false;
-			moveUp = false;
+		case ENTER:
+			if (!gameplay.onPause)
+			{
+				console.debug("Enter Pause");
+				pause.mapXOffset = 13;
+				pause.mapYOffset = 6;
+				gameplay.onPause = true;
+				moveDown = false;
+				moveLeft = false;
+				moveRight = false;
+				moveUp = false;
+			}
+			else
+			{
+				console.debug("Exit Pause");
+				gameplay.mapBuilt = false;
+				gameplay.onPause = false;
+				utility.clearAll();
+			}
 			break;
-		}
 	}
 	
 }, false);

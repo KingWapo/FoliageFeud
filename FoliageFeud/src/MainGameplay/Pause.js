@@ -12,6 +12,10 @@ var pause = {
 	mapTilesheet: new Image(),
 	mapSprites: [],
 	mapScale: 1,
+	mapScaleSpeed: .2,
+	mapXOffset: 13,
+	mapYOffset: 6,
+	mapPanSpeed: 10,
 	
 	
 	buildInGameMap: function()
@@ -102,6 +106,18 @@ var pause = {
 	
 	render: function()
 	{
+		if (moveLeft && !moveRight)
+			pause.mapXOffset -= pause.mapPanSpeed;
+		else if (moveRight && !moveLeft)
+			pause.mapXOffset += pause.mapPanSpeed;
+		if (moveUp && !moveDown)
+			pause.mapYOffset -= pause.mapPanSpeed;
+		else if (moveDown && !moveUp)
+			pause.mapYOffset += pause.mapPanSpeed;
+			
+		pause.mapXOffset = utility.clamp(pause.mapXOffset, CANVAS_WIDTH - ((pause.pauseObjectMap[0].length * 15) * pause.mapScale) - 14, 13);
+		pause.mapYOffset = utility.clamp(pause.mapYOffset, CANVAS_HEIGHT - ((pause.pauseObjectMap.length * 10) * pause.mapScale) - 6, 6);
+		
 		for(var i = 0; i < this.mapSprites.length; i++)
 		{
 			utility.drawImage
@@ -109,15 +125,12 @@ var pause = {
 				menuSurface, imgMapTilesheet, 
 				this.mapSprites[i].sourceX, this.mapSprites[i].sourceY, 
 				this.mapSprites[i].sourceWidth, this.mapSprites[i].sourceHeight,
-				(Math.floor(this.mapSprites[i].x) + 13) * this.mapScale, (Math.floor(this.mapSprites[i].y) + 6) * this.mapScale, 
+				(Math.floor(this.mapSprites[i].x) * this.mapScale) + this.mapXOffset, (Math.floor(this.mapSprites[i].y) * this.mapScale) + this.mapYOffset, 
 				this.mapSprites[i].width * this.mapScale, this.mapSprites[i].height * this.mapScale
 			); 
 		}
-		
-		
 	}
 }
-
 
 window.addEventListener("keyup", function(event)
 {
@@ -125,15 +138,15 @@ window.addEventListener("keyup", function(event)
 	{
 		switch(event.keyCode)
 		{   
-		  case UP:
-			if (pause.mapScale < 2)
-				pause.mapScale += .2;
-			break;
+			case 88: // x
+				if (pause.mapScale < 2)
+					pause.mapScale += pause.mapScaleSpeed;
+				break;
 			
-		  case DOWN:
-			if (pause.mapScale > 1)
-				pause.mapScale -= .2;
-			break;
+			case 90: // z
+				if (pause.mapScale > 1)
+					pause.mapScale -= pause.mapScaleSpeed;
+				break;
 		}
 	}
 }, false);
