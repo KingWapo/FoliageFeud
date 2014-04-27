@@ -60,7 +60,7 @@ var info = {
 			var x = ((this.tileSize + gapBetween - 12) * (i % imgsPerRow)) + (this.tileSize * 2) + gapBetween + 112;
 			var y = ((this.tileSize + gapBetween + 4) * Math.floor((i % this.plantsPerPage) / imgsPerRow)) + gapBetween + 10;
 			
-			if (i === 0 || i === 3)
+			if (i % (imgsPerRow * 3) === 0 || i % (imgsPerRow * 3) === 3)
 				x += 3;
 				
 			if (plantList[i].harvested || this.debugInfo)

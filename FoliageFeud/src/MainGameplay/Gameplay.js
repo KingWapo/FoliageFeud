@@ -58,7 +58,7 @@ var gameplay = {
 	curObjMap: [],
 	teleporterCoords: [],
 	obsCoords: [],
-	gold:0,
+	gold:20,
 	
 	// Buildings
 	store: Object.create(spriteObject),

@@ -236,6 +236,9 @@ var ispy = {
 	leaveISpy: function()
 	{
 		// Reset requested plant index
+		if (ispy.fromTraining)
+			trainingGame.finishGame();
+			
 		ispy.requestedPlant = -1;
 		ispy.fromTraining = false;
 		ispy.gamesPlayed = 0;
