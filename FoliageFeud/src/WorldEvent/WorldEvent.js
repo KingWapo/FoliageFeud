@@ -41,12 +41,37 @@ var worldEvent = {
 			correct: false
 		}],
 	
-	wall: {
-		x: 0,
-		y: 0,
-		width: 128,
-		height: 512,
-		sprite: new Image()
+	coin: {
+		sourceX: 0,
+		sourceY: 0,
+		sourceWidth: 64,
+		sourceHeight: 64,
+		numOfFrames: 10,
+		currentFrame: 0,
+		visible: true,
+		update:0,
+		updateAnimation: function()
+		{
+			if(this.update===0)
+			{
+				this.sourceX = this.currentFrame * this.sourceWidth;
+			
+				this.currentFrame += 1;
+					
+				if ( this.currentFrame === this.numOfFrames )
+				{
+					this.currentFrame = 0;	
+				}
+					
+			}
+			this.update = (this.update+1)%2;
+		},
+		x: 100,
+		y: 100,
+		width: 64,
+		height: 64,
+		
+		sprite: ''
 	},
 	
 	init: function()
@@ -70,6 +95,9 @@ var worldEvent = {
 		gameplay.unicorn.x = gameplay.unicorn.width;
 		gameplay.unicorn.y = gameplay.player.y;
 		gameplay.unicorn.visible = true;
+		
+		this.coin.x = CANVAS_WIDTH - this.coin.width - 128;
+		this.coin.y = gameplay.player.y;
 		
 		createScenery.init();
 		
@@ -124,14 +152,14 @@ var worldEvent = {
 			}
 			
 		}
-		//console.debug("Player: " + gameplay.player.x + ", " + gameplay.player.y + "--" + gameplay.player.width + ", " + gameplay.player.height);
-		//console.debug("Wall: " + this.wall.x + ", " + this.wall.y + "--" + this.wall.width + ", " + this.wall.height);
-		//if (utility.collisionDetection(this.wall, gameplay.player))
-		if (gameplay.player.x <= this.wall.width)
+		
+		this.coin.updateAnimation();
+		
+		if (gameplay.player.x <= gameplay.unicorn.x + gameplay.unicorn.width)
 		{
 			exiting[currentScreen] = true;
 		}
-		if (this.checkmarks.length >= 5)
+		if (gameplay.player.x + gameplay.player.width >= this.coin.x)
 		{
 			exiting[currentScreen] = true;
 		}
@@ -141,19 +169,14 @@ var worldEvent = {
 	{
 		gameplay.render();
 		cameraController.renderBackground();
-		
-		createScenery.render();
-		//console.debug("Unicorn coords: " + gameplay.unicorn.x + ", " + gameplay.unicorn.y + "--" + gameplay.unicorn.width + ", " + gameplay.unicorn.height);
-		utility.debugDimensions(gameplay.unicorn);
-		/*
-		utility.drawImage( gameplaySurface,
-			this.wall.sprite,
-			0, 0,
-			this.wall.width, this.wall.height,
-			0, 0,
-			this.wall.width, this.wall.height
+		utility.drawImage(
+			gameplaySurface, this.coin.sprite,
+			this.coin.sourceX, this.coin.sourceY, this.coin.sourceWidth, this.coin.sourceHeight,
+			this.coin.x, this.coin.y, this.coin.width, this.coin.height
 			);
-		*/
+		createScenery.render();
+		utility.debugDimensions(gameplay.unicorn);
+			
 		if (this.questionBeingAsked)
 		{
 			if (this.countdown > 0)
@@ -167,18 +190,6 @@ var worldEvent = {
 				this.answerQuestion(0);
 			}
 		}
-		
-		for (var i = 0; i < this.checkmarks.length; i++)
-		{
-			utility.drawImage(menuSurface,
-				imgCheckmark,
-				0, 0,
-				64, 64,
-				i * 64, 0,
-				64, 64
-				);
-		}
-		
 	},
 	
 	askQuestion: function()

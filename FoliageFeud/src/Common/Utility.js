@@ -470,7 +470,6 @@ var imgLargeTextBox = utility.loadImage("../img/Backgrounds/textboxbig.png");
 var imgTrainingBackground = utility.loadImage("../img/Backgrounds/trainingicon.png");
 
 createScenery.tilesheet = utility.loadImage("../img/Tiles/tilesheet.png");
-worldEvent.wall.sprite = utility.loadImage("../img/WorldEvent/WALL.png");
 gameplay.mainCamp.sprite = utility.loadImage("../img/Tiles/missions.png");
 gameplay.player.sprite = utility.loadImage("../img/Player/characterMale.png");
 gameplay.observationInstance.sprite = utility.loadImage("../img/Tokens/exclamationPoint.png");
@@ -487,6 +486,7 @@ cameraController.tilesheetMain = utility.loadImage("../img/Tiles/tilesheet.png")
 cameraController.tilesheetForest = utility.loadImage("../img/Tiles/tilesheetForest.png");
 cameraController.tilesheetMarsh = utility.loadImage("../img/Tiles/tilesheetMarsh.png");
 cameraController.tilesheetHilly = utility.loadImage("../img/Tiles/tilesheetRocky.png");
+worldEvent.coin.sprite = utility.loadImage("../img/Tokens/speedToken.png");
 
 var songMainTitle = utility.loadSong("../sounds/main menu/Who Likes To Party.mp3");
 var songGameplayPrairie = utility.loadSong("../sounds/gameplay/Call to Adventure.mp3");
