@@ -4,6 +4,7 @@ var matching = {
 	card1: -1,
 	card2: -1,
 	numFlipped: 0,
+	checkMatchDelay: 0,
 	
 	init: function()
 	{
@@ -31,6 +32,14 @@ var matching = {
 	{
 		utility.clearAll();
 		
+		utility.drawImage(
+			backgroundSurface, imgISpyBg,
+			0, 0, imgISpyBg.width, imgISpyBg.height,
+			0, 0, imgISpyBg.width, imgISpyBg.height
+		);
+		
+		utility.writeText(backgroundSurface, ["Match the plant names with its image.", "Click on the pictures to flip them over."], 96, 64, 64 * 4, 25, false);
+		
 		var imgsPerRow = 6;
 		var gapBetween = 32;
 		
@@ -52,7 +61,8 @@ var matching = {
 			{
 				sprite = imgQuestionMark;
 				
-				utility.addClickItem(x, y, this.tileSize, this.tileSize, this.flipCard, [i]);
+				if (this.numFlipped != 2)
+					utility.addClickItem(x, y, this.tileSize, this.tileSize, this.flipCard, [i]);
 			}
 			
 			utility.drawImage
@@ -68,6 +78,14 @@ var matching = {
 			0, 0, imgInfoOverlay.width, imgInfoOverlay.height,
 			0, 0, imgInfoOverlay.width, imgInfoOverlay.height
 		);
+		
+		if (this.numFlipped == 2)
+		{
+			this.checkMatchDelay = (this.checkMatchDelay + 1) % 30;
+			
+			if (this.checkMatchDelay == 0)
+				this.checkMatch();
+		}
 	},
 	
 	flipCard: function(i)
@@ -83,13 +101,12 @@ var matching = {
 		else if (matching.numFlipped === 2)
 		{
 			matching.card2 = matching.cards[i].index;
-			matching.checkMatch();
+			//matching.checkMatch();
 		}
 	},
 	
 	checkMatch: function()
 	{
-		console.debug("checking match");
 		matching.numFlipped = 0;
 		
 		if (matching.card1 === matching.card2)
