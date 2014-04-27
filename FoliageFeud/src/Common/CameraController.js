@@ -222,7 +222,7 @@ var cameraController = {
 		
 		var theseSprites = spritesFromGameplay;
 		var foregroundSpriteCols = [];
-		foregroundSpriteCols = this.foregroundTiles.slice(Math.max(0, Math.floor(this.camera.y / 64) - 2), Math.min(Math.floor((this.camera.y + this.camera.height)/64), gameplay.curMap.length));
+		foregroundSpriteCols = this.foregroundTiles.slice(Math.max(0, Math.floor(this.camera.y / 64) - 2), Math.min(Math.floor((this.camera.y + this.camera.height)/64) + 1, gameplay.curMap.length));
 		for (var i = 0; i < foregroundSpriteCols.length; i++)
 		{
 			var spritesWanted = foregroundSpriteCols[i].slice(Math.max(0, Math.floor(this.camera.x / 64) - 2), 
