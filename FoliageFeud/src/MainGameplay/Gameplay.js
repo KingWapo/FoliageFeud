@@ -472,9 +472,9 @@ var gameplay = {
 				break;	
 			case SpriteState.Parsnip:
 				this.player.sprite = imgParsnipSprite;
-				this.player.numOfFrames = 4;
-				this.player.sourceHeight = 128;
-				this.player.height = 128;
+				this.player.numOfFrames = 9;
+				this.player.sourceHeight = 64;
+				this.player.height = 64;
 				break;
 			case SpriteState.Dingle:
 				this.player.sprite = imgDingleSprite;
@@ -593,7 +593,7 @@ var gameplay = {
 	checkMovement: function()
 	{
 		try{
-		if (gameplay.collisionTiles[Math.floor(this.player.y/64 + .5)][Math.floor(this.player.x/64 + .5)].name == "water")
+		if (gameplay.collisionTiles[Math.floor(this.player.y/64 + .5)][Math.floor(this.player.x/64 + .5)].name == "water" && currentSprite != SpriteState.Parsnip)
 		{
 			this.swimming = true;
 		}
@@ -681,11 +681,13 @@ var gameplay = {
 		{
 			this.player.vy = 0;
 		}
-		
+		/*
 		if ((!moveRight && !moveLeft && !moveDown && !moveUp) ||
 			(moveRight && moveLeft && !moveDown && !moveUp) ||
 			(moveDown && moveUp && !moveRight && !moveLeft) ||
 			(moveRight && moveLeft && moveDown && moveUp))
+			*/
+		if (this.player.vx == 0 && this.player.vy == 0 && currentSprite != SpriteState.Parsnip)
 		{
 			if (this.player.animation !== Animation.Idle) {
 				if (this.player.animation == Animation.Right) {
