@@ -40,6 +40,8 @@ var ispy = {
 		
 		// Get 2 random traits for the plant
 		this.curTraits = plant.get2Traits(this.requestedPlant);
+		
+		console.debug("ispy: ", this.curPlants);
 
 		for (var i = 0; i < this.curPlants.length; i++)
 		{

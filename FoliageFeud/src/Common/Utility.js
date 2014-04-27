@@ -184,21 +184,24 @@ var utility = {
 	
 	loadedAsset: function()
 	{
-		utility.curNumAssets += 1;
-		
-		var x = 76 * utility.scale;
-		var y = 206 * utility.scale;
-		var w = 1000 * utility.scale;
-		var h = 100 * utility.scale;
-		
-		menuSurface.rect(x, y, w, h);
-		menuSurface.stroke();
-		
-		menuSurface.fillStyle = "#006600";
-		menuSurface.fillRect(x, y, w * (utility.curNumAssets / utility.totalNumAssets), h);
-		
-		if (utility.curNumAssets === utility.totalNumAssets)
-			mainUpdate();
+		if (utility.curNumAssets < utility.totalNumAssets)
+		{
+			utility.curNumAssets += 1;
+			
+			var x = 76 * utility.scale;
+			var y = 206 * utility.scale;
+			var w = 1000 * utility.scale;
+			var h = 100 * utility.scale;
+			
+			menuSurface.rect(x, y, w, h);
+			menuSurface.stroke();
+			
+			menuSurface.fillStyle = "#006600";
+			menuSurface.fillRect(x, y, w * (utility.curNumAssets / utility.totalNumAssets), h);
+			
+			if (utility.curNumAssets === utility.totalNumAssets)
+				mainUpdate();
+		}
 	},
 	
 	// Shuffle array
@@ -309,6 +312,7 @@ var utility = {
 		for (var i = 0; i < array.length; i++)
 		{
 			if (array[i] === element){
+				console.debug("found dupe");
 				return true;
 			}
 		}
