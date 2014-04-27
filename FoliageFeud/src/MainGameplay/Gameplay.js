@@ -764,6 +764,18 @@ var gameplay = {
 				{
 					this.onMainCamp = false;
 				}
+				if (utility.collisionDetection(gameplay.player, gameplay.training))
+				{
+					if (!this.onTraining)
+					{
+						this.onTraining = true;
+						currentScreen = ScreenState.TrainingMode;
+					}
+				}
+				else
+				{
+					this.onTraining = false;
+				}
 				if (utility.collisionDetection(gameplay.player, gameplay.plants))
 				{
 					if (!this.onPlants)
@@ -803,32 +815,50 @@ var gameplay = {
 		switch(map)
 		{
 			case Level.BaseCamp:
-				utility.startNewSong(songGameplayCamp);
 				this.drawBaseCamp();
 				break;
 			case Level.Map1:
-				utility.startNewSong(songGameplayPrairie);
 				this.drawMap1();
 				break;
 			case Level.Forest:
-				utility.startNewSong(songGameplayForest);
 				this.drawForest();
 				break;
 			case Level.Marsh:
-				utility.startNewSong(songGameplayMarsh);
 				this.drawMarsh();
 				break;
 			case Level.Hilly:
-				utility.startNewSong(songGameplayHilly);
 				this.drawHilly();
 				break;
 		}
+		this.chooseSong(map);
 		this.teleporter.hitbox.x = this.teleporter.x;
 		this.teleporter.hitbox.y = this.teleporter.y + 64;
 		this.teleporter.hitbox.width = this.teleporter.width;
 		this.teleporter.hitbox.height = this.teleporter.height / 2;
 		console.debug("Hitbox x: " + this.teleporter.hitbox.x + ", y: " + this.teleporter.hitbox.y + ", w: " + this.teleporter.hitbox.width + ", h: " + this.teleporter.hitbox.height);
 		console.debug("Building level");
+	},
+	
+	chooseSong: function(level)
+	{
+		switch(level)
+		{
+			case Level.BaseCamp:
+				utility.startNewSong(songGameplayCamp);
+				break;
+			case Level.Map1:
+				utility.startNewSong(songGameplayPrairie);
+				break;
+			case Level.Forest:
+				utility.startNewSong(songGameplayForest);
+				break;
+			case Level.Marsh:
+				utility.startNewSong(songGameplayMarsh);
+				break;
+			case Level.Hilly:
+				utility.startNewSong(songGameplayHilly);
+				break;
+		}
 	},
 	
 	// Functions to set up the smart positions of the player,

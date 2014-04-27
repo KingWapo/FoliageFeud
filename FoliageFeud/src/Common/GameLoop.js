@@ -214,6 +214,12 @@ function mainUpdate()
 		case ScreenState.SkillBook:
 			break;
 		case ScreenState.TrainingMode:
+			if (entering[currentScreen])
+			{
+				trainingScreen.init();
+				entering[currentScreen] = false;
+			}
+			trainingScreen.render();
 			break;
 		case ScreenState.WorldEvent:
 			if (entering[currentScreen])

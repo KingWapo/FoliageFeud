@@ -24,7 +24,7 @@ var utility = {
 	scale: 1,
 	originalWidth: 1152,
 	originalHeight: 512,
-	debugSound: false,
+	debugSound: true,
 	
 	// Clear screen and all objects from clickable
 	clearAll: function()
@@ -457,6 +457,7 @@ var imgNip=utility.loadImage("../img/Tokens/drparsniptoken.png");
 var imgCompassBackground = utility.loadImage("../img/Backgrounds/compass.png");
 var imgCompassArrow = utility.loadImage("../img/Backgrounds/compassarrow.png");
 var imgLargeTextBox = utility.loadImage("../img/Backgrounds/textboxbig.png");
+var imgTrainingBackground = utility.loadImage("../img/Backgrounds/trainingicon.png");
 
 createScenery.tilesheet = utility.loadImage("../img/Tiles/tilesheet.png");
 worldEvent.wall.sprite = utility.loadImage("../img/WorldEvent/WALL.png");

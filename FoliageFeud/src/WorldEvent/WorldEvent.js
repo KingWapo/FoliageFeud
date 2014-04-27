@@ -13,7 +13,7 @@ var worldEvent = {
 		[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], // 7
 		[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]  // 8
 	],
-	
+	training: false,
 	xMovement: 0,
 	playerVars: [],
 	cameraPosition: [],
@@ -88,6 +88,7 @@ var worldEvent = {
 		cameraController.buildMap(allLevelMaps[gameplay.currentLevel], 0);
 		cameraController.buildMap(allObjectMaps[gameplay.currentLevel], 1);
 		gameplay.render();
+		gameplay.chooseSong(gameplay.currentLevel);
 		currentScreen = ScreenState.Gameplay;
 	},
 	
@@ -113,8 +114,12 @@ var worldEvent = {
 			}
 			
 		}
-		if (utility.collisionDetection(this.wall, gameplay.player))
+		//console.debug("Player: " + gameplay.player.x + ", " + gameplay.player.y + "--" + gameplay.player.width + ", " + gameplay.player.height);
+		//console.debug("Wall: " + this.wall.x + ", " + this.wall.y + "--" + this.wall.width + ", " + this.wall.height);
+		//if (utility.collisionDetection(this.wall, gameplay.player))
+		if (gameplay.player.x <= this.wall.width)
 		{
+			console.debug("Yeah, it's colliding");
 			exiting[currentScreen] = true;
 		}
 		if (this.checkmarks.length >= 5)
