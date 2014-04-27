@@ -24,6 +24,7 @@ var utility = {
 	scale: 1,
 	originalWidth: 1152,
 	originalHeight: 512,
+	debugSound: false,
 	
 	// Clear screen and all objects from clickable
 	clearAll: function()
@@ -322,7 +323,7 @@ var utility = {
 	
 	clamp: function(val, minVal, maxVal)
 	{
-		return Math.max(minVal, Math.min(val, maxVal));
+		return Math.min(maxVal, Math.max(val, minVal));
 	},
 	
 	collisionDetection: function(chaseTheCollider, brandonTheCollidee)
@@ -401,9 +402,13 @@ var utility = {
 		{
 			utility.curSong.pause();
 		}
-		utility.curSong = newSong;
-		utility.curSong.load();
-		utility.curSong.play();
+		
+		if (utility.debugSound)
+		{
+			utility.curSong = newSong;
+			utility.curSong.load();
+			utility.curSong.play();
+		}
 	}
 };
 

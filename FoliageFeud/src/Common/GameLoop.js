@@ -16,6 +16,14 @@ window.addEventListener("keydown", function(event)
 		else
 			console.debug("not debugging info");
 	}
+	if (event.keyCode === 188)
+	{
+		utility.debugSound = !utility.debugSound;
+		if (utility.debugSound)
+			console.debug("debugging sound");
+		else
+			console.debug("not debugging sound");
+	}
 }, false);
 
 // Edit Log:
@@ -47,7 +55,7 @@ entering = [true, // Title
 		 true, // WorldEvent
 		 true, // BaseCamp
 		 true, // End
-		 true, // TestCode
+		 true, // Matching
 
 		 true, // Shop
 		 true, // SNA
@@ -65,7 +73,7 @@ screensLoaded = [true, // Title
 				 false, // WorldEvent
 				 false, // BaseCamp
 				 false, // End
-				 false, // TestCode
+				 false, // Matching
 				 false, // Shop
 				 false, // SNA
 				 false, // Sibling
@@ -84,7 +92,7 @@ exiting = [false, // Title
 			 false, // BaseCamp
 			 false, // End
 
-			 false, // TestCode
+			 false, // Matching
 			 false, // Shop
 			 false, // SNA
 			 false, // Sibling
@@ -105,7 +113,7 @@ ScreenState = {
 	WorldEvent: 6,
 	BaseCamp: 7,
 	End: 8,
-	TestCode: 9,
+	Matching: 9,
 
 	ShopScreen: 10,
 	SNASelectionScreen: 11,
@@ -226,12 +234,13 @@ function mainUpdate()
 			break;
 		case ScreenState.End:
 			break;
-		case ScreenState.TestCode:
+		case ScreenState.Matching:
 			if (entering[currentScreen])
 			{
 				matching.init();
 				entering[currentScreen] = false;
 			}
+				matching.render();
 			if (exiting[currentScreen])
 			{
 				switchGamemode(ScreenState.Gameplay);
