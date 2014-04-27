@@ -331,9 +331,19 @@ var utility = {
 	{
 		var oldArray = array;
 		var newArray = [];
+		var j = 0;
+		while (j < oldArray.length)
+		{
+			if (oldArray[j].name == "empty")
+			{
+				oldArray.splice(j, 1);
+			}
+			else
+				j++
+		}
 		while (oldArray.length > 0)
 		{
-			var minY = CANVAS_HEIGHT;
+			var minY = gameplay.curMap.length * 64;
 			var index = -1;
 			for (var i = 0; i < oldArray.length; i++)
 			{

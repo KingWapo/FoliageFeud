@@ -1110,7 +1110,7 @@ var gameplay = {
 			if (this.teleporter.visible) sprites.push(this.teleporter);
 			if (this.currentLevel == Level.BaseCamp) sprites = sprites.concat([this.training, this.mainCamp, this.store, this.plants]);
 			sprites.push(this.player);
-			sprites = sprites.concat(this.observationInstances);
+			if (this.observationInstances.length > 0) sprites = sprites.concat(this.observationInstances);
 			cameraController.renderForeground(sprites);
 			
 			if (this.onPause)

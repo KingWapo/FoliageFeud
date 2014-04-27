@@ -234,7 +234,8 @@ var cameraController = {
 		{
 			var currentSprite = newSprites[i];
 			if (gameplay.currentLevel == Level.Map1)
-				console.debug(currentSprite);
+			{
+			}
 			if (currentSprite.name == "player")
 			{
 				utility.drawImage
@@ -266,7 +267,7 @@ var cameraController = {
 				
 				);
 			}
-			else if (currentSprite.name != "empty")
+			else if (currentSprite.name !== "empty")
 			{
 				utility.drawImage
 				 (
