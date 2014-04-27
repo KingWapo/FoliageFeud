@@ -339,7 +339,6 @@ var utility = {
 		}
 	},
 	
-<<<<<<< HEAD
 	reorderArrayByY: function(array)
 	{
 		var oldArray = array;
@@ -386,7 +385,8 @@ var utility = {
 			oldArray.splice(index, 1);
 		}
 		return newArray;
-=======
+	},
+	
 	startNewSong: function(newSong)
 	{
 		if (utility.curSong != '')
@@ -396,7 +396,6 @@ var utility = {
 		utility.curSong = newSong;
 		utility.curSong.load();
 		utility.curSong.play();
->>>>>>> 95d5e0c976f09a6766e61bb139fcff4ca2776d5a
 	}
 };
 
