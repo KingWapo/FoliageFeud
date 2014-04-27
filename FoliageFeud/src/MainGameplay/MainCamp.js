@@ -44,8 +44,9 @@ var mainCamp = {
 		for (var i = 0; i < this.listOfQuests.length; i++)
 		{
 			var plantName = plantList[this.listOfQuests[i]].name;
+			var randRegion = Math.floor(Math.random() * 4) + 2;
 			
-			utility.writeForClick(menuSurface, [plantName], .45 * CANVAS_WIDTH, .25 * CANVAS_HEIGHT + (60 * i), CANVAS_WIDTH / 2, 30, true, [quests.addQuestFromSibling, [this.listOfQuests[i], 2]]);
+			utility.writeForClick(menuSurface, [plantName], .45 * CANVAS_WIDTH, .25 * CANVAS_HEIGHT + (60 * i), CANVAS_WIDTH / 2, 30, true, [quests.addQuestFromSibling, [this.listOfQuests[i], randRegion]]);
 		}
 		
 		utility.drawImage(

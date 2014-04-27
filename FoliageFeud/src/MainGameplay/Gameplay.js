@@ -54,6 +54,7 @@ var gameplay = {
 	writting:false,
 	trainning:true,
 	swimming: false,
+	questDisplay: false,
 	curMap: [],
 	curObjMap: [],
 	teleporterCoords: [],
@@ -238,7 +239,8 @@ var gameplay = {
 		lowestPos: 0,
 		atLowestPos: true,
 		name: "observation point",
-		sprite: ''
+		sprite: '',
+		plantIndex: -1
 	},
 	
 	observationInstances: [],
@@ -560,8 +562,8 @@ var gameplay = {
 		}
 		else
 		{
-		 strings.push(" You have gained the ability to swim! The swim ability is now unlocked in your skill book.");	
-				utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, true);
+			strings.push(" You have gained the ability to swim! The swim ability is now unlocked in your skill book.");	
+			utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, true);
 		}
 		/*
 		moveDown = false;
@@ -576,7 +578,7 @@ var gameplay = {
 	},
 	updateAnimation: function()
 	{
-		this.player.updateAnimation();
+		if (!this.questDisplay) this.player.updateAnimation();
 		for (var i = 0; i < this.observationInstances.length; i++)
 		{
 			this.observationInstances[i].updateAnimation();
@@ -747,7 +749,7 @@ var gameplay = {
 		}
 		else if (currentScreen == ScreenState.Gameplay)
 		{
-			this.checkMovement();
+			if (!this.questDisplay) this.checkMovement();
 			
 			for (var i = 0; i < this.observationInstances.length; i++)
 			{
@@ -756,7 +758,7 @@ var gameplay = {
 				{	
 					if(skillBook.swim==true && skillBook.climb ==true)
 					{
-						this.removeObservationPoint(i);
+						this.removeObservationPoint(i, obs.plantIndex);
 						switchGamemode(ScreenState.Observation);
 					}
 					else
@@ -1372,13 +1374,29 @@ var gameplay = {
 				1152 - imgCompassBackground.width - 32, 512 - imgCompassBackground.height - 32,
 				64, 64
 			);
+			
+			if (this.questDisplay)
+			{
+				utility.drawImage(
+					menuSurface, imgQuestLog,
+					0,0, imgQuestLog.width, imgQuestLog.height,
+					(CANVAS_WIDTH - imgQuestLog.width) / 2, 0, imgQuestLog.width, imgQuestLog.height
+				);
+				var strings = ["               Plants I need to find"];
+				for (var i = 0; i < quests.plantsToIdentify.length; i++)
+				{
+					strings.push("Plant: " + plantList[quests.plantsToIdentify[i]].name + "   Region: " + regions[quests.regionsToVisit[i]]);
+				}
+				utility.writeText(menuSurface, strings, (CANVAS_WIDTH - imgQuestLog.width) / 2 + 64, 72, imgQuestLog.width, 16, false)
+			}
 		}
 	},
 	
 	// Randomly places the observationInstance on the map
 	placeObservationEvent: function()
 	{
-		for (var i = this.observationInstances.length; i < quests.plantsInARegion(this.currentLevel).length; i++)
+		var listOfPlants = quests.plantsInARegion(this.currentLevel);
+		for (var i = this.observationInstances.length; i < listOfPlants.length; i++)
 		{
 			var obsPoint = Object.create(this.observationInstance);
 			if (this.currentLevel == Level.Tutorial)
@@ -1407,6 +1425,8 @@ var gameplay = {
 				
 				//console.debug("x: " + obsX + " y: " + obsY);
 			}
+			
+			obsPoint.plantIndex = listOfPlants[i][1];
 			
 			var fromX = Math.floor(obsPoint.x / 64);
 			var fromY = Math.floor(obsPoint.y / 64);
@@ -1459,11 +1479,11 @@ var gameplay = {
 		this.speedCoin.y=100;
 	},
 	
-	removeObservationPoint: function(index)
+	removeObservationPoint: function(index, plantIndex)
 	{
 		this.observationInstances.splice(index, 1);
-		ispy.setRequested(quests.plantsToIdentify[index]);
-		quests.removeQuest(quests.plantsToIdentify[index], quests.regionsToVisit[index]);
+		ispy.setRequested(quests.plantsToIdentify[plantIndex]);
+		quests.removeQuest(plantIndex);
 	}
 }
 
@@ -1515,6 +1535,10 @@ window.addEventListener("keyup", function(event)
 		
 			skillBook.display=false;
 			gameplay.writtingClear();
+	}
+	if (event.keyCode == 81)
+	{
+		gameplay.questDisplay = !gameplay.questDisplay;
 	}
 	switch(event.keyCode)
 	{   
