@@ -162,7 +162,7 @@ var ispy = {
 			utility.writeForClick(menuSurface, ["Close"], 782 + textOffset, CANVAS_HEIGHT - this.responseOffset - 32 + imgLargeTextBox.height, 100, 20, false, [ispy.leaveISpy, ['']]);
 				
 			if (this.responseOffset < 120)
-				this.responseOffset += 12;
+				this.responseOffset += 24;
 		}
 	},
 

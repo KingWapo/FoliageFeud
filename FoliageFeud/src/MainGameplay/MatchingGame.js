@@ -1,6 +1,9 @@
 var matching = {
 	tileSize: 105,
 	cards: [],
+	card1: -1,
+	card2: -1,
+	numFlipped: 0,
 	
 	init: function()
 	{
@@ -22,7 +25,11 @@ var matching = {
 		}
 		
 		utility.shuffle(this.cards);
-		
+	},
+	
+	render: function()
+	{
+		utility.clearAll();
 		
 		var imgsPerRow = 6;
 		var gapBetween = 32;
@@ -34,13 +41,24 @@ var matching = {
 			
 			if (i === 0 || i === 3)
 				x += 3;
-				
-			utility.addClickItem(x, y, this.tileSize, this.tileSize, this.flipCard, [i]);
 
+			var sprite;
+			
+			if (this.cards[i].isFlipped || this.cards[i].isFound)
+			{
+				sprite = plantList[this.cards[i].index].sprite[0];
+			}
+			else
+			{
+				sprite = imgQuestionMark;
+				
+				utility.addClickItem(x, y, this.tileSize, this.tileSize, this.flipCard, [i]);
+			}
+			
 			utility.drawImage
 			(
-				backgroundSurface, imgQuestionMark,
-				0, 0, this.tileSize, this.tileSize, x, y,
+				backgroundSurface, sprite,
+				0, 0, sprite.width, sprite.height, x, y,
 				this.tileSize, this.tileSize
 			);
 		}
@@ -54,7 +72,49 @@ var matching = {
 	
 	flipCard: function(i)
 	{
+		matching.numFlipped += 1;
+			
+		matching.cards[i].isFlipped = true;
+		
 		console.debug(plantList[matching.cards[i].index].name);
+		
+		if (matching.numFlipped === 1)
+			matching.card1 = matching.cards[i].index;
+		else if (matching.numFlipped === 2)
+		{
+			matching.card2 = matching.cards[i].index;
+			matching.checkMatch();
+		}
+	},
+	
+	checkMatch: function()
+	{
+		console.debug("checking match");
+		matching.numFlipped = 0;
+		
+		if (matching.card1 === matching.card2)
+		{
+			for (var i = 0; i < matching.cards.length; i++)
+			{
+				if (matching.cards[i].index === matching.card1)
+					matching.cards[i].isFound = true;
+			}
+		}
+		
+		var allFound = true;
+		
+		for (var i = 0; i < matching.cards.length; i++)
+		{
+			matching.cards[i].isFlipped = false;
+			if (matching.cards[i].isFound == false)
+				allFound = false;
+		}
+		
+		matching.card1 = -1;
+		matching.card2 = -1;
+		
+		if (allFound)
+			exiting[currentScreen] = true;
 	},
 	
 	createNameCard: function(index)
@@ -62,6 +122,8 @@ var matching = {
 		var card = Object.create(cardObj);
 		card.index = index;
 		card.isImg = false;
+		card.isFlipped = false;
+		card.isFound = false;
 		
 		return card;
 	},
@@ -71,6 +133,8 @@ var matching = {
 		var card = Object.create(cardObj);
 		card.index = index;
 		card.isImg = true;
+		card.isFlipped = false;
+		card.isFound = false;
 		
 		return card;
 	}
@@ -79,4 +143,6 @@ var matching = {
 var cardObj = {
 	index: -1,
 	isImg: false,
+	isFlipped: false,
+	isFound: false,
 };
