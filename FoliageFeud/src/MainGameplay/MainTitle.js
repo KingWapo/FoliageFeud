@@ -30,7 +30,7 @@ var title = {
 		this.playAsBoy.y = this.playAsGirl.y + 128;
 		utility.addClickItem(this.playAsBoy.x, this.playAsBoy.y, this.playAsBoy.width, this.playAsBoy.height, this.playAsBoyClicked);
 		
-		//utility.startNewSong(songMainTitle);
+		utility.startNewSong(songMainTitle);
 	},
 	
 	playAsBoyClicked: function()

@@ -289,7 +289,14 @@ var gameplay = {
 		width: 128,
 		height: 128,	
 		name: "teleporter",
-		sprite: ''
+		sprite: '',
+		
+		hitbox: {
+			x: 0,
+			y: 0,
+			width: 128,
+			height: 128
+		}
 		
 	},
 	
@@ -324,7 +331,14 @@ var gameplay = {
 		this.placeBlue();
 		this.placeGray();
 		this.placeSpeed();
-		this.placeTeleporter();
+		
+		this.teleporter.x=1000;
+		this.teleporter.y=300;
+		this.teleporter.hitbox.x = this.teleporter.x;
+		this.teleporter.hitbox.y = this.teleporter.y + 64;
+		this.teleporter.hitbox.width = this.teleporter.width;
+		this.teleporter.hitbox.height = this.teleporter.height / 2;
+		
 		// Init the stores
 		this.training.width = 128;
 		this.training.height = 256;
@@ -703,7 +717,7 @@ var gameplay = {
 							skillBook.sprint = true;
 						
 						}	
-						if ( utility.collisionDetection(gameplay.player, gameplay.teleporter))
+						if ( utility.collisionDetection(gameplay.player, gameplay.teleporter.hitbox))
 						{
 							if(this.canTeleport)
 							{
@@ -809,6 +823,11 @@ var gameplay = {
 				this.drawHilly();
 				break;
 		}
+		this.teleporter.hitbox.x = this.teleporter.x;
+		this.teleporter.hitbox.y = this.teleporter.y + 64;
+		this.teleporter.hitbox.width = this.teleporter.width;
+		this.teleporter.hitbox.height = this.teleporter.height / 2;
+		console.debug("Hitbox x: " + this.teleporter.hitbox.x + ", y: " + this.teleporter.hitbox.y + ", w: " + this.teleporter.hitbox.width + ", h: " + this.teleporter.hitbox.height);
 		console.debug("Building level");
 	},
 	
@@ -1224,11 +1243,6 @@ var gameplay = {
 	{
 		this.speedCoin.x=100;
 		this.speedCoin.y=100;
-	},
-	placeTeleporter:function()
-	{	
-		this.teleporter.x=1000;
-		this.teleporter.y=300;
 	},
 	
 	removeObservationPoint: function(index)

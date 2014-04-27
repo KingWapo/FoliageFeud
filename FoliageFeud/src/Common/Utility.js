@@ -372,6 +372,10 @@ var utility = {
 				{
 					yVal += 104;
 				}
+				else if (oldArray[i].name == "teleporter")
+				{
+					yVal += 64;
+				}
 				else if (oldArray[i].name == "training" ||
 						 oldArray[i].name == "store" ||
 						 oldArray[i].name == "main camp" ||
@@ -417,7 +421,10 @@ imgInfoSmallOverlay.push(utility.loadImage("../img/Backgrounds/infoOverlay01.png
 imgInfoSmallOverlay.push(utility.loadImage("../img/Backgrounds/infoOverlay02.png"));
 var imgInfoOverlay = utility.loadImage("../img/Backgrounds/informationOverlay.png");
 var imgQuestLog = utility.loadImage("../img/Backgrounds/questlog.png");
-var imgMap1 = utility.loadImage("../img/Buttons/MapButton.png");
+var imgMap1 = utility.loadImage("../img/Maps/Map1.png");
+var imgForestMap = utility.loadImage("../img/Maps/forest.png");
+var imgMarshMap = utility.loadImage("../img/Maps/marsh.png");
+var imgHillyMap = utility.loadImage("../img/Maps/hilly.png");
 var imgMapBackground = utility.loadImage("../img/Backgrounds/mapSelectionBackground.png");
 var imgMapTilesheet = utility.loadImage("../img/Tiles/MapTilesheet.png");
 var imgGirlButton = utility.loadImage("../img/Buttons/playButtonGirl.png");
