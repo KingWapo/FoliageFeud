@@ -17,8 +17,9 @@ var utility = {
 	clickable: [],
 	mouseOver:[],
 	colors: [],
-	totalNumImages: 0,
-	curNumImages: 0,
+	totalNumAssets: 0,
+	curNumAssets: 0,
+	curSong: '',
 	writting:false,
 	scale: 1,
 	originalWidth: 1152,
@@ -159,21 +160,32 @@ var utility = {
 	*/
 	loadImage: function(source)
 	{
-		utility.totalNumImages += 1;
+		utility.totalNumAssets += 1;
 		
 		var tempImage = new Image();
 		tempImage.src = source;
 		
-		tempImage.addEventListener("load", utility.loadedImage, false);
+		tempImage.addEventListener("load", utility.loadedAsset, false);
 		
 		return tempImage;
 	},
 	
-	loadedImage: function()
+	loadSong: function(source)
 	{
-		utility.curNumImages += 1;
+		utility.totalNumAssets += 1;
 		
-		//console.debug('total: ', utility.totalNumImages, ' - loaded: ', utility.curNumImages);
+		var tempSong = new Audio(source);
+		tempSong.loop = true;
+		
+		tempSong.addEventListener("canplay", utility.loadedAsset, false);
+		
+		return tempSong;
+	},
+	
+	loadedAsset: function()
+	{
+		utility.curNumAssets += 1;
+		
 		var x = 76 * utility.scale;
 		var y = 206 * utility.scale;
 		var w = 1000 * utility.scale;
@@ -183,9 +195,9 @@ var utility = {
 		menuSurface.stroke();
 		
 		menuSurface.fillStyle = "#006600";
-		menuSurface.fillRect(x, y, w * (utility.curNumImages / utility.totalNumImages), h);
+		menuSurface.fillRect(x, y, w * (utility.curNumAssets / utility.totalNumAssets), h);
 		
-		if (utility.curNumImages === utility.totalNumImages)
+		if (utility.curNumAssets === utility.totalNumAssets)
 			mainUpdate();
 	},
 	
@@ -325,6 +337,17 @@ var utility = {
 			//console.debug('COLLIDING');
 			return true;
 		}
+	},
+	
+	startNewSong: function(newSong)
+	{
+		if (utility.curSong != '')
+		{
+			utility.curSong.pause();
+		}
+		utility.curSong = newSong;
+		utility.curSong.load();
+		utility.curSong.play();
 	}
 };
 
@@ -388,4 +411,11 @@ cameraController.tilesheetForest = utility.loadImage("../img/Tiles/tilesheetFore
 cameraController.tilesheetMarsh = utility.loadImage("../img/Tiles/tilesheetMarsh.png");
 cameraController.tilesheetHilly = utility.loadImage("../img/Tiles/tilesheetRocky.png");
 
-
+var songMainTitle = utility.loadSong("../sounds/main menu/Who Likes To Party.mp3");
+var songGameplayPrairie = utility.loadSong("../sounds/gameplay/Call to Adventure.mp3");
+var songGameplayForest = utility.loadSong("../sounds/gameplay/Pamgaea.mp3");
+var songGameplayMarsh = utility.loadSong("../sounds/gameplay/Sneaky Snitch.mp3");
+var songGameplayHilly = utility.loadSong("../sounds/gameplay/Minstrel Guild.mp3");
+var songGameplayCamp = utility.loadSong("../sounds/gameplay/The Builder.mp3");
+var songWorldEvent = utility.loadSong("../sounds/world event/8bit Dungeon Boss.mp3");
+var loadingStatus = ["Initializing previsualization matrix", "Analyzing reversal algorithms", "Packaging gui worms", "Constructing dynamic shaders", "Reversing polarity", "I can't allow you to do that, Dave", "Encrypting llamas", "Fixing code, and taking names, but I'm all out of names"];

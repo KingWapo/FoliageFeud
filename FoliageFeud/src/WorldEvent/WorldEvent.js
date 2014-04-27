@@ -66,6 +66,8 @@ var worldEvent = {
 		gameplay.player.animation = Animation.WorldEventRight;
 		
 		createScenery.init();
+		
+		utility.startNewSong(songWorldEvent);
 	},
 	
 	onExit: function()

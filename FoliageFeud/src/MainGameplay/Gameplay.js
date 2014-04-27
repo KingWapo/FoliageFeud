@@ -342,7 +342,6 @@ var gameplay = {
 		moveDown = false;
 		moveLeft = false;
 		moveRight = false;
-
 	},
 	
 	updateSprite: function()
@@ -776,18 +775,23 @@ var gameplay = {
 		switch(map)
 		{
 			case Level.BaseCamp:
+				utility.startNewSong(songGameplayCamp);
 				this.drawBaseCamp();
 				break;
 			case Level.Map1:
+				utility.startNewSong(songGameplayPrairie);
 				this.drawMap1();
 				break;
 			case Level.Forest:
+				utility.startNewSong(songGameplayForest);
 				this.drawForest();
 				break;
 			case Level.Marsh:
+				utility.startNewSong(songGameplayMarsh);
 				this.drawMarsh();
 				break;
 			case Level.Hilly:
+				utility.startNewSong(songGameplayHilly);
 				this.drawHilly();
 				break;
 		}
