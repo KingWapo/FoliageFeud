@@ -17,7 +17,7 @@ var worldEvent = {
 	xMovement: 0,
 	playerVars: [],
 	cameraPosition: [],
-	offset: 32,
+	offset: 64,
 	questionBeingAsked: false,
 	questionImageIndex: -1,
 	correctImage: new Image(),
@@ -80,6 +80,7 @@ var worldEvent = {
 		gameplay.player.animation = this.playerVars[3];
 		cameraController.camera.x = this.cameraPosition[0];
 		cameraController.camera.y = this.cameraPosition[1];
+		gameplay.player.currentFrame = 0;
 		createScenery.onExit();
 		
 		cameraController.buildMap(allLevelMaps[gameplay.currentLevel], 0);
@@ -173,32 +174,19 @@ var worldEvent = {
 	{
 		this.questionBeingAsked = true;
 		
-		numsChosen = [-1, -1, -1];
+		numsChosen = plant.getMultiplePlants(3);
 		
-		var curQuestion = 0;
-		this.questionImageIndex = Math.floor(Math.random() * this.questions.length);
-		this.questions[this.questionImageIndex].correct = true;
-		while (curQuestion < 3)
+		var answerIndex = Math.floor(Math.random() * this.questions.length);
+		
+		this.questions[answerIndex].correct = true;
+		
+		for (var i = 0; i < this.questions.length; i++)
 		{
-			var index = Math.floor(Math.random() * plantList.length);
-			if (index == numsChosen[0] ||
-				index == numsChosen[1] ||
-				index == numsChosen[2]){ 
-					continue;
-				}
-			else
-			{
-				this.questions[curQuestion].name = plantList[index].name;
-				if (this.questions[curQuestion].correct)
-				{
-					this.correctImage = plantList[index].sprite[0];
-					console.debug(curQuestion + ": " + this.questions[curQuestion].name);
-					
-				}
-				curQuestion++;
-			}
+			this.questions[i].name = plantList[numsChosen[i]].name;
 		}
 		
+		this.correctImage = plantList[numsChosen[answerIndex]].sprite[0];
+		console.debug(answerIndex + ": " + this.questions[answerIndex].name);
 	},
 	
 	answerQuestion: function(index)
