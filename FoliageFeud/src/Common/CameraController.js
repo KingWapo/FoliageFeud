@@ -230,55 +230,60 @@ var cameraController = {
 			theseSprites = theseSprites.concat(spritesWanted);
 		}
 		var newSprites = utility.reorderArrayByY(theseSprites);
-		for (var i = 0; i < newSprites.length; i++)
+		
+		try
 		{
-			var currentSprite = newSprites[i];
-			if (currentSprite.name == "player")
+			for (var i = 0; i < newSprites.length; i++)
 			{
-				utility.drawImage
-				(
-					gameplaySurface, currentSprite.sprite, 
-					currentSprite.sourceX, currentSprite.sourceY + currentSprite.animation * currentSprite.sourceHeight, 
-					currentSprite.sourceWidth, currentSprite.sourceHeight,
-					Math.floor(currentSprite.x), Math.floor(currentSprite.y), 
-					currentSprite.width, currentSprite.height
-				
-				);
-			}
-			else if (currentSprite.name == "blue coin" ||
-					 currentSprite.name == "gray coin" ||
-					 currentSprite.name == "teleporter" ||
-					 currentSprite.name == "training" ||
-					 currentSprite.name == "main camp" ||
-					 currentSprite.name == "store" ||
-					 currentSprite.name == "plants" ||
-					 currentSprite.name == "observation point" ||
-					 currentSprite.name == "unicorn" ||
-					 currentSprite.name == "dr parsnip")
-			{
-				if (currentSprite.name == "unicorn") console.debug("Drawing Unicorn");
-				utility.drawImage
-				(
-					gameplaySurface, currentSprite.sprite, 
-					currentSprite.sourceX, currentSprite.sourceY, 
-					currentSprite.sourceWidth, currentSprite.sourceHeight,
-					Math.floor(currentSprite.x), Math.floor(currentSprite.y), 
-					currentSprite.width, currentSprite.height
-				
-				);
-			}
-			else if (currentSprite.name !== "empty")
-			{
-				utility.drawImage
-				 (
-				   gameplaySurface, tilesheet, 
-				   currentSprite.sourceX, currentSprite.sourceY, 
-				   currentSprite.sourceWidth, currentSprite.sourceHeight,
-				   Math.floor(currentSprite.x), Math.floor(currentSprite.y), 
-				   currentSprite.width, currentSprite.height
-				 ); 
+				var currentSprite = newSprites[i];
+				if (currentSprite.name == "player")
+				{
+					utility.drawImage
+					(
+						gameplaySurface, currentSprite.sprite, 
+						currentSprite.sourceX, currentSprite.sourceY + currentSprite.animation * currentSprite.sourceHeight, 
+						currentSprite.sourceWidth, currentSprite.sourceHeight,
+						Math.floor(currentSprite.x), Math.floor(currentSprite.y), 
+						currentSprite.width, currentSprite.height
+					
+					);
+				}
+				else if (currentSprite.name == "blue coin" ||
+						 currentSprite.name == "gray coin" ||
+						 currentSprite.name == "teleporter" ||
+						 currentSprite.name == "training" ||
+						 currentSprite.name == "main camp" ||
+						 currentSprite.name == "store" ||
+						 currentSprite.name == "plants" ||
+						 currentSprite.name == "observation point" ||
+						 currentSprite.name == "unicorn" ||
+						 currentSprite.name == "dr parsnip")
+				{
+					if (currentSprite.name == "unicorn") console.debug("Drawing Unicorn");
+					utility.drawImage
+					(
+						gameplaySurface, currentSprite.sprite, 
+						currentSprite.sourceX, currentSprite.sourceY, 
+						currentSprite.sourceWidth, currentSprite.sourceHeight,
+						Math.floor(currentSprite.x), Math.floor(currentSprite.y), 
+						currentSprite.width, currentSprite.height
+					
+					);
+				}
+				else if (currentSprite.name !== "empty")
+				{
+					utility.drawImage
+					 (
+					   gameplaySurface, tilesheet, 
+					   currentSprite.sourceX, currentSprite.sourceY, 
+					   currentSprite.sourceWidth, currentSprite.sourceHeight,
+					   Math.floor(currentSprite.x), Math.floor(currentSprite.y), 
+					   currentSprite.width, currentSprite.height
+					 ); 
+				}
 			}
 		}
+		catch(err){}
 	},
 	
 	buildMap: function(levelMap, tier)

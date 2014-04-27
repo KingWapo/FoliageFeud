@@ -50,6 +50,7 @@ var trainingScreen = {
 	goToIspy: function()
 	{
 		ispy.fromTraining = true;
+		entering[ScreenState.TrainingMode] = true;
 		switchGamemode(ScreenState.Observation);
 	},
 	
@@ -58,4 +59,9 @@ var trainingScreen = {
 		entering[ScreenState.TrainingMode] = true;
 		currentScreen = ScreenState.Matching;
 	}
+};
+
+var trainingGame = {
+	goldWagered: 0,
+	returnRate: 0,
 };

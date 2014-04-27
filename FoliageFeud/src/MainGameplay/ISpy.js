@@ -13,10 +13,15 @@ var ispy = {
 	curSprites: [],
 	gameEnd: false,
 	isCorrect: false,
-	fromTraining: false,
 	dingleBotFailResponses: ["Hmmm, not the one I would have chosen.. Oh well, Come back to base and I'll give you a chance to redeem yourself."],
 	dingleBotWinResponses: ["You make this look easy. Come back to base and I'll give you that dubloon I promised you."],
 	responseOffset: 0,
+	
+	// Training mode variables
+	fromTraining: false,
+	gamesPlayed: 0,
+	maxGames: 10,
+	gamesCorrect: 0,
 	
 	// Initialize game mode
 	init: function()
@@ -138,40 +143,55 @@ var ispy = {
 		
 		if (this.gameEnd)
 		{
-			var textOffset = 128;
-			var responseString = [];
-			
-			utility.drawImage
-			(
-				menuSurface, imgLargeTextBox,
-				0, 0, imgLargeTextBox.width, imgLargeTextBox.height,
-				textOffset, CANVAS_HEIGHT - this.responseOffset, imgLargeTextBox.width, imgLargeTextBox.height
-			);
-			
-			if (this.isCorrect)
+			if (!ispy.fromTraining)
 			{
-				if (gameplay.currentLevel != Level.Tutorial && !ispy.fromTraining)
-					responseString.push(this.dingleBotWinResponses[Math.floor(Math.random() * this.dingleBotWinResponses.length)]);
-				else if (ispy.fromTraining)
-					responseString.push("My training teaches you well, young grasshopper.");
+				var textOffset = 128;
+				var responseString = [];
+				
+				utility.drawImage
+				(
+					menuSurface, imgLargeTextBox,
+					0, 0, imgLargeTextBox.width, imgLargeTextBox.height,
+					textOffset, CANVAS_HEIGHT - this.responseOffset, imgLargeTextBox.width, imgLargeTextBox.height
+				);
+				
+				if (this.isCorrect)
+				{
+					if (gameplay.currentLevel != Level.Tutorial && !ispy.fromTraining)
+						responseString.push(this.dingleBotWinResponses[Math.floor(Math.random() * this.dingleBotWinResponses.length)]);
+					else
+						responseString.push("Strong in the ways of plant, you are.");
+				}
 				else
-					responseString.push("Strong in the ways of plant, you are.");
+				{
+					if (gameplay.currentLevel != Level.Tutorial && !ispy.fromTraining)
+						responseString.push(this.dingleBotFailResponses[Math.floor(Math.random() * this.dingleBotFailResponses.length)]);
+					else
+						responseString.push("That is not the plant you are looking for.  /space_wizard_brain_manipulation");
+				}
+			
+				utility.writeText(menuSurface, responseString, textOffset + 20, CANVAS_HEIGHT - this.responseOffset + 48, 840, 20, false);
+				utility.writeForClick(menuSurface, ["Close"], 782 + textOffset, CANVAS_HEIGHT - this.responseOffset - 32 + imgLargeTextBox.height, 100, 20, false, [ispy.leaveISpy, ['']]);
+					
+				if (this.responseOffset < 120)
+					this.responseOffset += 24;
 			}
 			else
 			{
-				if (gameplay.currentLevel != Level.Tutorial && !ispy.fromTraining)
-					responseString.push(this.dingleBotFailResponses[Math.floor(Math.random() * this.dingleBotFailResponses.length)]);
-				else if (ispy.fromTraining)
-					responseString.push("I have failed as an instructor.");
-				else
-					responseString.push("That is not the plant you are looking for.  /space_wizard_brain_manipulation");
-			}
-			
-			utility.writeText(menuSurface, responseString, textOffset + 20, CANVAS_HEIGHT - this.responseOffset + 48, 840, 20, false);
-			utility.writeForClick(menuSurface, ["Close"], 782 + textOffset, CANVAS_HEIGHT - this.responseOffset - 32 + imgLargeTextBox.height, 100, 20, false, [ispy.leaveISpy, ['']]);
+				this.gamesPlayed += 1;
 				
-			if (this.responseOffset < 120)
-				this.responseOffset += 24;
+				if (this.gamesPlayed < this.maxGames)
+				{
+					console.debug("Playing game ", this.gamesPlayed);
+					this.init();
+				}
+				else
+				{
+					trainingGame.returnRate = (.02 * this.gamesCorrect * this.gamesCorrect) + (.1 * this.gamesCorrect);
+					console.debug(trainingGame.returnRate);
+					ispy.leaveISpy();
+				}
+			}
 		}
 	},
 
@@ -187,6 +207,8 @@ var ispy = {
 			// Show that plant was harvested
 			plantList[ispy.requestedPlant].harvested = true;
 		}
+		else
+			ispy.gamesCorrect += 1;
 
 		// Exit game mode
 		ispy.gameEnd = true;
@@ -216,6 +238,8 @@ var ispy = {
 		// Reset requested plant index
 		ispy.requestedPlant = -1;
 		ispy.fromTraining = false;
+		ispy.gamesPlayed = 0;
+		ispy.gamesCorrect = 0;
 		
 		exiting[currentScreen] = true;
 	},
