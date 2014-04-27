@@ -16,6 +16,14 @@ window.addEventListener("keydown", function(event)
 		else
 			console.debug("not debugging info");
 	}
+	if (event.keyCode === 188)
+	{
+		utility.debugSound = !utility.debugSound;
+		if (utility.debugSound)
+			console.debug("debugging sound");
+		else
+			console.debug("not debugging sound");
+	}
 }, false);
 
 // Edit Log:

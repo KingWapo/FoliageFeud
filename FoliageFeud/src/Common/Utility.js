@@ -24,6 +24,7 @@ var utility = {
 	scale: 1,
 	originalWidth: 1152,
 	originalHeight: 512,
+	debugSound: false,
 	
 	// Clear screen and all objects from clickable
 	clearAll: function()
@@ -393,12 +394,13 @@ var utility = {
 	
 	startNewSong: function(newSong)
 	{
-		if (false) // debug
+		if (utility.curSong != '')
 		{
-			if (utility.curSong != '')
-			{
-				utility.curSong.pause();
-			}
+			utility.curSong.pause();
+		}
+		
+		if (utility.debugSound)
+		{
 			utility.curSong = newSong;
 			utility.curSong.load();
 			utility.curSong.play();
