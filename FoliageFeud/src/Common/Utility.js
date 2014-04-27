@@ -409,6 +409,13 @@ var utility = {
 			utility.curSong.load();
 			utility.curSong.play();
 		}
+	},
+	
+	debugDimensions: function(sprite)
+	{
+		console.debug("Sprite dimensions for " + sprite.name + " are: " + 
+					  "x: " + sprite.x + " y: " + sprite.y + " w: " + sprite.width + " h: " + sprite.height + "\n" +
+					  "source x: " + sprite.sourceX + " source y: " + sprite.sourceY + " source w: " + sprite.sourceWidth + " source h: " + sprite.sourceHeight);
 	}
 };
 
@@ -443,6 +450,9 @@ var imgQuestionMark = utility.loadImage("../img/Buttons/QuestionMark.png");
 var imgInfoButton = utility.loadImage("../img/Buttons/infoButton.png");
 var imgMaleSprite = utility.loadImage("../img/Player/characterMale.png");
 var imgFemaleSprite = utility.loadImage("../img/Player/characterFemale.png");
+var imgParsnipSprite = utility.loadImage("../img/Player/drparsnip.png");
+var imgDingleSprite = utility.loadImage("../img/Player/siblingMale.png");
+var imgUnicornSprite = utility.loadImage("../img/Player/unicorn.png");
 var imgTimer = utility.loadImage("../img/WorldEvent/timer.png");
 var imgTimerBg = utility.loadImage("../img/WorldEvent/timerBackground.png");
 var imgCheckmark = utility.loadImage("../img/WorldEvent/checkmark.png");
@@ -471,6 +481,8 @@ gameplay.teleporter.sprite = utility.loadImage("../img/Tiles/teleporterfinal.png
 gameplay.training.sprite = utility.loadImage("../img/Tiles/training.png");
 gameplay.store.sprite = utility.loadImage("../img/Tiles/shop.png");
 gameplay.plants.sprite = utility.loadImage("../img/Tiles/plants.png");
+gameplay.parsnip.sprite = utility.loadImage("../img/Player/drparsnip.png");
+gameplay.unicorn.sprite = utility.loadImage("../img/Player/unicorn.png");
 cameraController.tilesheetMain = utility.loadImage("../img/Tiles/tilesheet.png");
 cameraController.tilesheetForest = utility.loadImage("../img/Tiles/tilesheetForest.png");
 cameraController.tilesheetMarsh = utility.loadImage("../img/Tiles/tilesheetMarsh.png");

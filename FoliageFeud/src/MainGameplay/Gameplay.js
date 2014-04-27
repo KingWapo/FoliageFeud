@@ -106,6 +106,88 @@ var gameplay = {
 		animation: Animation.Idle
 	}, 
 	
+	parsnip: {
+		// Sprite Located on sheet
+		sourceX: 0,
+		sourceY: 0,
+		sourceWidth: 64,
+		sourceHeight: 64,
+		
+		// Animation info
+		numOfFrames: 9,
+		currentFrame: 0,
+		
+		//Update Animation Function
+		updateAnimation: function()
+		{
+			if (this.animation !== Animation.Idle)
+			{
+				this.sourceX = this.currentFrame * this.sourceWidth;
+				
+				this.currentFrame += 1;
+				if ( this.currentFrame === this.numOfFrames ) {
+					this.currentFrame = 0;
+				}
+			}
+		},
+		
+		// Gameplay info
+		x: -64,
+		y: -64,
+		width: 64,
+		height: 64,
+		vx: 0,
+		vy: 0,
+		speed: 4,
+		walkSpeed: 4,
+		runSpeed: 8,
+		visible: false,
+		sprite: '',
+		name: "dr parsnip",
+		animation: Animation.Idle
+	},
+	
+	unicorn: {
+		// Sprite Located on sheet
+		sourceX: 0,
+		sourceY: 0,
+		sourceWidth: 64,
+		sourceHeight: 64,
+		
+		// Animation info
+		numOfFrames: 4,
+		currentFrame: 0,
+		
+		//Update Animation Function
+		updateAnimation: function()
+		{
+			if (this.animation !== Animation.Idle)
+			{
+				this.sourceX = this.currentFrame * this.sourceWidth;
+				
+				this.currentFrame += 1;
+				if ( this.currentFrame === this.numOfFrames ) {
+					this.currentFrame = 0;
+				}
+			}
+		},
+		
+		// Gameplay info
+		x: -64,
+		y: -64,
+		width: 64,
+		height: 64,
+		vx: 0,
+		vy: 0,
+		speed: 4,
+		walkSpeed: 4,
+		runSpeed: 8,
+		visible: false,
+		sprite: '',
+		name: "unicorn",
+		animation: Animation.Idle
+	},
+	
 	observationInstance: {
 		sourceX: 0,
 		sourceY: 0,
@@ -378,11 +460,34 @@ var gameplay = {
 		{
 			case SpriteState.Boy:
 				this.player.sprite = imgMaleSprite;
-			break;
-			
+				this.player.numOfFrames = 9;
+				this.player.sourceHeight = 64;
+				this.player.height = 64;
+				break;
 			case SpriteState.Girl:
 				this.player.sprite = imgFemaleSprite;
-			break;	
+				this.player.numOfFrames = 9;
+				this.player.sourceHeight = 64;
+				this.player.height = 64;
+				break;	
+			case SpriteState.Parsnip:
+				this.player.sprite = imgParsnipSprite;
+				this.player.numOfFrames = 4;
+				this.player.sourceHeight = 128;
+				this.player.height = 128;
+				break;
+			case SpriteState.Dingle:
+				this.player.sprite = imgDingleSprite;
+				this.player.numOfFrames = 9;
+				this.player.sourceHeight = 64;
+				this.player.height = 64;
+				break;
+			case SpriteState.Unicorn:
+				this.player.sprite = imgUnicornSprite;
+				this.player.numOfFrames = 4;
+				this.player.sourceHeight = 64;
+				this.player.height = 64;
+				break;
 		}
 	},
 	
@@ -480,6 +585,9 @@ var gameplay = {
 		this.grayCoin.updateAnimation();
 		this.speedCoin.updateAnimation();
 		this.teleporter.updateAnimation();
+		if (this.parsnip.visible) this.parsnip.updateAnimation();
+		//if (this.unicorn.visible) this.unicorn.updateAnimation();
+		
 	},
 	
 	checkMovement: function()
@@ -752,7 +860,7 @@ var gameplay = {
 			
 			if (this.currentLevel == Level.BaseCamp)
 			{
-				if (utility.collisionDetection(gameplay.player, gameplay.mainCamp))
+				if (utility.collisionDetection(gameplay.player, gameplay.mainCamp.hitboxDoor))
 				{
 					if (!this.onMainCamp)
 					{
@@ -760,11 +868,15 @@ var gameplay = {
 						currentScreen = ScreenState.SiblingInteraction;
 					}
 				}
+				if (utility.collisionDetection(gameplay.player, gameplay.mainCamp.hitboxBack) || utility.collisionDetection(gameplay.player, gameplay.mainCamp.hitboxFront))
+				{
+					this.collide();
+				}
 				else
 				{
 					this.onMainCamp = false;
 				}
-				if (utility.collisionDetection(gameplay.player, gameplay.training))
+				if (utility.collisionDetection(gameplay.player, gameplay.training.hitboxDoor))
 				{
 					if (!this.onTraining)
 					{
@@ -772,11 +884,15 @@ var gameplay = {
 						currentScreen = ScreenState.TrainingMode;
 					}
 				}
+				if (utility.collisionDetection(gameplay.player, gameplay.training.hitbox))
+				{
+					this.collide();
+				}
 				else
 				{
 					this.onTraining = false;
 				}
-				if (utility.collisionDetection(gameplay.player, gameplay.plants))
+				if (utility.collisionDetection(gameplay.player, gameplay.plants.hitboxDoor))
 				{
 					if (!this.onPlants)
 					{
@@ -784,13 +900,21 @@ var gameplay = {
 						currentScreen = ScreenState.Information;
 					}
 				}
+				if (utility.collisionDetection(gameplay.player, gameplay.plants.hitbox))
+				{
+					this.collide();
+				}
 				else
 				{
 					this.onPlants = false;
 				}
-				if (utility.collisionDetection(gameplay.player, gameplay.store))
+				if (utility.collisionDetection(gameplay.player, gameplay.store.hitboxDoor))
 				{
 					switchGamemode(ScreenState.ShopScreen);
+					this.collide();
+				}
+				if (utility.collisionDetection(gameplay.player, gameplay.store.hitbox))
+				{
 					this.collide();
 				}
 				
@@ -835,7 +959,6 @@ var gameplay = {
 		this.teleporter.hitbox.y = this.teleporter.y + 64;
 		this.teleporter.hitbox.width = this.teleporter.width;
 		this.teleporter.hitbox.height = this.teleporter.height / 2;
-		console.debug("Hitbox x: " + this.teleporter.hitbox.x + ", y: " + this.teleporter.hitbox.y + ", w: " + this.teleporter.hitbox.width + ", h: " + this.teleporter.hitbox.height);
 		console.debug("Building level");
 	},
 	
@@ -881,15 +1004,69 @@ var gameplay = {
 		
 		this.plants.x = 6 * 64;
 		this.plants.y = 32;
+		this.plants.hitbox = {
+			x: this.plants.x,
+			y: this.plants.y + 160,
+			width: this.plants.width,
+			height: this.plants.height - 160
+		}
+		this.plants.hitboxDoor = {
+			x: this.plants.x + 64 - .05,
+			y: this.plants.y + 128 + 64,
+			width: 0.1,
+			height: 64
+		}
 		
 		this.training.x = 9 * 64;
 		this.training.y = 32;
+		this.training.hitbox = {
+			x: this.training.x,
+			y: this.training.y + 160,
+			width: this.training.width,
+			height: this.training.height - 160
+		}
+		this.training.hitboxDoor = {
+			x: this.training.x + 64 + 24,
+			y: this.training.y + 128 + 64,
+			width: 0.1,
+			height: 64
+		}
 		
 		this.mainCamp.x = 12 * 64;
 		this.mainCamp.y =  32;
+		this.mainCamp.hitboxBack = {
+			x: this.mainCamp.x,
+			y: this.mainCamp.y + 160,
+			width: this.mainCamp.width,
+			height: this.mainCamp.height - 48 - 160
+		}
+		this.mainCamp.hitboxFront = {
+			x: this.mainCamp.x + 32,
+			y: this.mainCamp.y + 160,
+			width: this.mainCamp.width - 64,
+			height: this.mainCamp.height - 160
+		}
+		this.mainCamp.hitboxDoor = {
+			x: this.mainCamp.x + 64 - .05,
+			y: this.mainCamp.y + 128 + 64,
+			width: 0.1,
+			height: 64
+		}
 		
 		this.store.x = 15 * 64;
 		this.store.y = 32;
+		this.store.hitbox = {
+			x: this.store.x,
+			y: this.store.y + 160,
+			width: this.store.width,
+			height: this.store.height - 160
+		}
+		this.store.hitboxDoor = {
+			x: this.store.x + 64 - .05,
+			y: this.store.y + 128 + 64,
+			width: 0.1,
+			height: 64
+		}
 		
 		this.placeSpeed;
 	},
@@ -1164,6 +1341,8 @@ var gameplay = {
 			if (this.currentLevel == Level.BaseCamp) sprites = sprites.concat([this.training, this.mainCamp, this.store, this.plants]);
 			sprites.push(this.player);
 			if (this.observationInstances.length > 0) sprites = sprites.concat(this.observationInstances);
+			if (this.parsnip.visible) sprites.push(this.parsnip);
+			if (this.unicorn.visible) sprites.push(this.unicorn);
 			cameraController.renderForeground(sprites);
 			
 			if (this.onPause)

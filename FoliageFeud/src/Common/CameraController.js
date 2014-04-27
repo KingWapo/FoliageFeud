@@ -252,8 +252,11 @@ var cameraController = {
 					 currentSprite.name == "main camp" ||
 					 currentSprite.name == "store" ||
 					 currentSprite.name == "plants" ||
-					 currentSprite.name == "observation point")
+					 currentSprite.name == "observation point" ||
+					 currentSprite.name == "unicorn" ||
+					 currentSprite.name == "dr parsnip")
 			{
+				if (currentSprite.name == "unicorn") console.debug("Drawing Unicorn");
 				utility.drawImage
 				(
 					gameplaySurface, currentSprite.sprite, 

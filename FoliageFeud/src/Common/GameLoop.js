@@ -24,6 +24,22 @@ window.addEventListener("keydown", function(event)
 		else
 			console.debug("not debugging sound");
 	}
+	if (event.keyCode == 61)
+	{
+		currentSprite = (currentSprite + 1) % 5;
+		gameplay.updateSprite();
+	}
+	if (event.keyCode == 173)
+	{
+		currentSprite = (currentSprite - 1) % 5;
+		gameplay.updateSprite();
+	}
+	if (event.keyCode == 221)
+	{
+		var curLevel = (gameplay.currentLevel + 1) % 6
+		if (curLevel == 0) curLevel = 1;
+		gameplay.nextLevel(curLevel);
+	}
 }, false);
 
 // Edit Log:
@@ -128,7 +144,10 @@ ScreenState = {
 
 SpriteState = {
 	Girl: 0,
-	Boy: 1
+	Boy: 1,
+	Parsnip: 2,
+	Dingle: 3,
+	Unicorn: 4
 };
 
 // vars to hold current and previous screens

@@ -17,6 +17,7 @@ var worldEvent = {
 	xMovement: 0,
 	playerVars: [],
 	cameraPosition: [],
+	unicornVars: [],
 	offset: 64,
 	questionBeingAsked: false,
 	questionImageIndex: -1,
@@ -54,6 +55,7 @@ var worldEvent = {
 		
 		this.playerVars = [gameplay.player.x, gameplay.player.y, gameplay.player.speed, gameplay.player.animation];
 		this.cameraPosition = [cameraController.camera.x, cameraController.camera.y];
+		this.unicornVars = [gameplay.unicorn.x, gameplay.unicorn.y, gameplay.unicorn.animation, gameplay.unicorn.visible];
 		
 		cameraController.buildMap(this.worldEventMap, 0);
 		
@@ -64,6 +66,10 @@ var worldEvent = {
 		gameplay.player.y = 5 * gameplay.player.height + this.offset;
 		gameplay.player.speed = gameplay.player.runSpeed;
 		gameplay.player.animation = Animation.WorldEventRight;
+		
+		gameplay.unicorn.x = gameplay.unicorn.width;
+		gameplay.unicorn.y = gameplay.player.y;
+		gameplay.unicorn.visible = true;
 		
 		createScenery.init();
 		
@@ -80,9 +86,13 @@ var worldEvent = {
 		gameplay.player.y = this.playerVars[1];
 		gameplay.player.walkSpeed = this.playerVars[2];
 		gameplay.player.animation = this.playerVars[3];
+		gameplay.player.currentFrame = 0;
 		cameraController.camera.x = this.cameraPosition[0];
 		cameraController.camera.y = this.cameraPosition[1];
-		gameplay.player.currentFrame = 0;
+		gameplay.unicorn.x = this.unicornVars[0];
+		gameplay.unicorn.y = this.unicornVars[1];
+		gameplay.unicorn.animation = this.unicornVars[2];
+		gameplay.unicorn.visible = this.unicornVars[3];
 		createScenery.onExit();
 		
 		cameraController.buildMap(allLevelMaps[gameplay.currentLevel], 0);
@@ -119,7 +129,6 @@ var worldEvent = {
 		//if (utility.collisionDetection(this.wall, gameplay.player))
 		if (gameplay.player.x <= this.wall.width)
 		{
-			console.debug("Yeah, it's colliding");
 			exiting[currentScreen] = true;
 		}
 		if (this.checkmarks.length >= 5)
@@ -134,7 +143,9 @@ var worldEvent = {
 		cameraController.renderBackground();
 		
 		createScenery.render();
-		
+		//console.debug("Unicorn coords: " + gameplay.unicorn.x + ", " + gameplay.unicorn.y + "--" + gameplay.unicorn.width + ", " + gameplay.unicorn.height);
+		utility.debugDimensions(gameplay.unicorn);
+		/*
 		utility.drawImage( gameplaySurface,
 			this.wall.sprite,
 			0, 0,
@@ -142,7 +153,7 @@ var worldEvent = {
 			0, 0,
 			this.wall.width, this.wall.height
 			);
-			
+		*/
 		if (this.questionBeingAsked)
 		{
 			if (this.countdown > 0)
@@ -166,13 +177,6 @@ var worldEvent = {
 				i * 64, 0,
 				64, 64
 				);
-			/*
-			menuSurface.drawImage(
-				imgCheckmark,
-				i * 64, 0,
-				64, 64
-				);
-			*/
 		}
 		
 	},
