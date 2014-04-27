@@ -220,22 +220,19 @@ var cameraController = {
 			tilesheet = this.tilesheetHilly;
 		}
 		
-		var sprites = spritesFromGameplay;
-		var foregroundSpriteCols = this.foregroundTiles.slice(Math.max(0, Math.floor(this.camera.y / 64) - 2), Math.min(Math.floor((this.camera.y + this.camera.height)/64), gameplay.curMap.length));
+		var theseSprites = spritesFromGameplay;
+		var foregroundSpriteCols = [];
+		foregroundSpriteCols = this.foregroundTiles.slice(Math.max(0, Math.floor(this.camera.y / 64) - 2), Math.min(Math.floor((this.camera.y + this.camera.height)/64), gameplay.curMap.length));
 		for (var i = 0; i < foregroundSpriteCols.length; i++)
 		{
 			var spritesWanted = foregroundSpriteCols[i].slice(Math.max(0, Math.floor(this.camera.x / 64) - 2), 
-															  Math.min(Math.floor((this.camera.x + this.camera.width)/64) + 2, gameplay.curMap[0].length))
-			spritesWanted.length;
-			sprites = sprites.concat(spritesWanted);
+															  Math.min(Math.floor((this.camera.x + this.camera.width)/64) + 2, gameplay.curMap[0].length));
+			theseSprites = theseSprites.concat(spritesWanted);
 		}
-		var newSprites = utility.reorderArrayByY(sprites);
+		var newSprites = utility.reorderArrayByY(theseSprites);
 		for (var i = 0; i < newSprites.length; i++)
 		{
 			var currentSprite = newSprites[i];
-			if (gameplay.currentLevel == Level.Map1)
-			{
-			}
 			if (currentSprite.name == "player")
 			{
 				utility.drawImage
@@ -291,6 +288,9 @@ var cameraController = {
 		
 		this.gameWorld.width = this.WIDTH;
 		this.gameWorld.height = this.HEIGHT;
+		
+		if (tier == 0) this.baseTiles = [];
+		else if (tier ==1) this.foregroundTiles = [];
 		
 		for (var i = 0; i < gameplay.curMap.length; i++)
 		{

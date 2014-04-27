@@ -355,7 +355,7 @@ var utility = {
 		}
 		while (oldArray.length > 0)
 		{
-			var minY = gameplay.curMap.length * 64;
+			var minY = 9001;
 			var index = -1;
 			for (var i = 0; i < oldArray.length; i++)
 			{
