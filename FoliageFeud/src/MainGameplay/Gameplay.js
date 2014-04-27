@@ -1005,9 +1005,9 @@ var gameplay = {
 		this.plants.x = 6 * 64;
 		this.plants.y = 32;
 		this.plants.hitbox = {
-			x: this.plants.x,
+			x: this.plants.x + 16,
 			y: this.plants.y + 160,
-			width: this.plants.width,
+			width: this.plants.width - 32,
 			height: this.plants.height - 160
 		}
 		this.plants.hitboxDoor = {
@@ -1020,9 +1020,9 @@ var gameplay = {
 		this.training.x = 9 * 64;
 		this.training.y = 32;
 		this.training.hitbox = {
-			x: this.training.x,
+			x: this.training.x + 8,
 			y: this.training.y + 160,
-			width: this.training.width,
+			width: this.training.width - 16,
 			height: this.training.height - 160
 		}
 		this.training.hitboxDoor = {
@@ -1035,9 +1035,9 @@ var gameplay = {
 		this.mainCamp.x = 12 * 64;
 		this.mainCamp.y =  32;
 		this.mainCamp.hitboxBack = {
-			x: this.mainCamp.x,
+			x: this.mainCamp.x + 8,
 			y: this.mainCamp.y + 160,
-			width: this.mainCamp.width,
+			width: this.mainCamp.width - 16,
 			height: this.mainCamp.height - 48 - 160
 		}
 		this.mainCamp.hitboxFront = {
@@ -1056,9 +1056,9 @@ var gameplay = {
 		this.store.x = 15 * 64;
 		this.store.y = 32;
 		this.store.hitbox = {
-			x: this.store.x,
+			x: this.store.x + 16,
 			y: this.store.y + 160,
-			width: this.store.width,
+			width: this.store.width - 32,
 			height: this.store.height - 160
 		}
 		this.store.hitboxDoor = {

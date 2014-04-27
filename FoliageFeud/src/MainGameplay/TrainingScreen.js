@@ -2,6 +2,9 @@
 // Created by Iron Man on 4/26/2014
 
 var trainingScreen = {
+
+	goldBet: 0,
+	
 	init: function()
 	{
 		utility.addClickItem(64, 64, imgTrainingBackground.width, imgTrainingBackground.height, this.goToWorldEvent, "");
@@ -19,17 +22,23 @@ var trainingScreen = {
 			64, 64, 320, 285
 		);
 		
+		utility.writeText(menuSurface, ["World Event Race"], 96 - 8, 296, 304, 32, false);
+		
 		utility.drawImage(
 			menuSurface, imgTrainingBackground,
 			0, 0, imgTrainingBackground.width, imgTrainingBackground.height,
 			64 + 320 + 32, 64, 320, 285
 		);
 		
+		utility.writeText(menuSurface, ["Find That Plant"], 64 + 320 + 64 , 296, 304, 32, false);
+		
 		utility.drawImage(
 			menuSurface, imgTrainingBackground,
 			0, 0, imgTrainingBackground.width, imgTrainingBackground.height,
 			64 + 2 * (320 + 32), 64, 320, 285
 		);
+		
+		utility.writeText(menuSurface, ["Speed Matching"], 64 + 2 * (320 + 32) + 32, 296, 304, 32, false);
 	},
 	
 	goToWorldEvent: function(empty)
