@@ -102,6 +102,7 @@ var gameplay = {
 		walkSpeed: 4,
 		runSpeed: 8,
 		sprite: '',
+		name: "player",
 		animation: Animation.Idle
 	}, 
 	
@@ -154,7 +155,7 @@ var gameplay = {
 		gravity: 2,
 		lowestPos: 0,
 		atLowestPos: true,
-		
+		name: "observation point",
 		sprite: ''
 	},
 	
@@ -189,7 +190,7 @@ var gameplay = {
 		y: 20,
 		width: 64,
 		height: 64,
-		
+		name: "blue coin",
 		sprite: ''
 		
 	},
@@ -222,7 +223,7 @@ var gameplay = {
 		y: 20,
 		width: 64,
 		height: 64,
-		
+		name: "gray coin",
 		sprite: ''
 	},
 	speedCoin: {
@@ -287,6 +288,7 @@ var gameplay = {
 		y: 0,
 		width: 128,
 		height: 128,	
+		name: "teleporter",
 		sprite: ''
 		
 	},
@@ -326,15 +328,27 @@ var gameplay = {
 		// Init the stores
 		this.training.width = 128;
 		this.training.height = 256;
+		this.training.sourceWidth = 128;
+		this.training.sourceHeight = 256;
+		this.training.name = "training";
 	
 		this.store.width = 128;
 		this.store.height = 256;
+		this.store.sourceWidth = 128;
+		this.store.sourceHeight = 256;
+		this.store.name = "store";
 		
 		this.plants.width = 128;
 		this.plants.height = 256;
+		this.plants.sourceWidth = 128;
+		this.plants.sourceHeight = 256;
+		this.plants.name = "plants";
 		
 		this.mainCamp.width = 128;
 		this.mainCamp.height = 256;
+		this.mainCamp.sourceWidth = 128;
+		this.mainCamp.sourceHeight = 256;
+		this.mainCamp.name = "main camp";
 		
 		this.updateSprite();
 		
@@ -1090,115 +1104,14 @@ var gameplay = {
 			}
 			
 			cameraController.renderBackground();
-			
-			if(this.blueCoin.visible==true)
-			{
-				utility.drawImage
-				(
-				
-					gameplaySurface, this.blueCoin.sprite, 
-					this.blueCoin.sourceX, this.blueCoin.sourceY, 
-					this.blueCoin.sourceWidth, this.blueCoin.sourceHeight,
-					Math.floor(this.blueCoin.x), Math.floor(this.blueCoin.y), 
-					this.blueCoin.width, this.blueCoin.height
-				 );
-			}
-			
-			if(this.grayCoin.visible==true)
-			{
-				utility.drawImage
-				(
-				
-					gameplaySurface, this.grayCoin.sprite, 
-					this.grayCoin.sourceX, this.grayCoin.sourceY, 
-					this.grayCoin.sourceWidth, this.grayCoin.sourceHeight,
-					Math.floor(this.grayCoin.x), Math.floor(this.grayCoin.y), 
-					this.grayCoin.width, this.grayCoin.height
-				 );
-			
-			}
-			if(this.teleporter.visible==true)
-			{
-				utility.drawImage	
-				(
-					gameplaySurface, this.teleporter.sprite, 
-					this.teleporter.sourceX, this.teleporter.sourceY, 
-					this.teleporter.sourceWidth, this.teleporter.sourceHeight,
-					Math.floor(this.teleporter.x), Math.floor(this.teleporter.y), 
-					this.teleporter.width, this.teleporter.height
-			   );
-			}
-			if (this.currentLevel == Level.BaseCamp)
-			{
-				utility.drawImage
-				(
-					gameplaySurface, this.training.sprite,
-					0, 0, this.training.sprite.width, this.training.sprite.height,
-					this.training.x, this.training.y, this.training.sprite.width, this.training.sprite.height
-				);
-				utility.drawImage
-				(
-					gameplaySurface, this.mainCamp.sprite,
-					0, 0, this.mainCamp.sprite.width, this.mainCamp.sprite.height,
-					this.mainCamp.x, this.mainCamp.y, this.mainCamp.sprite.width, this.mainCamp.sprite.height
-				);
-				
-				utility.drawImage
-				(
-					gameplaySurface, this.store.sprite,
-					0, 0, this.store.sprite.width, this.store.sprite.height,
-					this.store.x, this.store.y, this.store.sprite.width, this.store.sprite.height
-				);
-				
-				utility.drawImage
-				(
-					gameplaySurface, this.plants.sprite,
-					0, 0, this.plants.sprite.width, this.plants.sprite.height,
-					this.plants.x, this.plants.y, this.plants.sprite.width, this.plants.sprite.height
-				);
-				
-				if(gameplay.trainning==true)
-				{
-					if(this.speedCoin.visible==true)
-					{	
-						utility.drawImage
-						(
-							gameplaySurface, this.speedCoin.sprite, 
-							this.speedCoin.sourceX, this.speedCoin.sourceY, 
-							this.speedCoin.sourceWidth, this.speedCoin.sourceHeight,
-							Math.floor(this.speedCoin.x), Math.floor(this.speedCoin.y), 
-							this.speedCoin.width, this.speedCoin.height
-						 );
-					}
-				}
-				
-			}
-
-
-			for (var i = 0; i < this.observationInstances.length; i++)
-			{
-				utility.drawImage
-				(
-				  
-					gameplaySurface, this.observationInstances[i].sprite, 
-					this.observationInstances[i].sourceX, this.observationInstances[i].sourceY, 
-					this.observationInstances[i].sourceWidth, this.observationInstances[i].sourceHeight,
-					Math.floor(this.observationInstances[i].x), Math.floor(this.observationInstances[i].y), 
-					this.observationInstances[i].width, this.observationInstances[i].height
-				);
-			}
-			/*
-			utility.drawImage
-			(
-				gameplaySurface, this.player.sprite, 
-				this.player.sourceX, this.player.sourceY + this.player.animation * this.player.sourceHeight, 
-				this.player.sourceWidth, this.player.sourceHeight,
-				Math.floor(this.player.x), Math.floor(this.player.y), 
-				this.player.width, this.player.height
-			
-			);	
-			*/
-			cameraController.renderForeground();
+			var sprites = [];
+			if (this.blueCoin.visible) sprites.push(this.blueCoin);
+			if (this.grayCoin.visible) sprites.push(this.grayCoin);
+			if (this.teleporter.visible) sprites.push(this.teleporter);
+			if (this.currentLevel == Level.BaseCamp) sprites = sprites.concat([this.training, this.mainCamp, this.store, this.plants]);
+			sprites.push(this.player);
+			sprites = sprites.concat(this.observationInstances);
+			cameraController.renderForeground(sprites);
 			
 			if (this.onPause)
 			{

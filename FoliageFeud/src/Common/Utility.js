@@ -325,6 +325,44 @@ var utility = {
 			//console.debug('COLLIDING');
 			return true;
 		}
+	},
+	
+	reorderArrayByY: function(array)
+	{
+		var oldArray = array;
+		var newArray = [];
+		while (oldArray.length > 0)
+		{
+			var minY = CANVAS_HEIGHT;
+			var index = -1;
+			for (var i = 0; i < oldArray.length; i++)
+			{
+				var yVal = oldArray[i].y;
+				if (oldArray[i].name == "player")
+				{
+					yVal += 32;
+				}
+				else if (oldArray[i].name == "tree")
+				{
+					yVal += 104;
+				}
+				else if (oldArray[i].name == "training" ||
+						 oldArray[i].name == "store" ||
+						 oldArray[i].name == "main camp" ||
+						 oldArray[i].name == "plants")
+				{
+					yVal += 128;
+				}
+				if (yVal < minY)
+				{
+					minY = yVal;
+					index = i;
+				}
+			}
+			newArray.push(oldArray[index]);
+			oldArray.splice(index, 1);
+		}
+		return newArray;
 	}
 };
 
