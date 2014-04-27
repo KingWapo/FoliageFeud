@@ -6,7 +6,7 @@ var ispy = {
 	// Size of image on screen
 	imgSize: 170,
 	// Index of requested plant
-	requestedPlant: 0,
+	requestedPlant: -1,
 	// Arrays of current plants and their sprites
 	curPlants: [],
 	curTraits: [],
@@ -27,11 +27,8 @@ var ispy = {
 		this.gameEnd = false;
 		this.isCorrect = false;
 		
-		if (this.requestedPlant == -1)
-		{
-			this.fromTraining = true;
+		if (this.fromTraining)
 			this.requestedPlant = plant.getRandPlant();
-		}
 		
 		this.responseOffset = 0;
 		
@@ -67,6 +64,12 @@ var ispy = {
 		var requested = this.curPlants.indexOf(this.requestedPlant);
 		console.debug(requested, ", ", this.curPlants.length);
 		
+		utility.drawImage(
+			backgroundSurface, imgISpyBg,
+			0, 0, imgISpyBg.width, imgISpyBg.height,
+			0, 0, imgISpyBg.width, imgISpyBg.height
+		);
+		
 		// Plants in current list
 		//console.debug("Current plant list: ", this.curPlants[0], ", ", this.curPlants[1], ", ", this.curPlants[2], ", ", this.curPlants[3]);
 		
@@ -82,7 +85,7 @@ var ispy = {
 			strings.push(this.curTraits[j]);
 		}
 		
-		utility.writeText(menuSurface, strings, 96, 64, 64 * 4, 25, false);
+		utility.writeText(backgroundSurface, strings, 96, 64, 64 * 4, 25, false);
 		
 		// Draw plants on screen and add them to click handler
 		for (var j = 0; j < this.curPlants.length; j++)
@@ -118,22 +121,16 @@ var ispy = {
 				else
 					utility.addClickItem(x, y, this.imgSize, this.imgSize, this.ignorePlant, [j]);
 			}
-		
-			utility.drawImage(
-				backgroundSurface, imgISpyBg,
-				0, 0, imgISpyBg.width, imgISpyBg.height,
-				0, 0, imgISpyBg.width, imgISpyBg.height
-			);
 			
 			utility.drawImage
 			(
-				gameplaySurface, this.curSprites[j],
+				backgroundSurface, this.curSprites[j],
 				0, 0, this.curSprites[j].width, this.curSprites[j].height,
 				x, y, this.imgSize, this.imgSize
 			);
 			utility.drawImage
 			(
-				gameplaySurface, imgISpyOverlay,
+				backgroundSurface, imgISpyOverlay,
 				0, 0, imgISpyOverlay.width, imgISpyOverlay.height,
 				0, 0, 1152, 512
 			);
@@ -153,7 +150,7 @@ var ispy = {
 			
 			if (this.isCorrect)
 			{
-				if (gameplay.currentLevel != Level.Tutorial)
+				if (gameplay.currentLevel != Level.Tutorial && !ispy.fromTraining)
 					responseString.push(this.dingleBotWinResponses[Math.floor(Math.random() * this.dingleBotWinResponses.length)]);
 				else if (ispy.fromTraining)
 					responseString.push("My training teaches you well, young grasshopper.");
@@ -162,7 +159,7 @@ var ispy = {
 			}
 			else
 			{
-				if (gameplay.currentLevel != Level.Tutorial)
+				if (gameplay.currentLevel != Level.Tutorial && !ispy.fromTraining)
 					responseString.push(this.dingleBotFailResponses[Math.floor(Math.random() * this.dingleBotFailResponses.length)]);
 				else if (ispy.fromTraining)
 					responseString.push("I have failed as an instructor.");
@@ -218,6 +215,7 @@ var ispy = {
 	{
 		// Reset requested plant index
 		ispy.requestedPlant = -1;
+		ispy.fromTraining = false;
 		
 		exiting[currentScreen] = true;
 	},
