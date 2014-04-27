@@ -322,7 +322,7 @@ var utility = {
 	
 	clamp: function(val, minVal, maxVal)
 	{
-		return Math.max(minVal, Math.min(val, maxVal));
+		return Math.min(maxVal, Math.max(val, minVal));
 	},
 	
 	collisionDetection: function(chaseTheCollider, brandonTheCollidee)
@@ -393,13 +393,16 @@ var utility = {
 	
 	startNewSong: function(newSong)
 	{
-		if (utility.curSong != '')
+		if (false) // debug
 		{
-			utility.curSong.pause();
+			if (utility.curSong != '')
+			{
+				utility.curSong.pause();
+			}
+			utility.curSong = newSong;
+			utility.curSong.load();
+			utility.curSong.play();
 		}
-		utility.curSong = newSong;
-		utility.curSong.load();
-		utility.curSong.play();
 	}
 };
 

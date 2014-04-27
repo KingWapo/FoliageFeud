@@ -1313,7 +1313,7 @@ window.addEventListener("keyup", function(event)
 				console.debug("Enter Pause");
 				pause.mapXOffset = 13;
 				pause.mapYOffset = 6;
-				pause.mapScale = 1;
+				pause.mapScale = MIN_MAP_SCALE;
 				gameplay.onPause = true;
 				moveDown = false;
 				moveLeft = false;

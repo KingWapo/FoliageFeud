@@ -3,16 +3,19 @@
 var BLANK = 0;
 var TREE = 5;
 
-var MAPWIDTH = 15;
-var MAPHEIGHT = 10;
+var MAPWIDTH = 20;
+var MAPHEIGHT = 20;
+
+var MIN_MAP_SCALE = .5;
+var MAX_MAP_SCALE = 1;
 
 var pause = {
 	pauseMap: [],
 	pauseObjectMap: [],
 	mapTilesheet: new Image(),
 	mapSprites: [],
-	mapScale: 1,
-	mapScaleSpeed: .2,
+	mapScale: .5,
+	mapScaleSpeed: .1,
 	mapXOffset: 13,
 	mapYOffset: 6,
 	mapPanSpeed: 10,
@@ -55,7 +58,7 @@ var pause = {
 				}
 				if (column == gameplay.teleporterCoords[0] && row == gameplay.teleporterCoords[1])
 				{
-					tempSprite = this.createSprite(5, column, row);
+					tempSprite = this.createSprite(4, column, row);
 					this.mapSprites.push(tempSprite);
 				}
 				else if (!objective)
@@ -68,17 +71,17 @@ var pause = {
 							break;
 						case TREE:
 						case BIRCHTREE:
-							tempSprite = this.createSprite(3, column, row);
+							tempSprite = this.createSprite(2, column, row);
 							this.mapSprites.push(tempSprite);
 							break;
 						case ROCK:
-							tempSprite = this.createSprite(6, column, row);
+							tempSprite = this.createSprite(5, column, row);
 							this.mapSprites.push(tempSprite);
 							break;
 					}
 					if (tile >= WATERBOUNDRARYBEGIN && tile <= WATERBOUNDRARYEND)
 					{
-						tempSprite = this.createSprite(4, column, row);
+						tempSprite = this.createSprite(3, column, row);
 						this.mapSprites.push(tempSprite);
 					}
 				}
@@ -112,8 +115,8 @@ var pause = {
 		else if (moveDown && !moveUp)
 			pause.mapYOffset -= pause.mapPanSpeed;
 			
-		pause.mapXOffset = utility.clamp(pause.mapXOffset, CANVAS_WIDTH - ((pause.pauseObjectMap[0].length * 15) * pause.mapScale) - 14, 13);
-		pause.mapYOffset = utility.clamp(pause.mapYOffset, CANVAS_HEIGHT - ((pause.pauseObjectMap.length * 10) * pause.mapScale) - 6, 6);
+		pause.mapXOffset = utility.clamp(pause.mapXOffset, CANVAS_WIDTH - ((pause.pauseObjectMap[0].length * 20) * pause.mapScale) - 14, 13);
+		pause.mapYOffset = utility.clamp(pause.mapYOffset, CANVAS_HEIGHT - ((pause.pauseObjectMap.length * 20) * pause.mapScale) - 6, 6);
 		
 		for(var i = 0; i < this.mapSprites.length; i++)
 		{
@@ -136,12 +139,12 @@ window.addEventListener("keyup", function(event)
 		switch(event.keyCode)
 		{   
 			case 88: // x
-				if (pause.mapScale < 2)
+				if (pause.mapScale < MAX_MAP_SCALE - pause.mapScaleSpeed)
 					pause.mapScale += pause.mapScaleSpeed;
 				break;
 			
 			case 90: // z
-				if (pause.mapScale > 1)
+				if (pause.mapScale > MIN_MAP_SCALE)
 					pause.mapScale -= pause.mapScaleSpeed;
 				break;
 		}
