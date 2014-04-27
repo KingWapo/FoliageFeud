@@ -13,6 +13,7 @@ var ispy = {
 	curSprites: [],
 	gameEnd: false,
 	isCorrect: false,
+	fromTraining: false,
 	dingleBotFailResponses: ["Hmmm, not the one I would have chosen.. Oh well, Come back to base and I'll give you a chance to redeem yourself."],
 	dingleBotWinResponses: ["You make this look easy. Come back to base and I'll give you that dubloon I promised you."],
 	responseOffset: 0,
@@ -25,6 +26,13 @@ var ispy = {
 		
 		this.gameEnd = false;
 		this.isCorrect = false;
+		
+		if (this.requestedPlant == -1)
+		{
+			this.fromTraining = true;
+			this.requestedPlant = plant.getRandPlant();
+		}
+		
 		this.responseOffset = 0;
 		
 		// Add plants to ispy pool
@@ -147,6 +155,8 @@ var ispy = {
 			{
 				if (gameplay.currentLevel != Level.Tutorial)
 					responseString.push(this.dingleBotWinResponses[Math.floor(Math.random() * this.dingleBotWinResponses.length)]);
+				else if (ispy.fromTraining)
+					responseString.push("My training teaches you well, young grasshopper.");
 				else
 					responseString.push("Strong in the ways of plant, you are.");
 			}
@@ -154,6 +164,8 @@ var ispy = {
 			{
 				if (gameplay.currentLevel != Level.Tutorial)
 					responseString.push(this.dingleBotFailResponses[Math.floor(Math.random() * this.dingleBotFailResponses.length)]);
+				else if (ispy.fromTraining)
+					responseString.push("I have failed as an instructor.");
 				else
 					responseString.push("That is not the plant you are looking for.  /space_wizard_brain_manipulation");
 			}
@@ -169,12 +181,15 @@ var ispy = {
 	// Handle correct guess
 	harvestPlant: function(i)
 	{
-		quests.finishedQuests.push(ispy.requestedPlant);
-		//console.debug('cur quests: ', quests.plantsToIdentify);
-		//console.debug('harvested : ', ispy.requestedPlant, ', ', plantList[ispy.requestedPlant].name);
-		
-		// Show that plant was harvested
-		plantList[ispy.requestedPlant].harvested = true;
+		if (!ispy.fromTraining)
+		{
+			quests.finishedQuests.push(ispy.requestedPlant);
+			//console.debug('cur quests: ', quests.plantsToIdentify);
+			//console.debug('harvested : ', ispy.requestedPlant, ', ', plantList[ispy.requestedPlant].name);
+			
+			// Show that plant was harvested
+			plantList[ispy.requestedPlant].harvested = true;
+		}
 
 		// Exit game mode
 		ispy.gameEnd = true;
@@ -184,7 +199,7 @@ var ispy = {
 	// Handle incorrect guess
 	ignorePlant: function(i)
 	{
-		if (gameplay.currentLevel != Level.Tutorial)
+		if (gameplay.currentLevel != Level.Tutorial && !ispy.fromTraining)
 		{
 			quests.addQuest(ispy.requestedPlant, gameplay.currentLevel);
 			//console.debug(quests.plantsToIdentify);
