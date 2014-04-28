@@ -537,30 +537,23 @@ var gameplay = {
 		{
 	
 			strings.push("You can now climb! you can pass through rocks now");	
-				utility.writeText(menuSurface, strings, 32, 50, 64 * 4 , 25, true);
+			utility.writeText(menuSurface, strings, 32, 50, 64 * 4 , 25, true);
 		}
-			else if( this.messageType =="rock")
+		else if( this.messageType =="rock")
 		{
 		
 			strings.push("you must learn to climb to pass through that");	
-				utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, true);	
+			utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, true);	
 		}
-			else if(this.messageType=="goldCoin ")
+		else if(this.messageType=="goldCoin ")
 		{
 			strings.push(" You acquired a gold coin! Use this to buy power ups at the shop");	
 				utility.writeText(menuSurface, strings, 32, 50, 64 * 4 , 25, true);	
 		}
-	
 		else
 		{
-<<<<<<< HEAD
 		 		strings.push("Get to the teleporter!!!!");	
 				utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, true);
-		}
-	
-=======
-			strings.push(" You have gained the ability to swim! The swim ability is now unlocked in your skill book.");	
-			utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, true);
 		}
 		/*
 		moveDown = false;
@@ -568,7 +561,6 @@ var gameplay = {
 		moveRight = false;
 		moveUp = false;
 		*/
->>>>>>> 510f6ee2e02fde337c24d32b35c89c43d28cb221
 	},
 	writtingClear:function()
 	{
@@ -784,14 +776,7 @@ var gameplay = {
 					
 							if(wCount===0)
 							{
-<<<<<<< HEAD
-								
-								
-								this.messageType="water";
-								
-=======
 								this.message("water");
->>>>>>> 510f6ee2e02fde337c24d32b35c89c43d28cb221
 							}
 							
 						}
@@ -1296,7 +1281,7 @@ var gameplay = {
 	},
 	
 	render: function()
-	{
+	{/*
 <<<<<<< HEAD
 		this.message();
 		if (this.onPause)
@@ -1304,10 +1289,9 @@ var gameplay = {
 			pause.render();
 		}
 		else if (currentScreen == ScreenState.WorldEvent)
-=======
+=======*/
 		
 		if (currentScreen == ScreenState.WorldEvent)
->>>>>>> 510f6ee2e02fde337c24d32b35c89c43d28cb221
 		{
 			backgroundSurface.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
 			gameplaySurface.clearRect(0, 0, gameplayCanvas.width, gameplayCanvas.height);
