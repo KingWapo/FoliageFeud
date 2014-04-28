@@ -360,6 +360,9 @@ var imgRock= utility.loadImage("../img/Tokens/rockCoin.png");
 var imgChest=utility.loadImage("../img/moneyicon.png");
 var imgWater=utility.loadImage("../img/Tokens/waterCoin.png");
 var imgNip=utility.loadImage("../img/Tokens/drparsniptoken.png");
+var imgShopSibling = utility.loadImage("../img/Player/siblingShop.png");
+var imgItemInfo = utility.loadImage("../img/Backgrounds/iteminfo.png");
+var imgPurchaseButton=utility.loadImage("../img/Buttons/exitButton.png");
 
 
 

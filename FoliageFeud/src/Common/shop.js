@@ -4,57 +4,53 @@ var shop ={
 	adventure: Object.create(buyableObject),
 	rockCoin: Object.create(buyableObject),
 	waterCoin: Object.create(buyableObject),
-	isOpen:false,
+	info:false,
+	shopKeeperDisplay:false,
 	
 render:function()
 {
 	utility.clearAll();	
 		
 		utility.drawImage(
-			menuSurface, imgShopBg,
+			gameplaySurface, imgShopBg,
 			0, 0, imgShopBg.width, imgShopBg.height,
 			0, 0, imgShopBg.width, imgShopBg.height
 		);
 		utility.drawImage(
-			menuSurface, imgExitButton,
+			gameplaySurface, imgExitButton,
 			0, 0, imgExitButton.width, imgExitButton.height,
-			1152 - 320, 512 - 160, imgExitButton.width, imgExitButton.height
-		);
-		menuSurface.drawImage(
-			imgExitButton,
-			932, 304
-		);
-		menuSurface.drawImage(
-			imgAdventure,
-			96, 138
-		);
-		menuSurface.drawImage(
-			imgRock,
-			265, 140
-		);
-		menuSurface.drawImage(
-			imgWater,
-			429, 140
-		);
-		/*menuSurface.drawImage(
-			imgNip,
-			599, 140
-		);
-		*/
-		menuSurface.drawImage(
-		imgQuestionMark,
-			766,307
+			932, 304, imgExitButton.width, imgExitButton.height
 		);
 	
+		utility.drawImage(
+			gameplaySurface, imgRock,
+			0, 0, imgRock.width, imgRock.height,
+			265, 140, imgRock.width,imgRock.height
+			);
 		
+		utility.drawImage(
+			gameplaySurface, imgWater,
+			0, 0, imgWater.width, imgWater.height,
+			429, 140, imgWater.width,imgWater.height
+			);
+			utility.drawImage(
+			gameplaySurface, imgAdventure,
+			0, 0, imgAdventure.width, imgAdventure.height,
+			96, 138, imgAdventure.width,imgAdventure.height
+			);
+			
+			utility.drawImage(
+			gameplaySurface, imgShopSibling,
+			0, 0, imgShopSibling.width, imgShopSibling.height,
+			750, 300, imgShopSibling.width,imgShopSibling.height
+			);
+				
 		
+				
+		shop.displayInfo();	
 		shop.initShop();
-		utility.addClickItem(932, 304, imgExitButton.width, imgExitButton.height,this.exitShop, "");
-		utility.addClickItem( 96,138,imgAdventure.width,imgAdventure.height,this.buyAdventure,"");
-		utility.addClickItem( 265,140,imgRock.width,imgRock.height,this.buyRock,"");
-		utility.addClickItem( 429,140,imgWater.width,imgWater.height,this.buyWater,"");
-		utility.addClickItem(759,300,imgQuestionMark.width,imgQuestionMark.height,this.loadInfo,"");
-		
+		shop.buttonHandler();
+		shop.infoDisplay();
 		
 },
 initShop:function()
@@ -74,110 +70,180 @@ initShop:function()
 	shop.waterCoin.x=429;
 	shop.waterCoin.y=140;
 	shop.waterCoin.init();	
+	var strings=[];
+			 strings.push(" gold: " + gameplay.gold);	
+				menuSurface.drawImage(
+						imgChest,
+						785, 10
+					);
+					utility.writeText(menuSurface, strings, 840,45, 64 * 4 - 10, 25, true);
+					strings.pop();
+					
+				strings.push("Click on the shop keeper for help using the shop." );
+				utility.writeText(gameplaySurface, strings, 228, 28, 64 * 4, 20, true);
 },
+
 buyAdventure:function()
 {
-	shop.adventure.buy();
-	if(gameplay.gold>=shop.adventure.price)
-		{
-			skillBook.sprintLevel=2;	
-		}
+	if(shop.adventure.description==true)
+	{
+		shop.adventure.buy();
+		skillBook.sprintLevel=1.75;
+	}
+	shop.info=true;
+	shop.adventure.description=true;
+
+	
+	
 		
 },
 buyRock:function()
 {
-	shop.rockCoin.buy();
-	if(gameplay.gold>=shop.rockCoin.price)
-		{
-			skillBook.climbLevel=2;	
-		}
+	if(shop.rockCoin.description==true)
+	{
+		shop.rockCoin.buy();
+		skillBook.climbLevel=2;
+	}
+	shop.info=true;
+	shop.rockCoin.description=true;
+	
 	
 },
 buyWater:function()
 {
-	shop.waterCoin.buy();
-	if(gameplay.gold>=shop.waterCoin.price)
-		{
-			skillBook.swimLevel=2;	
-		}
-	
-	
-	
+	if(shop.waterCoin.description==true)
+	{
+		shop.waterCoin.buy();
+		skillBook.swimLevel=2;
+	}
+	shop.info=true;
+	shop.waterCoin.description=true;
 },
-debug:function()
-{
-	console.debug("HAT!!!!!!!!!!");
+shopKeeper:function()
+{	
+	shop.info=true;
+	shop.shopKeeperDisplay=true;
 },
-loadInfo:function()
-{
-	console.debug(" hmmm this will do. ");
-	gameplay.writtingClear();
-	shop.drawInfo();
 
-	
-},
-drawInfo:function()
-{
-	utility.clearClickHandler();
-		menuSurface.drawImage(
-			imgCommonBg,
-			0, 0
-		);
-		menuSurface.drawImage(
-			imgExitButton,
-			932, 304
-		);
-			menuSurface.drawImage(
-			imgAdventure,
-			96, 140
-		);
-		menuSurface.drawImage(
-			imgRock,
-			433, 140
-		);
-		menuSurface.drawImage(
-			imgWater,
-			97, 306
-			);
-		menuSurface.drawImage(
-			imgNip,
-			433, 306
-		);
-		menuSurface.drawImage(
-			imgRightArrow,
-			1006, 270
-		);
-		menuSurface.drawImage(
-			imgLeftArrow,
-			950, 270
-		);
-		utility.addClickItem(932, 304, imgExitButton.width, imgExitButton.height, shop.redrawShop, "");
-		var strings = [];
-		strings.push(" Info Screen ");
-		utility.writeText(menuSurface, strings, 240, 25, 64 * 4 - 10, 25, true);
-		strings.pop();
-		strings.push(" Buy the adventure hat in order to increase your sprint speed.");
-		utility.writeText(menuSurface,strings,260,150,160,20,true); 
-		strings.pop();
-		strings.push(" Buy the Rock Coin to pass through large Rocks.");
-		utility.writeText(menuSurface,strings,599,150,160,20,true); 
-		strings.pop();
-		strings.push(" Buy the Water Coin to increase your swim speed and allow you to swim through rapids.");
-		utility.writeText(menuSurface,strings,260,315,160,20,true); 
-		strings.pop();
-		strings.push("Buy the parsnip costume to become the villain himself!");
-		utility.writeText(menuSurface,strings,599,315,160,20,true);
-		
-		
-	
-	
-	
-	
-},
 exitShop:function()
 {
-	utility.clearClickHandler();
-	switchGamemode(ScreenState.Gameplay);
+	if(shop.info==false)
+		{
+			switchGamemode(ScreenState.Gameplay);
+		}
+		else
+		{
+			shop.info=false;
+		}
+		shop.adventure.description=false;
+		shop.waterCoin.description=false;
+		shop.rockCoin.description=false;
+		shop.shopKeeperDisplay=false;
+	
+},
+displayInfo:function()
+{
+				if(shop.info==true)
+				{
+					utility.drawImage(
+					menuSurface,imgItemInfo,
+					0,0,imgItemInfo.width,imgItemInfo.height,
+					95,136,imgItemInfo.width,imgItemInfo.height
+				)
+				}				
+},
+buttonHandler:function()
+{
+	if(shop.info==false)
+	{
+		utility.addClickItem(932, 304, imgExitButton.width, imgExitButton.height,this.exitShop, "");
+		utility.addClickItem( 96,138,imgAdventure.width,imgAdventure.height,this.buyAdventure,"");
+		utility.addClickItem( 265,140,imgRock.width,imgRock.height,this.buyRock,"");
+		utility.addClickItem( 429,140,imgWater.width,imgWater.height,this.buyWater,"");
+		utility.addClickItem(750,300,imgShopSibling.width,imgShopSibling.height,this.shopKeeper,"");
+		
+	}
+	if(shop.info==true)
+	{
+			utility.drawImage(
+			menuSurface, imgExitButton,
+			0, 0, imgExitButton.width, imgExitButton.height,
+			338, 364, 64,64
+			
+		);
+		if(this.shopKeeperDisplay==false)
+		{	
+		utility.drawImage(
+			menuSurface, imgPurchaseButton,
+			0, 0, imgPurchaseButton.width, imgPurchaseButton.height,
+			402, 364, 64,64
+			
+		);
+		}
+			utility.addClickItem(338,364, 64,64,this.exitShop, "");
+	}
+	
+},
+infoDisplay:function()
+{
+	if(this.adventure.description==true)
+	{
+				var strings = [];
+				strings.push(" The adventure hat increases your sprint speed." );
+				utility.writeText(menuSurface, strings, 245, 290, 64 * 4, 25, true);
+				utility.drawImage(
+				menuSurface, imgAdventure,
+				0, 0, imgAdventure.width, imgAdventure.height,
+				315, 155, imgAdventure.width,imgAdventure.height
+				
+			);
+			//if you have enough gold assigns the listener to the purchase button
+				if(gameplay.gold>=this.adventure.price)
+				{
+					utility.addClickItem(402,364, 64,64,this.buyAdventure, "");
+					utility.addClickItem(402,364, 64,64,this.exitShop, "");
+				}
+	}
+	if(this.waterCoin.description==true)
+	{
+				var strings = [];
+				strings.push(" The water coin increases your swim speed as well as allows you to pass through rapids. " );
+				utility.writeText(menuSurface, strings, 245, 290, 64 * 4, 20, true);
+				utility.drawImage(
+				menuSurface, imgWater,
+				0, 0, imgWater.width, imgWater.height,
+				315, 155, imgWater.width,imgWater.height
+			);
+				if(gameplay.gold>=this.waterCoin.price)
+				{
+					utility.addClickItem(402,364, 64,64,this.buyWater, "");
+					utility.addClickItem(402,364, 64,64,this.exitShop, "");
+				}
+	}
+	if(this.rockCoin.description==true)
+	{
+		
+				var strings = [];
+				strings.push(" The rock coin increases your climb speed and allows you to pass large rocks. " );
+				utility.writeText(menuSurface, strings, 245, 290, 64 * 4, 20, true);
+				utility.drawImage(
+				menuSurface, imgRock,
+				0, 0, imgRock.width, imgRock.height,
+				315, 155, imgRock.width,imgRock.height
+			);
+				if(gameplay.gold>=this.rockCoin.price)
+				{
+					utility.addClickItem(402,364, 64,64,this.buyRock, "");
+					utility.addClickItem(402,364, 64,64,this.exitShop, "");
+				}
+	}
+	if(this.shopKeeperDisplay==true)
+	{
+				var strings = [];
+				strings.push("Welcome to the shop! You can click on any item to see a description of the item. Hit exit to return to the base camp. If you don't have enough gold				explore other maps and complete quests to receive gold to unlock items! " );
+					utility.writeText(menuSurface, strings, 245, 200, 64 * 4, 20, true);
+		
+	}
 	
 }
 };

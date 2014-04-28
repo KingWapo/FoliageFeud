@@ -25,6 +25,16 @@ Level = {
 	Map4: 5,
 	writting:false,
 }
+messageType={
+	water:0,
+	rock:1,
+	waterCoin:2,
+	rockCoin:3,
+	goldCoin:4,
+	baseCampe:5,
+}
+	
+	
 
 //Arrow key codes
 var LEFT = 37;
@@ -370,70 +380,48 @@ var gameplay = {
 		}
 	},
 	
-	message: function(name)
+	message: function()
 	{
 		var strings = [];
 		this.writtingClear();
 		this.writting=true;
-		if(name === "water" )
+		if(this.messageType=="water" )
 		{	
-			if( cameraController.levelCounter ===0)
 			
 				strings.push("Beware you dont know how to swim yet!!");
 				utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, true);
 				
 		}
-		 else if(name === "swim" )
+		 else if(this.messageType =="waterCoin"  )
 		{	
 			if( cameraController.levelCounter ===0)
 				strings.push(" You have gained the ability to swim! The swim ability is now unlocked in your skill book.");	
-				utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, true);
+				utility.writeText(menuSurface, strings, 32, 50, 64 * 4, 25, true);
 		}
-		else if(name ==="climb")
+		else if(this.messageType =="rockCoin")
 		{
 	
 			strings.push("You can now climb! you can pass through rocks now");	
-				utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, true);
+				utility.writeText(menuSurface, strings, 32, 50, 64 * 4 , 25, true);
 		}
-			else if(name ==="rock")
+			else if( this.messageType =="rock")
 		{
 		
 			strings.push("you must learn to climb to pass through that");	
 				utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, true);	
 		}
-			else if(name ==="speed")
+			else if(this.messageType=="goldCoin ")
 		{
 			strings.push(" You acquired a gold coin! Use this to buy power ups at the shop");	
-				utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, true);	
+				utility.writeText(menuSurface, strings, 32, 50, 64 * 4 , 25, true);	
 		}
-		else if(name ==="!")
-		{
-			strings.push(" You have gained the ability to swim! The swim ability is now unlocked in your skill book.");	
-				utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, true);	
-		}
-		else if(name === "skill")
-		{
-						strings.push("Climbing "+ skillBook.climbLevel);
-					utility.writeText(menuSurface, strings, 250, 200, 500, 25, true);
-					strings.pop();
-					strings.push("Swimming "+ skillBook.swimLevel);
-						utility.writeText(menuSurface, strings, 250, 225, 500, 25, true);
-						strings.pop();
-					strings.push("Run Speed "+ skillBook.sprintLevel);
-						utility.writeText(menuSurface, strings, 250, 250, 500, 25, true);
-						strings.pop();
-		
-
-		}
+	
 		else
 		{
-		 strings.push(" You have gained the ability to swim! The swim ability is now unlocked in your skill book.");	
+		 		strings.push("Get to the teleporter!!!!");	
 				utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, true);
 		}
-		moveDown = false;
-		moveLeft = false;
-		moveRight = false;
-		moveUp = false;
+	
 	},
 	writtingClear:function()
 	{
@@ -560,7 +548,7 @@ var gameplay = {
 					else
 					{
 						this.collide();
-						this.message("!")
+						
 					}
 					this.canTeleport = true;
 				}
@@ -583,14 +571,10 @@ var gameplay = {
 							{
 								
 								
-								this.message("water");
+								this.messageType="water";
 								
 							}
-							wCount++;
-							if(wCount===3000)
-							{
-								wCount=0;
-							}
+							
 						}
 						if ( utility.collisionDetection(gameplay.player, collider) && collider.name=="tree")
 						{
@@ -599,14 +583,14 @@ var gameplay = {
 						if ( utility.collisionDetection(gameplay.player, collider) && collider.name=="rock" && skillBook.climb===false)
 						{
 							this.collide();
-							this.message("rock");
+							this.messageType="rock"
 						}
 						if ( utility.collisionDetection(gameplay.player, gameplay.blueCoin) && gameplay.blueCoin.visible==true)
 						{
 							skillBook.swim=true;
 							skillBook.swimLevel=1;
 							this.blueCoin.visible=false;
-							this.message("swim");
+							this.messageType="waterCoin";
 						
 						}
 						if ( utility.collisionDetection(gameplay.player, gameplay.grayCoin) && gameplay.grayCoin.visible==true)
@@ -614,17 +598,16 @@ var gameplay = {
 							skillBook.climb=true;
 							skillBook.climbLevel=1;
 							this.grayCoin.visible=false;
-							this.message("climb");
+							this.messageType="rockCoin";
 						
 						}
 						if ( utility.collisionDetection(gameplay.player, gameplay.speedCoin) && gameplay.speedCoin.visible==true)
 						{
 							
 							this.speedCoin.visible=false;
-							this.message("speed");
+							this.messageType="goldCoin";
 							this.gold++;
 							this.tutorial=false;
-							skillBook.sprint = true;
 						
 						}	
 						if ( utility.collisionDetection(gameplay.player, gameplay.teleporter))
@@ -647,7 +630,6 @@ var gameplay = {
 							else
 							{
 								this.collide();
-								this.message("!")
 							}
 						}
 						else if (this.onTeleport)
@@ -767,6 +749,7 @@ var gameplay = {
 	
 	render: function()
 	{
+		this.message();
 		if (this.onPause)
 		{
 			pause.render();
@@ -798,13 +781,10 @@ var gameplay = {
 			 strings.push(" gold: " + this.gold);	
 				menuSurface.drawImage(
 						imgChest,
-						21, 463
+						21, 450
 					);
 					utility.writeText(menuSurface, strings, 75,485, 64 * 4 - 10, 25, true);
-				if(skillBook.display===true)
-				{
-					this.message("skill")
-				}
+				
 			
 			cameraController.render();
 			
@@ -881,6 +861,8 @@ var gameplay = {
 				 );
 			}
 				}
+				//displays the message while constantly rendering.
+				
 				
 			}
 
