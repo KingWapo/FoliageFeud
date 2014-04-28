@@ -114,7 +114,7 @@ var gameplay = {
 		speed: 8,
 		swimSpeed:2,
 		walkSpeed: 8,
-		runSpeed: 16,
+		runSpeed: 10,
 		sprite: '',
 		name: "player",
 		animation: Animation.Idle
@@ -253,7 +253,8 @@ var gameplay = {
 		atLowestPos: true,
 		name: "observation point",
 		sprite: '',
-		plantIndex: -1
+		plantIndex: -1,
+		found: false
 	},
 	
 	observationInstances: [],

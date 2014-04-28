@@ -163,7 +163,7 @@ var mainCamp = {
 	giveQuest: function(index)
 	{
 		console.debug("Removing index " + index);
-		quests.finishedQuests.splice(index);
+		quests.finishedQuests.splice(index, 1);
 		mainCamp.broTalk = 3;
 	},
 	
