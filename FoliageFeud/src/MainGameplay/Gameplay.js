@@ -64,6 +64,8 @@ var gameplay = {
 	writting:false,
 	trainning:true,
 	swimming: false,
+	climbing: false,
+	sprinting:false,
 	questDisplay: false,
 	curMap: [],
 	curObjMap: [],
@@ -110,6 +112,7 @@ var gameplay = {
 		vx: 0,
 		vy: 0,
 		speed: 8,
+		swimSpeed:2,
 		walkSpeed: 8,
 		runSpeed: 16,
 		sprite: '',
@@ -584,10 +587,31 @@ var gameplay = {
 	
 	checkMovement: function()
 	{
+		
+		if(this.swimming)
+		{
+			this.player.speed=this.player.walkSpeed/4*skillBook.swimLevel;
+		}
+		
+		 else if(this.sprinting&& !this.swimming)
+		{
+			this.player.speed=this.player.runSpeed*skillBook.sprintLevel;
+		}
+		else if(this.climbing)
+		{
+			this.player.speed=2*skillBook.climbLevel;
+		}
+		else
+		{
+			this.player.speed=this.player.walkSpeed;
+		}
+		
+		
 		try{
 		if (gameplay.collisionTiles[Math.floor(this.player.y/64 + .5)][Math.floor(this.player.x/64 + .5)].name == "water" && currentSprite != SpriteState.Parsnip)
 		{
 			this.swimming = true;
+			
 		}
 		else
 		{
@@ -603,6 +627,9 @@ var gameplay = {
 				//console.debug("Change to swimming");
 				if (this.player.animation !== Animation.SwimmingRight) {
 					this.player.animation = Animation.SwimmingRight;
+					
+		
+				
 				}
 			}
 			else
@@ -617,8 +644,12 @@ var gameplay = {
 			this.player.vx = -this.player.speed;
 			if (this.swimming)
 			{
+				
 				if (this.player.animation !== Animation.SwimmingLeft) {
 					this.player.animation = Animation.SwimmingLeft;
+					
+					
+					
 				}
 			}
 			else
@@ -627,6 +658,7 @@ var gameplay = {
 					this.player.animation = Animation.Left;
 				}
 			}
+			
 		}
 		if (currentScreen != ScreenState.WorldEvent)
 		{
@@ -637,6 +669,7 @@ var gameplay = {
 				{
 					if (this.player.animation !== Animation.SwimmingUp) {
 						this.player.animation = Animation.SwimmingUp;
+						
 					}
 				}
 				else
@@ -653,6 +686,7 @@ var gameplay = {
 				{
 					if (this.player.animation !== Animation.SwimmingDown) {
 						this.player.animation = Animation.SwimmingDown;
+						
 					}
 				}
 				else
@@ -721,6 +755,7 @@ var gameplay = {
 		this.player.x = utility.clamp(this.player.x + this.player.vx, 0, cameraController.gameWorld.width - this.player.width);
 		this.player.y = utility.clamp(this.player.y + this.player.vy, 0, cameraController.gameWorld.height - this.player.height);
 		cameraController.update();
+	
 	},
 	
 	update: function()
@@ -770,25 +805,33 @@ var gameplay = {
 					{
 						var wCount=0;
 						var collider = gameplay.collisionTiles[row][col];
-						if ( utility.collisionDetection(gameplay.player, collider) && collider.name=="water" && !skillBook.swim)
+						if ( utility.collisionDetection(gameplay.player, collider) && collider.name=="water")
 						{
-							this.collide();
-					
-							if(wCount===0)
+							if(skillBook.swim==false)
 							{
-								this.message("water");
+								this.collide();
+								this.messageType="water";	
+									
 							}
-							
+							gameplay.swimming=true;
 						}
+					
 						if ( utility.collisionDetection(gameplay.player, collider) && collider.name=="tree")
 						{
 							this.collide();
 						}	
-						if ( utility.collisionDetection(gameplay.player, collider) && collider.name=="rock" && skillBook.climb===false)
+						if ( utility.collisionDetection(gameplay.player, collider) && collider.name=="rock")
 						{
-							this.collide();
-							this.messageType="rock"
+							if(skillBook.climb=false)
+							{
+								this.collide();
+								this.messageType="rock"
+							}
+
+							
+		
 						}
+						
 						if ( utility.collisionDetection(gameplay.player, gameplay.blueCoin) && gameplay.blueCoin.visible==true)
 						{
 							skillBook.swim=true;
@@ -1282,6 +1325,7 @@ var gameplay = {
 	
 	render: function()
 	{
+		this.message();
 		if (currentScreen == ScreenState.WorldEvent)
 		{
 			backgroundSurface.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
@@ -1477,6 +1521,7 @@ window.addEventListener("keydown", function(event)
 {
 	if (event.keyCode == 16)// && skillBook.sprint== true)
 	{
+		gameplay.sprinting=true;
 		gameplay.player.speed = gameplay.player.runSpeed*skillBook.sprintLevel;
 		
 	}
@@ -1516,6 +1561,7 @@ window.addEventListener("keyup", function(event)
 {
 	if (event.keyCode == 16)
 	{
+		gameplay.sprinting=false;
 		gameplay.player.speed = gameplay.player.walkSpeed;
 	}
 	if (event.keyCode == 75)// && skillBook.sprint== true)
