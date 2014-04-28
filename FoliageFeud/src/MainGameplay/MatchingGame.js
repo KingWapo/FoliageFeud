@@ -5,12 +5,17 @@ var matching = {
 	card2: -1,
 	numFlipped: 0,
 	checkMatchDelay: 0,
+	matchesMade: 0,
+	timer: 1200,
+	timerFull: 1200,
 	
 	init: function()
 	{
 		utility.clearAll();
 		
 		this.cards = [];
+		this.matchesMade = 0;
+		this.timer = this.timerFull;
 		
 		var plantCards = plant.getMultiplePlants(9);
 		
@@ -38,7 +43,9 @@ var matching = {
 			0, 0, imgISpyBg.width, imgISpyBg.height
 		);
 		
-		utility.writeText(backgroundSurface, ["Match the plant names with its image.", "Click on the pictures to flip them over."], 96, 64, 64 * 4, 25, false);
+		this.renderTimer();
+		
+		utility.writeText(backgroundSurface, ["Match the plant names with its image.", "Click on the pictures to flip them over.", "You have made " + this.matchesMade + " matches"], 96, 128, 64 * 4, 25, false);
 		
 		var imgsPerRow = 6;
 		var gapBetween = 32;
@@ -56,6 +63,16 @@ var matching = {
 			if (this.cards[i].isFlipped || this.cards[i].isFound)
 			{
 				sprite = plantList[this.cards[i].index].sprite[0];
+				
+				if (this.cards[i].isFound)
+				{
+					utility.drawImage
+					(
+						gameplaySurface, imgCheckmark,
+						0, 0, imgCheckmark.width, imgCheckmark.height,
+						x, y, 32, 32
+					);
+				}
 			}
 			else
 			{
@@ -88,6 +105,31 @@ var matching = {
 		}
 	},
 	
+	renderTimer: function()
+	{
+		if (this.timer > 0)
+		{
+			utility.drawImage
+			(
+				backgroundSurface, imgTimerBg,
+				0, 0, imgTimerBg.width, imgTimerBg.height,
+				82, 40, 256, 32
+			);
+			utility.drawImage
+			(
+				backgroundSurface, imgTimer,
+				0, 0, imgTimer.width, imgTimer.height,
+				84, 42, Math.floor(256*this.timer/this.timerFull), 32
+			);
+			
+			this.timer -= 1;
+		}
+		else
+		{
+			this.exitMatching();
+		}
+	},
+	
 	flipCard: function(i)
 	{
 		matching.numFlipped += 1;
@@ -116,6 +158,8 @@ var matching = {
 				if (matching.cards[i].index === matching.card1)
 					matching.cards[i].isFound = true;
 			}
+			
+			matching.matchesMade += 1;
 		}
 		
 		var allFound = true;
@@ -131,7 +175,7 @@ var matching = {
 		matching.card2 = -1;
 		
 		if (allFound)
-			exiting[currentScreen] = true;
+			matching.exitMatching();
 	},
 	
 	createNameCard: function(index)
@@ -154,6 +198,11 @@ var matching = {
 		card.isFound = false;
 		
 		return card;
+	},
+	
+	exitMatching: function()
+	{
+		exiting[currentScreen] = true;
 	}
 };
 
