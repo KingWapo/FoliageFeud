@@ -782,16 +782,8 @@ var gameplay = {
 				var obs = this.observationInstances[i];
 				if (utility.collisionDetection(gameplay.player, obs))
 				{	
-					if(skillBook.swim==true && skillBook.climb ==true)
-					{
-						this.removeObservationPoint(i, obs.plantIndex);
-						switchGamemode(ScreenState.Observation);
-					}
-					else
-					{
-						this.collide();
-						
-					}
+					this.removeObservationPoint(i, obs.plantIndex);
+					switchGamemode(ScreenState.Observation);
 					this.canTeleport = true;
 				}
 			}

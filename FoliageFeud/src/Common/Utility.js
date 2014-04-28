@@ -25,6 +25,7 @@ var utility = {
 	originalWidth: 1152,
 	originalHeight: 512,
 	debugSound: false,
+	demo: false,
 	
 	// Clear screen and all objects from clickable
 	clearAll: function()
@@ -428,6 +429,11 @@ window.addEventListener("click", utility.handleClick, false);
 window.addEventListener("resize", utility.handleScale, false);
 //window.addEventListener("mouseover",utility.handleMouseOver,false);
 
+
+if (!utility.demo) // Here's where to load the assets not needed in the demo.
+{
+}
+
 var imgCommonBg = utility.loadImage("../img/Backgrounds/commonBackground.png");
 var imgMenuBg = utility.loadImage("../img/Backgrounds/menuscreen.png");
 var imgISpyBg = utility.loadImage("../img/Backgrounds/iSpyScreen.png");
@@ -438,10 +444,10 @@ imgInfoSmallOverlay.push(utility.loadImage("../img/Backgrounds/infoOverlay01.png
 imgInfoSmallOverlay.push(utility.loadImage("../img/Backgrounds/infoOverlay02.png"));
 var imgInfoOverlay = utility.loadImage("../img/Backgrounds/informationOverlay.png");
 var imgQuestLog = utility.loadImage("../img/Backgrounds/questlog.png");
-var imgMap1 = utility.loadImage("../img/Maps/Map1.png");
-var imgForestMap = utility.loadImage("../img/Maps/forest.png");
-var imgMarshMap = utility.loadImage("../img/Maps/marsh.png");
-var imgHillyMap = utility.loadImage("../img/Maps/hilly.png");
+var imgMap1 = utility.loadImage("../img/Maps/Map1.PNG");
+var imgForestMap = utility.loadImage("../img/Maps/forest.PNG");
+var imgMarshMap = utility.loadImage("../img/Maps/marsh.PNG");
+var imgHillyMap = utility.loadImage("../img/Maps/hilly.PNG");
 var imgMapBackground = utility.loadImage("../img/Backgrounds/mapSelectionBackground.png");
 var imgMapTilesheet = utility.loadImage("../img/Tiles/MapTilesheet.png");
 var imgGirlButton = utility.loadImage("../img/Buttons/playButtonGirl.png");
@@ -460,8 +466,8 @@ var imgDingleSprite = utility.loadImage("../img/Player/siblingMale.png");
 var imgUnicornSprite = utility.loadImage("../img/Player/unicorn.png");
 var imgTimer = utility.loadImage("../img/WorldEvent/timer.png");
 var imgTimerBg = utility.loadImage("../img/WorldEvent/timerBackground.png");
-var imgCheckmark = utility.loadImage("../img/WorldEvent/checkmark.png");
-var imgInvasivemark = utility.loadImage("../img/WorldEvent/invasive mark.png");
+var imgCheckmark = utility.loadImage("../img/WorldEvent/Checkmark.png");
+var imgInvasivemark = utility.loadImage("../img/WorldEvent/Invasive Mark.png");
 var imgShopBg = utility.loadImage(" ../img/Backgrounds/shopscreen.png");
 var imgAdventure =utility.loadImage("../img/Hats/explorer.png");
 var imgSold = utility.loadImage("../img/Tokens/purchased.png");
@@ -486,7 +492,7 @@ gameplay.observationInstance.sprite = utility.loadImage("../img/Tokens/exclamati
 gameplay.blueCoin.sprite = utility.loadImage("../img/Tokens/waterToken.png");
 gameplay.grayCoin.sprite = utility.loadImage("../img/Tokens/rockToken.png");
 gameplay.speedCoin.sprite = utility.loadImage("../img/Tokens/speedToken.png");
-gameplay.teleporter.sprite = utility.loadImage("../img/Tiles/teleporterfinal.png");
+gameplay.teleporter.sprite = utility.loadImage("../img/Tiles/teleporterFinal.png");
 gameplay.training.sprite = utility.loadImage("../img/Tiles/training.png");
 gameplay.store.sprite = utility.loadImage("../img/Tiles/shop.png");
 gameplay.plants.sprite = utility.loadImage("../img/Tiles/plants.png");
@@ -499,7 +505,7 @@ cameraController.tilesheetHilly = utility.loadImage("../img/Tiles/tilesheetRocky
 worldEvent.coin.sprite = utility.loadImage("../img/Tokens/speedToken.png");
 mainCamp.dingle.sprite = utility.loadImage("../img/Player/siblingMale.png");
 
-var songMainTitle = utility.loadSong("../sounds/main menu/Who Likes To Party.mp3");
+var songMainTitle = utility.loadSong("../sounds/main menu/Who Likes to Party.mp3");
 var songGameplayPrairie = utility.loadSong("../sounds/gameplay/Call to Adventure.mp3");
 var songGameplayForest = utility.loadSong("../sounds/gameplay/Pamgaea.mp3");
 var songGameplayMarsh = utility.loadSong("../sounds/gameplay/Sneaky Snitch.mp3");
