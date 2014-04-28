@@ -16,6 +16,30 @@ window.addEventListener("keydown", function(event)
 		else
 			console.debug("not debugging info");
 	}
+	if (event.keyCode === 188)
+	{
+		utility.debugSound = !utility.debugSound;
+		if (utility.debugSound)
+			console.debug("debugging sound");
+		else
+			console.debug("not debugging sound");
+	}
+	if (event.keyCode == 61)
+	{
+		currentSprite = (currentSprite + 1) % 5;
+		gameplay.updateSprite();
+	}
+	if (event.keyCode == 173)
+	{
+		currentSprite = (currentSprite - 1) % 5;
+		gameplay.updateSprite();
+	}
+	if (event.keyCode == 221)
+	{
+		var curLevel = (gameplay.currentLevel + 1) % 6
+		if (curLevel == 0) curLevel = 1;
+		gameplay.nextLevel(curLevel);
+	}
 }, false);
 
 // Edit Log:
@@ -47,7 +71,7 @@ entering = [true, // Title
 		 true, // WorldEvent
 		 true, // BaseCamp
 		 true, // End
-		 true, // TestCode
+		 true, // Matching
 
 		 true, // Shop
 		 true, // SNA
@@ -65,7 +89,7 @@ screensLoaded = [true, // Title
 				 false, // WorldEvent
 				 false, // BaseCamp
 				 false, // End
-				 false, // TestCode
+				 false, // Matching
 				 false, // Shop
 				 false, // SNA
 				 false, // Sibling
@@ -84,7 +108,7 @@ exiting = [false, // Title
 			 false, // BaseCamp
 			 false, // End
 
-			 false, // TestCode
+			 false, // Matching
 			 false, // Shop
 			 false, // SNA
 			 false, // Sibling
@@ -105,7 +129,7 @@ ScreenState = {
 	WorldEvent: 6,
 	BaseCamp: 7,
 	End: 8,
-	TestCode: 9,
+	Matching: 9,
 
 	ShopScreen: 10,
 	SNASelectionScreen: 11,
@@ -120,7 +144,10 @@ ScreenState = {
 
 SpriteState = {
 	Girl: 0,
-	Boy: 1
+	Boy: 1,
+	Parsnip: 2,
+	Dingle: 3,
+	Unicorn: 4
 };
 
 // vars to hold current and previous screens
@@ -206,6 +233,12 @@ function mainUpdate()
 		case ScreenState.SkillBook:
 			break;
 		case ScreenState.TrainingMode:
+			if (entering[currentScreen])
+			{
+				trainingScreen.init();
+				entering[currentScreen] = false;
+			}
+			trainingScreen.render();
 			break;
 		case ScreenState.WorldEvent:
 			if (entering[currentScreen])
@@ -226,12 +259,13 @@ function mainUpdate()
 			break;
 		case ScreenState.End:
 			break;
-		case ScreenState.TestCode:
+		case ScreenState.Matching:
 			if (entering[currentScreen])
 			{
 				matching.init();
 				entering[currentScreen] = false;
 			}
+				matching.render();
 			if (exiting[currentScreen])
 			{
 				switchGamemode(ScreenState.Gameplay);
@@ -296,5 +330,6 @@ function switchGamemode(newScreen)
 	}
 	currentScreen = newScreen;
 	screensLoaded[currentScreen] = true;
-	entering[currentScreen] = true;
+	if (currentScreen != ScreenState.Gameplay)
+		entering[currentScreen] = true;
 }

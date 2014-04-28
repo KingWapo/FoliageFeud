@@ -13,11 +13,12 @@ var worldEvent = {
 		[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], // 7
 		[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]  // 8
 	],
-	
+	training: false,
 	xMovement: 0,
 	playerVars: [],
 	cameraPosition: [],
-	offset: 32,
+	unicornVars: [],
+	offset: 64,
 	questionBeingAsked: false,
 	questionImageIndex: -1,
 	correctImage: new Image(),
@@ -40,12 +41,37 @@ var worldEvent = {
 			correct: false
 		}],
 	
-	wall: {
-		x: 0,
-		y: 0,
-		width: 128,
-		height: 512,
-		sprite: new Image()
+	coin: {
+		sourceX: 0,
+		sourceY: 0,
+		sourceWidth: 64,
+		sourceHeight: 64,
+		numOfFrames: 10,
+		currentFrame: 0,
+		visible: true,
+		update:0,
+		updateAnimation: function()
+		{
+			if(this.update===0)
+			{
+				this.sourceX = this.currentFrame * this.sourceWidth;
+			
+				this.currentFrame += 1;
+					
+				if ( this.currentFrame === this.numOfFrames )
+				{
+					this.currentFrame = 0;	
+				}
+					
+			}
+			this.update = (this.update+1)%2;
+		},
+		x: 100,
+		y: 100,
+		width: 64,
+		height: 64,
+		
+		sprite: ''
 	},
 	
 	init: function()
@@ -54,6 +80,7 @@ var worldEvent = {
 		
 		this.playerVars = [gameplay.player.x, gameplay.player.y, gameplay.player.speed, gameplay.player.animation];
 		this.cameraPosition = [cameraController.camera.x, cameraController.camera.y];
+		this.unicornVars = [gameplay.unicorn.x, gameplay.unicorn.y, gameplay.unicorn.animation, gameplay.unicorn.visible];
 		
 		cameraController.buildMap(this.worldEventMap, 0);
 		
@@ -65,7 +92,16 @@ var worldEvent = {
 		gameplay.player.speed = gameplay.player.runSpeed;
 		gameplay.player.animation = Animation.WorldEventRight;
 		
+		gameplay.unicorn.x = gameplay.unicorn.width;
+		gameplay.unicorn.y = gameplay.player.y;
+		gameplay.unicorn.visible = true;
+		
+		this.coin.x = CANVAS_WIDTH - this.coin.width - 128;
+		this.coin.y = gameplay.player.y;
+		
 		createScenery.init();
+		
+		utility.startNewSong(songWorldEvent);
 	},
 	
 	onExit: function()
@@ -78,13 +114,19 @@ var worldEvent = {
 		gameplay.player.y = this.playerVars[1];
 		gameplay.player.walkSpeed = this.playerVars[2];
 		gameplay.player.animation = this.playerVars[3];
+		gameplay.player.currentFrame = 0;
 		cameraController.camera.x = this.cameraPosition[0];
 		cameraController.camera.y = this.cameraPosition[1];
+		gameplay.unicorn.x = this.unicornVars[0];
+		gameplay.unicorn.y = this.unicornVars[1];
+		gameplay.unicorn.animation = this.unicornVars[2];
+		gameplay.unicorn.visible = this.unicornVars[3];
 		createScenery.onExit();
 		
-		cameraController.buildMap(allLevelMaps[cameraController.levelCounter], 0);
-		cameraController.buildMap(allObjectMaps[cameraController.levelCounter], 1);
+		cameraController.buildMap(allLevelMaps[gameplay.currentLevel], 0);
+		cameraController.buildMap(allObjectMaps[gameplay.currentLevel], 1);
 		gameplay.render();
+		gameplay.chooseSong(gameplay.currentLevel);
 		currentScreen = ScreenState.Gameplay;
 	},
 	
@@ -110,11 +152,14 @@ var worldEvent = {
 			}
 			
 		}
-		if (utility.collisionDetection(this.wall, gameplay.player))
+		
+		this.coin.updateAnimation();
+		
+		if (gameplay.player.x <= gameplay.unicorn.x + gameplay.unicorn.width)
 		{
 			exiting[currentScreen] = true;
 		}
-		if (this.checkmarks.length >= 5)
+		if (gameplay.player.x + gameplay.player.width >= this.coin.x)
 		{
 			exiting[currentScreen] = true;
 		}
@@ -123,17 +168,14 @@ var worldEvent = {
 	render: function()
 	{
 		gameplay.render();
-		cameraController.render();
-		
-		createScenery.render();
-		
-		utility.drawImage( gameplaySurface,
-			this.wall.sprite,
-			0, 0,
-			this.wall.width, this.wall.height,
-			0, 0,
-			this.wall.width, this.wall.height
+		cameraController.renderBackground();
+		utility.drawImage(
+			gameplaySurface, this.coin.sprite,
+			this.coin.sourceX, this.coin.sourceY, this.coin.sourceWidth, this.coin.sourceHeight,
+			this.coin.x, this.coin.y, this.coin.width, this.coin.height
 			);
+		createScenery.render();
+		utility.debugDimensions(gameplay.unicorn);
 			
 		if (this.questionBeingAsked)
 		{
@@ -148,57 +190,25 @@ var worldEvent = {
 				this.answerQuestion(0);
 			}
 		}
-		
-		for (var i = 0; i < this.checkmarks.length; i++)
-		{
-			utility.drawImage(menuSurface,
-				imgCheckmark,
-				0, 0,
-				64, 64,
-				i * 64, 0,
-				64, 64
-				);
-			/*
-			menuSurface.drawImage(
-				imgCheckmark,
-				i * 64, 0,
-				64, 64
-				);
-			*/
-		}
-		
 	},
 	
 	askQuestion: function()
 	{
 		this.questionBeingAsked = true;
 		
-		numsChosen = [-1, -1, -1];
+		numsChosen = plant.getMultiplePlants(3);
 		
-		var curQuestion = 0;
-		this.questionImageIndex = Math.floor(Math.random() * this.questions.length);
-		this.questions[this.questionImageIndex].correct = true;
-		while (curQuestion < 3)
+		var answerIndex = Math.floor(Math.random() * this.questions.length);
+		
+		this.questions[answerIndex].correct = true;
+		
+		for (var i = 0; i < this.questions.length; i++)
 		{
-			var index = Math.floor(Math.random() * plantList.length);
-			if (index == numsChosen[0] ||
-				index == numsChosen[1] ||
-				index == numsChosen[2]){ 
-					continue;
-				}
-			else
-			{
-				this.questions[curQuestion].name = plantList[index].name;
-				if (this.questions[curQuestion].correct)
-				{
-					this.correctImage = plantList[index].sprite[0];
-					console.debug(curQuestion + ": " + this.questions[curQuestion].name);
-					
-				}
-				curQuestion++;
-			}
+			this.questions[i].name = plantList[numsChosen[i]].name;
 		}
 		
+		this.correctImage = plantList[numsChosen[answerIndex]].sprite[0];
+		console.debug(answerIndex + ": " + this.questions[answerIndex].name);
 	},
 	
 	answerQuestion: function(index)

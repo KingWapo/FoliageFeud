@@ -32,7 +32,10 @@ var cameraController = {
 	//Game Level Mapsbuil
 	//Arrays to store the level maps
 	levelCounter: 0,
-	tilesheet: new Image(),
+	tilesheetMain: new Image(),
+	tilesheetForest: new Image(),
+	tilesheetMarsh: new Image(),
+	tilesheetHilly: new Image(),
 	baseTiles: [],
 	foregroundTiles: [],
 	sprites: [],
@@ -52,8 +55,8 @@ var cameraController = {
 	camera: {
 		x: 0,
 		y: 0,
-		width: gameplayCanvas.width,
-		height: gameplayCanvas.height,
+		width: CANVAS_WIDTH,
+		height: CANVAS_HEIGHT,
 		vx: 0,
 		previousX: 0,
 		xBounds: .8,
@@ -83,8 +86,6 @@ var cameraController = {
 	
 	init: function()
 	{
-		this.tilesheet.src = "../img/Tiles/tilesheet.png";
-		
 		//The number of rows and columns
 		var curMap = allLevelMaps[gameplay.currentLevel];
 		this.ROWS = curMap.length;
@@ -104,15 +105,17 @@ var cameraController = {
 			for (var j = 0; j < 75; j++)
 			{
 				var sprite = Object.create(spriteObject);
+				sprite.name = "empty";
 				tempList.push(sprite);
 				foregroundTemp.push(sprite);
 			}
 			this.baseTiles.push(tempList);
 			this.foregroundTiles.push(foregroundTemp);
 		}
-		
-		this.buildMap(allLevelMaps[gameplay.currentLevel], 0);
-		this.buildMap(allObjectMaps[gameplay.currentLevel], 1);
+		gameplay.curMap = allLevelMaps[gameplay.currentLevel];
+		gameplay.curObjMap = allObjectMaps[gameplay.currentLevel];
+		this.buildMap(gameplay.curMap, 0);
+		this.buildMap(gameplay.curObjMap, 1);
 	},
 	
 	update: function()
@@ -154,28 +157,40 @@ var cameraController = {
 		}
 	},
 	
-	render: function()
+	renderBackground: function()
 	{
 		//Move the drawing surface so that it's positioned relative to the camera
-		backgroundSurface.translate(-this.camera.x, -this.camera.y);
-		gameplaySurface.translate(-this.camera.x, -this.camera.y);
+		backgroundSurface.translate(-this.camera.x * utility.scale, -this.camera.y * utility.scale);
+		
+		var tilesheet = this.tilesheetMain;
+		if (gameplay.currentLevel == Level.Forest)
+		{
+			tilesheet = this.tilesheetForest;
+		}
+		else if (gameplay.currentLevel == Level.Marsh)
+		{
+			tilesheet = this.tilesheetMarsh;
+		}
+		else if (gameplay.currentLevel == Level.Hilly)
+		{
+			tilesheet = this.tilesheetHilly;
+		}
 		for (var row = Math.floor(this.camera.y / 64) - 2; row < Math.floor((this.camera.y + this.camera.height)/64) + 2; row++)
 		{
 			for (var column = Math.floor(this.camera.x / 64) - 2; column < Math.floor((this.camera.x + this.camera.width)/64) + 2; column++)
 			{
-				if (row >= 0 && row < this.ROWS && column >= 0 && column < this.COLUMNS)
+				if (row >= 0 && row < gameplay.curMap.length && column >= 0 && column < gameplay.curMap[0].length)
 				{
 					var sprite = this.baseTiles[row][column];
 					
 					//display the scrolling sprites
-					currentLevelMap = allLevelMaps[gameplay.currentLevel];
-					if (currentLevelMap[row][column] != EMPTY)
+					if (gameplay.curMap[row][column] != EMPTY)
 					{
 						if(sprite.visible && sprite.scrollable)
 						{
 						 utility.drawImage
 						 (
-						   backgroundSurface, this.tilesheet, 
+						   backgroundSurface, tilesheet, 
 						   sprite.sourceX, sprite.sourceY, 
 						   sprite.sourceWidth, sprite.sourceHeight,
 						   Math.floor(sprite.x), Math.floor(sprite.y), 
@@ -183,37 +198,123 @@ var cameraController = {
 						 ); 
 						}
 					}
-					 
-					var gameObjectMap = allObjectMaps[gameplay.currentLevel];
-					if (currentScreen != ScreenState.WorldEvent)
-					{
-						if (gameObjectMap[row][column] != EMPTY)
-						{
-							var foregroundSprite = this.foregroundTiles[row][column];
-							try {
-							utility.drawImage
-							 (
-							   gameplaySurface, this.tilesheet, 
-							   foregroundSprite.sourceX, foregroundSprite.sourceY, 
-							   foregroundSprite.sourceWidth, foregroundSprite.sourceHeight,
-							   Math.floor(foregroundSprite.x), Math.floor(foregroundSprite.y), 
-							   foregroundSprite.width, foregroundSprite.height
-							 ); 
-							}
-							catch(err){console.debug("Error: " + err);}
-						}
-					}
 				}
 			}		
 		}
 	},
 	
+	renderForeground: function(spritesFromGameplay)
+	{
+		gameplaySurface.translate(-this.camera.x * utility.scale, -this.camera.y * utility.scale);
+		var tilesheet = this.tilesheetMain;
+		if (gameplay.currentLevel == Level.Forest)
+		{
+			tilesheet = this.tilesheetForest;
+		}
+		else if (gameplay.currentLevel == Level.Marsh)
+		{
+			tilesheet = this.tilesheetMarsh;
+		}
+		else if (gameplay.currentLevel == Level.Hilly)
+		{
+			tilesheet = this.tilesheetHilly;
+		}
+		
+		var theseSprites = spritesFromGameplay;
+		var foregroundSpriteCols = [];
+		foregroundSpriteCols = this.foregroundTiles.slice(Math.max(0, Math.floor(this.camera.y / 64) - 2), Math.min(Math.floor((this.camera.y + this.camera.height)/64) + 1, gameplay.curMap.length));
+		for (var i = 0; i < foregroundSpriteCols.length; i++)
+		{
+			var spritesWanted = foregroundSpriteCols[i].slice(Math.max(0, Math.floor(this.camera.x / 64) - 2), 
+															  Math.min(Math.floor((this.camera.x + this.camera.width)/64) + 2, gameplay.curMap[0].length));
+			theseSprites = theseSprites.concat(spritesWanted);
+		}
+		var newSprites = utility.reorderArrayByY(theseSprites);
+		
+		try
+		{
+			for (var i = 0; i < newSprites.length; i++)
+			{
+				var currentSprite = newSprites[i];
+				if (currentSprite.name == "player")
+				{
+					utility.drawImage
+					(
+						gameplaySurface, currentSprite.sprite, 
+						currentSprite.sourceX, currentSprite.sourceY + currentSprite.animation * currentSprite.sourceHeight, 
+						currentSprite.sourceWidth, currentSprite.sourceHeight,
+						Math.floor(currentSprite.x), Math.floor(currentSprite.y), 
+						currentSprite.width, currentSprite.height
+					
+					);
+				}
+				else if (currentSprite.name == "blue coin" ||
+						 currentSprite.name == "gray coin" ||
+						 currentSprite.name == "teleporter" ||
+						 currentSprite.name == "training" ||
+						 currentSprite.name == "main camp" ||
+						 currentSprite.name == "store" ||
+						 currentSprite.name == "plants" ||
+						 currentSprite.name == "observation point" ||
+						 currentSprite.name == "unicorn" ||
+						 currentSprite.name == "dr parsnip")
+				{
+					if (currentSprite.name == "unicorn") console.debug("Drawing Unicorn");
+					utility.drawImage
+					(
+						gameplaySurface, currentSprite.sprite, 
+						currentSprite.sourceX, currentSprite.sourceY, 
+						currentSprite.sourceWidth, currentSprite.sourceHeight,
+						Math.floor(currentSprite.x), Math.floor(currentSprite.y), 
+						currentSprite.width, currentSprite.height
+					
+					);
+				}
+				else if (currentSprite.name !== "empty")
+				{
+					utility.drawImage
+					 (
+					   gameplaySurface, tilesheet, 
+					   currentSprite.sourceX, currentSprite.sourceY, 
+					   currentSprite.sourceWidth, currentSprite.sourceHeight,
+					   Math.floor(currentSprite.x), Math.floor(currentSprite.y), 
+					   currentSprite.width, currentSprite.height
+					 ); 
+				}
+			}
+		}
+		catch(err){}
+	},
+	
 	buildMap: function(levelMap, tier)
 	{
-		this.gameWorld.width = levelMap[0].length * 64;
-		this.gameWorld.height = levelMap.length * 64;
-		this.ROWS = levelMap.length;
-		this.COLUMNS = levelMap[0].length;
+		this.ROWS = gameplay.curMap.length;
+		this.COLUMNS = gameplay.curMap[0].length;
+		
+		this.WIDTH = this.COLUMNS * SIZE;
+		this.HEIGHT = this.ROWS * SIZE;
+		
+		this.gameWorld.width = this.WIDTH;
+		this.gameWorld.height = this.HEIGHT;
+		
+		if (tier == 0) this.baseTiles = [];
+		else if (tier ==1) this.foregroundTiles = [];
+		
+		for (var i = 0; i < gameplay.curMap.length; i++)
+		{
+			var tempList = [];
+			var foregroundTemp = [];
+			for (var j = 0; j < gameplay.curMap[i].length; j++)
+			{
+				var sprite = Object.create(spriteObject);
+				sprite.name = "empty";
+				tempList.push(sprite);
+				foregroundTemp.push(sprite);
+			}
+			this.baseTiles.push(tempList);
+			this.foregroundTiles.push(foregroundTemp);
+		}
+		
 		for(var row = 0; row < levelMap.length; row++) 
 		{	
 			for(var column = 0; column < levelMap[row].length; column++) 
@@ -244,30 +345,53 @@ var cameraController = {
 						sprite.name = "rock";
 						gameplay.collisionTiles[row][column] = sprite;
 					}
+					if (currentTile == GRASS)
+					{
+						sprite.name = "grass";
+					}
 				}
 				else if (tier == 1) // Object tiles
 				{
 					if (currentTile == TREE || currentTile == BIRCHTREE)
 					{
+						var hitBox = {
+							x: -64,
+							y: -64,
+							width: 0,
+							height: 0
+						};
+						sprite.sourceHeight = 128;
+						sprite.height = 128;
 						if (currentTile == BIRCHTREE)
 						{
 							sprite.sourceWidth = 64;
 							sprite.width = 64;
+							hitBox.x = sprite.x + 24;
+							hitBox.y = sprite.y + 104;
+							hitBox.width = 16;
+							hitBox.height = 8;
 						}
 						else
 						{
 							sprite.sourceWidth = 128;
 							sprite.width = 128;
+							hitBox.x = sprite.x + 48;
+							hitBox.y = sprite.y + 96;
+							hitBox.width = 32;
+							hitBox.height = 16;
 						}
-						sprite.sourceHeight = 128;
-						sprite.height = 128;
 						sprite.name = "tree";
+						hitBox.name = "tree";
+						
+						//console.debug("Sprite--x: " + sprite.x + ", y: " + sprite.y + ", w: " + sprite.width + ", h: " + sprite.height);
+						//console.debug("Hit Box--x: " + hitBox.x + ", y: " + hitBox.y + ", w: " + hitBox.width + ", h: " + hitBox.height);
 						this.foregroundTiles[row][column] = sprite;
-						gameplay.collisionTiles[row][column] = sprite;
+						gameplay.collisionTiles[row][column] = hitBox;
 					}
 					else
 					{
-						levelMap[row][column] = EMPTY;
+						//levelMap[row][column] = EMPTY;
+						
 					}
 				}
 			  }

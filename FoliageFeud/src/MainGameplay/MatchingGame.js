@@ -1,12 +1,21 @@
 var matching = {
 	tileSize: 105,
 	cards: [],
+	card1: -1,
+	card2: -1,
+	numFlipped: 0,
+	checkMatchDelay: 0,
+	matchesMade: 0,
+	timer: 1200,
+	timerFull: 1200,
 	
 	init: function()
 	{
 		utility.clearAll();
 		
 		this.cards = [];
+		this.matchesMade = 0;
+		this.timer = this.timerFull;
 		
 		var plantCards = plant.getMultiplePlants(9);
 		
@@ -22,7 +31,21 @@ var matching = {
 		}
 		
 		utility.shuffle(this.cards);
+	},
+	
+	render: function()
+	{
+		utility.clearAll();
 		
+		utility.drawImage(
+			backgroundSurface, imgISpyBg,
+			0, 0, imgISpyBg.width, imgISpyBg.height,
+			0, 0, imgISpyBg.width, imgISpyBg.height
+		);
+		
+		this.renderTimer();
+		
+		utility.writeText(backgroundSurface, ["Match the plant names with its image.", "Click on the pictures to flip them over.", "You have made " + this.matchesMade + " matches"], 96, 128, 64 * 4, 25, false);
 		
 		var imgsPerRow = 6;
 		var gapBetween = 32;
@@ -34,13 +57,35 @@ var matching = {
 			
 			if (i === 0 || i === 3)
 				x += 3;
-				
-			utility.addClickItem(x, y, this.tileSize, this.tileSize, this.flipCard, [i]);
 
+			var sprite;
+			
+			if (this.cards[i].isFlipped || this.cards[i].isFound)
+			{
+				sprite = plantList[this.cards[i].index].sprite[0];
+				
+				if (this.cards[i].isFound)
+				{
+					utility.drawImage
+					(
+						gameplaySurface, imgCheckmark,
+						0, 0, imgCheckmark.width, imgCheckmark.height,
+						x, y, 32, 32
+					);
+				}
+			}
+			else
+			{
+				sprite = imgQuestionMark;
+				
+				if (this.numFlipped != 2)
+					utility.addClickItem(x, y, this.tileSize, this.tileSize, this.flipCard, [i]);
+			}
+			
 			utility.drawImage
 			(
-				backgroundSurface, imgQuestionMark,
-				0, 0, this.tileSize, this.tileSize, x, y,
+				backgroundSurface, sprite,
+				0, 0, sprite.width, sprite.height, x, y,
 				this.tileSize, this.tileSize
 			);
 		}
@@ -50,11 +95,87 @@ var matching = {
 			0, 0, imgInfoOverlay.width, imgInfoOverlay.height,
 			0, 0, imgInfoOverlay.width, imgInfoOverlay.height
 		);
+		
+		if (this.numFlipped == 2)
+		{
+			this.checkMatchDelay = (this.checkMatchDelay + 1) % 30;
+			
+			if (this.checkMatchDelay == 0)
+				this.checkMatch();
+		}
+	},
+	
+	renderTimer: function()
+	{
+		if (this.timer > 0)
+		{
+			utility.drawImage
+			(
+				backgroundSurface, imgTimerBg,
+				0, 0, imgTimerBg.width, imgTimerBg.height,
+				82, 40, 256, 32
+			);
+			utility.drawImage
+			(
+				backgroundSurface, imgTimer,
+				0, 0, imgTimer.width, imgTimer.height,
+				84, 42, Math.floor(256*this.timer/this.timerFull), 32
+			);
+			
+			this.timer -= 1;
+		}
+		else
+		{
+			this.exitMatching();
+		}
 	},
 	
 	flipCard: function(i)
 	{
+		matching.numFlipped += 1;
+			
+		matching.cards[i].isFlipped = true;
+		
 		console.debug(plantList[matching.cards[i].index].name);
+		
+		if (matching.numFlipped === 1)
+			matching.card1 = matching.cards[i].index;
+		else if (matching.numFlipped === 2)
+		{
+			matching.card2 = matching.cards[i].index;
+			//matching.checkMatch();
+		}
+	},
+	
+	checkMatch: function()
+	{
+		matching.numFlipped = 0;
+		
+		if (matching.card1 === matching.card2)
+		{
+			for (var i = 0; i < matching.cards.length; i++)
+			{
+				if (matching.cards[i].index === matching.card1)
+					matching.cards[i].isFound = true;
+			}
+			
+			matching.matchesMade += 1;
+		}
+		
+		var allFound = true;
+		
+		for (var i = 0; i < matching.cards.length; i++)
+		{
+			matching.cards[i].isFlipped = false;
+			if (matching.cards[i].isFound == false)
+				allFound = false;
+		}
+		
+		matching.card1 = -1;
+		matching.card2 = -1;
+		
+		if (allFound)
+			matching.exitMatching();
 	},
 	
 	createNameCard: function(index)
@@ -62,6 +183,8 @@ var matching = {
 		var card = Object.create(cardObj);
 		card.index = index;
 		card.isImg = false;
+		card.isFlipped = false;
+		card.isFound = false;
 		
 		return card;
 	},
@@ -71,12 +194,21 @@ var matching = {
 		var card = Object.create(cardObj);
 		card.index = index;
 		card.isImg = true;
+		card.isFlipped = false;
+		card.isFound = false;
 		
 		return card;
+	},
+	
+	exitMatching: function()
+	{
+		exiting[currentScreen] = true;
 	}
 };
 
 var cardObj = {
 	index: -1,
 	isImg: false,
+	isFlipped: false,
+	isFound: false,
 };

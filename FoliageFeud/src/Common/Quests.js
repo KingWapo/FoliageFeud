@@ -26,15 +26,11 @@ var quests = {
 		quests.addQuest(plantInfo[0], plantInfo[1]);
 	},
 	
-	removeQuest:function(plant, region)
+	removeQuest:function(plantIndex)
 	{
-		var plantIndex = this.plantsToIdentify.indexOf(plant);
-		if (plantIndex > -1)
-		{
-			this.finishedQuests.push(this.plantsToIdentify[plantIndex]);
-			this.plantsToIdentify.splice(plantIndex, 1);
-			this.regionsToVisit.splice(plantIndex, 1);
-		}
+		//this.finishedQuests.push(this.plantsToIdentify[plantIndex]);
+		this.plantsToIdentify.splice(plantIndex, 1);
+		this.regionsToVisit.splice(plantIndex, 1);
 	},
 	
 	plantsInARegion: function(region)
@@ -44,9 +40,14 @@ var quests = {
 		{
 			if (this.regionsToVisit[i] == region)
 			{
-				plants.push(this.plantsToIdentify[i]);
+				indices = [];
+				indices.push(this.plantsToIdentify[i]);
+				indices.push(i);
+				plants.push(indices);
 			}
 		}
 		return plants;
 	}
 };
+
+var regions = [ "Brandon's Bib", "Ben's Castle", "Praire", "Forest", "Marsh", "Hilly"];
