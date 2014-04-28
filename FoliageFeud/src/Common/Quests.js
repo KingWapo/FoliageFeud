@@ -28,7 +28,7 @@ var quests = {
 	
 	removeQuest:function(plantIndex)
 	{
-		this.finishedQuests.push(this.plantsToIdentify[plantIndex]);
+		//this.finishedQuests.push(this.plantsToIdentify[plantIndex]);
 		this.plantsToIdentify.splice(plantIndex, 1);
 		this.regionsToVisit.splice(plantIndex, 1);
 	},
