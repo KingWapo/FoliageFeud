@@ -99,9 +99,9 @@ var gameplay = {
 		height: 64,
 		vx: 0,
 		vy: 0,
-		speed: 4,
-		walkSpeed: 4,
-		runSpeed: 8,
+		speed: 8,
+		walkSpeed: 8,
+		runSpeed: 16,
 		sprite: '',
 		name: "player",
 		animation: Animation.Idle

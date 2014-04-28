@@ -486,6 +486,7 @@ cameraController.tilesheetForest = utility.loadImage("../img/Tiles/tilesheetFore
 cameraController.tilesheetMarsh = utility.loadImage("../img/Tiles/tilesheetMarsh.png");
 cameraController.tilesheetHilly = utility.loadImage("../img/Tiles/tilesheetRocky.png");
 worldEvent.coin.sprite = utility.loadImage("../img/Tokens/speedToken.png");
+mainCamp.dingle.sprite = utility.loadImage("../img/Player/siblingMale.png");
 
 var songMainTitle = utility.loadSong("../sounds/main menu/Who Likes To Party.mp3");
 var songGameplayPrairie = utility.loadSong("../sounds/gameplay/Call to Adventure.mp3");
