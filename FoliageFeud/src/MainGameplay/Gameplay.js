@@ -1502,6 +1502,11 @@ window.addEventListener("keydown", function(event)
 		
 			skillBook.display=true;
 	}
+	if (event.keyCode >= LEFT && event.keyCode <= DOWN)
+	{
+		event.preventDefault();
+	}
+	
 	switch(event.keyCode)
 	{
 		case LEFT:

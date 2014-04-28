@@ -9,16 +9,28 @@
 
 <style type="text/css">
 	canvas{
-		border: 1px dashed black;
+		border: none;
 		position: absolute;
+	}
+	#description{
+		font-family: ComingSoon;
+		position: relative;
 	}
 </style>
 
 <body>
-	<div id="stage" style="position: relative; font-family: Evilgreen1;">
+	<div id="stage" style="position: relative;">
 		<canvas width="1152" height="512" id="backgroundCanvas" style="z-index: 0;"> </canvas>
 		<canvas width="1152" height="512" id="gameplayCanvas" style="z-index: 1;"> </canvas>
 		<canvas width="1152" height="512" id="menuCanvas" style="z-index: 2;"> </canvas>
+	</div>
+	<div id="description">
+		<p>Controls:
+		<br/> &nbsp &nbsp Arrow keys - Move
+		<br/> &nbsp &nbsp Hold shift - Sprint
+		<br/> &nbsp &nbsp Q - Quest Log
+		<br/> &nbsp &nbsp Enter - Minimap
+		<br/> &nbsp &nbsp Z/X - Minimap Zoom</p>
 	</div>
 	
 	<link rel="stylesheet" type="text/css" href="Style/style.css">

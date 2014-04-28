@@ -63,6 +63,14 @@ var utility = {
 		menuCanvas.setAttribute('width', utility.originalWidth * utility.scale);
 		menuCanvas.setAttribute('height', utility.originalHeight * utility.scale);
 		
+		backgroundCanvas.style.left = ((window.innerWidth - backgroundCanvas.width) / 2) - 10 + "px";
+		gameplayCanvas.style.left = ((window.innerWidth - gameplayCanvas.width) / 2) - 10 + "px";
+		menuCanvas.style.left = ((window.innerWidth - menuCanvas.width) / 2) - 10 + "px";
+		
+		var description = document.getElementById('description');
+		description.style.paddingTop = CANVAS_HEIGHT * utility.scale + 20 + "px";
+		description.style.paddingLeft = backgroundCanvas.style.left;
+		
 		//console.debug(utility.scale);
 	},
 	
