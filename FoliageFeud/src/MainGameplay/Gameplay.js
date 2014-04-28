@@ -553,23 +553,21 @@ var gameplay = {
 	
 		else
 		{
-<<<<<<< HEAD
+
 		 		strings.push("Get to the teleporter!!!!");	
 				utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, true);
 		}
 	
-=======
-			strings.push(" You have gained the ability to swim! The swim ability is now unlocked in your skill book.");	
-			utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, true);
-		}
+
+	
+	},
 		/*
 		moveDown = false;
 		moveLeft = false;
 		moveRight = false;
 		moveUp = false;
 		*/
->>>>>>> 510f6ee2e02fde337c24d32b35c89c43d28cb221
-	},
+
 	writtingClear:function()
 	{
 		menuSurface.clearRect(0, 0, menuCanvas.width, menuCanvas.height);
@@ -784,14 +782,13 @@ var gameplay = {
 					
 							if(wCount===0)
 							{
-<<<<<<< HEAD
+
 								
 								
 								this.messageType="water";
 								
-=======
 								this.message("water");
->>>>>>> 510f6ee2e02fde337c24d32b35c89c43d28cb221
+
 							}
 							
 						}
@@ -1297,17 +1294,16 @@ var gameplay = {
 	
 	render: function()
 	{
-<<<<<<< HEAD
 		this.message();
 		if (this.onPause)
 		{
 			pause.render();
 		}
 		else if (currentScreen == ScreenState.WorldEvent)
-=======
+
 		
 		if (currentScreen == ScreenState.WorldEvent)
->>>>>>> 510f6ee2e02fde337c24d32b35c89c43d28cb221
+
 		{
 			backgroundSurface.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
 			gameplaySurface.clearRect(0, 0, gameplayCanvas.width, gameplayCanvas.height);
@@ -1331,7 +1327,7 @@ var gameplay = {
 				menuSurface.clearRect(0, 0, menuCanvas.width, menuCanvas.height);
 			}
 			var strings=[];
-<<<<<<< HEAD
+
 			 strings.push(" gold: " + this.gold);	
 				menuSurface.drawImage(
 						imgChest,
@@ -1343,7 +1339,7 @@ var gameplay = {
 			cameraController.render();
 			
 			if(this.blueCoin.visible==true)
-=======
+
 			strings.push(" gold: " + this.gold);	
 			utility.drawImage(
 				menuSurface, imgChest,
@@ -1354,9 +1350,8 @@ var gameplay = {
 			);
 			utility.writeText(menuSurface, strings, 96, CANVAS_HEIGHT - imgChest.height + 8, 64 * 4 - 10, 25, true);
 			if(skillBook.display===true)
->>>>>>> 510f6ee2e02fde337c24d32b35c89c43d28cb221
 			{
-				this.message("skill")
+
 			}
 			
 			cameraController.renderBackground();
@@ -1409,13 +1404,13 @@ var gameplay = {
 				{
 					strings.push("Plant: " + plantList[quests.plantsToIdentify[i]].name + "   Region: " + regions[quests.regionsToVisit[i]]);
 				}
-<<<<<<< HEAD
+
 				//displays the message while constantly rendering.
 				
 				
-=======
+
 				utility.writeText(menuSurface, strings, (CANVAS_WIDTH - imgQuestLog.width) / 2 + 64, 72, imgQuestLog.width, 16, false)
->>>>>>> 510f6ee2e02fde337c24d32b35c89c43d28cb221
+
 			}
 		}
 	},

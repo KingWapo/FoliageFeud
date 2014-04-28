@@ -133,6 +133,7 @@ var mainCamp = {
 	
 	talkToBro: function(empty)
 	{
+		
 		switch(mainCamp.broTalk)
 		{
 			case 0: // Intro statement
