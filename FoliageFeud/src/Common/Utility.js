@@ -236,10 +236,7 @@ var utility = {
 		maxWidth = maxWidth * utility.scale;
 		fontSize = Math.floor(fontSize * utility.scale);
 		
-		//if (!isOutlined)
-			context.fillStyle = "black";
-		//else
-			//context.fillStyle = "white";
+		context.fillStyle = "black";
 		context.font = fontSize + "px ComingSoon";
 		
 		context.lineWidth = 1;
@@ -264,8 +261,8 @@ var utility = {
 						
 					context.fillText(line, x, y);
 					
-					//if (isOutlined)
-						//context.strokeText(line, x, y);
+					if (isOutlined)
+						context.strokeText(line, x, y);
 						
 					line = words[i] + ' ';
 					y += fontSize;
@@ -284,8 +281,8 @@ var utility = {
 			
 			height += originalSize;
 			
-			//if (isOutlined)
-				//context.strokeText(line, x, y);
+			if (isOutlined)
+				context.strokeText(line, x, y);
 			
 			y += fontSize * 2;
 		}
@@ -456,6 +453,7 @@ var imgUnicornSprite = utility.loadImage("../img/Player/unicorn.png");
 var imgTimer = utility.loadImage("../img/WorldEvent/timer.png");
 var imgTimerBg = utility.loadImage("../img/WorldEvent/timerBackground.png");
 var imgCheckmark = utility.loadImage("../img/WorldEvent/checkmark.png");
+var imgInvasivemark = utility.loadImage("../img/WorldEvent/invasive mark.png");
 var imgShopBg = utility.loadImage(" ../img/Backgrounds/shopscreen.png");
 var imgAdventure =utility.loadImage("../img/Hats/explorer.png");
 var imgSold = utility.loadImage("../img/Tokens/purchased.png");

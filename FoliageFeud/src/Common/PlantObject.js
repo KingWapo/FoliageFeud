@@ -120,6 +120,19 @@ var plant = {
 		}
 		
 		return curPlants;
+	},
+	
+	getInvasivePlants: function()
+	{
+		var invasive = [];
+		
+		for (var i = 0; i < plantList.length; i++)
+		{
+			if (plantList[i].invasive)
+				invasive.push(i);
+		}
+		
+		return invasive;
 	}
 }
 

@@ -131,13 +131,13 @@ var info = {
 				if (plantList[curPlant].invasive)
 					strings.push("Invasive species");
 				
-				utility.addClickItem(40, 40, 32, 32, this.moreInfo, '');
+				utility.addClickItem(64, 40, 32, 32, this.moreInfo, '');
 				
 				utility.drawImage
 				(
 					backgroundSurface, imgInfoButton,
 					0, 0, imgInfoButton.width, imgInfoButton.height,
-					40, 40, 32, 32
+					64, 40, 32, 32
 				);
 				
 				if (moreInfoDisplayed)

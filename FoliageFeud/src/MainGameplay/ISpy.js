@@ -133,13 +133,24 @@ var ispy = {
 				0, 0, this.curSprites[j].width, this.curSprites[j].height,
 				x, y, this.imgSize, this.imgSize
 			);
-			utility.drawImage
-			(
-				backgroundSurface, imgISpyOverlay,
-				0, 0, imgISpyOverlay.width, imgISpyOverlay.height,
-				0, 0, 1152, 512
-			);
+			
+			if (plantList[this.curPlants[j]].invasive)
+			{
+				utility.drawImage
+				(
+					gameplaySurface, imgInvasivemark,
+					0, 0, imgInvasivemark.width, imgInvasivemark.height,
+					x + 80, y + 80, imgInvasivemark.width, imgInvasivemark.height
+				);
+			}
 		}
+		
+		utility.drawImage
+		(
+			backgroundSurface, imgISpyOverlay,
+			0, 0, imgISpyOverlay.width, imgISpyOverlay.height,
+			0, 0, 1152, 512
+		);
 		
 		if (this.gameEnd)
 		{
