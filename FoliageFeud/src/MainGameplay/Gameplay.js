@@ -1281,16 +1281,7 @@ var gameplay = {
 	},
 	
 	render: function()
-	{/*
-<<<<<<< HEAD
-		this.message();
-		if (this.onPause)
-		{
-			pause.render();
-		}
-		else if (currentScreen == ScreenState.WorldEvent)
-=======*/
-		
+	{
 		if (currentScreen == ScreenState.WorldEvent)
 		{
 			backgroundSurface.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
@@ -1314,20 +1305,7 @@ var gameplay = {
 				
 				menuSurface.clearRect(0, 0, menuCanvas.width, menuCanvas.height);
 			}
-			var strings=[];
-<<<<<<< HEAD
-			 strings.push(" gold: " + this.gold);	
-				menuSurface.drawImage(
-						imgChest,
-						21, 450
-					);
-					utility.writeText(menuSurface, strings, 75,485, 64 * 4 - 10, 25, true);
-				
-			
-			cameraController.render();
-			
-			if(this.blueCoin.visible==true)
-=======
+			strings = [];
 			strings.push(" gold: " + this.gold);	
 			utility.drawImage(
 				menuSurface, imgChest,
@@ -1338,7 +1316,6 @@ var gameplay = {
 			);
 			utility.writeText(menuSurface, strings, 96, CANVAS_HEIGHT - imgChest.height + 8, 64 * 4 - 10, 25, true);
 			if(skillBook.display===true)
->>>>>>> 510f6ee2e02fde337c24d32b35c89c43d28cb221
 			{
 				this.message("skill")
 			}
@@ -1393,13 +1370,7 @@ var gameplay = {
 				{
 					strings.push("Plant: " + plantList[quests.plantsToIdentify[i]].name + "   Region: " + regions[quests.regionsToVisit[i]]);
 				}
-<<<<<<< HEAD
-				//displays the message while constantly rendering.
-				
-				
-=======
 				utility.writeText(menuSurface, strings, (CANVAS_WIDTH - imgQuestLog.width) / 2 + 64, 72, imgQuestLog.width, 16, false)
->>>>>>> 510f6ee2e02fde337c24d32b35c89c43d28cb221
 			}
 		}
 	},
