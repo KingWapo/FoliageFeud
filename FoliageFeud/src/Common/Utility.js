@@ -24,7 +24,7 @@ var utility = {
 	scale: 1,
 	originalWidth: 1152,
 	originalHeight: 512,
-	debugSound: true,
+	debugSound: false,
 	demo: false,
 	debugAll: true,
 	

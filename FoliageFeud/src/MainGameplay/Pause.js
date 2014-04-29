@@ -19,6 +19,7 @@ var pause = {
 	mapXOffset: 13,
 	mapYOffset: 6,
 	mapPanSpeed: 10,
+	orientation: 0,
 	
 	
 	buildInGameMap: function()
@@ -34,8 +35,12 @@ var pause = {
 			//console.debug("(" + objectives[i][0] + ", " + objectives[i][1] + ")");
 		}*/
 		//console.debug("(" + playerLocation[0] + ", " + playerLocation[1] + ")");
-		this.pauseMap = allLevelMaps[gameplay.currentLevel];
-		this.pauseObjectMap = allObjectMaps[gameplay.currentLevel];
+		this.pauseMap = [];
+		this.pauseObjectMap = [];
+		this.mapSprites = [];
+		
+		this.pauseMap = rotate.RotateMap(allLevelMaps[gameplay.currentLevel], pause.orientation);
+		this.pauseObjectMap = rotate.RotateMap(allObjectMaps[gameplay.currentLevel], pause.orientation);
 		for (var row = 0; row < this.pauseMap.length; row++)
 		{
 			for (var column = 0; column < this.pauseMap[row].length; column++)
@@ -146,6 +151,20 @@ window.addEventListener("keyup", function(event)
 			case 90: // z
 				if (pause.mapScale > MIN_MAP_SCALE)
 					pause.mapScale -= pause.mapScaleSpeed;
+				break;
+				
+			case 83: // s
+				pause.orientation = (pause.orientation + 1) % 4;
+				pause.buildInGameMap();
+				//console.debug("s ",pause.orientation);
+				break;
+			
+			case 65: // a
+				pause.orientation -= 1;
+				if (pause.orientation < 0)
+					pause.orientation = 3;
+				pause.buildInGameMap();
+				//console.debug("a ",pause.orientation);
 				break;
 		}
 	}

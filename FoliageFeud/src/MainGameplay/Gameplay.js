@@ -1482,7 +1482,9 @@ var gameplay = {
 					0, 0, imgLargeTextBox.width, imgLargeTextBox.height,
 					x, y, imgLargeTextBox.width, imgLargeTextBox.height
 				);
-				utility.writeText(menuSurface, [this.phrases[this.phraseIndex]], x + 32, y + 48 , imgSmallTextBox.width - 64, 24, false);
+				try {
+					utility.writeText(menuSurface, [this.phrases[this.phraseIndex]], x + 32, y + 48 , imgSmallTextBox.width - 64, 24, false);
+				} catch (err) {console.debug("nooooooo");}
 			}
 		}
 		
