@@ -75,6 +75,9 @@ var gameplay = {
 	obsCoords: [],
 	gold:20,
 	invasivesSeen: [],
+	phrases: ["Ah! Sibling, you've seem to have found my previous", "assistant's handbook. While you're there, if you could grab", "the plant she was looking for, that'd be great!", "Come find me at my hq when you're done, we have", "important things to discuss. The  teleporter will take you", "straight there."],
+	phraseIndex: 0,
+	talking: false,
 	
 	// Buildings
 	store: Object.create(spriteObject),
@@ -582,7 +585,7 @@ var gameplay = {
 	},
 	updateAnimation: function()
 	{
-		if (!this.questDisplay) this.player.updateAnimation();
+		if (!this.questDisplay && !this.talking) this.player.updateAnimation();
 		for (var i = 0; i < this.observationInstances.length; i++)
 		{
 			this.observationInstances[i].updateAnimation();
@@ -785,7 +788,7 @@ var gameplay = {
 		}
 		else if (currentScreen == ScreenState.Gameplay)
 		{
-			if (!this.questDisplay) this.checkMovement();
+			if (!this.questDisplay && !this.talking) this.checkMovement();
 			
 			for (var i = 0; i < this.observationInstances.length; i++)
 			{
@@ -793,8 +796,6 @@ var gameplay = {
 				if (utility.collisionDetection(gameplay.player, obs))
 				{
 					this.removeObservationPoint(i, obs.plantIndex);
-					switchGamemode(ScreenState.Observation);
-					this.canTeleport = true;
 				}
 			}
 				
@@ -1423,6 +1424,23 @@ var gameplay = {
 				}
 				utility.writeText(menuSurface, strings, (CANVAS_WIDTH - imgQuestLog.width) / 2 + 64, 72, imgQuestLog.width, 16, false)
 			}
+			
+			if (this.talking)
+			{
+				x = 0;
+				y = CANVAS_HEIGHT - imgLargeTextBox.height;
+				utility.drawImage(
+					menuSurface, imgLargeTextBox,
+					0, 0, imgLargeTextBox.width, imgLargeTextBox.height,
+					x, y, imgLargeTextBox.width, imgLargeTextBox.height
+				);
+				phrase = "";
+				for (var i = this.phraseIndex; i < Math.min(this.phraseIndex + 3, this.phrases.length); i++)
+				{
+					phrase += " " + this.phrases[i];
+				}
+				utility.writeText(menuSurface, [phrase], x + 32, y + 48 , imgSmallTextBox.width - 64, 24, false);
+			}
 		}
 	},
 	
@@ -1519,10 +1537,21 @@ var gameplay = {
 	
 	removeObservationPoint: function(index, plantIndex)
 	{
-		console.debug("index: " + index + "plantIndex: " + plantIndex);
-		this.observationInstances.splice(index, 1);
-		ispy.setRequested(quests.plantsToIdentify[plantIndex]);
-		quests.removeQuest(plantIndex);
+		if (this.currentLevel == Level.Tutorial && this.phraseIndex < this.phrases.length - 2)
+		{
+			this.talking = true;
+			
+		}
+		else
+		{
+			this.talking = false;
+			console.debug("index: " + index + "plantIndex: " + plantIndex);
+			this.observationInstances.splice(index, 1);
+			ispy.setRequested(quests.plantsToIdentify[plantIndex]);
+			quests.removeQuest(plantIndex);
+			switchGamemode(ScreenState.Observation);
+			this.canTeleport = true;
+		}
 	}
 }
 
@@ -1606,7 +1635,11 @@ window.addEventListener("keyup", function(event)
 
 		  
 		case ENTER:
-			if (!gameplay.onPause)
+			if (gameplay.talking)
+			{
+				gameplay.phraseIndex += 1;
+			}
+			else if (!gameplay.onPause)
 			{
 				console.debug("Enter Pause");
 				pause.mapXOffset = 13;
