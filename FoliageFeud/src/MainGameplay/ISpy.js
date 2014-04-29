@@ -238,7 +238,7 @@ var ispy = {
 				}
 				else
 				{
-					trainingGame.returnRate = (.02 * this.gamesCorrect * this.gamesCorrect) + (.1 * this.gamesCorrect);
+					trainingGame.returnRate = (.0125 * this.gamesCorrect * this.gamesCorrect) + (.025 * this.gamesCorrect);
 					console.debug(trainingGame.returnRate);
 					ispy.leaveISpy();
 				}
