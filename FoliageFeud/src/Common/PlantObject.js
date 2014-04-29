@@ -91,7 +91,10 @@ var plant = {
 			var plantIndex;
 			
 			if (curPlants.length < 1)
-				plantIndex = plant.getRandPlant();
+				do
+				{
+					plantIndex = plant.getRandPlant();
+				} while (plantIndex === ispy.requestedPlant);
 			else
 			{
 				do
