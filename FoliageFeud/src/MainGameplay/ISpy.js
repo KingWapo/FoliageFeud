@@ -46,10 +46,12 @@ var ispy = {
 		
 		// Add requested plant to ispy pool
 		this.curPlants.push(this.requestedPlant);
+		console.debug(this.curPlants);
 		
 		// Shuffle array
 		this.curPlants = utility.shuffle(this.curPlants);
 		
+		console.debug(this.curPlants);
 		for (var i = 0; i < this.curPlants.length; i++)
 		{
 			if (!plantList[this.curPlants[i]].loaded)

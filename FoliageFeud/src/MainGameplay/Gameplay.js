@@ -73,9 +73,8 @@ var gameplay = {
 	curObjMap: [],
 	teleporterCoords: [],
 	obsCoords: [],
-	gold:0,
+	gold:20,
 	invasivesSeen: [],
-
 	
 	// Buildings
 	store: Object.create(spriteObject),
@@ -432,6 +431,7 @@ var gameplay = {
 		this.placeObservationEvent();
 		this.placeBlue();
 		this.placeGray();
+		this.placeGold();
 		
 		this.teleporter.x=1000;
 		this.teleporter.y=300;
@@ -560,17 +560,13 @@ var gameplay = {
 		}
 		else if(this.messageType=="teleporter")
 		{
-
-				
-		 		strings.push(" You must collect plants first!");	
-				utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, false);
-
+			strings.push(" You must collect plants first!");	
+			utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, false);
 		}
 		else if(this.messageType=="blank")
 		{
 			strings.push(" ");
 			utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, false);
-			
 		}
 			
 		/*
@@ -795,8 +791,7 @@ var gameplay = {
 			{
 				var obs = this.observationInstances[i];
 				if (utility.collisionDetection(gameplay.player, obs))
-				{	
-
+				{
 					if(skillBook.swim==true)
 					{
 						this.removeObservationPoint(i, obs.plantIndex);
@@ -1121,7 +1116,7 @@ var gameplay = {
 			height: 64
 		}
 		
-		this.placeSpeed;
+		this.placeGold();
 	},
 	
 	drawMap1: function()
@@ -1524,8 +1519,13 @@ var gameplay = {
 	},
 	placeGold:function()
 	{
+<<<<<<< HEAD
 				goldCoin.x = Math.random() * (cameraController.gameWorld.width - 128) - obsPoint.width + 128;
 				  goldCoin.y= Math.random() * (cameraController.gameWorld.height - 128) - obsPoint.height + 128;
+=======
+				//var obsX = Math.random() * (cameraController.gameWorld.width - 128) - obsPoint.width + 128;
+				//var obsY = Math.random() * (cameraController.gameWorld.height - 128) - obsPoint.height + 128;
+>>>>>>> be2d298ed8a7d5256f8c4bc6c188b58a7e4ff2ea
 		
 	},
 	
