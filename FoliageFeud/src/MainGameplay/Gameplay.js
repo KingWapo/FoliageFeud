@@ -75,21 +75,12 @@ var gameplay = {
 	obsCoords: [],
 	gold:0,
 	invasivesSeen: [],
-<<<<<<< HEAD
-<<<<<<< HEAD
 	goldStorage:[],
-=======
-	phrases: ["Ah! Sibling, you've seem to have found my previous", "assistant's handbook. While you're there, if you could grab", "the plant she was looking for, that'd be great!", "Come find me at my hq when you're done, we have", "important things to discuss. The  teleporter will take you", "straight there."],
-	phraseIndex: 0,
-	talking: false,
->>>>>>> b377ce310b19003946d3c9016b6c2268bcad0df6
-=======
 	phrases: ["Ah! Sibling, you've seem to have found my previous assistant's handbook. While you're there, if you could grab the plant she was looking for, that'd be great!", 
 			  "Come find me at my hq when you're done, we have important things to discuss. The  teleporter will take you straight there."],
 	phraseIndex: 0,
 	talking: false,
 	visitedBrother: false,
->>>>>>> db2765513003cad74feb91ae66883c9997d8ab7e
 	
 	// Buildings
 	store: Object.create(spriteObject),
@@ -896,13 +887,8 @@ var gameplay = {
 						}	
 						if ( utility.collisionDetection(gameplay.player, gameplay.teleporter.hitbox))
 						{
-<<<<<<< HEAD
-							
-							if(this.canTeleport)
-=======
 							this.messageType="teleporter";
 							if(this.canTeleport && (this.visitedBrother || this.currentLevel == Level.Tutorial))
->>>>>>> db2765513003cad74feb91ae66883c9997d8ab7e
 							{
 								if (!this.onTeleport)
 								{
