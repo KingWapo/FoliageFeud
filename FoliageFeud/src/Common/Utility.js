@@ -170,26 +170,30 @@ var utility = {
 	*/
 	loadImage: function(source)
 	{
-		utility.totalNumAssets += 1;
-		
-		var tempImage = new Image();
-		tempImage.src = source;
-		
-		tempImage.addEventListener("load", utility.loadedAsset, false);
-		
-		return tempImage;
+		try {
+			utility.totalNumAssets += 1;
+			
+			var tempImage = new Image();
+			tempImage.src = source;
+			
+			tempImage.addEventListener("load", utility.loadedAsset, false);
+			
+			return tempImage;
+		} catch (err) { console.log("Art asset failed to load: " + err); }
 	},
 	
 	loadSong: function(source)
 	{
-		utility.totalNumAssets += 1;
-		
-		var tempSong = new Audio(source);
-		tempSong.loop = true;
-		
-		tempSong.addEventListener("canplay", utility.loadedAsset, false);
-		
-		return tempSong;
+		try {
+			utility.totalNumAssets += 1;
+			
+			var tempSong = new Audio(source);
+			tempSong.loop = true;
+			
+			tempSong.addEventListener("canplay", utility.loadedAsset, false);
+			
+			return tempSong;
+		} catch (err) { console.log("Sound asset failed to load: " + err); }
 	},
 	
 	loadedAsset: function()
