@@ -110,5 +110,6 @@ var trainingGame = {
 		var goldWon = Math.floor(trainingGame.goldWagered * trainingGame.returnRate)
 		gameplay.gold += goldWon;
 		console.debug("goldwon ", goldWon);
+		trainingGame.goldWagered = 0;
 	}
 };

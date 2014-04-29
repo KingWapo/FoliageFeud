@@ -17,6 +17,8 @@ var ispy = {
 	dingleBotWinResponses: ["You make this look easy. Come back to base and I'll give you that dubloon I promised you."],
 	responseOffset: 0,
 	readyToRender: false,
+	invasiveSeen: false,
+	hasInvasive: false,
 	
 	// Training mode variables
 	fromTraining: false,
@@ -33,6 +35,7 @@ var ispy = {
 		this.gameEnd = false;
 		this.isCorrect = false;
 		this.readyToRender = true;
+		this.hasInvasive = false;
 		
 		if (this.fromTraining)
 			this.requestedPlant = plant.getRandPlant();
@@ -52,14 +55,18 @@ var ispy = {
 		this.curPlants = utility.shuffle(this.curPlants);
 		
 		console.debug(this.curPlants);
+		
 		for (var i = 0; i < this.curPlants.length; i++)
 		{
 			if (!plantList[this.curPlants[i]].loaded)
 			{
 				//console.debug("loaded ", plantList[this.curPlants[i]].loaded);
 				plant.loadPlant(plantList[this.curPlants[i]]);
-				this.readyToRender = true;
+				this.readyToRender = false;
 			}
+			
+			if (plantList[this.curPlants[i]].invasive)
+				this.hasInvasive = true;
 		}
 		
 		// Get 2 random traits for the plant
@@ -171,6 +178,19 @@ var ispy = {
 			0, 0, imgISpyOverlay.width, imgISpyOverlay.height,
 			0, 0, 1152, 512
 		);
+		
+		if (!this.invasiveSeen && this.hasInvasive)
+		{
+			utility.drawImage
+			(
+				menuSurface, imgLargeTextBox,
+				0, 0, imgLargeTextBox.width, imgLargeTextBox.height,
+				128, CANVAS_HEIGHT - 120, imgLargeTextBox.width, imgLargeTextBox.height
+			);
+			
+			utility.writeText(menuSurface, ["Do you see that red check?  That means a plant is invasive.  After seeing one, come back to camp and I'll give you a reward for identifying them."], 148, CANVAS_HEIGHT - 72, 840, 20, false);
+			utility.writeForClick(menuSurface, ["Close"], 910, CANVAS_HEIGHT - 120 - 32 + imgLargeTextBox.height, 100, 20, false, [function(){ispy.invasiveSeen = true;}, ['']]);
+		}
 		
 		if (this.gameEnd)
 		{
