@@ -195,6 +195,11 @@ var info = {
 	
 	exitInfo: function()
 	{
+		curPlant = -1;
+		plantDisplayed = false;
+		info.page = 0;
+		delay = 0;
+		imagePosY = -256;
 		exiting[currentScreen] = true;
 	},
 	
