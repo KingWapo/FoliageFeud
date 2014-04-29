@@ -528,6 +528,12 @@ var gameplay = {
 				this.player.sourceHeight = 64;
 				this.player.height = 64;
 				break;
+			case SpriteState.BlackDingle:
+				this.player.sprite = imgBlackDingleSprite;
+				this.player.numOfFrames = 9;
+				this.player.sourceHeight = 64;
+				this.player.height = 64;
+				break;
 			case SpriteState.Unicorn:
 				this.player.sprite = imgUnicornSprite;
 				this.player.numOfFrames = 4;

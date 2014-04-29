@@ -147,7 +147,8 @@ SpriteState = {
 	Boy: 1,
 	Parsnip: 2,
 	Dingle: 3,
-	Unicorn: 4
+	BlackDingle: 4,
+	Unicorn: 5
 };
 
 // vars to hold current and previous screens

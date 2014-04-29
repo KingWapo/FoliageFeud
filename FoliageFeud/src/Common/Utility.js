@@ -467,6 +467,7 @@ var imgMaleSprite = utility.loadImage("../img/Player/characterMale.png");
 var imgFemaleSprite = utility.loadImage("../img/Player/characterFemale.png");
 var imgParsnipSprite = utility.loadImage("../img/Player/drparsnip.png");
 var imgDingleSprite = utility.loadImage("../img/Player/siblingMale.png");
+var imgBlackDingleSprite = utility.loadImage("../img/Player/siblingMaleDiverse.png");
 var imgUnicornSprite = utility.loadImage("../img/Player/unicorn.png");
 var imgTimer = utility.loadImage("../img/WorldEvent/timer.png");
 var imgTimerBg = utility.loadImage("../img/WorldEvent/timerBackground.png");
