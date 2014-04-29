@@ -259,7 +259,6 @@ var cameraController = {
 						 currentSprite.name == "unicorn" ||
 						 currentSprite.name == "dr parsnip")
 				{
-					if (currentSprite.name == "unicorn") console.debug("Drawing Unicorn");
 					utility.drawImage
 					(
 						gameplaySurface, currentSprite.sprite, 

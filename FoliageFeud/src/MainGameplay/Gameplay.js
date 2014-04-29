@@ -72,7 +72,12 @@ var gameplay = {
 	curObjMap: [],
 	teleporterCoords: [],
 	obsCoords: [],
+<<<<<<< HEAD
 	gold:0,
+=======
+	gold:20,
+	invasivesSeen: [],
+>>>>>>> 13fb5e5e44c855a02dbdda7b4e9d6507af71c516
 	
 	// Buildings
 	store: Object.create(spriteObject),
@@ -115,7 +120,7 @@ var gameplay = {
 		speed: 8,
 		swimSpeed:2,
 		walkSpeed: 8,
-		runSpeed: 16,
+		runSpeed: 10,
 		sprite: '',
 		name: "player",
 		animation: Animation.Idle
@@ -254,7 +259,8 @@ var gameplay = {
 		atLowestPos: true,
 		name: "observation point",
 		sprite: '',
-		plantIndex: -1
+		plantIndex: -1,
+		found: false
 	},
 	
 	observationInstances: [],
@@ -529,35 +535,40 @@ var gameplay = {
 		{	
 			
 				strings.push("Beware you dont know how to swim yet!!");
-				utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, true);
+				utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, false);
 				
 		}
 		 else if(this.messageType =="waterCoin"  )
 		{	
 			if( cameraController.levelCounter ===0)
 				strings.push(" You have gained the ability to swim! The swim ability is now unlocked in your skill book.");	
-				utility.writeText(menuSurface, strings, 32, 50, 64 * 4, 25, true);
+				utility.writeText(menuSurface, strings, 32, 50, 64 * 4, 25, false);
 		}
 		else if(this.messageType =="rockCoin")
 		{
 	
 			strings.push("You can now climb! you can pass through rocks now");	
-			utility.writeText(menuSurface, strings, 32, 50, 64 * 4 , 25, true);
+			utility.writeText(menuSurface, strings, 32, 50, 64 * 4 , 25, false);
 		}
 		else if( this.messageType =="rock")
 		{
 		
 			strings.push("you must learn to climb to pass through that");	
-			utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, true);	
+			utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, false);	
 		}
 		else if(this.messageType=="goldCoin ")
 		{
 			strings.push(" You acquired a gold coin! Use this to buy power ups at the shop");	
-				utility.writeText(menuSurface, strings, 32, 50, 64 * 4 , 25, true);	
+				utility.writeText(menuSurface, strings, 32, 50, 64 * 4 , 25, false);	
 		}
 		else if(this.messageType=="teleporter")
 		{
+<<<<<<< HEAD
 			
+=======
+		 		strings.push("Get to the teleporter!!!!");	
+				utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, false);
+>>>>>>> 13fb5e5e44c855a02dbdda7b4e9d6507af71c516
 		}
 			
 		/*
@@ -783,6 +794,7 @@ var gameplay = {
 				var obs = this.observationInstances[i];
 				if (utility.collisionDetection(gameplay.player, obs))
 				{	
+<<<<<<< HEAD
 					if(skillBook.swim==true)
 					{
 						this.removeObservationPoint(i, obs.plantIndex);
@@ -793,6 +805,10 @@ var gameplay = {
 						this.collide();
 						
 					}
+=======
+					this.removeObservationPoint(i, obs.plantIndex);
+					switchGamemode(ScreenState.Observation);
+>>>>>>> 13fb5e5e44c855a02dbdda7b4e9d6507af71c516
 					this.canTeleport = true;
 				}
 			}
