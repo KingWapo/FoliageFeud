@@ -362,6 +362,7 @@ var gameplay = {
 		y: 100,
 		width: 64,
 		height: 64,
+		name: "gold coin",
 		
 		sprite: new Image()
 	},
@@ -411,9 +412,9 @@ var gameplay = {
 		for(i=0;i<10;i++)
 		{
 			this.goldStorage[i]=Object.create(this.goldCoin);
-			this.goldStorage[i].name="gold";
-			this.goldStorage[i].x = Math.random() * (cameraController.gameWorld.width + 300);
-			this.goldStorage[i].y = Math.random() * (cameraController.gameWorld.height - 300);
+			this.goldStorage[i].name="gold coin";
+			this.goldStorage[i].x = Math.random() * (this.curMap[0].length * 64 + 300);
+			this.goldStorage[i].y = Math.random() * (this.curMap.length * 64 - 300);
 			console.debug ("gold x "+ this.goldStorage[i].x+" gold.y"+this.goldStorage[i].y)
 			
 		}
@@ -454,7 +455,6 @@ var gameplay = {
 		this.placeObservationEvent();
 		this.placeBlue();
 		this.placeGray();
-		this.placeGold();
 		
 		this.teleporter.x=1000;
 		this.teleporter.y=300;
@@ -496,6 +496,8 @@ var gameplay = {
 		moveDown = false;
 		moveLeft = false;
 		moveRight = false;
+		
+		this.populateGold();
 	},
 	
 	updateSprite: function()
@@ -614,7 +616,7 @@ var gameplay = {
 		}
 		this.blueCoin.updateAnimation();
 		this.grayCoin.updateAnimation();
-		this.goldCoin.updateAnimation();
+		for (var i = 0; i < this.goldStorage.length; i++) this.goldStorage[i].updateAnimation();
 		this.teleporter.updateAnimation();
 		if (this.parsnip.visible) this.parsnip.updateAnimation();
 		//if (this.unicorn.visible) this.unicorn.updateAnimation();
@@ -1373,7 +1375,6 @@ var gameplay = {
 	{
 		
 		this.message();
-		this.placeGold();
 		if (currentScreen == ScreenState.WorldEvent)
 		{
 			backgroundSurface.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
@@ -1422,6 +1423,7 @@ var gameplay = {
 			if (this.observationInstances.length > 0) sprites = sprites.concat(this.observationInstances);
 			if (this.parsnip.visible) sprites.push(this.parsnip);
 			if (this.unicorn.visible) sprites.push(this.unicorn);
+			if (this.goldStorage.length > 0) sprites = sprites.concat(this.goldStorage);
 			cameraController.renderForeground(sprites);
 			
 			if (this.onPause)
@@ -1564,18 +1566,17 @@ var gameplay = {
 	
 	placeGold:function()
 	{
-		if(this.currentLevel==Level.Marsh)
+		if(this.currentLevel==Level.Tutorial)
 		{
-			for(i=0;i<10;i++)
+			for(i=0;i<this.goldStorage.length;i++)
 			{
 				utility.drawImage(
-				gameplaySurface, imgGoldCoin,
-				0, 0, imgGoldCoin.width, imgGoldCoin.height,
-				this.goldStorage[i].x, this.goldStorage[i].y, imgGoldCoin.width, imgGoldCoin.height
-			);
-			this.goldStorage[i].updateAnimation();
+					gameplaySurface, imgGoldCoin,
+					0, 0, imgGoldCoin.width, imgGoldCoin.height,
+					this.goldStorage[i].x, this.goldStorage[i].y, imgGoldCoin.width, imgGoldCoin.height
+				);
+			}
 		}
-	}
 	},
 
 	
