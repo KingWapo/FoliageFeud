@@ -32,6 +32,7 @@ messageType={
 	rockCoin:3,
 	goldCoin:4,
 	baseCampe:5,
+	teleporter:6,
 }
 	
 	
@@ -71,7 +72,7 @@ var gameplay = {
 	curObjMap: [],
 	teleporterCoords: [],
 	obsCoords: [],
-	gold:20,
+	gold:0,
 	
 	// Buildings
 	store: Object.create(spriteObject),
@@ -323,7 +324,7 @@ var gameplay = {
 		name: "gray coin",
 		sprite: ''
 	},
-	speedCoin: {
+	goldCoin: {
 		sourceX: 0,
 		sourceY: 0,
 		sourceWidth: 64,
@@ -518,8 +519,9 @@ var gameplay = {
 		}
 	},
 	
-	message: function()
+	message:function()
 	{
+		
 		var strings = [];
 		this.writtingClear();
 		this.writting=true;
@@ -553,11 +555,11 @@ var gameplay = {
 			strings.push(" You acquired a gold coin! Use this to buy power ups at the shop");	
 				utility.writeText(menuSurface, strings, 32, 50, 64 * 4 , 25, true);	
 		}
-		else
+		else if(this.messageType=="teleporter")
 		{
-		 		strings.push("Get to the teleporter!!!!");	
-				utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, true);
+			
 		}
+			
 		/*
 		moveDown = false;
 		moveLeft = false;
@@ -578,7 +580,7 @@ var gameplay = {
 		}
 		this.blueCoin.updateAnimation();
 		this.grayCoin.updateAnimation();
-		this.speedCoin.updateAnimation();
+		this.goldCoin.updateAnimation();
 		this.teleporter.updateAnimation();
 		if (this.parsnip.visible) this.parsnip.updateAnimation();
 		//if (this.unicorn.visible) this.unicorn.updateAnimation();
@@ -781,7 +783,7 @@ var gameplay = {
 				var obs = this.observationInstances[i];
 				if (utility.collisionDetection(gameplay.player, obs))
 				{	
-					if(skillBook.swim==true && skillBook.climb ==true)
+					if(skillBook.swim==true)
 					{
 						this.removeObservationPoint(i, obs.plantIndex);
 						switchGamemode(ScreenState.Observation);
@@ -822,7 +824,7 @@ var gameplay = {
 						}	
 						if ( utility.collisionDetection(gameplay.player, collider) && collider.name=="rock")
 						{
-							if(skillBook.climb=false)
+							if(skillBook.climb==false)
 							{
 								this.collide();
 								this.messageType="rock"
@@ -848,17 +850,19 @@ var gameplay = {
 							this.messageType="rockCoin";
 						
 						}
-						if ( utility.collisionDetection(gameplay.player, gameplay.speedCoin) && gameplay.speedCoin.visible==true)
+						if ( utility.collisionDetection(gameplay.player, gameplay.goldCoin) && gameplay.goldCoin.visible==true)
 						{
 							
-							this.speedCoin.visible=false;
+							this.goldCoin.visible=false;
 							this.messageType="goldCoin";
-							this.gold++;
+							var randGold=math.floor(math.random()*5);
+							gameplay.gold= gameplay.gold+ randgold;
 							this.tutorial=false;
 						
 						}	
 						if ( utility.collisionDetection(gameplay.player, gameplay.teleporter.hitbox))
 						{
+							this.messageType="teleporter";
 							if(this.canTeleport)
 							{
 								if (!this.onTeleport)
@@ -999,6 +1003,7 @@ var gameplay = {
 		{
 			case Level.BaseCamp:
 				utility.startNewSong(songGameplayCamp);
+				
 				break;
 			case Level.Map1:
 				utility.startNewSong(songGameplayPrairie);
@@ -1500,10 +1505,11 @@ var gameplay = {
 		this.grayCoin.x=600;
 		this.grayCoin.y=100;
 	},
-	placeSpeed:function()
+	placeGold:function()
 	{
-		this.speedCoin.x=100;
-		this.speedCoin.y=100;
+				var obsX = Math.random() * (cameraController.gameWorld.width - 128) - obsPoint.width + 128;
+				var obsY = Math.random() * (cameraController.gameWorld.height - 128) - obsPoint.height + 128;
+		
 	},
 	
 	removeObservationPoint: function(index, plantIndex)

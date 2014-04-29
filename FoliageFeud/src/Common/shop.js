@@ -85,7 +85,7 @@ initShop:function()
 
 buyAdventure:function()
 {
-	if(shop.adventure.description==true)
+	if(shop.adventure.description==true&&shop.adventure.purchased==false)
 	{
 		shop.adventure.buy();
 		skillBook.sprintLevel=1.75;
@@ -99,7 +99,7 @@ buyAdventure:function()
 },
 buyRock:function()
 {
-	if(shop.rockCoin.description==true)
+	if(shop.rockCoin.description==true&& shop.rockCoin.purchased==false)
 	{
 		shop.rockCoin.buy();
 		skillBook.climbLevel=2;
@@ -111,7 +111,8 @@ buyRock:function()
 },
 buyWater:function()
 {
-	if(shop.waterCoin.description==true)
+	if(shop.waterCoin.description==true&&shop.waterCoin.purchased==false)
+	
 	{
 		shop.waterCoin.buy();
 		skillBook.swimLevel=2;
@@ -207,7 +208,7 @@ infoDisplay:function()
 	if(this.waterCoin.description==true)
 	{
 				var strings = [];
-				strings.push(" The water coin increases your swim speed as well as allows you to pass through rapids. " );
+				strings.push(" The water coin increases your swim speed.  " );
 				utility.writeText(menuSurface, strings, 245, 290, 64 * 4, 20, true);
 				utility.drawImage(
 				menuSurface, imgWater,
@@ -224,7 +225,7 @@ infoDisplay:function()
 	{
 		
 				var strings = [];
-				strings.push(" The rock coin increases your climb speed and allows you to pass large rocks. " );
+				strings.push(" The rock coin increases your climb speed. " );
 				utility.writeText(menuSurface, strings, 245, 290, 64 * 4, 20, true);
 				utility.drawImage(
 				menuSurface, imgRock,
