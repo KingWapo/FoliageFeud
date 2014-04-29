@@ -121,9 +121,9 @@ var gameplay = {
 		vx: 0,
 		vy: 0,
 		speed: 8,
-		swimSpeed:2,
-		walkSpeed: 8,
-		runSpeed: 10,
+		swimSpeed:6,
+		walkSpeed: 10,
+		runSpeed: 12,
 		sprite: '',
 		name: "player",
 		animation: Animation.Idle
