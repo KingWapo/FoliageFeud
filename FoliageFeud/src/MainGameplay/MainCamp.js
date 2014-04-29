@@ -7,6 +7,7 @@ var mainCamp = {
 	broTalk: 0,
 	arrowOffset: 0,
 	invasivesChosen: [],
+	talkingInMainCamp: true,
 	
 	dingle: {
 		x: 128,
@@ -18,14 +19,19 @@ var mainCamp = {
 		sourceWidth: 64,
 		sourceHeigth: 64,
 		
-		phrases: ["Hello my sibling, it is quite nice to see you.",              								// Intro Statement      	0
+		phrases: ["What can I help you with?",              													// Intro Statement      	0
 				  "Go away, quit wasting my time.",																// No plants to return  	1
 				  "Ahh, I see you have some plants for me, which would you like to return?",					// Plants to return			2
 				  "Ooo, I like this plant!",																	// Returned a plant			3
 				  "Did you happen to see any invasive plants?",													// Done returning plants	4
 				  "Oh that's good. Well then, is there anything else?",											// No invasives				5
 				  "Oh no, please tell me which of these you saw.",												// Invasives, choose them	6
-				  "I'll have to make a note of that. Thank you. Anything else?"									// Done choosing			7
+				  "I'll have to make a note of that. Thank you. Anything else?",								// Done choosing			7
+				  "It's so nice to see you again, unfortunately it's not under the best of circumstances. I need your help just as you need mine. My arch nemesis, Dr. Parsnip, has claimed these SNA",
+				  "territories as his own, and is impeding my research. Not only that, but he has kidnapped your fiancee and my assistant. This shall not be tolerated, and working together, the two of us can",
+				  "foil his plans! I need you to go out and investigate the plants to see if there is some clue as to where he is hiding. I will have the plants I need posted on this board here, you can choose",
+				  "which ones you'd like to find. I'll stay here and analyse the plants for clues.",
+				  "Oh, before you go, feel free to check out the other buildings here. All are bound to help you in one way or another."
 				  ],
 		
 		sprite: ""
@@ -33,6 +39,14 @@ var mainCamp = {
 	
 	init: function()
 	{
+		if (gameplay.visitedBrother)
+		{
+			this.broTalk = 0;
+		}
+		else
+		{
+			this.broTalk = 8;
+		}
 		this.listOfQuests = [];
 		
 		this.dingle.x = 128;
@@ -95,7 +109,7 @@ var mainCamp = {
 				utility.writeForClick(menuSurface, [plantName], .45 * CANVAS_WIDTH, .35 * CANVAS_HEIGHT + (48 * i), CANVAS_WIDTH / 2, 24, true, [quests.addQuestFromSibling, [this.listOfQuests[i], randRegion]]);
 		}
 		
-		utility.writeText(menuSurface, [this.dingle.phrases[this.broTalk]], 64, 32 + imgSmallTextBox.height / 2, CANVAS_WIDTH - 128, 24, false);
+		utility.writeText(menuSurface, [this.dingle.phrases[this.broTalk]], 64, 24 + imgSmallTextBox.height / 2, CANVAS_WIDTH - 128, 24, false);
 		
 		
 		switch(this.broTalk)
@@ -104,6 +118,7 @@ var mainCamp = {
 			case 1:
 			case 5:
 			case 7:
+				this.talkingInMainCamp = false;
 				utility.addClickItem(this.dingle.x, this.dingle.y, this.dingle.width, this.dingle.height, this.talkToBro, []); // First bro talk phrase
 				break;
 			case 2:
@@ -148,6 +163,12 @@ var mainCamp = {
 					utility.addClickItem(x + 64 + (i % 2) * 96, y + 32 + 88 * (i / 2), 64, 64, this.addInvasive, [i])
 				}
 				utility.writeForClick(menuSurface, ["Done"], x + 64 + 96, y + 32 + 88 * 2.75, 64, 30, true, [mainCamp.finishInvasives, []]);
+				break;
+			case 8:
+			case 9:
+			case 10:
+				break;
+			case 11:
 				break;
 		}
 		
@@ -198,10 +219,20 @@ var mainCamp = {
 	
 	exitToGameplay: function(empty)
 	{
-		mainCamp.broTalk = 0;
-		entering[ScreenState.SiblingInteraction] = true;
-		currentScreen = ScreenState.Gameplay;
-		utility.clearAll();
+		if (gameplay.visitedBrother)
+		{
+			mainCamp.broTalk = 0;
+			//mainCamp.talkingInMainCamp = false;
+			entering[ScreenState.SiblingInteraction] = true;
+			currentScreen = ScreenState.Gameplay;
+			utility.clearAll();
+		}
+		else
+		{
+			gameplay.visitedBrother = true;
+			mainCamp.broTalk = 12;
+			mainCamp.talkingInMainCamp = true;
+		}
 	},
 	
 	talkToBro: function(empty)

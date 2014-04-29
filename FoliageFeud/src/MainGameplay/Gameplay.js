@@ -75,9 +75,11 @@ var gameplay = {
 	obsCoords: [],
 	gold:20,
 	invasivesSeen: [],
-	phrases: ["Ah! Sibling, you've seem to have found my previous", "assistant's handbook. While you're there, if you could grab", "the plant she was looking for, that'd be great!", "Come find me at my hq when you're done, we have", "important things to discuss. The  teleporter will take you", "straight there."],
+	phrases: ["Ah! Sibling, you've seem to have found my previous assistant's handbook. While you're there, if you could grab the plant she was looking for, that'd be great!", 
+			  "Come find me at my hq when you're done, we have important things to discuss. The  teleporter will take you straight there."],
 	phraseIndex: 0,
 	talking: false,
+	visitedBrother: false,
 	
 	// Buildings
 	store: Object.create(spriteObject),
@@ -798,7 +800,11 @@ var gameplay = {
 					this.removeObservationPoint(i, obs.plantIndex);
 				}
 			}
-				
+			try{
+			if (this.collidingWithWater(this.player))
+			{
+				gameplay.swimming = true;
+			}}catch(err) { console.debug(err); }
 			//check for collisions with collidables.
 			if (!screensLoaded[ScreenState.WorldEvent] && cameraController.mapBuilt)
 			{
@@ -817,7 +823,6 @@ var gameplay = {
 								this.messageType="water";	
 									
 							}
-							gameplay.swimming=true;
 						}
 					
 						if ( utility.collisionDetection(gameplay.player, collider) && collider.name=="tree")
@@ -865,7 +870,7 @@ var gameplay = {
 						if ( utility.collisionDetection(gameplay.player, gameplay.teleporter.hitbox))
 						{
 							this.messageType="teleporter";
-							if(this.canTeleport)
+							if(this.canTeleport && (this.visitedBrother || this.currentLevel == Level.Tutorial))
 							{
 								if (!this.onTeleport)
 								{
@@ -914,13 +919,17 @@ var gameplay = {
 				{
 					this.onMainCamp = false;
 				}
-				if (utility.collisionDetection(gameplay.player, gameplay.training.hitboxDoor))
+				if (utility.collisionDetection(gameplay.player, gameplay.training.hitboxDoor) && this.visitedBrother)
 				{
 					if (!this.onTraining)
 					{
 						this.onTraining = true;
 						currentScreen = ScreenState.TrainingMode;
 					}
+				}
+				else
+				{
+					//message: I should visit my brother
 				}
 				if (utility.collisionDetection(gameplay.player, gameplay.training.hitbox))
 				{
@@ -930,13 +939,17 @@ var gameplay = {
 				{
 					this.onTraining = false;
 				}
-				if (utility.collisionDetection(gameplay.player, gameplay.plants.hitboxDoor))
+				if (utility.collisionDetection(gameplay.player, gameplay.plants.hitboxDoor) && this.visitedBrother)
 				{
 					if (!this.onPlants)
 					{
 						this.onPlants = true;
 						currentScreen = ScreenState.Information;
 					}
+				}
+				else
+				{
+					//message: I should visit my brother
 				}
 				if (utility.collisionDetection(gameplay.player, gameplay.plants.hitbox))
 				{
@@ -946,10 +959,14 @@ var gameplay = {
 				{
 					this.onPlants = false;
 				}
-				if (utility.collisionDetection(gameplay.player, gameplay.store.hitboxDoor))
+				if (utility.collisionDetection(gameplay.player, gameplay.store.hitboxDoor) && this.visitedBrother)
 				{
 					switchGamemode(ScreenState.ShopScreen);
 					this.collide();
+				}
+				else
+				{
+					//message: I should visit my brother
 				}
 				if (utility.collisionDetection(gameplay.player, gameplay.store.hitbox))
 				{
@@ -993,9 +1010,9 @@ var gameplay = {
 				break;
 		}
 		this.chooseSong(map);
-		this.teleporter.hitbox.x = this.teleporter.x;
+		this.teleporter.hitbox.x = this.teleporter.x + 32;
 		this.teleporter.hitbox.y = this.teleporter.y + 64;
-		this.teleporter.hitbox.width = this.teleporter.width;
+		this.teleporter.hitbox.width = this.teleporter.width / 2;
 		this.teleporter.hitbox.height = this.teleporter.height / 2;
 		console.debug("Building level");
 	},
@@ -1434,12 +1451,7 @@ var gameplay = {
 					0, 0, imgLargeTextBox.width, imgLargeTextBox.height,
 					x, y, imgLargeTextBox.width, imgLargeTextBox.height
 				);
-				phrase = "";
-				for (var i = this.phraseIndex; i < Math.min(this.phraseIndex + 3, this.phrases.length); i++)
-				{
-					phrase += " " + this.phrases[i];
-				}
-				utility.writeText(menuSurface, [phrase], x + 32, y + 48 , imgSmallTextBox.width - 64, 24, false);
+				utility.writeText(menuSurface, [this.phrases[this.phraseIndex]], x + 32, y + 48 , imgSmallTextBox.width - 64, 24, false);
 			}
 		}
 	},
@@ -1537,7 +1549,7 @@ var gameplay = {
 	
 	removeObservationPoint: function(index, plantIndex)
 	{
-		if (this.currentLevel == Level.Tutorial && this.phraseIndex < this.phrases.length - 2)
+		if (this.currentLevel == Level.Tutorial && this.phraseIndex < this.phrases.length)
 		{
 			this.talking = true;
 			
@@ -1552,6 +1564,22 @@ var gameplay = {
 			switchGamemode(ScreenState.Observation);
 			this.canTeleport = true;
 		}
+	},
+	
+	collidingWithWater: function(obj)
+	{
+		xLeft = Math.floor(obj.x + obj.width / 4);
+		xRight = Math.floor(obj.x + 3 * obj.width / 4);
+		yTop = Math.floor(obj.y + obj.height / 4);
+		yBottom = Math.floor(obj.y + 3 * obj.height / 4);
+		
+		if ( this.collisionTiles[xLeft][yTop].name == "water" &&
+			 this.collisionTiles[xLeft][yBottom].name == "water" &&
+			 this.collisionTiles[xRight][yTop].name == "water" &&
+			 this.collisionTiles[xRight][yBottom].name == "water")
+			 return true;
+		else
+			return false;
 	}
 }
 
@@ -1638,6 +1666,17 @@ window.addEventListener("keyup", function(event)
 			if (gameplay.talking)
 			{
 				gameplay.phraseIndex += 1;
+			}
+			else if (mainCamp.talkingInMainCamp)
+			{
+				if (mainCamp.broTalk != 12)
+				{
+					mainCamp.broTalk = (mainCamp.broTalk + 1) % (mainCamp.dingle.phrases.length - 1);
+				}
+				else
+				{
+					mainCamp.exitToGameplay("");
+				}
 			}
 			else if (!gameplay.onPause)
 			{
