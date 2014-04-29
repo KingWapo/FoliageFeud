@@ -363,7 +363,7 @@ var gameplay = {
 		width: 64,
 		height: 64,
 		
-		sprite: ''
+		sprite: new Image()
 	},
 	teleporter: {
 	
@@ -487,6 +487,8 @@ var gameplay = {
 		this.mainCamp.sourceWidth = 128;
 		this.mainCamp.sourceHeight = 256;
 		this.mainCamp.name = "main camp";
+		
+		this.goldCoin.sprite = imgGoldCoin;
 		
 		this.updateSprite();
 		
@@ -818,11 +820,11 @@ var gameplay = {
 					this.removeObservationPoint(i, obs.plantIndex);
 				}
 			}
-			try{
+			/*try{
 			if (this.collidingWithWater(this.player))
 			{
 				gameplay.swimming = true;
-			}}catch(err) { console.debug(err); }
+			}}catch(err) { console.debug(err); }*/
 			//check for collisions with collidables.
 			if (!screensLoaded[ScreenState.WorldEvent] && cameraController.mapBuilt)
 			{
@@ -1560,9 +1562,10 @@ var gameplay = {
 		this.grayCoin.x=600;
 		this.grayCoin.y=100;
 	},
+	
 	placeGold:function()
 	{
-		if(this.Currentlevel==Level.Marsh)
+		if(this.currentLevel==Level.Marsh)
 		{
 			for(i=0;i<10;i++)
 			{

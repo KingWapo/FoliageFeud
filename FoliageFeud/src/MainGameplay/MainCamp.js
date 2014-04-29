@@ -222,7 +222,7 @@ var mainCamp = {
 		if (gameplay.visitedBrother)
 		{
 			mainCamp.broTalk = 0;
-			//mainCamp.talkingInMainCamp = false;
+			mainCamp.talkingInMainCamp = false;
 			entering[ScreenState.SiblingInteraction] = true;
 			currentScreen = ScreenState.Gameplay;
 			utility.clearAll();
