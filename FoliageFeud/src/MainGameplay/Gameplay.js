@@ -497,7 +497,7 @@ var gameplay = {
 		moveLeft = false;
 		moveRight = false;
 		
-		this.populateGold();
+		//this.populateGold();
 	},
 	
 	updateSprite: function()
@@ -1698,7 +1698,7 @@ window.addEventListener("keyup", function(event)
 		case ENTER:
 			if (gameplay.talking)
 			{
-				gameplay.phraseIndex += 1;
+				if (gameplay.phraseIndex < gameplay.phrases.length) gameplay.phraseIndex += 1;
 			}
 			else if (mainCamp.talkingInMainCamp)
 			{
