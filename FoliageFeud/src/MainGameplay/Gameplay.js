@@ -33,6 +33,7 @@ messageType={
 	goldCoin:4,
 	baseCampe:5,
 	teleporter:6,
+	blank:7,
 }
 	
 	
@@ -561,6 +562,16 @@ var gameplay = {
 		{
 		 	strings.push("Get to the teleporter!!!!");	
 			utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, false);
+
+				
+			strings.push(" You must collect plants first!");	
+			utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, false);
+
+		}
+		else if(this.messageType=="blank")
+		{
+			strings.push(" ");
+			utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, false);
 		}
 			
 		/*
@@ -879,6 +890,7 @@ var gameplay = {
 									}
 									else
 									{
+										this.messageType="blank";
 										currentScreen = ScreenState.SNASelectionScreen;
 									}
 								}
