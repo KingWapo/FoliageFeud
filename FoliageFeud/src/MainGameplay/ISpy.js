@@ -49,18 +49,27 @@ var ispy = {
 		
 		// Add requested plant to ispy pool
 		this.curPlants.push(this.requestedPlant);
-		console.debug(this.curPlants);
+		if (utility.debugAll)
+		{
+			console.debug(this.curPlants);
+		}
 		
 		// Shuffle array
 		this.curPlants = utility.shuffle(this.curPlants);
 		
-		console.debug(this.curPlants);
+		if (utility.debugAll)
+		{
+			console.debug(this.curPlants);
+		}
 		
 		for (var i = 0; i < this.curPlants.length; i++)
 		{
 			if (!plantList[this.curPlants[i]].loaded)
 			{
-				//console.debug("loaded ", plantList[this.curPlants[i]].loaded);
+				if (utility.debugAll)
+				{
+					//console.debug("loaded ", plantList[this.curPlants[i]].loaded);
+				}
 				plant.loadPlant(plantList[this.curPlants[i]]);
 				this.readyToRender = false;
 			}
@@ -72,14 +81,18 @@ var ispy = {
 		// Get 2 random traits for the plant
 		this.curTraits = plant.get2Traits(this.requestedPlant);
 		
-		console.debug("ispy: ", this.curPlants);
+		if (utility.debugAll)
+			console.debug("ispy: ", this.curPlants);
 
 		for (var i = 0; i < this.curPlants.length; i++)
 		{
 			var imgNum = Math.floor(Math.random() * plantList[this.curPlants[i]].sprite.length);
 			
 			this.curSprites.push(plantList[this.curPlants[i]].sprite[imgNum]);
-			//console.debug(this.curSprites[i]);
+			if (utility.debugAll)
+			{
+				//console.debug(this.curSprites[i]);
+			}
 		}
 	},
 	
@@ -89,7 +102,8 @@ var ispy = {
 		utility.clearAll();
 		
 		var requested = this.curPlants.indexOf(this.requestedPlant);
-		console.debug(requested, ", ", this.curPlants.length);
+		if (utility.debugAll)
+			console.debug(requested, ", ", this.curPlants.length);
 		
 		utility.drawImage(
 			backgroundSurface, imgISpyBg,
@@ -98,7 +112,10 @@ var ispy = {
 		);
 		
 		// Plants in current list
-		//console.debug("Current plant list: ", this.curPlants[0], ", ", this.curPlants[1], ", ", this.curPlants[2], ", ", this.curPlants[3]);
+		if (utility.debugAll)
+		{
+			//console.debug("Current plant list: ", this.curPlants[0], ", ", this.curPlants[1], ", ", this.curPlants[2], ", ", this.curPlants[3]);
+		}
 		
 		// Write plant name and traits to screen
 		var strings = [];
@@ -117,7 +134,6 @@ var ispy = {
 		// Draw plants on screen and add them to click handler
 		for (var j = 0; j < this.curPlants.length; j++)
 		{
-			//console.debug("loop: ", j, ", ", i);
 			var x;
 			var y;
 			
@@ -167,7 +183,8 @@ var ispy = {
 				if (!utility.contains(gameplay.invasivesSeen, this.curPlants[j]))
 				{
 					gameplay.invasivesSeen.push(this.curPlants[j]);
-					console.debug('added invasive: ',  plantList[this.curPlants[j]].name);
+					if (utility.debugAll)
+						console.debug('added invasive: ',  plantList[this.curPlants[j]].name);
 				}
 			}
 		}
@@ -233,13 +250,15 @@ var ispy = {
 				
 				if (this.gamesPlayed < this.maxGames)
 				{
-					console.debug("Playing game ", this.gamesPlayed);
+					if (utility.debugAll)
+						console.debug("Playing game ", this.gamesPlayed);
 					this.init();
 				}
 				else
 				{
 					trainingGame.returnRate = (.0125 * this.gamesCorrect * this.gamesCorrect) + (.025 * this.gamesCorrect);
-					console.debug(trainingGame.returnRate);
+					if (utility.debugAll)
+						console.debug(trainingGame.returnRate);
 					ispy.leaveISpy();
 				}
 			}
@@ -252,8 +271,6 @@ var ispy = {
 		if (!ispy.fromTraining)
 		{
 			quests.finishedQuests.push(ispy.requestedPlant);
-			//console.debug('cur quests: ', quests.plantsToIdentify);
-			//console.debug('harvested : ', ispy.requestedPlant, ', ', plantList[ispy.requestedPlant].name);
 			
 			// Show that plant was harvested
 			plantList[ispy.requestedPlant].harvested = true;
@@ -272,11 +289,18 @@ var ispy = {
 		if (gameplay.currentLevel != Level.Tutorial && !ispy.fromTraining)
 		{
 			quests.addQuest(ispy.requestedPlant, gameplay.currentLevel);
-			//console.debug(quests.plantsToIdentify);
-			//console.debug(ispy.requestedPlant, ', ', plantList[ispy.requestedPlant].name);
+			
+			if (utility.debugAll)
+			{
+				//console.debug(quests.plantsToIdentify);
+				//console.debug(ispy.requestedPlant, ', ', plantList[ispy.requestedPlant].name);
+			}
 		}
 		
-		//console.debug("You selected the wrong flower");
+		if (utility.debugAll)
+		{
+			//console.debug("You selected the wrong flower");
+		}
 		
 		gameplay.placeObservationEvent();
 		

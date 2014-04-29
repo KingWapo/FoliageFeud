@@ -26,6 +26,7 @@ var utility = {
 	originalHeight: 512,
 	debugSound: false,
 	demo: false,
+	debugAll: true,
 	
 	// Clear screen and all objects from clickable
 	clearAll: function()
