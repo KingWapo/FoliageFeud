@@ -560,13 +560,8 @@ var gameplay = {
 		}
 		else if(this.messageType=="teleporter")
 		{
-		 	strings.push("Get to the teleporter!!!!");	
-			utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, false);
-
-				
 			strings.push(" You must collect plants first!");	
 			utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, false);
-
 		}
 		else if(this.messageType=="blank")
 		{
