@@ -32,7 +32,7 @@ var ispy = {
 		
 		this.gameEnd = false;
 		this.isCorrect = false;
-		this.readyToRender = false;
+		this.readyToRender = true;
 		
 		if (this.fromTraining)
 			this.requestedPlant = plant.getRandPlant();
@@ -58,6 +58,7 @@ var ispy = {
 			{
 				//console.debug("loaded ", plantList[this.curPlants[i]].loaded);
 				plant.loadPlant(plantList[this.curPlants[i]]);
+				this.readyToRender = true;
 			}
 		}
 		
