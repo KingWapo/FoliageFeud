@@ -12,18 +12,37 @@ function PlantObject(name, lname, family, bloom, invasive, traits, numImages)
 	this.bloom = bloom;
 	this.invasive = invasive;
 	this.sprite = [];
-	
-	for (var i = 0; i < numImages; i++)
-	{
-		this.sprite[i] = new Image();
-		this.sprite[i].src = "../img/Plants/".concat(name, "/", i, ".png");
-	}
-	
 	this.traits = traits;
+	this.numImages = numImages;
 	this.harvested = false;
+	this.loaded = false;
 }
 
 var plant = {
+	totalPlantImagesLoaded: 0,
+	curPlantImagesLoaded: 0,
+	
+	loadPlant: function(curPlant)
+	{
+		for (var i = 0; i < curPlant.numImages; i++)
+		{
+			plant.totalPlantImagesLoaded += 1;
+			curPlant.sprite[i] = new Image();
+			curPlant.sprite[i].src = "../img/Plants/" + curPlant.name + "/" + i + ".png";
+			curPlant.sprite[i].addEventListener("load", plant.plantLoaded, false);
+		}
+		
+		curPlant.loaded = true;
+	},
+	
+	plantLoaded: function()
+	{
+		plant.curPlantImagesLoaded += 1;
+		//console.debug("plants loaded ", plant.totalPlantImagesLoaded, ', ', plant.curPlantImagesLoaded);
+		if (plant.totalPlantImagesLoaded == plant.curPlantImagesLoaded)
+			ispy.readyToRender = true;
+	},
+	
 	getRandTrait: function(index)
 	{
 		var i = Math.floor(Math.random() * plantList[index].traits.length);

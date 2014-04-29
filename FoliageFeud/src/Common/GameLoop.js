@@ -227,7 +227,7 @@ function mainUpdate()
 				switchGamemode(ScreenState.Gameplay);
 				utility.clearClickHandler();
 			}
-			else
+			if (ispy.readyToRender)
 				ispy.render();
 			break;
 		case ScreenState.SkillBook:

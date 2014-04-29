@@ -16,6 +16,7 @@ var ispy = {
 	dingleBotFailResponses: ["Hmmm, not the one I would have chosen.. Oh well, Come back to base and I'll give you a chance to redeem yourself."],
 	dingleBotWinResponses: ["You make this look easy. Come back to base and I'll give you that dubloon I promised you."],
 	responseOffset: 0,
+	readyToRender: false,
 	
 	// Training mode variables
 	fromTraining: false,
@@ -31,6 +32,7 @@ var ispy = {
 		
 		this.gameEnd = false;
 		this.isCorrect = false;
+		this.readyToRender = false;
 		
 		if (this.fromTraining)
 			this.requestedPlant = plant.getRandPlant();
@@ -48,6 +50,15 @@ var ispy = {
 		// Shuffle array
 		this.curPlants = utility.shuffle(this.curPlants);
 		
+		for (var i = 0; i < this.curPlants.length; i++)
+		{
+			if (!plantList[this.curPlants[i]].loaded)
+			{
+				//console.debug("loaded ", plantList[this.curPlants[i]].loaded);
+				plant.loadPlant(plantList[this.curPlants[i]]);
+			}
+		}
+		
 		// Get 2 random traits for the plant
 		this.curTraits = plant.get2Traits(this.requestedPlant);
 		
@@ -58,6 +69,7 @@ var ispy = {
 			var imgNum = Math.floor(Math.random() * plantList[this.curPlants[i]].sprite.length);
 			
 			this.curSprites.push(plantList[this.curPlants[i]].sprite[imgNum]);
+			//console.debug(this.curSprites[i]);
 		}
 	},
 	
@@ -259,6 +271,7 @@ var ispy = {
 		ispy.fromTraining = false;
 		ispy.gamesPlayed = 0;
 		ispy.gamesCorrect = 0;
+		ispy.readyToRender = false;
 		
 		exiting[currentScreen] = true;
 	},
