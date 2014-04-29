@@ -792,16 +792,6 @@ var gameplay = {
 				var obs = this.observationInstances[i];
 				if (utility.collisionDetection(gameplay.player, obs))
 				{
-					if(skillBook.swim==true)
-					{
-						this.removeObservationPoint(i, obs.plantIndex);
-						switchGamemode(ScreenState.Observation);
-					}
-					else
-					{
-						this.collide();
-						
-					}
 					this.removeObservationPoint(i, obs.plantIndex);
 					switchGamemode(ScreenState.Observation);
 					this.canTeleport = true;
@@ -1529,6 +1519,7 @@ var gameplay = {
 	
 	removeObservationPoint: function(index, plantIndex)
 	{
+		console.debug("index: " + index + "plantIndex: " + plantIndex);
 		this.observationInstances.splice(index, 1);
 		ispy.setRequested(quests.plantsToIdentify[plantIndex]);
 		quests.removeQuest(plantIndex);
