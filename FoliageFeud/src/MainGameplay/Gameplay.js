@@ -889,11 +889,12 @@ var gameplay = {
 						}	
 						if ( utility.collisionDetection(gameplay.player, gameplay.teleporter.hitbox))
 						{
-							this.messageType="teleporter";
+							
 							if(this.canTeleport && (this.visitedBrother || this.currentLevel == Level.Tutorial))
 							{
 								if (!this.onTeleport)
 								{
+									
 									this.onTeleport = true;
 									if (this.currentLevel != Level.BaseCamp)
 									{
@@ -908,9 +909,7 @@ var gameplay = {
 								}
 							}
 							else
-							{
-								this.collide();
-								this.messageType="teleporter";							}
+							{							}
 						}
 						else if (this.onTeleport)
 						{
