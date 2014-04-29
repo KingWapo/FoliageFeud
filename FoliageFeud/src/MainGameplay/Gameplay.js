@@ -1519,13 +1519,11 @@ var gameplay = {
 	},
 	placeGold:function()
 	{
-<<<<<<< HEAD
-				goldCoin.x = Math.random() * (cameraController.gameWorld.width - 128) - obsPoint.width + 128;
-				  goldCoin.y= Math.random() * (cameraController.gameWorld.height - 128) - obsPoint.height + 128;
-=======
+
+
 				//var obsX = Math.random() * (cameraController.gameWorld.width - 128) - obsPoint.width + 128;
 				//var obsY = Math.random() * (cameraController.gameWorld.height - 128) - obsPoint.height + 128;
->>>>>>> be2d298ed8a7d5256f8c4bc6c188b58a7e4ff2ea
+
 		
 	},
 	
