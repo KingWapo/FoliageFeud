@@ -73,8 +73,9 @@ var gameplay = {
 	curObjMap: [],
 	teleporterCoords: [],
 	obsCoords: [],
-	gold:20,
+	gold:0,
 	invasivesSeen: [],
+	goldStorage:[],
 	
 	// Buildings
 	store: Object.create(spriteObject),
@@ -400,8 +401,25 @@ var gameplay = {
 		}
 		
 	},
+	populateGold:function()
+	{
+		for(i=0;i<10;i++)
+		{
+			this.goldStorage[i]=Object.create(this.goldCoin);
+			this.goldStorage[i].name="gold";
+			this.goldStorage[i].x = Math.random() * (cameraController.gameWorld.width + 300);
+			this.goldStorage[i].y = Math.random() * (cameraController.gameWorld.height - 300);
+			console.debug ("gold x "+ this.goldStorage[i].x+" gold.y"+this.goldStorage[i].y)
+			
+		}
+		this.goldStorage[0].x=0;
+		this.goldStorage[0].y=0;
+		
+		
+		
+	},
 	
-	
+
 	
 	init: function()
 	{
@@ -863,7 +881,7 @@ var gameplay = {
 						}	
 						if ( utility.collisionDetection(gameplay.player, gameplay.teleporter.hitbox))
 						{
-							this.messageType="teleporter";
+							
 							if(this.canTeleport)
 							{
 								if (!this.onTeleport)
@@ -872,10 +890,11 @@ var gameplay = {
 									if (this.currentLevel != Level.BaseCamp)
 									{
 										this.nextLevel(Level.BaseCamp);
+										this.messageType="blank";
 									}
 									else
 									{
-										this.messageType="blank";
+										
 										currentScreen = ScreenState.SNASelectionScreen;
 									}
 								}
@@ -883,7 +902,7 @@ var gameplay = {
 							else
 							{
 								this.collide();
-							}
+								this.messageType="teleporter";							}
 						}
 						else if (this.onTeleport)
 						{
@@ -1106,7 +1125,7 @@ var gameplay = {
 			height: 64
 		}
 		
-		this.placeGold();
+		
 	},
 	
 	drawMap1: function()
@@ -1222,6 +1241,7 @@ var gameplay = {
 	drawMarsh: function()
 	{
 		this.placeObservationEvent();
+		this.populateGold();
 		
 		var rotX = 2;
 		var rotY = 2;
@@ -1332,7 +1352,9 @@ var gameplay = {
 	
 	render: function()
 	{
+		
 		this.message();
+		this.placeGold();
 		if (currentScreen == ScreenState.WorldEvent)
 		{
 			backgroundSurface.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
@@ -1424,6 +1446,7 @@ var gameplay = {
 				utility.writeText(menuSurface, strings, (CANVAS_WIDTH - imgQuestLog.width) / 2 + 64, 72, imgQuestLog.width, 16, false)
 			}
 		}
+		
 	},
 	
 	// Randomly places the observationInstance on the map
@@ -1509,13 +1532,20 @@ var gameplay = {
 	},
 	placeGold:function()
 	{
-
-
-				//var obsX = Math.random() * (cameraController.gameWorld.width - 128) - obsPoint.width + 128;
-				//var obsY = Math.random() * (cameraController.gameWorld.height - 128) - obsPoint.height + 128;
-
-		
+		if(this.Currentlevel==Level.Marsh)
+		{
+			for(i=0;i<10;i++)
+			{
+				utility.drawImage(
+				gameplaySurface, imgGoldCoin,
+				0, 0, imgGoldCoin.width, imgGoldCoin.height,
+				this.goldStorage[i].x, this.goldStorage[i].y, imgGoldCoin.width, imgGoldCoin.height
+			);
+			this.goldStorage[i].updateAnimation();
+		}
+	}
 	},
+
 	
 	removeObservationPoint: function(index, plantIndex)
 	{
