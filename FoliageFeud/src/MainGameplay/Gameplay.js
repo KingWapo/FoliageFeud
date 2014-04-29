@@ -72,12 +72,9 @@ var gameplay = {
 	curObjMap: [],
 	teleporterCoords: [],
 	obsCoords: [],
-<<<<<<< HEAD
 	gold:0,
-=======
-	gold:20,
 	invasivesSeen: [],
->>>>>>> 13fb5e5e44c855a02dbdda7b4e9d6507af71c516
+
 	
 	// Buildings
 	store: Object.create(spriteObject),
@@ -434,7 +431,6 @@ var gameplay = {
 		this.placeObservationEvent();
 		this.placeBlue();
 		this.placeGray();
-		this.placeSpeed();
 		
 		this.teleporter.x=1000;
 		this.teleporter.y=300;
@@ -563,12 +559,11 @@ var gameplay = {
 		}
 		else if(this.messageType=="teleporter")
 		{
-<<<<<<< HEAD
+
 			
-=======
 		 		strings.push("Get to the teleporter!!!!");	
 				utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, false);
->>>>>>> 13fb5e5e44c855a02dbdda7b4e9d6507af71c516
+
 		}
 			
 		/*
@@ -794,7 +789,7 @@ var gameplay = {
 				var obs = this.observationInstances[i];
 				if (utility.collisionDetection(gameplay.player, obs))
 				{	
-<<<<<<< HEAD
+
 					if(skillBook.swim==true)
 					{
 						this.removeObservationPoint(i, obs.plantIndex);
@@ -805,10 +800,8 @@ var gameplay = {
 						this.collide();
 						
 					}
-=======
 					this.removeObservationPoint(i, obs.plantIndex);
 					switchGamemode(ScreenState.Observation);
->>>>>>> 13fb5e5e44c855a02dbdda7b4e9d6507af71c516
 					this.canTeleport = true;
 				}
 			}
