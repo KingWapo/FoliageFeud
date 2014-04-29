@@ -305,13 +305,12 @@ var utility = {
 	writeForClick: function(context, text, x, y, maxWidth, fontSize, isOutlined, clickHandler)
 	{
 		var size = utility.writeText(context, text, x, y, maxWidth, fontSize, isOutlined);
-		utility.addClickItem(x, y - fontSize, size[0], size[1], clickHandler[0], clickHandler[1]);
+		utility.addClickItem(x - 5, y - fontSize, size[0] + 10, size[1] + 5, clickHandler[0], clickHandler[1]);
 		
-		/*
+		
 		context.fillStyle = "black";
-		context.rect(x, y - fontSize, size[0], size[1]);
+		context.rect(x - 5, y - fontSize, size[0] + 10, size[1] + 5);
 		context.stroke();
-		*/
 	},
 	
 	contains: function(array, element)
@@ -319,7 +318,7 @@ var utility = {
 		for (var i = 0; i < array.length; i++)
 		{
 			if (array[i] === element){
-				console.debug("found dupe");
+				//console.debug("found dupe");
 				return true;
 			}
 		}

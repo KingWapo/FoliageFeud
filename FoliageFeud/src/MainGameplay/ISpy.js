@@ -142,6 +142,11 @@ var ispy = {
 					0, 0, imgInvasivemark.width, imgInvasivemark.height,
 					x + 80, y + 80, imgInvasivemark.width, imgInvasivemark.height
 				);
+				if (!utility.contains(gameplay.invasivesSeen, this.curPlants[j]))
+				{
+					gameplay.invasivesSeen.push(this.curPlants[j]);
+					console.debug('added invasive: ',  plantList[this.curPlants[j]].name);
+				}
 			}
 		}
 		
