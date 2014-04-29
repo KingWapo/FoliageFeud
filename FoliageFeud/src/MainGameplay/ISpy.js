@@ -17,6 +17,8 @@ var ispy = {
 	dingleBotWinResponses: ["You make this look easy. Come back to base and I'll give you that dubloon I promised you."],
 	responseOffset: 0,
 	readyToRender: false,
+	invasiveSeen: false,
+	hasInvasive: false,
 	
 	// Training mode variables
 	fromTraining: false,
@@ -33,6 +35,7 @@ var ispy = {
 		this.gameEnd = false;
 		this.isCorrect = false;
 		this.readyToRender = true;
+		this.hasInvasive = false;
 		
 		if (this.fromTraining)
 			this.requestedPlant = plant.getRandPlant();
@@ -46,33 +49,50 @@ var ispy = {
 		
 		// Add requested plant to ispy pool
 		this.curPlants.push(this.requestedPlant);
-		console.debug(this.curPlants);
+		if (utility.debugAll)
+		{
+			console.debug(this.curPlants);
+		}
 		
 		// Shuffle array
 		this.curPlants = utility.shuffle(this.curPlants);
 		
-		console.debug(this.curPlants);
+		if (utility.debugAll)
+		{
+			console.debug(this.curPlants);
+		}
+		
 		for (var i = 0; i < this.curPlants.length; i++)
 		{
 			if (!plantList[this.curPlants[i]].loaded)
 			{
-				//console.debug("loaded ", plantList[this.curPlants[i]].loaded);
+				if (utility.debugAll)
+				{
+					//console.debug("loaded ", plantList[this.curPlants[i]].loaded);
+				}
 				plant.loadPlant(plantList[this.curPlants[i]]);
-				this.readyToRender = true;
+				this.readyToRender = false;
 			}
+			
+			if (plantList[this.curPlants[i]].invasive)
+				this.hasInvasive = true;
 		}
 		
 		// Get 2 random traits for the plant
 		this.curTraits = plant.get2Traits(this.requestedPlant);
 		
-		console.debug("ispy: ", this.curPlants);
+		if (utility.debugAll)
+			console.debug("ispy: ", this.curPlants);
 
 		for (var i = 0; i < this.curPlants.length; i++)
 		{
 			var imgNum = Math.floor(Math.random() * plantList[this.curPlants[i]].sprite.length);
 			
 			this.curSprites.push(plantList[this.curPlants[i]].sprite[imgNum]);
-			//console.debug(this.curSprites[i]);
+			if (utility.debugAll)
+			{
+				//console.debug(this.curSprites[i]);
+			}
 		}
 	},
 	
@@ -82,7 +102,8 @@ var ispy = {
 		utility.clearAll();
 		
 		var requested = this.curPlants.indexOf(this.requestedPlant);
-		console.debug(requested, ", ", this.curPlants.length);
+		if (utility.debugAll)
+			console.debug(requested, ", ", this.curPlants.length);
 		
 		utility.drawImage(
 			backgroundSurface, imgISpyBg,
@@ -91,7 +112,10 @@ var ispy = {
 		);
 		
 		// Plants in current list
-		//console.debug("Current plant list: ", this.curPlants[0], ", ", this.curPlants[1], ", ", this.curPlants[2], ", ", this.curPlants[3]);
+		if (utility.debugAll)
+		{
+			//console.debug("Current plant list: ", this.curPlants[0], ", ", this.curPlants[1], ", ", this.curPlants[2], ", ", this.curPlants[3]);
+		}
 		
 		// Write plant name and traits to screen
 		var strings = [];
@@ -110,7 +134,6 @@ var ispy = {
 		// Draw plants on screen and add them to click handler
 		for (var j = 0; j < this.curPlants.length; j++)
 		{
-			//console.debug("loop: ", j, ", ", i);
 			var x;
 			var y;
 			
@@ -160,7 +183,8 @@ var ispy = {
 				if (!utility.contains(gameplay.invasivesSeen, this.curPlants[j]))
 				{
 					gameplay.invasivesSeen.push(this.curPlants[j]);
-					console.debug('added invasive: ',  plantList[this.curPlants[j]].name);
+					if (utility.debugAll)
+						console.debug('added invasive: ',  plantList[this.curPlants[j]].name);
 				}
 			}
 		}
@@ -171,6 +195,19 @@ var ispy = {
 			0, 0, imgISpyOverlay.width, imgISpyOverlay.height,
 			0, 0, 1152, 512
 		);
+		
+		if (!this.invasiveSeen && this.hasInvasive)
+		{
+			utility.drawImage
+			(
+				menuSurface, imgLargeTextBox,
+				0, 0, imgLargeTextBox.width, imgLargeTextBox.height,
+				128, CANVAS_HEIGHT - 120, imgLargeTextBox.width, imgLargeTextBox.height
+			);
+			
+			utility.writeText(menuSurface, ["Do you see that red check?  That means a plant is invasive.  After seeing one, come back to camp and I'll give you a reward for identifying them."], 148, CANVAS_HEIGHT - 72, 840, 20, false);
+			utility.writeForClick(menuSurface, ["Close"], 910, CANVAS_HEIGHT - 120 - 32 + imgLargeTextBox.height, 100, 20, false, [function(){ispy.invasiveSeen = true;}, ['']]);
+		}
 		
 		if (this.gameEnd)
 		{
@@ -213,13 +250,15 @@ var ispy = {
 				
 				if (this.gamesPlayed < this.maxGames)
 				{
-					console.debug("Playing game ", this.gamesPlayed);
+					if (utility.debugAll)
+						console.debug("Playing game ", this.gamesPlayed);
 					this.init();
 				}
 				else
 				{
-					trainingGame.returnRate = (.02 * this.gamesCorrect * this.gamesCorrect) + (.1 * this.gamesCorrect);
-					console.debug(trainingGame.returnRate);
+					trainingGame.returnRate = (.0125 * this.gamesCorrect * this.gamesCorrect) + (.025 * this.gamesCorrect);
+					if (utility.debugAll)
+						console.debug(trainingGame.returnRate);
 					ispy.leaveISpy();
 				}
 			}
@@ -232,8 +271,6 @@ var ispy = {
 		if (!ispy.fromTraining)
 		{
 			quests.finishedQuests.push(ispy.requestedPlant);
-			//console.debug('cur quests: ', quests.plantsToIdentify);
-			//console.debug('harvested : ', ispy.requestedPlant, ', ', plantList[ispy.requestedPlant].name);
 			
 			// Show that plant was harvested
 			plantList[ispy.requestedPlant].harvested = true;
@@ -252,11 +289,18 @@ var ispy = {
 		if (gameplay.currentLevel != Level.Tutorial && !ispy.fromTraining)
 		{
 			quests.addQuest(ispy.requestedPlant, gameplay.currentLevel);
-			//console.debug(quests.plantsToIdentify);
-			//console.debug(ispy.requestedPlant, ', ', plantList[ispy.requestedPlant].name);
+			
+			if (utility.debugAll)
+			{
+				//console.debug(quests.plantsToIdentify);
+				//console.debug(ispy.requestedPlant, ', ', plantList[ispy.requestedPlant].name);
+			}
 		}
 		
-		//console.debug("You selected the wrong flower");
+		if (utility.debugAll)
+		{
+			//console.debug("You selected the wrong flower");
+		}
 		
 		gameplay.placeObservationEvent();
 		
