@@ -30,7 +30,7 @@ var utility = {
 	
 	// Clear screen and all objects from clickable
 	clearAll: function()
-	{true
+	{
 		this.clearClickHandler();
 		this.clearSurfaces();
 	},
@@ -386,6 +386,10 @@ var utility = {
 				else if (oldArray[i].name == "teleporter")
 				{
 					yVal += 64;
+				}
+				else if (oldArray[i].name == "observation point")
+				{
+					yVal = oldArray[i].lowestPos;
 				}
 				else if (oldArray[i].name == "training" ||
 						 oldArray[i].name == "store" ||

@@ -1484,10 +1484,18 @@ var gameplay = {
 				);
 				try {
 					utility.writeText(menuSurface, [this.phrases[this.phraseIndex]], x + 32, y + 48 , imgSmallTextBox.width - 64, 24, false);
-				} catch (err) {console.debug("nooooooo");}
+				} catch (err) { }
+				
+				utility.writeForClick(menuSurface, ["Enter"], x + imgLargeTextBox.width - 104, y + 96, 64, 30, false, [gameplay.incrementPhrase, []])
 			}
 		}
 		
+	},
+	
+	incrementPhrase: function(empty)
+	{
+		gameplay.phraseIndex += 1;
+		console.debug("Phrase Index: " + gameplay.phraseIndex);
 	},
 	
 	// Randomly places the observationInstance on the map
