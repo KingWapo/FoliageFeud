@@ -112,6 +112,9 @@ var createScenery = {
 		
 		for (var i = 0; i < this.treesBack.length; i++)
 		{
+			if (this.treesBack[i].x + 256 < 0)
+				this.treesBack.splice(i, 1);
+				
 			var sprite = this.treesBack[i];
 			
 			utility.drawImage
@@ -125,6 +128,9 @@ var createScenery = {
 		
 		for (var i = 0; i < this.treesFront.length; i++)
 		{
+			if (this.treesFront[i].x + 256 < 0)
+				this.treesFront.splice(i, 1);
+				
 			var sprite = this.treesFront[i];
 			
 			utility.drawImage
