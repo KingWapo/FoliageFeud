@@ -184,7 +184,7 @@ var cameraController = {
 					var sprite = this.baseTiles[row][column];
 					
 					//display the scrolling sprites
-					if (gameplay.curMap[row][column] != EMPTY)
+					if (gameplay.curMap[row][column] != EMPTY && sprite.name != "empty")
 					{
 						if(sprite.visible && sprite.scrollable)
 						{

@@ -152,7 +152,14 @@ SpriteState = {
 };
 
 // vars to hold current and previous screens
-var currentScreen = ScreenState.Title;
+if (isDemo)
+{
+	var currentScreen = ScreenState.TrainingMode;
+}
+else
+{
+	var currentScreen = ScreenState.Title;
+}
 var currentSprite = SpriteState.Girl;
 
 // Frames per a second

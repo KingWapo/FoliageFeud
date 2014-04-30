@@ -10,7 +10,11 @@ var trainingScreen = {
 	{
 		utility.clearAll();
 		
-		gameplay.render();
+		utility.drawImage(
+			backgroundSurface, imgCommonBg,
+			0, 0, imgCommonBg.width, imgCommonBg.height,
+			0, 0, imgCommonBg.width, imgCommonBg.height
+		);
 		
 		utility.addClickItem(64, 64, 320, 285, this.goToWorldEvent, "");
 		utility.addClickItem(64 + 320 + 32, 64, 320, 285, this.goToIspy, "");
@@ -40,30 +44,48 @@ var trainingScreen = {
 		
 		utility.writeText(menuSurface, ["Speed Matching"], 64 + 2 * (320 + 32) + 32, 296, 304, 32, false);
 		
-		var boxX = 940;
-		var boxY = 400;
-		var boxW = 200;
-		var boxH = 96;
-		var textYOffset = 80;
-		
+		strings = [];
+		strings.push(" gold: " + gameplay.gold);	
 		utility.drawImage(
-			menuSurface, imgSmallTextBox,
-			0, 0, imgSmallTextBox.width, imgSmallTextBox.height,
-			boxX, boxY, boxW, boxH
-		)
+			menuSurface, imgChest,
+			0, 0,
+			imgChest.width, imgChest.height,
+			32, CANVAS_HEIGHT - imgChest.height - 32,
+			imgChest.width, imgChest.height
+		);
+		utility.writeText(menuSurface, strings, 96, CANVAS_HEIGHT - imgChest.height + 8, 64 * 4 - 10, 25, true);
 		
-		utility.writeText(menuSurface, ["Make a wager"], boxX + 16, boxY + textYOffset - 48, 200 - 32, 24, false);
-		if (trainingGame.goldWagered > 0)
-			utility.writeForClick(menuSurface, ["-"], boxX + 16, boxY + textYOffset, 32, 32, false, [trainingGame.goldDown, ['']]);
+		if (isDemo)
+		{
+		}
+		else
+		{
+			var boxX = 940;
+			var boxY = 400;
+			var boxW = 200;
+			var boxH = 96;
+			var textYOffset = 80;
 			
-		utility.writeText(menuSurface, ["" + trainingGame.goldWagered], boxX + 80, boxY + textYOffset, 128, 32, false);
+			utility.drawImage(
+				menuSurface, imgSmallTextBox,
+				0, 0, imgSmallTextBox.width, imgSmallTextBox.height,
+				boxX, boxY, boxW, boxH
+			)
 		
-		if (trainingGame.goldWagered < gameplay.gold)
-			utility.writeForClick(menuSurface, ["+"], boxX + 164, boxY + textYOffset, 32, 32, false, [trainingGame.goldUp, ['']]);
+			utility.writeText(menuSurface, ["Make a wager"], boxX + 16, boxY + textYOffset - 48, 200 - 32, 24, false);
+			if (trainingGame.goldWagered > 0)
+				utility.writeForClick(menuSurface, ["-"], boxX + 16, boxY + textYOffset, 32, 32, false, [trainingGame.goldDown, ['']]);
+				
+			utility.writeText(menuSurface, ["" + trainingGame.goldWagered], boxX + 80, boxY + textYOffset, 128, 32, false);
+			
+			if (trainingGame.goldWagered < gameplay.gold)
+				utility.writeForClick(menuSurface, ["+"], boxX + 164, boxY + textYOffset, 32, 32, false, [trainingGame.goldUp, ['']]);
+		}
 	},
 	
 	goToWorldEvent: function(empty)
 	{
+		worldEvent.training = true;
 		trainingGame.wager();
 		entering[ScreenState.TrainingMode] = true;
 		currentScreen = ScreenState.WorldEvent;

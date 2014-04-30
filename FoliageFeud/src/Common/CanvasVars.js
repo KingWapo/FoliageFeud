@@ -14,3 +14,5 @@ var menuSurface = menuCanvas.getContext("2d");
 
 CANVAS_WIDTH = 1152;
 CANVAS_HEIGHT = 512;
+
+var isDemo = false;

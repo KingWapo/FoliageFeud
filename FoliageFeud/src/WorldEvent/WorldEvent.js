@@ -78,9 +78,19 @@ var worldEvent = {
 	{
 		utility.clearAll();
 		
-		this.playerVars = [gameplay.player.x, gameplay.player.y, gameplay.player.speed, gameplay.player.animation];
-		this.cameraPosition = [cameraController.camera.x, cameraController.camera.y];
-		this.unicornVars = [gameplay.unicorn.x, gameplay.unicorn.y, gameplay.unicorn.animation, gameplay.unicorn.visible];
+		if (this.training)
+		{
+			// Randomly choose the current map
+			var map = Math.floor(Math.random() * 4) + 2;
+			gameplay.curMap = allLevelMaps[map];
+			
+		}
+		else
+		{
+			this.playerVars = [gameplay.player.x, gameplay.player.y, gameplay.player.speed, gameplay.player.animation];
+			this.cameraPosition = [cameraController.camera.x, cameraController.camera.y];
+			this.unicornVars = [gameplay.unicorn.x, gameplay.unicorn.y, gameplay.unicorn.animation, gameplay.unicorn.visible];
+		}
 		
 		cameraController.buildMap(this.worldEventMap, 0);
 		
@@ -95,7 +105,7 @@ var worldEvent = {
 		gameplay.unicorn.x = gameplay.unicorn.width;
 		gameplay.unicorn.y = gameplay.player.y;
 		gameplay.unicorn.visible = true;
-		
+			
 		this.coin.x = CANVAS_WIDTH - this.coin.width - 128;
 		this.coin.y = gameplay.player.y;
 		
@@ -109,25 +119,33 @@ var worldEvent = {
 		this.speedBoost = 0;
 		this.speedCooldown = 30;
 		this.checkmarks = [];
-		
-		gameplay.player.x = this.playerVars[0];
-		gameplay.player.y = this.playerVars[1];
-		gameplay.player.walkSpeed = this.playerVars[2];
-		gameplay.player.animation = this.playerVars[3];
-		gameplay.player.currentFrame = 0;
-		cameraController.camera.x = this.cameraPosition[0];
-		cameraController.camera.y = this.cameraPosition[1];
-		gameplay.unicorn.x = this.unicornVars[0];
-		gameplay.unicorn.y = this.unicornVars[1];
-		gameplay.unicorn.animation = this.unicornVars[2];
-		gameplay.unicorn.visible = this.unicornVars[3];
 		createScenery.onExit();
 		
-		cameraController.buildMap(allLevelMaps[gameplay.currentLevel], 0);
-		cameraController.buildMap(allObjectMaps[gameplay.currentLevel], 1);
-		gameplay.render();
-		gameplay.chooseSong(gameplay.currentLevel);
-		currentScreen = ScreenState.Gameplay;
+		if (this.training)
+		{
+			this.training = false;
+			currentScreen = ScreenState.TrainingMode;
+		}
+		else
+		{
+			gameplay.player.x = this.playerVars[0];
+			gameplay.player.y = this.playerVars[1];
+			gameplay.player.walkSpeed = this.playerVars[2];
+			gameplay.player.animation = this.playerVars[3];
+			gameplay.player.currentFrame = 0;
+			cameraController.camera.x = this.cameraPosition[0];
+			cameraController.camera.y = this.cameraPosition[1];
+			gameplay.unicorn.x = this.unicornVars[0];
+			gameplay.unicorn.y = this.unicornVars[1];
+			gameplay.unicorn.animation = this.unicornVars[2];
+			gameplay.unicorn.visible = this.unicornVars[3];
+			
+			cameraController.buildMap(allLevelMaps[gameplay.currentLevel], 0);
+			cameraController.buildMap(allObjectMaps[gameplay.currentLevel], 1);
+			gameplay.render();
+			gameplay.chooseSong(gameplay.currentLevel);
+			currentScreen = ScreenState.Gameplay;
+		}
 	},
 	
 	update: function()

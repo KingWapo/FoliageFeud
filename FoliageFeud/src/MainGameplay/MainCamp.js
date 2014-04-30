@@ -167,8 +167,17 @@ var mainCamp = {
 			case 8:
 			case 9:
 			case 10:
-				break;
 			case 11:
+				// Draw the enter button
+				var x = CANVAS_WIDTH - 160;
+				var y = 142;
+				utility.writeForClick(menuSurface, ["Enter"], x, y, 64, 30, false, [mainCamp.incrementBroTalk,[""]])
+				break;
+			case 12:
+				// Draw the enter button
+				var x = CANVAS_WIDTH - 160;
+				var y = 142;
+				utility.writeForClick(menuSurface, ["Enter"], x, y, 64, 30, false, [mainCamp.exitToGameplay,[""]])
 				break;
 		}
 		
@@ -177,13 +186,11 @@ var mainCamp = {
 			0, 0, imgExitButton.width, imgExitButton.height,
 			CANVAS_WIDTH - 320 + 128, CANVAS_HEIGHT - 160, imgExitButton.width, imgExitButton.height
 		);
-		
-		utility.addClickItem(CANVAS_WIDTH - 320 + 128, CANVAS_HEIGHT - 160, imgExitButton.width, imgExitButton.height, this.exitToGameplay, "");
+		if (!this.talkingInMainCamp) utility.addClickItem(CANVAS_WIDTH - 320 + 128, CANVAS_HEIGHT - 160, imgExitButton.width, imgExitButton.height, this.exitToGameplay, "");
 	},
 	
 	giveQuest: function(index)
 	{
-		console.debug("Removing index " + index);
 		quests.finishedQuests.splice(index, 1);
 		gameplay.gold += 5;
 		mainCamp.broTalk = 3;
@@ -196,14 +203,12 @@ var mainCamp = {
 	
 	anyInvasives: function(yes)
 	{
-		console.debug("Any Invasives: " + yes);
 		if (yes[0]) { 
 			mainCamp.broTalk = 6;
 		}
 		else {
 			mainCamp.broTalk = 5;
 		}
-		console.debug("Talk should be at: " + mainCamp.broTalk)
 	},
 	
 	addInvasive: function(index)
@@ -246,6 +251,11 @@ var mainCamp = {
 			mainCamp.broTalk = 1;
 		else 
 			mainCamp.broTalk = 2;
+	},
+	
+	incrementBroTalk: function(empty)
+	{
+		mainCamp.broTalk = (mainCamp.broTalk + 1) % (mainCamp.dingle.phrases.length - 1);
 	},
 	
 	compareInvasiveLists: function()

@@ -24,8 +24,7 @@ var utility = {
 	scale: 1,
 	originalWidth: 1152,
 	originalHeight: 512,
-	debugSound: false,
-	demo: false,
+	debugSound: true,
 	debugAll: true,
 	
 	// Clear screen and all objects from clickable
@@ -436,11 +435,6 @@ var utility = {
 window.addEventListener("click", utility.handleClick, false);
 window.addEventListener("resize", utility.handleScale, false);
 //window.addEventListener("mouseover",utility.handleMouseOver,false);
-
-
-if (!utility.demo) // Here's where to load the assets not needed in the demo.
-{
-}
 
 var imgCommonBg = utility.loadImage("../img/Backgrounds/commonBackground.png");
 var imgMenuBg = utility.loadImage("../img/Backgrounds/menuscreen.png");
