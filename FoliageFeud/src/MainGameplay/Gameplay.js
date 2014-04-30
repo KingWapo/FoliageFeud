@@ -1534,6 +1534,7 @@ var gameplay = {
 			
 			obsPoint.plantIndex = listOfPlants[i][1];
 			
+			/*
 			var fromX = Math.floor(obsPoint.x / 64);
 			var fromY = Math.floor(obsPoint.y / 64);
 			
@@ -1563,7 +1564,7 @@ var gameplay = {
 			}
 			
 			this.obsCoords.push([fromX, fromY]);
-			
+			*/
 			this.observationInstances.push(obsPoint);
 		}
 	},

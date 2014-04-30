@@ -20,6 +20,7 @@ var pause = {
 	mapYOffset: 6,
 	mapPanSpeed: 10,
 	orientation: 0,
+	obsCoords: [],
 	
 	
 	buildInGameMap: function()
@@ -35,6 +36,7 @@ var pause = {
 			//console.debug("(" + objectives[i][0] + ", " + objectives[i][1] + ")");
 		}*/
 		//console.debug("(" + playerLocation[0] + ", " + playerLocation[1] + ")");
+		this.findObsCoords();
 		this.pauseMap = [];
 		this.pauseObjectMap = [];
 		this.mapSprites = [];
@@ -52,9 +54,9 @@ var pause = {
 				}
 				var tempSprite;
 				var objective = false;
-				for (var i = 0; i < gameplay.obsCoords.length; i++)
+				for (var i = 0; i < this.obsCoords.length; i++)
 				{
-					if (column == gameplay.obsCoords[i][0] && row == gameplay.obsCoords[i][1])
+					if (column == this.obsCoords[i][0] && row == this.obsCoords[i][1])
 					{
 						tempSprite = this.createSprite(1, column, row);
 						this.mapSprites.push(tempSprite);
@@ -133,6 +135,46 @@ var pause = {
 				(Math.floor(this.mapSprites[i].x) * this.mapScale) + this.mapXOffset, (Math.floor(this.mapSprites[i].y) * this.mapScale) + this.mapYOffset, 
 				this.mapSprites[i].width * this.mapScale, this.mapSprites[i].height * this.mapScale
 			); 
+		}
+	},
+	
+	findObsCoords: function()
+	{
+		this.obsCoords = [];
+		orient = gameplay.mapOrientation - this.orientation;
+		if (orient < 0) orient += 4;
+		for (var i = 0; i < gameplay.observationInstances.length; i++)
+		{
+			obsPoint = gameplay.observationInstances[i];
+			var fromX = Math.floor(obsPoint.x / 64);
+			var fromY = Math.floor(obsPoint.y / 64);
+			
+			if (orient == 1) // x changes
+			{
+				// 90 degree Transpose then Reverse row
+				fromX = gameplay.curMap[0].length - 1 - fromX;
+				
+				var temp = fromX;
+				fromX = fromY;
+				fromY = temp;
+			}
+			else if (orient == 2) // both change
+			{
+				// 180 degrees Reverse row then col
+				fromX = gameplay.curMap[0].length - 1 - fromX;
+				fromY = gameplay.curMap.length - 1 - fromY;
+			}
+			else if (orient == 3) // y changes
+			{
+				// 270 degrees Transpose then reverse col
+				fromY = gameplay.curMap.length - 1 - fromY;
+				
+				var temp = fromY;
+				fromY = fromX;
+				fromX = temp;
+			}
+			
+			this.obsCoords.push([fromX, fromY]);
 		}
 	}
 }
