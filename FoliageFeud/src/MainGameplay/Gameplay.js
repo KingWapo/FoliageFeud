@@ -503,13 +503,6 @@ var gameplay = {
 		moveDown = false;
 		moveLeft = false;
 		moveRight = false;
-		
-<<<<<<< HEAD
-
-
-=======
-		//this.populateGold();
->>>>>>> 577330321a7d7088828e1a13881e53572f69c0c1
 	},
 	
 	updateSprite: function()

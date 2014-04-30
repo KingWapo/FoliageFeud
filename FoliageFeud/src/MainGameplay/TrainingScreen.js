@@ -43,23 +43,22 @@ var trainingScreen = {
 		);
 		
 		utility.writeText(menuSurface, ["Speed Matching"], 64 + 2 * (320 + 32) + 32, 296, 304, 32, false);
-		
-		strings = [];
-		strings.push(" gold: " + gameplay.gold);	
-		utility.drawImage(
-			menuSurface, imgChest,
-			0, 0,
-			imgChest.width, imgChest.height,
-			32, CANVAS_HEIGHT - imgChest.height - 32,
-			imgChest.width, imgChest.height
-		);
-		utility.writeText(menuSurface, strings, 96, CANVAS_HEIGHT - imgChest.height + 8, 64 * 4 - 10, 25, true);
-		
 		if (isDemo)
 		{
 		}
 		else
 		{
+			strings = [];
+			strings.push(" gold: " + gameplay.gold);	
+			utility.drawImage(
+				menuSurface, imgChest,
+				0, 0,
+				imgChest.width, imgChest.height,
+				32, CANVAS_HEIGHT - imgChest.height - 32,
+				imgChest.width, imgChest.height
+			);
+			utility.writeText(menuSurface, strings, 96, CANVAS_HEIGHT - imgChest.height + 8, 64 * 4 - 10, 25, true);
+			
 			var boxX = 940;
 			var boxY = 400;
 			var boxW = 200;
