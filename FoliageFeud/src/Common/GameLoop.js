@@ -180,6 +180,7 @@ function mainUpdate()
 			title.render();
 			if (exiting[currentScreen])
 			{
+				
 				switchGamemode(ScreenState.Gameplay);
 			}
 			break;
@@ -196,6 +197,7 @@ function mainUpdate()
 				gameplay.init();
 				entering[currentScreen] = false;
 			}
+			
 			gameplay.update();
 			gameplay.render();
 			break;
@@ -209,6 +211,7 @@ function mainUpdate()
 			}
 			if (exiting[currentScreen])
 			{
+				
 				switchGamemode(ScreenState.Gameplay);
 			}
 			info.render();

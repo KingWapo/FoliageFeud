@@ -418,13 +418,20 @@ var gameplay = {
 			console.debug ("gold x "+ this.goldStorage[i].x+" gold.y"+this.goldStorage[i].y)
 			
 		}
-		this.goldStorage[0].x=0;
-		this.goldStorage[0].y=0;
+	
 		
 		
 		
 	},
-	
+	emptyGold:function()
+	{
+		for(i=0;i<this.goldStorage.length;i++)
+		{
+			this.goldStorage[i].pop();
+			
+		}
+		
+	},
 
 	
 	init: function()
@@ -497,7 +504,8 @@ var gameplay = {
 		moveLeft = false;
 		moveRight = false;
 		
-		this.populateGold();
+
+
 	},
 	
 	updateSprite: function()
@@ -628,7 +636,7 @@ var gameplay = {
 		
 		if(this.swimming)
 		{
-			this.player.speed=this.player.walkSpeed/4*skillBook.swimLevel;
+			this.player.speed=this.player.walkSpeed/2*skillBook.swimLevel;
 		}
 		
 		 else if(this.sprinting&& !this.swimming)
@@ -1001,6 +1009,7 @@ var gameplay = {
 	
 	nextLevel: function(map)
 	{
+		this.emptyGold();
 		this.currentLevel = map;
 		this.obsCoords = [];
 		utility.clearAll();
@@ -1017,18 +1026,22 @@ var gameplay = {
 		{
 			case Level.BaseCamp:
 				this.drawBaseCamp();
+			
 				break;
 			case Level.Map1:
 				this.drawMap1();
 				break;
 			case Level.Forest:
 				this.drawForest();
+				this.populateGold();
 				break;
 			case Level.Marsh:
 				this.drawMarsh();
+				this.populateGold();
 				break;
 			case Level.Hilly:
 				this.drawHilly();
+				this.populateGold();
 				break;
 		}
 		this.chooseSong(map);
@@ -1262,7 +1275,7 @@ var gameplay = {
 	drawMarsh: function()
 	{
 		this.placeObservationEvent();
-		this.populateGold();
+
 		
 		var rotX = 2;
 		var rotY = 2;

@@ -250,7 +250,7 @@ var cameraController = {
 				}
 				else if (currentSprite.name == "blue coin" ||
 						 currentSprite.name == "gray coin" ||
-						 currentSprite.name == "gold coin" ||
+						 currentSprite.name == "gold coin"  ||
 						 currentSprite.name == "teleporter" ||
 						 currentSprite.name == "training" ||
 						 currentSprite.name == "main camp" ||
