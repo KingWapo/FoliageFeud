@@ -28,7 +28,7 @@ var plant = {
 		{
 			plant.totalPlantImagesLoaded += 1;
 			curPlant.sprite[i] = new Image();
-			curPlant.sprite[i].src = "../img/Plants/" + curPlant.name + "/" + i + ".png";
+			curPlant.sprite[i].src = "../img/Plants/" + curPlant.name + "/" + i + ".jpg";
 			curPlant.sprite[i].addEventListener("load", plant.plantLoaded, false);
 		}
 		
