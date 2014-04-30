@@ -30,7 +30,7 @@ var utility = {
 	
 	// Clear screen and all objects from clickable
 	clearAll: function()
-	{
+	{true
 		this.clearClickHandler();
 		this.clearSurfaces();
 	},
