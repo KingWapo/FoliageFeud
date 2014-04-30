@@ -1607,7 +1607,7 @@ var gameplay = {
 		else
 		{
 			this.talking = false;
-			console.debug("index: " + index + "plantIndex: " + plantIndex);
+			console.debug("index: " + index + " plantIndex: " + plantIndex);
 			this.observationInstances.splice(index, 1);
 			ispy.setRequested(quests.plantsToIdentify[plantIndex]);
 			quests.removeQuest(plantIndex);
