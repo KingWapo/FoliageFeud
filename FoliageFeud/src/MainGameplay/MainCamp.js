@@ -185,6 +185,7 @@ var mainCamp = {
 	{
 		console.debug("Removing index " + index);
 		quests.finishedQuests.splice(index, 1);
+		gameplay.gold += 5;
 		mainCamp.broTalk = 3;
 	},
 	
@@ -214,6 +215,10 @@ var mainCamp = {
 	
 	finishInvasives: function(empty)
 	{
+		if (mainCamp.compareInvasiveLists())
+		{
+			gameplay.gold += 5;
+		}
 		mainCamp.broTalk = 7;
 	},
 	
@@ -241,5 +246,27 @@ var mainCamp = {
 			mainCamp.broTalk = 1;
 		else 
 			mainCamp.broTalk = 2;
+	},
+	
+	compareInvasiveLists: function()
+	{
+		if (this.invasivesChosen.length == gameplay.invasivesSeen.length && this.invasivesChosen.length > 0)
+		{
+			for (var i = 0; i < this.invasivesChosen.length; i++)
+			{
+				if (gameplay.invasivesSeen.indexOf(this.invasivesChosen[i]) == -1) 
+				{
+					console.debug("Choose wrong plant");
+					return false;
+				}
+			}
+			console.debug("Correct Match");
+			return true;
+		}
+		else
+		{
+			console.debug("Not same size");
+			return false;
+		}
 	}
 };
