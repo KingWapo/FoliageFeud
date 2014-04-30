@@ -504,8 +504,12 @@ var gameplay = {
 		moveLeft = false;
 		moveRight = false;
 		
+<<<<<<< HEAD
 
 
+=======
+		//this.populateGold();
+>>>>>>> 577330321a7d7088828e1a13881e53572f69c0c1
 	},
 	
 	updateSprite: function()
@@ -532,6 +536,12 @@ var gameplay = {
 				break;
 			case SpriteState.Dingle:
 				this.player.sprite = imgDingleSprite;
+				this.player.numOfFrames = 9;
+				this.player.sourceHeight = 64;
+				this.player.height = 64;
+				break;
+			case SpriteState.BlackDingle:
+				this.player.sprite = imgBlackDingleSprite;
 				this.player.numOfFrames = 9;
 				this.player.sourceHeight = 64;
 				this.player.height = 64;
@@ -1386,7 +1396,6 @@ var gameplay = {
 	
 	render: function()
 	{
-		
 		this.message();
 		if (currentScreen == ScreenState.WorldEvent)
 		{
@@ -1489,10 +1498,21 @@ var gameplay = {
 					0, 0, imgLargeTextBox.width, imgLargeTextBox.height,
 					x, y, imgLargeTextBox.width, imgLargeTextBox.height
 				);
-				utility.writeText(menuSurface, [this.phrases[this.phraseIndex]], x + 32, y + 48 , imgSmallTextBox.width - 64, 24, false);
+				try {
+					utility.writeText(menuSurface, [this.phrases[this.phraseIndex]], x + 32, y + 48 , imgSmallTextBox.width - 64, 24, false);
+				} catch (err) { }
+				
+				utility.clearClickHandler();
+				utility.writeForClick(menuSurface, ["Enter"], x + imgLargeTextBox.width - 104, y + 96, 64, 30, false, [gameplay.incrementPhrase, []])
 			}
 		}
 		
+	},
+	
+	incrementPhrase: function(empty)
+	{
+		gameplay.phraseIndex += 1;
+		console.debug("Phrase Index: " + gameplay.phraseIndex);
 	},
 	
 	// Randomly places the observationInstance on the map
@@ -1531,6 +1551,7 @@ var gameplay = {
 			
 			obsPoint.plantIndex = listOfPlants[i][1];
 			
+			/*
 			var fromX = Math.floor(obsPoint.x / 64);
 			var fromY = Math.floor(obsPoint.y / 64);
 			
@@ -1560,7 +1581,7 @@ var gameplay = {
 			}
 			
 			this.obsCoords.push([fromX, fromY]);
-			
+			*/
 			this.observationInstances.push(obsPoint);
 		}
 	},
@@ -1603,7 +1624,7 @@ var gameplay = {
 		else
 		{
 			this.talking = false;
-			console.debug("index: " + index + "plantIndex: " + plantIndex);
+			console.debug("index: " + index + " plantIndex: " + plantIndex);
 			this.observationInstances.splice(index, 1);
 			ispy.setRequested(quests.plantsToIdentify[plantIndex]);
 			quests.removeQuest(plantIndex);
@@ -1711,7 +1732,7 @@ window.addEventListener("keyup", function(event)
 		case ENTER:
 			if (gameplay.talking)
 			{
-				gameplay.phraseIndex += 1;
+				if (gameplay.phraseIndex < gameplay.phrases.length) gameplay.phraseIndex += 1;
 			}
 			else if (mainCamp.talkingInMainCamp)
 			{

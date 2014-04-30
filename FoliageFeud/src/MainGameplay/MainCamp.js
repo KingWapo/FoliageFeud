@@ -28,8 +28,8 @@ var mainCamp = {
 				  "Oh no, please tell me which of these you saw.",												// Invasives, choose them	6
 				  "I'll have to make a note of that. Thank you. Anything else?",								// Done choosing			7
 				  "It's so nice to see you again, unfortunately it's not under the best of circumstances. I need your help just as you need mine. My arch nemesis, Dr. Parsnip, has claimed these SNA",
-				  "territories as his own, and is impeding my research. Not only that, but he has kidnapped your fiancee and my assistant. This shall not be tolerated, and working together, the two of us can",
-				  "foil his plans! I need you to go out and investigate the plants to see if there is some clue as to where he is hiding. I will have the plants I need posted on this board here, you can choose",
+				  "territories as his own, and is impeding my research. Not only that, but he has kidnapped your fiancee and my assistant. This shall not be tolerated, and we must work together.",
+				  "The two of us can foil his plans! I need you to go out and investigate the plants to see if there is some clue as to where he is hiding. I will have the plants I need posted on this board here, you can choose",
 				  "which ones you'd like to find. I'll stay here and analyse the plants for clues.",
 				  "Oh, before you go, feel free to check out the other buildings here. All are bound to help you in one way or another."
 				  ],
@@ -94,7 +94,7 @@ var mainCamp = {
 		utility.drawImage(
 			menuSurface, imgSmallTextBox,
 			0, 0, imgSmallTextBox.width, imgSmallTextBox.height,
-			32, 32, CANVAS_WIDTH - 64, imgSmallTextBox.height
+			32, 32, CANVAS_WIDTH - 64, imgSmallTextBox.height + 40
 		);
 		
 		for (var i = 0; i < this.listOfQuests.length; i++)
@@ -106,7 +106,7 @@ var mainCamp = {
 				this.broTalk == 1 ||
 				this.broTalk == 5 ||
 				this.broTalk == 7)
-				utility.writeForClick(menuSurface, [plantName], .45 * CANVAS_WIDTH, .35 * CANVAS_HEIGHT + (48 * i), CANVAS_WIDTH / 2, 24, true, [quests.addQuestFromSibling, [this.listOfQuests[i], randRegion]]);
+				utility.writeForClick(menuSurface, [plantName], .45 * CANVAS_WIDTH, .4 * CANVAS_HEIGHT + (48 * i), CANVAS_WIDTH / 2, 24, true, [quests.addQuestFromSibling, [this.listOfQuests[i], randRegion]]);
 		}
 		
 		utility.writeText(menuSurface, [this.dingle.phrases[this.broTalk]], 64, 24 + imgSmallTextBox.height / 2, CANVAS_WIDTH - 128, 24, false);
@@ -185,6 +185,7 @@ var mainCamp = {
 	{
 		console.debug("Removing index " + index);
 		quests.finishedQuests.splice(index, 1);
+		gameplay.gold += 5;
 		mainCamp.broTalk = 3;
 	},
 	
@@ -214,6 +215,10 @@ var mainCamp = {
 	
 	finishInvasives: function(empty)
 	{
+		if (mainCamp.compareInvasiveLists())
+		{
+			gameplay.gold += 5;
+		}
 		mainCamp.broTalk = 7;
 	},
 	
@@ -241,5 +246,27 @@ var mainCamp = {
 			mainCamp.broTalk = 1;
 		else 
 			mainCamp.broTalk = 2;
+	},
+	
+	compareInvasiveLists: function()
+	{
+		if (this.invasivesChosen.length == gameplay.invasivesSeen.length && this.invasivesChosen.length > 0)
+		{
+			for (var i = 0; i < this.invasivesChosen.length; i++)
+			{
+				if (gameplay.invasivesSeen.indexOf(this.invasivesChosen[i]) == -1) 
+				{
+					console.debug("Choose wrong plant");
+					return false;
+				}
+			}
+			console.debug("Correct Match");
+			return true;
+		}
+		else
+		{
+			console.debug("Not same size");
+			return false;
+		}
 	}
 };

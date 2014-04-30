@@ -64,7 +64,7 @@ var ispy = {
 		
 		for (var i = 0; i < this.curPlants.length; i++)
 		{
-			if (!plantList[this.curPlants[i]].loaded)
+			/*if (!plantList[this.curPlants[i]].loaded)
 			{
 				if (utility.debugAll)
 				{
@@ -72,7 +72,7 @@ var ispy = {
 				}
 				plant.loadPlant(plantList[this.curPlants[i]]);
 				this.readyToRender = false;
-			}
+			}*/
 			
 			if (plantList[this.curPlants[i]].invasive)
 				this.hasInvasive = true;
