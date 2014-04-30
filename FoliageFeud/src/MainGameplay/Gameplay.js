@@ -1379,7 +1379,6 @@ var gameplay = {
 	
 	render: function()
 	{
-		
 		this.message();
 		if (currentScreen == ScreenState.WorldEvent)
 		{
@@ -1486,6 +1485,7 @@ var gameplay = {
 					utility.writeText(menuSurface, [this.phrases[this.phraseIndex]], x + 32, y + 48 , imgSmallTextBox.width - 64, 24, false);
 				} catch (err) { }
 				
+				utility.clearClickHandler();
 				utility.writeForClick(menuSurface, ["Enter"], x + imgLargeTextBox.width - 104, y + 96, 64, 30, false, [gameplay.incrementPhrase, []])
 			}
 		}
