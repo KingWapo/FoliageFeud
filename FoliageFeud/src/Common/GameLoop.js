@@ -237,7 +237,7 @@ function mainUpdate()
 				gameplay.writtingClear();
 				if (ispy.fromTraining)
 				{
-					currentScreen = ScreenState.TrainingMode;
+					switchGamemode(ScreenState.TrainingMode);
 					ispy.fromTraining = false;
 				}
 				else
@@ -291,7 +291,7 @@ function mainUpdate()
 				if (matching.fromTraining)
 				{
 					matching.fromTraining = false;
-					currentScreen = ScreenState.TrainingMode;
+					switchGamemode(ScreenState.TrainingMode);
 				}
 				else
 				switchGamemode(ScreenState.Gameplay);

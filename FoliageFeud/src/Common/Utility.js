@@ -452,6 +452,7 @@ var imgMarshMap = utility.loadImage("../img/Maps/marsh.PNG");
 var imgHillyMap = utility.loadImage("../img/Maps/hilly.PNG");
 var imgMapBackground = utility.loadImage("../img/Backgrounds/mapSelectionBackground.png");
 var imgMapTilesheet = utility.loadImage("../img/Tiles/MapTilesheet.png");
+var imgMapLegend = utility.loadImage("../img/Tiles/MapDirectionTiles.png");
 var imgGirlButton = utility.loadImage("../img/Buttons/playButtonGirl.png");
 var imgBoyButton = utility.loadImage("../img/Buttons/playButtonBoy.png");
 var imgExitButton = utility.loadImage("../img/Buttons/exitButton.png");

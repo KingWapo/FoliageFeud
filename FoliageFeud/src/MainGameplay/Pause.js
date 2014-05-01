@@ -136,6 +136,13 @@ var pause = {
 				this.mapSprites[i].width * this.mapScale, this.mapSprites[i].height * this.mapScale
 			); 
 		}
+		
+		utility.drawImage
+		(
+			menuSurface, imgMapLegend,
+			32 * pause.orientation, 0, 32, 32,
+			20, 20, 32, 32
+		);
 	},
 	
 	findObsCoords: function()
