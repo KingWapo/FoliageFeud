@@ -1,4 +1,4 @@
-// Script to allow acces to the canvases at any time
+// Script to allow access to the canvases at any time
 // Created by Iron Man 3/28/2014
 
 // The canvas and its drawing surface

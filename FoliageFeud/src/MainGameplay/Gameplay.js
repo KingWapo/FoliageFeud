@@ -1740,15 +1740,18 @@ window.addEventListener("keyup", function(event)
 			}
 			else if (!gameplay.onPause)
 			{
-				console.debug("Enter Pause");
-				pause.mapXOffset = 13;
-				pause.mapYOffset = 6;
-				pause.mapScale = MIN_MAP_SCALE;
-				gameplay.onPause = true;
-				moveDown = false;
-				moveLeft = false;
-				moveRight = false;
-				moveUp = false;
+				if (currentScreen == ScreenState.Gameplay)
+				{
+					console.debug("Enter Pause");
+					pause.mapXOffset = 13;
+					pause.mapYOffset = 6;
+					pause.mapScale = MIN_MAP_SCALE;
+					gameplay.onPause = true;
+					moveDown = false;
+					moveLeft = false;
+					moveRight = false;
+					moveUp = false;
+				}
 			}
 			else
 			{
