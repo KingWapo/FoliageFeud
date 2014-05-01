@@ -425,12 +425,13 @@ var gameplay = {
 	},
 	emptyGold:function()
 	{
-		for(i=0;i<this.goldStorage.length;i++)
-		{
-			this.goldStorage[i].pop();
-			
-		}
-		
+		this.goldStorage = [];
+	},
+	
+	giveGold: function()
+	{
+		var amount = Math.floor(Math.random() * 4) + 1;
+		this.gold += amount;
 	},
 
 	
@@ -931,6 +932,14 @@ var gameplay = {
 						{
 							this.onTeleport = false;
 						}
+						for (var i = 0; i < this.goldStorage.length; i++)
+						{
+							if ( utility.collisionDetection(gameplay.player, this.goldStorage[i]))
+							{
+								this.goldStorage.splice(i, 1);
+								this.giveGold();
+							}
+						}
 					}
 				}
 				} catch(err) {}
@@ -1015,7 +1024,7 @@ var gameplay = {
 	
 	nextLevel: function(map)
 	{
-		//this.emptyGold();
+		this.emptyGold();
 		this.currentLevel = map;
 		this.obsCoords = [];
 		utility.clearAll();
