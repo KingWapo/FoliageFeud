@@ -251,6 +251,7 @@ function mainUpdate()
 			}
 			break;
 		case ScreenState.SkillBook:
+			
 			break;
 		case ScreenState.TrainingMode:
 			if (entering[currentScreen])

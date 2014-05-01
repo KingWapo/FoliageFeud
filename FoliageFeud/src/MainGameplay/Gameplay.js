@@ -522,10 +522,13 @@ var gameplay = {
 				this.player.height = 64;
 				break;	
 			case SpriteState.Parsnip:
-				this.player.sprite = imgParsnipSprite;
-				this.player.numOfFrames = 9;
-				this.player.sourceHeight = 64;
-				this.player.height = 64;
+				if(shop.parsnipMask.purchased==true)
+				{
+					this.player.sprite = imgParsnipSprite;
+					this.player.numOfFrames = 9;
+					this.player.sourceHeight = 64;
+					this.player.height = 64;
+				}
 				break;
 			case SpriteState.Dingle:
 				this.player.sprite = imgDingleSprite;
@@ -1387,8 +1390,22 @@ var gameplay = {
 		}
 	},
 	
+	skillDisplay:function()
+	{
+		if(skillBook.display==true)
+		{
+		utility.drawImage(
+			menuSurface, imgQuestLog,
+			0, 0, imgQuestLog.width, imgQuestLog.height,
+			0, 0, imgQuestLog.width, imgQuestLog.height
+	
+		);
+	}
+	},
+	
 	render: function()
 	{
+		this.skillDisplay();
 		this.message();
 		if (currentScreen == ScreenState.WorldEvent)
 		{
@@ -1658,6 +1675,8 @@ window.addEventListener("keydown", function(event)
 	{		
 		
 			skillBook.display=true;
+			
+			
 	}
 	if (event.keyCode >= LEFT && event.keyCode <= DOWN)
 	{
