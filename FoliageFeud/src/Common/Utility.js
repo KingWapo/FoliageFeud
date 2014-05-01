@@ -138,7 +138,7 @@ var utility = {
 			var w = utility.clickable[i].width * utility.scale;
 			var h = utility.clickable[i].height * utility.scale;
 			
-			
+			console.debug(posx+ " "+posy);
 			// If image was clicked, runs specified function
 			if (posx >= x && posx <= x + w &&
 				posy >= y && posy <= y + h )

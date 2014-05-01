@@ -4,6 +4,7 @@ var shop ={
 	adventure: Object.create(buyableObject),
 	rockCoin: Object.create(buyableObject),
 	waterCoin: Object.create(buyableObject),
+	parsnipMask:Object.create(buyableObject),
 	info:false,
 	shopKeeperDisplay:false,
 	
@@ -38,6 +39,21 @@ render:function()
 			0, 0, imgAdventure.width, imgAdventure.height,
 			96, 138, imgAdventure.width,imgAdventure.height
 			);
+			utility.drawImage(
+			gameplaySurface, imgAdventure,
+			0, 0, imgAdventure.width, imgAdventure.height,
+			598, 138, imgAdventure.width,imgAdventure.height
+			);
+			utility.drawImage(
+			gameplaySurface, imgNip,
+			0, 0, imgNip.width, imgNip.height,
+			765, 138, imgNip.width,imgNip.height
+			);
+			utility.drawImage(
+			gameplaySurface, imgAdventure,
+			0, 0, imgAdventure.width, imgAdventure.height,
+			934, 138, imgAdventure.width,imgAdventure.height
+			);
 			
 			utility.drawImage(
 			gameplaySurface, imgShopSibling,
@@ -70,6 +86,12 @@ initShop:function()
 	shop.waterCoin.x=429;
 	shop.waterCoin.y=140;
 	shop.waterCoin.init();	
+	shop.parsnipMask.x=765;
+	shop.parsnipMask.y=138;
+	shop.parsnipMask.price=0;
+	shop.parsnipMask.name="parsnip Mask ";
+	shop.parsnipMask.init();
+	
 	var strings=[];
 			 strings.push(" gold: " + gameplay.gold);	
 				menuSurface.drawImage(
@@ -96,6 +118,20 @@ buyAdventure:function()
 	
 	
 		
+},
+buyParsnip:function()
+{
+	if(shop.parsnipMask.description==true&&shop.parsnipMask.purchased==false)
+	{
+		console.debug("parsnip in");
+		shop.parsnipMask.buy();
+		
+		
+	}
+
+	shop.parsnipMask.description=true;
+	shop.info=true;
+	
 },
 buyRock:function()
 {
@@ -140,6 +176,7 @@ exitShop:function()
 		shop.waterCoin.description=false;
 		shop.rockCoin.description=false;
 		shop.shopKeeperDisplay=false;
+		shop.parsnipMask.description=false;
 	
 },
 displayInfo:function()
@@ -162,6 +199,7 @@ buttonHandler:function()
 		utility.addClickItem( 265,140,imgRock.width,imgRock.height,this.buyRock,"");
 		utility.addClickItem( 429,140,imgWater.width,imgWater.height,this.buyWater,"");
 		utility.addClickItem(750,300,imgShopSibling.width,imgShopSibling.height,this.shopKeeper,"");
+		utility.addClickItem(765,138,imgNip.width,imgNip.height,this.buyParsnip,"");
 		
 	}
 	if(shop.info==true)
@@ -245,6 +283,26 @@ infoDisplay:function()
 					utility.writeText(menuSurface, strings, 245, 200, 64 * 4, 20, true);
 		
 	}
+	if(this.parsnipMask.description==true)
+	{
+		var strings = [];
+		
+				
+				strings.push(" Once you purchase this hit the = button to become professor parsnip " );
+				utility.writeText(menuSurface, strings, 245, 290, 64 * 4, 20, true);
+				utility.drawImage(
+				menuSurface, imgNip,
+				0, 0, imgNip.width, imgNip.height,
+				315, 155, imgNip.width,imgNip.height
+			);
+				if(gameplay.gold>=this.parsnipMask.price)
+				{
+					utility.addClickItem(402,364, 64,64,this.buyParsnip, "");
+					utility.addClickItem(402,364, 64,64,this.exitShop, "");
+				}
+		
+	}
+	
 	
 }
 };
