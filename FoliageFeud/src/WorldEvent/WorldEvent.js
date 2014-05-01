@@ -175,11 +175,15 @@ var worldEvent = {
 		
 		if (gameplay.player.x <= gameplay.unicorn.x + gameplay.unicorn.width)
 		{
+			trainingGame.returnRate = 0;
 			exiting[currentScreen] = true;
+			trainingGame.finishGame();
 		}
 		if (gameplay.player.x + gameplay.player.width >= this.coin.x)
 		{
+			trainingGame.returnRate = 1.8;
 			exiting[currentScreen] = true;
+			trainingGame.finishGame();
 		}
 	},
 	

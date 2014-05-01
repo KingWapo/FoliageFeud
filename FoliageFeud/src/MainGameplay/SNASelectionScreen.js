@@ -65,6 +65,18 @@ var snaSelect = {
 			0, 0, imgHillyMap.width, imgHillyMap.height,
 			imgMapBackground.width + 128 + 32 + 128 + 32, imgMapBackground.height + 84, imgHillyMap.width, imgHillyMap.height
 		);
+		
+			
+		var x = (CANVAS_WIDTH - imgExitButton.width) / 2;
+		var y = CANVAS_HEIGHT - imgExitButton.height + 56;
+		var width = 3 * imgExitButton.width / 4;
+		var height = 2 * imgExitButton.height / 4;
+		utility.drawImage(
+			menuSurface, imgExitButton,
+			0, 0, imgExitButton.width, imgExitButton.height,
+			x, y, width, height
+		);
+		utility.addClickItem(x, y, width, height, snaSelect.exit, []);
 	},
 	
 	goToMap1: function(empty)
@@ -92,6 +104,11 @@ var snaSelect = {
 	{
 		gameplay.nextLevel(Level.Hilly);
 		entering[ScreenState.SNASelectionScreen] = true;
+		currentScreen = ScreenState.Gameplay;
+	},
+	
+	exit: function(empty)
+	{
 		currentScreen = ScreenState.Gameplay;
 	}
 

@@ -79,6 +79,16 @@ var trainingScreen = {
 			
 			if (trainingGame.goldWagered < gameplay.gold)
 				utility.writeForClick(menuSurface, ["+"], boxX + 164, boxY + textYOffset, 32, 32, false, [trainingGame.goldUp, ['']]);
+				
+			var x = (CANVAS_WIDTH - imgExitButton.width) / 2;
+			var y = CANVAS_HEIGHT - imgExitButton.height;
+			utility.drawImage(
+				menuSurface, imgExitButton,
+				0, 0, imgExitButton.width, imgExitButton.height,
+				x, y, imgExitButton.width, 3 * imgExitButton.height / 4
+			);
+			utility.addClickItem(x, y, imgExitButton.width, imgExitButton.height, trainingScreen.exit, [])
+			
 		}
 	},
 	
@@ -103,6 +113,11 @@ var trainingScreen = {
 		trainingGame.wager();
 		entering[ScreenState.TrainingMode] = true;
 		currentScreen = ScreenState.Matching;
+	},
+	
+	exit: function(empty)
+	{
+		currentScreen = ScreenState.Gameplay;
 	}
 };
 
