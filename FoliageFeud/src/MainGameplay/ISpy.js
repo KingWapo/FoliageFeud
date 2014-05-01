@@ -157,7 +157,7 @@ var ispy = {
 					break;
 			}
 			
-			if (!this.gameEnd)
+			if (!this.gameEnd && (this.invasiveSeen || !this.hasInvasive))
 			{
 				if (this.curPlants[j] === this.requestedPlant)
 					utility.addClickItem(x, y, this.imgSize, this.imgSize, this.harvestPlant, [j]);
