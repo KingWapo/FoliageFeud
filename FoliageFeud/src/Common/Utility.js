@@ -481,13 +481,14 @@ var imgWater=utility.loadImage("../img/Tokens/waterCoin.png");
 var imgNip=utility.loadImage("../img/Tokens/drparsniptoken.png");
 var imgShopSibling = utility.loadImage("../img/Player/siblingShop.png");
 var imgItemInfo = utility.loadImage("../img/Backgrounds/iteminfo.png");
-var imgPurchaseButton=utility.loadImage("../img/Buttons/exitButton.png");
+var imgPurchaseButton=utility.loadImage("../img/Buttons/buyButton.png");
 var imgCompassBackground = utility.loadImage("../img/Backgrounds/compass.png");
 var imgCompassArrow = utility.loadImage("../img/Backgrounds/compassarrow.png");
 var imgLargeTextBox = utility.loadImage("../img/Backgrounds/textboxbig.png");
 var imgSmallTextBox = utility.loadImage("../img/Backgrounds/textboxsmall.png");
 var imgTrainingBackground = utility.loadImage("../img/Backgrounds/trainingicon.png");
 var imgGoldCoin= utility.loadImage("../img/Tokens/speedToken.png");
+var imgPrice=utility.loadImage("../img/Buttons/shopbuybutton.png");
 
 createScenery.tilesheet = utility.loadImage("../img/Tiles/tilesheet.png");
 gameplay.mainCamp.sprite = utility.loadImage("../img/Tiles/missions.png");

@@ -5,30 +5,91 @@ var shop ={
 	rockCoin: Object.create(buyableObject),
 	waterCoin: Object.create(buyableObject),
 	parsnipMask:Object.create(buyableObject),
+	superWaterCoin:Object.create(buyableObject),
 	info:false,
 	shopKeeperDisplay:false,
 	
 render:function()
 {
 	utility.clearAll();	
-		
+	shop.drawPrices();
 		utility.drawImage(
 			gameplaySurface, imgShopBg,
 			0, 0, imgShopBg.width, imgShopBg.height,
 			0, 0, imgShopBg.width, imgShopBg.height
 		);
 		utility.drawImage(
+			gameplaySurface, imgPrice,
+			0, 0, imgPrice.width, imgPrice.height,
+			94, 435, 128, 32
+		);
+		utility.drawImage(
+			gameplaySurface, imgPrice,
+			0, 0, imgPrice.width, imgPrice.height,
+			94, 270, 128, 32
+		);
+		
+		utility.drawImage(
+			gameplaySurface, imgPrice,
+			0, 0, imgPrice.width, imgPrice.height,
+			260, 270, 128, 32
+		);
+		
+		utility.drawImage(
+			gameplaySurface, imgPrice,
+			0, 0, imgPrice.width, imgPrice.height,
+			260, 435, 128, 32
+		);
+		utility.drawImage(
+			gameplaySurface, imgPrice,
+			0, 0, imgPrice.width, imgPrice.height,
+			430, 270, 128, 32
+		);
+		utility.drawImage(
+			gameplaySurface, imgPrice,
+			0, 0, imgPrice.width, imgPrice.height,
+			430, 435, 128, 32
+		);
+			utility.drawImage(
+			gameplaySurface, imgPrice,
+			0, 0, imgPrice.width, imgPrice.height,
+			600, 270, 128, 32
+		);
+		utility.drawImage(
+			gameplaySurface, imgPrice,
+			0, 0, imgPrice.width, imgPrice.height,
+			600, 435, 128, 32
+		);
+		utility.drawImage(
+			gameplaySurface, imgPrice,
+			0, 0, imgPrice.width, imgPrice.height,
+			765, 270, 128, 32
+		);
+		utility.drawImage(
+			gameplaySurface, imgPrice,
+			0, 0, imgPrice.width, imgPrice.height,
+			930, 270, 128, 32
+		);
+		
+		utility.drawImage(
 			gameplaySurface, imgExitButton,
 			0, 0, imgExitButton.width, imgExitButton.height,
 			932, 304, imgExitButton.width, imgExitButton.height
 		);
+		
 	
 		utility.drawImage(
 			gameplaySurface, imgRock,
 			0, 0, imgRock.width, imgRock.height,
 			265, 140, imgRock.width,imgRock.height
 			);
-		
+			
+		utility.drawImage(
+			gameplaySurface, imgWater,
+			0, 0, imgWater.width, imgWater.height,
+			97, 308, imgWater.width,imgWater.height
+			);
+		//for the second water coin
 		utility.drawImage(
 			gameplaySurface, imgWater,
 			0, 0, imgWater.width, imgWater.height,
@@ -67,10 +128,16 @@ render:function()
 		shop.initShop();
 		shop.buttonHandler();
 		shop.infoDisplay();
+		shop.drawPrices();
 		
 },
 initShop:function()
-{
+{	
+	shop.superWaterCoin.price=0;
+	shop.superWaterCoin.name="water Coin";
+	shop.superWaterCoin.x=97;
+	shop.superWaterCoin.y=308;
+	shop.superWaterCoin.init();
 	shop.adventure.price=1;
 	shop.adventure.name="Adventure Hat";
 	shop.adventure.x=96;
@@ -151,11 +218,32 @@ buyWater:function()
 	
 	{
 		shop.waterCoin.buy();
-		skillBook.swimLevel=2;
+		skillBook.swimLevel=skillBook.swimLevel+1;
+		
 	}
+	
+	
+	
+
 	shop.info=true;
 	shop.waterCoin.description=true;
+	
+
 },
+buyWaterCoin:function()
+{
+	shop.superWaterCoin.description=true;
+	shop.info=true;
+	if(shop.superWaterCoin.description==true&&shop.superWaterCoin.purchased==false)
+	{
+		shop.superWaterCoin.buy();
+		skillBook.swimLevel=skillBook.swimLevel+1;
+	}
+	console.debug("skillBook" +skillBook.swimLevel);
+},
+
+
+
 shopKeeper:function()
 {	
 	shop.info=true;
@@ -177,6 +265,7 @@ exitShop:function()
 		shop.rockCoin.description=false;
 		shop.shopKeeperDisplay=false;
 		shop.parsnipMask.description=false;
+		shop.superWaterCoin.description=false;
 	
 },
 displayInfo:function()
@@ -198,6 +287,7 @@ buttonHandler:function()
 		utility.addClickItem( 96,138,imgAdventure.width,imgAdventure.height,this.buyAdventure,"");
 		utility.addClickItem( 265,140,imgRock.width,imgRock.height,this.buyRock,"");
 		utility.addClickItem( 429,140,imgWater.width,imgWater.height,this.buyWater,"");
+		utility.addClickItem( 97,308,imgWater.width,imgWater.height,this.buyWaterCoin,"");
 		utility.addClickItem(750,300,imgShopSibling.width,imgShopSibling.height,this.shopKeeper,"");
 		utility.addClickItem(765,138,imgNip.width,imgNip.height,this.buyParsnip,"");
 		
@@ -223,6 +313,27 @@ buttonHandler:function()
 	}
 	
 },
+drawPrices:function()
+{
+	var strings=[];				
+	strings.push("30 gold" );
+	utility.writeText(gameplaySurface, strings, 110, 290, 64 * 4, 20, true);
+	strings.pop();
+	strings.push(" 10 gold ");
+	utility.writeText(gameplaySurface, strings, 270, 290, 64 * 4, 20, true);
+	strings.pop();
+	strings.push(" 10 gold ");
+	utility.writeText(gameplaySurface, strings, 440, 290, 64 * 4, 20, true);
+	strings.pop();
+	strings.push(" 10 gold ");
+	utility.writeText(gameplaySurface, strings, 620, 290, 64 * 4, 20, true);
+	strings.pop();
+	strings.push(" 150 gold ");
+	utility.writeText(gameplaySurface, strings, 780, 290, 64 * 4, 20, true);
+	strings.pop();
+	
+},
+
 infoDisplay:function()
 {
 	if(this.adventure.description==true)
@@ -253,12 +364,33 @@ infoDisplay:function()
 				0, 0, imgWater.width, imgWater.height,
 				315, 155, imgWater.width,imgWater.height
 			);
-				if(gameplay.gold>=this.waterCoin.price)
+				if(gameplay.gold>=this.waterCoin.price&&this.waterCoin.description==true)
 				{
 					utility.addClickItem(402,364, 64,64,this.buyWater, "");
 					utility.addClickItem(402,364, 64,64,this.exitShop, "");
 				}
+				
+				
 	}
+	if(this.superWaterCoin.description==true)
+	{
+				var strings = [];
+				strings.push(" The water coin increases your swim speed.  " );
+				utility.writeText(menuSurface, strings, 245, 290, 64 * 4, 20, true);
+				utility.drawImage(
+				menuSurface, imgWater,
+				0, 0, imgWater.width, imgWater.height,
+				315, 155, imgWater.width,imgWater.height
+			);
+				
+				if(gameplay.gold>=this.superWaterCoin.price&&this.superWaterCoin.description==true)
+				{
+					utility.addClickItem(402,364, 64,64,this.buyWaterCoin, "");
+					utility.addClickItem(402,364, 64,64,this.exitShop, "");
+				}
+				
+	}
+	
 	if(this.rockCoin.description==true)
 	{
 		
@@ -302,6 +434,7 @@ infoDisplay:function()
 				}
 		
 	}
+	
 	
 	
 }
