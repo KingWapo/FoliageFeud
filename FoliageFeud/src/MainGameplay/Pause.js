@@ -21,6 +21,7 @@ var pause = {
 	mapPanSpeed: 10,
 	orientation: 0,
 	obsCoords: [],
+	teleporterCoords: [],
 	
 	
 	buildInGameMap: function()
@@ -37,6 +38,7 @@ var pause = {
 		}*/
 		//console.debug("(" + playerLocation[0] + ", " + playerLocation[1] + ")");
 		this.findObsCoords();
+		this.findTelportCoords();
 		this.pauseMap = [];
 		this.pauseObjectMap = [];
 		this.mapSprites = [];
@@ -63,7 +65,7 @@ var pause = {
 						objective = true;
 					}
 				}
-				if (column == gameplay.teleporterCoords[0] && row == gameplay.teleporterCoords[1])
+				if (column == this.teleporterCoords[0] && row == this.teleporterCoords[1])
 				{
 					tempSprite = this.createSprite(4, column, row);
 					this.mapSprites.push(tempSprite);
@@ -183,6 +185,42 @@ var pause = {
 			
 			this.obsCoords.push([fromX, fromY]);
 		}
+	},
+	
+	findTelportCoords: function()
+	{
+		this.teleporterCoords = [];
+		orient = gameplay.mapOrientation - this.orientation;
+		if (orient < 0) orient += 4;
+		
+		var fromX = Math.floor(gameplay.teleporter.x / 64);
+		var fromY = Math.floor(gameplay.teleporter.y / 64);
+		
+		if (orient == 1) // x changes
+		{
+			// 90 degree Transpose then Reverse row
+			fromX = gameplay.curMap[0].length - 1 - fromX;
+			
+			var temp = fromX;
+			fromX = fromY;
+			fromY = temp;
+		}
+		else if (orient == 2) // both change
+		{
+			// 180 degrees Reverse row then col
+			fromX = gameplay.curMap[0].length - 1 - fromX;
+			fromY = gameplay.curMap.length - 1 - fromY;
+		}
+		else if (orient == 3) // y changes
+		{
+			// 270 degrees Transpose then reverse col
+			fromY = gameplay.curMap.length - 1 - fromY;
+			
+			var temp = fromY;
+			fromY = fromX;
+			fromX = temp;
+		}
+		this.teleporterCoords = [fromX, fromY];
 	}
 }
 
