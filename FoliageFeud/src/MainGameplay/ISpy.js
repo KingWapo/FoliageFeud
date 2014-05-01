@@ -315,7 +315,6 @@ var ispy = {
 			trainingGame.finishGame();
 			
 		ispy.requestedPlant = -1;
-		ispy.fromTraining = false;
 		ispy.gamesPlayed = 0;
 		ispy.gamesCorrect = 0;
 		ispy.readyToRender = false;

@@ -235,7 +235,13 @@ function mainUpdate()
 			if (exiting[currentScreen])
 			{
 				gameplay.writtingClear();
-				switchGamemode(ScreenState.Gameplay);
+				if (ispy.fromTraining)
+				{
+					currentScreen = ScreenState.TrainingMode;
+					ispy.fromTraining = false;
+				}
+				else
+					switchGamemode(ScreenState.Gameplay);
 				utility.clearClickHandler();
 			}
 			else
@@ -282,6 +288,12 @@ function mainUpdate()
 				matching.render();
 			if (exiting[currentScreen])
 			{
+				if (matching.fromTraining)
+				{
+					matching.fromTraining = false;
+					currentScreen = ScreenState.TrainingMode;
+				}
+				else
 				switchGamemode(ScreenState.Gameplay);
 			}
 			break;

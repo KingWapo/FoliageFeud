@@ -111,13 +111,18 @@ var trainingScreen = {
 	goToMatching: function()
 	{
 		trainingGame.wager();
+		matching.fromTraining = true;
 		entering[ScreenState.TrainingMode] = true;
+<<<<<<< HEAD
 		currentScreen = ScreenState.Matching;
 	},
 	
 	exit: function(empty)
 	{
 		currentScreen = ScreenState.Gameplay;
+=======
+		switchGamemode(ScreenState.Matching);
+>>>>>>> fcbca7bfc44e6527a6bea47239655dcb92c5ebf4
 	}
 };
 
