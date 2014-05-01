@@ -1012,7 +1012,7 @@ var gameplay = {
 	
 	nextLevel: function(map)
 	{
-		this.emptyGold();
+		//this.emptyGold();
 		this.currentLevel = map;
 		this.obsCoords = [];
 		utility.clearAll();
