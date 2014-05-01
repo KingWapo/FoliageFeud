@@ -6,8 +6,9 @@ var matching = {
 	numFlipped: 0,
 	checkMatchDelay: 0,
 	matchesMade: 0,
-	timer: 1200,
-	timerFull: 1200,
+	timer: 1800,
+	timerFull: 1800,
+	fromTraining: false,
 	
 	init: function()
 	{
@@ -98,7 +99,7 @@ var matching = {
 		
 		if (this.numFlipped == 2)
 		{
-			this.checkMatchDelay = (this.checkMatchDelay + 1) % 30;
+			this.checkMatchDelay = (this.checkMatchDelay + 1) % 15;
 			
 			if (this.checkMatchDelay == 0)
 				this.checkMatch();
