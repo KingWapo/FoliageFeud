@@ -65,6 +65,20 @@ var matching = {
 			{
 				sprite = plantList[this.cards[i].index].sprite[0];
 				
+				if (this.cards[i].isImg)
+				{
+					utility.drawImage
+					(
+						backgroundSurface, sprite,
+						0, 0, sprite.width, sprite.height, x, y,
+						this.tileSize, this.tileSize
+					);
+				}
+				else
+				{
+					utility.writeText(backgroundSurface, [plantList[this.cards[i].index].name], x + 10, y + 40, this.tileSize - 20, 15, false);
+				}
+				
 				if (this.cards[i].isFound)
 				{
 					utility.drawImage
@@ -78,17 +92,17 @@ var matching = {
 			else
 			{
 				sprite = imgQuestionMark;
+		
+				utility.drawImage
+				(
+					backgroundSurface, sprite,
+					0, 0, sprite.width, sprite.height, x, y,
+					this.tileSize, this.tileSize
+				);
 				
 				if (this.numFlipped != 2)
 					utility.addClickItem(x, y, this.tileSize, this.tileSize, this.flipCard, [i]);
 			}
-			
-			utility.drawImage
-			(
-				backgroundSurface, sprite,
-				0, 0, sprite.width, sprite.height, x, y,
-				this.tileSize, this.tileSize
-			);
 		}
 		
 		utility.drawImage(

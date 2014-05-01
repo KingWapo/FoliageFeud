@@ -311,10 +311,11 @@ var utility = {
 		var size = utility.writeText(context, text, x, y, maxWidth, fontSize, isOutlined);
 		utility.addClickItem(x - 5, y - fontSize, size[0] + 10, size[1] + 5, clickHandler[0], clickHandler[1]);
 		
-		
+		/*
 		context.fillStyle = "black";
 		context.rect(x - 5, y - fontSize, size[0] + 10, size[1] + 5);
 		context.stroke();
+		*/
 	},
 	
 	contains: function(array, element)
