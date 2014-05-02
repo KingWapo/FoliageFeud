@@ -143,26 +143,26 @@ var mainCamp = {
 				utility.writeForClick(menuSurface, ["No"], CANVAS_WIDTH - 320 + 64, imgSmallTextBox.height, 64, 30, true, [mainCamp.anyInvasives, [false]]);
 				break;
 			case 6:
-				var x = CANVAS_WIDTH - 64 - 128 - 256;
+				var x = CANVAS_WIDTH - 64 - 512;
 				var y = 96;
 				utility.drawImage(
 					menuSurface, imgSmallTextBox,
 					0, 0, imgSmallTextBox.width, imgSmallTextBox.height,
-					x, y, 256, 256 + 64
+					x, y, 256 + 128, 256 + 64
 					);
 				var invasives = plant.getInvasivePlants();
-				for (var i = 0; i < Math.min(invasives.length, 4); i++)
+				for (var i = 0; i < invasives.length; i++)
 				{
 					var invImage = plantList[invasives[i + this.arrowOffset]].sprite[0];
 					utility.drawImage(
 						menuSurface, invImage,
 						0, 0, invImage.width, invImage.height,
-						x + 64 + (i % 2) * 96, y + 32 + 88 * (i / 2), 64, 64
+						x + 64 + (i % 3) * 96, y + 32 + 88 * Math.floor(i / 3), 64, 64
 					);
 					index = i;
-					utility.addClickItem(x + 64 + (i % 2) * 96, y + 32 + 88 * (i / 2), 64, 64, this.addInvasive, [i])
+					utility.addClickItem(x + 64 + (i % 3) * 96, y + 32 + 88 * Math.floor(i / 3), 64, 64, this.addInvasive, [i])
 				}
-				utility.writeForClick(menuSurface, ["Done"], x + 64 + 96, y + 32 + 88 * 2.75, 64, 30, true, [mainCamp.finishInvasives, []]);
+				utility.writeForClick(menuSurface, ["Done"], x + 64 + 96 + 96, y + 88 * 2.75, 64, 30, true, [mainCamp.finishInvasives, []]);
 				break;
 			case 8:
 			case 9:
@@ -214,16 +214,24 @@ var mainCamp = {
 	addInvasive: function(index)
 	{
 		invasives = plant.getInvasivePlants();
-		mainCamp.invasivesChosen.push(invasives[index[0]]);
-		console.debug(index[0]);
+		//mainCamp.invasivesChosen.push(invasives[index[0]]);
+		console.debug("invasive index: " + index[0]);
+		console.debug("plant index: " + invasives[index[0]]);
+		if (mainCamp.compareInvasives(invasives[index[0]]))
+		{
+			gameplay.gold += 5;
+			console.debug("Correct");
+		}
+		else console.debug("Wrong");
 	},
 	
 	finishInvasives: function(empty)
 	{
+		/*
 		if (mainCamp.compareInvasiveLists())
 		{
 			gameplay.gold += 5;
-		}
+		}*/
 		mainCamp.broTalk = 7;
 	},
 	
@@ -258,25 +266,17 @@ var mainCamp = {
 		mainCamp.broTalk = (mainCamp.broTalk + 1) % (mainCamp.dingle.phrases.length - 1);
 	},
 	
-	compareInvasiveLists: function()
+	compareInvasives: function(plantIndex)
 	{
-		if (this.invasivesChosen.length == gameplay.invasivesSeen.length && this.invasivesChosen.length > 0)
-		{
-			for (var i = 0; i < this.invasivesChosen.length; i++)
-			{
-				if (gameplay.invasivesSeen.indexOf(this.invasivesChosen[i]) == -1) 
-				{
-					console.debug("Choose wrong plant");
-					return false;
-				}
-			}
-			console.debug("Correct Match");
-			return true;
-		}
+		console.debug("plant index: " + plantIndex);
+		var index = gameplay.invasivesSeen.indexOf(plantIndex);
+		console.debug("index: " + index);
+		if (index == -1) return false;
 		else
 		{
-			console.debug("Not same size");
-			return false;
+			console.debug("Plant: " + plantList[plantIndex]);
+			gameplay.invasivesSeen.splice(index, 1);
+			return true;
 		}
 	}
 };

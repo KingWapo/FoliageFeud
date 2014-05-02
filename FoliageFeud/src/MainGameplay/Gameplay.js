@@ -439,7 +439,7 @@ var gameplay = {
 	{
 		utility.clearAll();
 		
-		console.debug("Map Orientation: " + this.mapOrientation);
+		//console.debug("Map Orientation: " + this.mapOrientation);
 		
 		// Initialize collisions
 		var collider = {
@@ -1031,7 +1031,7 @@ var gameplay = {
 		this.observationInstances = [];
 		this.mapOrientation = Math.floor(Math.random() * 4);
 		if (map < Level.Map1) this.mapOrientation *= 0;
-		console.debug("Map Orientation: " + this.mapOrientation);
+		//console.debug("Map Orientation: " + this.mapOrientation);
 		this.curMap = rotate.RotateMap(allLevelMaps[gameplay.currentLevel], this.mapOrientation);
 		this.curObjMap = rotate.RotateMap(allObjectMaps[gameplay.currentLevel], this.mapOrientation);
 		this.clearCollision();
@@ -1064,7 +1064,7 @@ var gameplay = {
 		this.teleporter.hitbox.y = this.teleporter.y + 64;
 		this.teleporter.hitbox.width = this.teleporter.width / 2;
 		this.teleporter.hitbox.height = this.teleporter.height / 2;
-		console.debug("Building level");
+		//console.debug("Building level");
 	},
 	
 	chooseSong: function(level)

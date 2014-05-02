@@ -40,6 +40,8 @@ var worldEvent = {
 			name: "",
 			correct: false
 		}],
+		
+	botnip: Object.create(spriteObject),
 	
 	coin: {
 		sourceX: 0,
@@ -83,6 +85,11 @@ var worldEvent = {
 			// Randomly choose the current map
 			var map = Math.floor(Math.random() * 4) + 2;
 			gameplay.curMap = allLevelMaps[map];
+			if (!isDemo)
+			{
+				this.playerVars = [gameplay.player.x, gameplay.player.y, gameplay.player.speed, gameplay.player.animation];
+				this.cameraPosition = [cameraController.camera.x, cameraController.camera.y];
+			}
 			
 		}
 		else
@@ -102,10 +109,16 @@ var worldEvent = {
 		gameplay.player.speed = gameplay.player.runSpeed;
 		gameplay.player.animation = Animation.WorldEventRight;
 		
+		/*
 		gameplay.unicorn.x = gameplay.unicorn.width;
 		gameplay.unicorn.y = gameplay.player.y;
 		gameplay.unicorn.visible = true;
-			
+		*/
+		
+		this.botnip.x = 64;
+		this.botnip.y = gameplay.player.y;
+		this.botnip.sprite = imgBotnipSprite;
+		
 		this.coin.x = CANVAS_WIDTH - this.coin.width - 128;
 		this.coin.y = gameplay.player.y;
 		
@@ -121,12 +134,7 @@ var worldEvent = {
 		this.checkmarks = [];
 		createScenery.onExit();
 		
-		if (this.training)
-		{
-			this.training = false;
-			currentScreen = ScreenState.TrainingMode;
-		}
-		else
+		if (!isDemo)
 		{
 			gameplay.player.x = this.playerVars[0];
 			gameplay.player.y = this.playerVars[1];
@@ -135,13 +143,27 @@ var worldEvent = {
 			gameplay.player.currentFrame = 0;
 			cameraController.camera.x = this.cameraPosition[0];
 			cameraController.camera.y = this.cameraPosition[1];
+			if (this.training)
+			{
+				gameplay.currentLevel = Level.BaseCamp;
+				gameplay.curMap = allLevelMaps[Level.BaseCamp];
+				gameplay.curObjMap = allLevelMaps[Level.BaseCamp];
+			}
+			cameraController.buildMap(allLevelMaps[gameplay.currentLevel], 0);
+			cameraController.buildMap(allObjectMaps[gameplay.currentLevel], 1);
+		}
+		
+		if (this.training)
+		{
+			this.training = false;
+			currentScreen = ScreenState.TrainingMode;
+		}
+		else
+		{
 			gameplay.unicorn.x = this.unicornVars[0];
 			gameplay.unicorn.y = this.unicornVars[1];
 			gameplay.unicorn.animation = this.unicornVars[2];
 			gameplay.unicorn.visible = this.unicornVars[3];
-			
-			cameraController.buildMap(allLevelMaps[gameplay.currentLevel], 0);
-			cameraController.buildMap(allObjectMaps[gameplay.currentLevel], 1);
 			gameplay.render();
 			gameplay.chooseSong(gameplay.currentLevel);
 			currentScreen = ScreenState.Gameplay;
@@ -155,7 +177,7 @@ var worldEvent = {
 			gameplay.player.x = utility.clamp(gameplay.player.x + this.speedBoost, 0, gameplayCanvas.width);
 			gameplay.player.updateAnimation();
 			createScenery.update();
-			if (this.speedBoost == 0 && Math.random() * 1000 < 10 && !this.questionBeingAsked) // .1% chance of question being asked and only when the player doesn't have a speedBoost
+			if (this.speedBoost == 0 && Math.random() * 1000 < 20 && !this.questionBeingAsked) // .1% chance of question being asked and only when the player doesn't have a speedBoost
 			{
 				this.askQuestion();
 			}
@@ -173,7 +195,7 @@ var worldEvent = {
 		
 		this.coin.updateAnimation();
 		
-		if (gameplay.player.x <= gameplay.unicorn.x + gameplay.unicorn.width)
+		if (gameplay.player.x <= this.botnip.x + this.botnip.width)
 		{
 			trainingGame.returnRate = 0;
 			exiting[currentScreen] = true;
@@ -195,6 +217,11 @@ var worldEvent = {
 			gameplaySurface, this.coin.sprite,
 			this.coin.sourceX, this.coin.sourceY, this.coin.sourceWidth, this.coin.sourceHeight,
 			this.coin.x, this.coin.y, this.coin.width, this.coin.height
+			);
+		utility.drawImage(
+			gameplaySurface, this.botnip.sprite,
+			this.botnip.sourceX, this.botnip.sourceY, this.botnip.sourceWidth, this.botnip.sourceHeight,
+			this.botnip.x, this.botnip.y, this.botnip.width, this.botnip.height
 			);
 		createScenery.render();
 		utility.debugDimensions(gameplay.unicorn);

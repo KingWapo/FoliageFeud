@@ -138,7 +138,7 @@ var utility = {
 			var w = utility.clickable[i].width * utility.scale;
 			var h = utility.clickable[i].height * utility.scale;
 			
-			console.debug(posx+ " "+posy);
+			//console.debug(posx+ " "+posy);
 			// If image was clicked, runs specified function
 			if (posx >= x && posx <= x + w &&
 				posy >= y && posy <= y + h )
@@ -469,6 +469,7 @@ var imgParsnipSprite = utility.loadImage("../img/Player/drparsnip.png");
 var imgDingleSprite = utility.loadImage("../img/Player/siblingMale.png");
 var imgBlackDingleSprite = utility.loadImage("../img/Player/siblingMaleDiverse.png");
 var imgUnicornSprite = utility.loadImage("../img/Player/unicorn.png");
+var imgBotnipSprite = utility.loadImage("../img/Player/botnip.png");
 var imgTimer = utility.loadImage("../img/WorldEvent/timer.png");
 var imgTimerBg = utility.loadImage("../img/WorldEvent/timerBackground.png");
 var imgCheckmark = utility.loadImage("../img/WorldEvent/Checkmark.png");
