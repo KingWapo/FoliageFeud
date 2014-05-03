@@ -106,7 +106,7 @@ var mainCamp = {
 				this.broTalk == 1 ||
 				this.broTalk == 5 ||
 				this.broTalk == 7)
-				utility.writeForClick(menuSurface, [plantName], .45 * CANVAS_WIDTH, .4 * CANVAS_HEIGHT + (48 * i), CANVAS_WIDTH / 2, 24, true, [quests.addQuestFromSibling, [this.listOfQuests[i], randRegion]]);
+				utility.writeForClick(menuSurface, [plantName], .45 * CANVAS_WIDTH, .4 * CANVAS_HEIGHT + (48 * i), CANVAS_WIDTH / 2, 24, true, [quests.addQuestFromSibling, [this.listOfQuests[i], plantList[this.listOfQuests[i]].regions[Math.floor(Math.random() * plantList[this.listOfQuests[i]].regions.length)]]]);
 		}
 		
 		utility.writeText(menuSurface, [this.dingle.phrases[this.broTalk]], 64, 24 + imgSmallTextBox.height / 2, CANVAS_WIDTH - 128, 24, false);
