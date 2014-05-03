@@ -26,6 +26,9 @@ var ispy = {
 	gamesPlayed: 0,
 	maxGames: 10,
 	gamesCorrect: 0,
+	gameHistory: new Array(this.maxGames),
+	CORRECT: 0,
+	INCORRECT: 1,
 	
 	// Initialize game mode
 	init: function()
@@ -39,7 +42,16 @@ var ispy = {
 		this.hasInvasive = false;
 		
 		if (this.fromTraining || this.fromEnd)
+		{
 			this.requestedPlant = plant.getRandPlant();
+			if (this.gamesPlayed == 0)
+			{
+				for (var i = 0; i < this.gameHistory.length; i++)
+				{
+					this.gameHistory[i] = -1;
+				}
+			}
+		}
 		
 		this.responseOffset = 0;
 		
@@ -101,6 +113,33 @@ var ispy = {
 			0, 0, imgISpyBg.width, imgISpyBg.height,
 			0, 0, imgISpyBg.width, imgISpyBg.height
 		);
+		
+		if (this.fromTraining || this.fromEnd)
+		{
+			for (var i = 0; i < this.gameHistory.length; i++)
+			{
+				if (this.gameHistory[i] == this.CORRECT)
+				{
+					utility.drawImage
+					(
+						backgroundSurface, imgCheckmark,
+						0, 0, imgCheckmark.width, imgCheckmark.height,
+						CANVAS_WIDTH - 52, 32 * i, 32, 32
+					);
+					console.debug("correct");
+				}
+				else if (this.gameHistory[i] == this.INCORRECT)
+				{
+					utility.drawImage
+					(
+						backgroundSurface, imgInvasivemark,
+						0, 0, imgInvasivemark.width, imgInvasivemark.height,
+						CANVAS_WIDTH - 52, 32 * i, 32, 32
+					);
+					console.debug("incorrect");
+				}
+			}
+		}
 		
 		// Plants in current list
 		if (utility.debugAll)
@@ -256,7 +295,10 @@ var ispy = {
 			plantList[ispy.requestedPlant].harvested = true;
 		}
 		else
+		{
 			ispy.gamesCorrect += 1;
+			ispy.gameHistory[ispy.gamesPlayed] = ispy.CORRECT;
+		}
 
 		// Exit game mode
 		ispy.gameEnd = true;
@@ -275,6 +317,10 @@ var ispy = {
 				//console.debug(quests.plantsToIdentify);
 				//console.debug(ispy.requestedPlant, ', ', plantList[ispy.requestedPlant].name);
 			}
+		}
+		else
+		{
+			ispy.gameHistory[ispy.gamesPlayed] = ispy.INCORRECT;
 		}
 		
 		if (utility.debugAll)
