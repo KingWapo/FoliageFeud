@@ -65,16 +65,6 @@ var ispy = {
 		
 		for (var i = 0; i < this.curPlants.length; i++)
 		{
-			/*if (!plantList[this.curPlants[i]].loaded)
-			{
-				if (utility.debugAll)
-				{
-					//console.debug("loaded ", plantList[this.curPlants[i]].loaded);
-				}
-				plant.loadPlant(plantList[this.curPlants[i]]);
-				this.readyToRender = false;
-			}*/
-			
 			if (plantList[this.curPlants[i]].invasive)
 				this.hasInvasive = true;
 		}
@@ -179,7 +169,7 @@ var ispy = {
 				(
 					gameplaySurface, imgInvasivemark,
 					0, 0, imgInvasivemark.width, imgInvasivemark.height,
-					x + 80, y + 80, imgInvasivemark.width, imgInvasivemark.height
+					x + 100, y + 140, imgInvasivemark.width, imgInvasivemark.height
 				);
 				if (!utility.contains(gameplay.invasivesSeen, this.curPlants[j]))
 				{

@@ -81,7 +81,7 @@ var snaSelect = {
 	
 	goToMap1: function(empty)
 	{
-		gameplay.nextLevel(Level.Map1);
+		gameplay.nextLevel(Level.Prairie);
 		entering[ScreenState.SNASelectionScreen] = true;
 		currentScreen = ScreenState.Gameplay;
 	},
