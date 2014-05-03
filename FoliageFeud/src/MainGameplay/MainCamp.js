@@ -102,15 +102,15 @@ var mainCamp = {
 		for (var i = 0; i < this.listOfQuests.length; i++)
 		{
 			var plantName = plantList[this.listOfQuests[i]].name;
-			var randRegion = Math.floor(Math.random() * 4) + 2;
+			var randRegion = plantList[this.listOfQuests[i]].regions[Math.floor(Math.random() * plantList[this.listOfQuests[i]].regions.length)];
 			
 			if (this.broTalk == 0 ||
 				this.broTalk == 1 ||
 				this.broTalk == 5 ||
 				this.broTalk == 7)
-				{
-					this.drawPlant(plantName, randRegion, i);
-				}
+			{
+				this.drawPlant(plantName, randRegion, i);
+			}
 		}
 		
 		//utility.writeText(menuSurface, [this.dingle.phrases[this.broTalk]], 64, 24 + imgSmallTextBox.height / 2, CANVAS_WIDTH - 128, 24, false);

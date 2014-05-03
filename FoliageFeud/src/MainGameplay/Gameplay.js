@@ -3,7 +3,7 @@
 // The main gameplay class
 
 // Enum to determine the animation to be played
-Animation = {
+var Animation = {
 	Idle: 0,
 	Right: 1,
 	Left: 2,
@@ -16,17 +16,23 @@ Animation = {
 	SwimmingUp: 9
 };
 
-Level = {
+var Level = {
 	Tutorial: 0,
 	BaseCamp: 1,
-	Map1: 2,
+	Prairie: 2,
 	Forest: 3,
 	Marsh: 4,
 	Hilly: 5,
+<<<<<<< HEAD
 	End: 6,
 	writting:false,
 }
 messageType={
+=======
+	writting:false
+};
+var messageType={
+>>>>>>> 6a2f349b40bddc7b30e3c948ef6660cef86de7c4
 	water:0,
 	rock:1,
 	waterCoin:2,
@@ -34,8 +40,8 @@ messageType={
 	goldCoin:4,
 	baseCampe:5,
 	teleporter:6,
-	blank:7,
-}
+	blank:7
+};
 	
 	
 
@@ -1084,7 +1090,7 @@ var gameplay = {
 		utility.clearAll();
 		this.observationInstances = [];
 		this.mapOrientation = Math.floor(Math.random() * 4);
-		if (map < Level.Map1) this.mapOrientation *= 0;
+		if (map < Level.Prairie) this.mapOrientation *= 0;
 		//console.debug("Map Orientation: " + this.mapOrientation);
 		this.curMap = rotate.RotateMap(allLevelMaps[gameplay.currentLevel], this.mapOrientation);
 		this.curObjMap = rotate.RotateMap(allObjectMaps[gameplay.currentLevel], this.mapOrientation);
@@ -1096,8 +1102,8 @@ var gameplay = {
 			case Level.BaseCamp:
 				this.drawBaseCamp();
 				break;
-			case Level.Map1:
-				this.drawMap1();
+			case Level.Prairie:
+				this.drawPrairie();
 				this.populateGold();
 				break;
 			case Level.Forest:
@@ -1130,7 +1136,7 @@ var gameplay = {
 				utility.startNewSong(songGameplayCamp);
 				
 				break;
-			case Level.Map1:
+			case Level.Prairie:
 				utility.startNewSong(songGameplayPrairie);
 				break;
 			case Level.Forest:
@@ -1232,7 +1238,7 @@ var gameplay = {
 		
 	},
 	
-	drawMap1: function()
+	drawPrairie: function()
 	{
 		this.placeObservationEvent();
 		
