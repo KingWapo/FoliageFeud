@@ -584,7 +584,6 @@ var imgPurchaseButton=utility.loadImage("../img/Buttons/buyButton.png");
 var imgCompassBackground = utility.loadImage("../img/Backgrounds/compass.png");
 var imgCompassArrow = utility.loadImage("../img/Backgrounds/compassarrow.png");
 var imgLargeTextBox = utility.loadImage("../img/Backgrounds/textboxbig.png");
-var imgSmallTextBox = utility.loadImage("../img/Backgrounds/textboxsmall.png");
 var imgTrainingBackground = utility.loadImage("../img/Backgrounds/trainingicon.png");
 var imgGoldCoin= utility.loadImage("../img/Tokens/speedToken.png");
 var imgPrice=utility.loadImage("../img/Buttons/shopbuybutton.png");
