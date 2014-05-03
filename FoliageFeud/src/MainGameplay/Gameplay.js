@@ -1557,7 +1557,10 @@ var gameplay = {
 			
 			if (this.onPause)
 			{
-				pause.render();
+				if (utility.onEsc)
+					utility.drawEsc();
+				else
+					pause.render();
 			}
 		}
 		
@@ -1712,6 +1715,30 @@ var gameplay = {
 		{
 			this.questlog.push([quests.plantsToIdentify[i], quests.regionsToVisit[i], false]);
 		} 
+	},
+	
+	enterPause: function()
+	{
+		if (!utility.onEsc)
+		{
+			console.debug("Enter Pause");
+			pause.mapXOffset = 13;
+			pause.mapYOffset = 6;
+			pause.mapScale = MIN_MAP_SCALE;
+		}
+		gameplay.onPause = true;
+		moveDown = false;
+		moveLeft = false;
+		moveRight = false;
+		moveUp = false;
+	},
+	
+	exitPause: function()
+	{
+		console.debug("Exit Pause");
+		gameplay.mapBuilt = false;
+		gameplay.onPause = false;
+		utility.clearAll();
 	}
 }
 
@@ -1803,23 +1830,12 @@ window.addEventListener("keyup", function(event)
 				{
 					if (currentScreen == ScreenState.Gameplay)
 					{
-						console.debug("Enter Pause");
-						pause.mapXOffset = 13;
-						pause.mapYOffset = 6;
-						pause.mapScale = MIN_MAP_SCALE;
-						gameplay.onPause = true;
-						moveDown = false;
-						moveLeft = false;
-						moveRight = false;
-						moveUp = false;
+						gameplay.enterPause();
 					}
 				}
 				else
 				{
-					console.debug("Exit Pause");
-					gameplay.mapBuilt = false;
-					gameplay.onPause = false;
-					utility.clearAll();
+					gameplay.exitPause();
 				}
 			}
 			break;

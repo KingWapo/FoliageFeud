@@ -23,6 +23,7 @@ var utility = {
 	writting:false,
 	textIndex: 0,
 	textShown: false,
+	onEsc: false,
 	scale: 1,
 	originalWidth: 1152,
 	originalHeight: 512,
@@ -493,6 +494,11 @@ var utility = {
 		console.debug("Sprite dimensions for " + sprite.name + " are: " + 
 					  "x: " + sprite.x + " y: " + sprite.y + " w: " + sprite.width + " h: " + sprite.height + "\n" +
 					  "source x: " + sprite.sourceX + " source y: " + sprite.sourceY + " source w: " + sprite.sourceWidth + " source h: " + sprite.sourceHeight);
+	},
+	
+	drawEsc: function()
+	{
+		utility.writeForClick(menuSurface, ["Save"], 32, 32, 200, 32, false, [function(){console.debug("clickyclick");}, ['']]);
 	}
 };
 
@@ -502,6 +508,18 @@ window.addEventListener("keyup", function(event)
 {
 	switch (event.keyCode)
 	{
+		case 27: //esc
+			if (!gameplay.onPause)
+			{
+				gameplay.enterPause();
+				utility.onEsc = true;
+			}
+			else
+			{
+				gameplay.exitPause();
+				utility.onEsc = false;
+			}
+			break;
 		case ENTER:
 			//console.debug("enter pressed");
 			if (utility.textShown)

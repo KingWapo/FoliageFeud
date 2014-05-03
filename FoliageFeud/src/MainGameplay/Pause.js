@@ -228,31 +228,34 @@ window.addEventListener("keyup", function(event)
 {
 	if (gameplay.onPause)
 	{
-		switch(event.keyCode)
-		{   
-			case 88: // x
-				if (pause.mapScale < MAX_MAP_SCALE - pause.mapScaleSpeed)
-					pause.mapScale += pause.mapScaleSpeed;
-				break;
-			
-			case 90: // z
-				if (pause.mapScale > MIN_MAP_SCALE)
-					pause.mapScale -= pause.mapScaleSpeed;
-				break;
+		if (!utility.onEsc)
+		{
+			switch(event.keyCode)
+			{   
+				case 88: // x
+					if (pause.mapScale < MAX_MAP_SCALE - pause.mapScaleSpeed)
+						pause.mapScale += pause.mapScaleSpeed;
+					break;
 				
-			case 83: // s
-				pause.orientation = (pause.orientation + 1) % 4;
-				pause.buildInGameMap();
-				//console.debug("s ",pause.orientation);
-				break;
-			
-			case 65: // a
-				pause.orientation -= 1;
-				if (pause.orientation < 0)
-					pause.orientation = 3;
-				pause.buildInGameMap();
-				//console.debug("a ",pause.orientation);
-				break;
+				case 90: // z
+					if (pause.mapScale > MIN_MAP_SCALE)
+						pause.mapScale -= pause.mapScaleSpeed;
+					break;
+					
+				case 83: // s
+					pause.orientation = (pause.orientation + 1) % 4;
+					pause.buildInGameMap();
+					//console.debug("s ",pause.orientation);
+					break;
+				
+				case 65: // a
+					pause.orientation -= 1;
+					if (pause.orientation < 0)
+						pause.orientation = 3;
+					pause.buildInGameMap();
+					//console.debug("a ",pause.orientation);
+					break;
+			}
 		}
 	}
 }, false);
