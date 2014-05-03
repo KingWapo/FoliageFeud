@@ -65,11 +65,11 @@ var trainingScreen = {
 			var boxH = 96;
 			var textYOffset = 80;
 			
-			utility.drawImage(
+			/*utility.drawImage(
 				menuSurface, imgSmallTextBox,
 				0, 0, imgSmallTextBox.width, imgSmallTextBox.height,
 				boxX, boxY, boxW, boxH
-			)
+			)*/
 		
 			utility.writeText(menuSurface, ["Make a wager"], boxX + 16, boxY + textYOffset - 48, 200 - 32, 24, false);
 			if (trainingGame.goldWagered > 0)
