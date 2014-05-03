@@ -14,6 +14,7 @@ var worldEvent = {
 		[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]  // 8
 	],
 	training: false,
+	fromEnd: false,
 	xMovement: 0,
 	playerVars: [],
 	cameraPosition: [],
@@ -137,7 +138,7 @@ var worldEvent = {
 			gameplay.player.currentFrame = 0;
 			cameraController.camera.x = this.cameraPosition[0];
 			cameraController.camera.y = this.cameraPosition[1];
-			if (this.training)
+			if (this.training || this.fromEnd)
 			{
 				gameplay.currentLevel = Level.BaseCamp;
 				gameplay.curMap = allLevelMaps[Level.BaseCamp];
@@ -154,10 +155,11 @@ var worldEvent = {
 		}
 		else
 		{
-			gameplay.unicorn.x = this.unicornVars[0];
-			gameplay.unicorn.y = this.unicornVars[1];
-			gameplay.unicorn.animation = this.unicornVars[2];
-			gameplay.unicorn.visible = this.unicornVars[3];
+			if (this.fromEnd)
+			{
+				currentLevel = Level.BaseCamp;
+				gameplay.nextLevel(currentLevel);
+			}
 			gameplay.render();
 			gameplay.chooseSong(gameplay.currentLevel);
 			currentScreen = ScreenState.Gameplay;

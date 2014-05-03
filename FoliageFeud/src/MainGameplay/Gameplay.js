@@ -23,6 +23,7 @@ Level = {
 	Forest: 3,
 	Marsh: 4,
 	Hilly: 5,
+	End: 6,
 	writting:false,
 }
 messageType={
@@ -403,8 +404,8 @@ var gameplay = {
 		},
 		x: 100,
 		y: 100,
-		width: 64,
-		height: 64,
+		width: 32,
+		height: 32,
 		name: "gold coin",
 		
 		sprite: new Image()
@@ -1785,27 +1786,30 @@ window.addEventListener("keyup", function(event)
 
 		  
 		case ENTER:
-			if (!gameplay.onPause && !utility.textShown)
+			if (!utility.textShown)
 			{
-				if (currentScreen == ScreenState.Gameplay)
+				if (!gameplay.onPause)
 				{
-					console.debug("Enter Pause");
-					pause.mapXOffset = 13;
-					pause.mapYOffset = 6;
-					pause.mapScale = MIN_MAP_SCALE;
-					gameplay.onPause = true;
-					moveDown = false;
-					moveLeft = false;
-					moveRight = false;
-					moveUp = false;
+					if (currentScreen == ScreenState.Gameplay)
+					{
+						console.debug("Enter Pause");
+						pause.mapXOffset = 13;
+						pause.mapYOffset = 6;
+						pause.mapScale = MIN_MAP_SCALE;
+						gameplay.onPause = true;
+						moveDown = false;
+						moveLeft = false;
+						moveRight = false;
+						moveUp = false;
+					}
 				}
-			}
-			else
-			{
-				console.debug("Exit Pause");
-				gameplay.mapBuilt = false;
-				gameplay.onPause = false;
-				utility.clearAll();
+				else
+				{
+					console.debug("Exit Pause");
+					gameplay.mapBuilt = false;
+					gameplay.onPause = false;
+					utility.clearAll();
+				}
 			}
 			break;
 	}

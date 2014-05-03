@@ -22,6 +22,7 @@ var ispy = {
 	
 	// Training mode variables
 	fromTraining: false,
+	fromEnd: false,
 	gamesPlayed: 0,
 	maxGames: 10,
 	gamesCorrect: 0,
@@ -37,7 +38,7 @@ var ispy = {
 		this.readyToRender = true;
 		this.hasInvasive = false;
 		
-		if (this.fromTraining)
+		if (this.fromTraining || this.fromEnd)
 			this.requestedPlant = plant.getRandPlant();
 		
 		this.responseOffset = 0;
@@ -203,7 +204,7 @@ var ispy = {
 		
 		if (this.gameEnd)
 		{
-			if (!ispy.fromTraining)
+			if (!ispy.fromTraining && !this.fromEnd)
 			{
 				var response = [];
 				
@@ -248,7 +249,7 @@ var ispy = {
 	// Handle correct guess
 	harvestPlant: function(i)
 	{
-		if (!ispy.fromTraining)
+		if (!ispy.fromTraining && !ispy.fromEnd)
 		{
 			quests.finishedQuests.push(ispy.requestedPlant);
 			for (var i = 0; i < gameplay.questlog.length; i++)
@@ -275,7 +276,7 @@ var ispy = {
 	// Handle incorrect guess
 	ignorePlant: function(i)
 	{
-		if (gameplay.currentLevel != Level.Tutorial && !ispy.fromTraining)
+		if (gameplay.currentLevel != Level.Tutorial && !ispy.fromTraining && !ispy.fromEnd)
 		{
 			quests.addQuest(ispy.requestedPlant, gameplay.currentLevel);
 			

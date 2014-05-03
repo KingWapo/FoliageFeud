@@ -240,6 +240,11 @@ function mainUpdate()
 					switchGamemode(ScreenState.TrainingMode);
 					ispy.fromTraining = false;
 				}
+				else if (ispy.fromEnd)
+				{
+					switchGamemode(ScreenState.End);
+					ispy.fromEnd = false;
+				}
 				else
 					switchGamemode(ScreenState.Gameplay);
 				utility.clearClickHandler();
@@ -279,6 +284,21 @@ function mainUpdate()
 			}
 			break;
 		case ScreenState.End:
+			if (entering[currentScreen])
+			{
+				endScene.init();
+				entering[currentScreen] = false;
+			}
+			endScene.update();
+			endScene.render();
+			if (exiting[currentScreen])
+			{
+				screensLoaded[currentScreen] = false;
+				entering[currentScreen] = true;
+				exiting[currentScreen] = false;
+				gameplay.nextLevel(Level.BaseCamp);
+				currentScreen = ScreenState.Gameplay;
+			}
 			break;
 		case ScreenState.Matching:
 			if (entering[currentScreen])
@@ -286,7 +306,7 @@ function mainUpdate()
 				matching.init();
 				entering[currentScreen] = false;
 			}
-				matching.render();
+			matching.render();
 			if (exiting[currentScreen])
 			{
 				if (matching.fromTraining)
@@ -294,8 +314,13 @@ function mainUpdate()
 					matching.fromTraining = false;
 					switchGamemode(ScreenState.TrainingMode);
 				}
+				else if (matching.fromEnd)
+				{
+					matching.fromEnd = false;
+					switchGamemode(ScreenState.End);
+				}
 				else
-				switchGamemode(ScreenState.Gameplay);
+					switchGamemode(ScreenState.Gameplay);
 			}
 			break;
 

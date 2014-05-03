@@ -9,6 +9,7 @@ var matching = {
 	timer: 1800,
 	timerFull: 1800,
 	fromTraining: false,
+	fromEnd: false,
 	
 	init: function()
 	{
