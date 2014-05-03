@@ -213,12 +213,12 @@ plantList.push(new PlantObject("Lady's Slipper", "Cypripedium spp.", [Level.Mars
 plantList.push(new PlantObject("Blue-Flag", "Iris spp.", [Level.Marsh], false, ["Perennial herb that is aquatic to semi-aquatic", "Flowers are 2 to 4 inches wide, showy, blue or violet, and have yellow markings", "Leaves are long and narrow, flattened, sheathing the stem", "Grows in wet ground and shallow water"], 4));
 plantList.push(new PlantObject("Daylily", "Hemerocallis fulva", [Level.Prairie, Level.Forest, Level.Marsh], false, ["Perennial herb that has rosette of leaves and flower stalks that are 2 to 4 feet tall", "Leaves are basal, linear, floppy, and taper to a point", "From the center of a rosette flower stalks arise and grow taller than the leaves", "The flowers are orange with 6 parts and are 4 inches wide"], 4));
 plantList.push(new PlantObject("Cat-tail", "Typha spp.", [Level.Marsh], false, ["Perennial herbs that are around 9 feet tall and grass-like leaves", "Flowers are staminate and are in loose deciduous spikes above the characteristic and dense brown cylinder of pistillate flowers and fruits", "Emergent from shallow waters in marshes and ditches"], 4));
-/*plantList.push(new PlantObject());
-plantList.push(new PlantObject());
-plantList.push(new PlantObject());
-plantList.push(new PlantObject());
-plantList.push(new PlantObject());
-plantList.push(new PlantObject());
+plantList.push(new PlantObject("Field Nut Sedge", "Cyperus esculentus", [Level.Marsh], false, ["Grassy perennial that grows 6 to 24 inches tall", "Unbranched with 3 angled main stem mostly covered by leaf sheaths", "Leaves are mostly light green", "Has an umbel on the top that is yellow or golden brown and has floral spikes on leafy bracts", "Found in moist open sites"], 4));
+plantList.push(new PlantObject("Kentucky Bluegrass", "Poa pratensis", [Level.Prairie, Level.Hilly], true, ["Perennial lawn and pasture grass", "Stem growing 12 to 18 inches tall and is hairless", "Leaves are long, dark green, narrow, and folded when young", "Inflorescence is oblong to pyramidal"], 4));
+plantList.push(new PlantObject("Quackgrass", "Elymus repens", [Level.Marsh, Level.Prairie], true, ["Perennial grass with stems that are 1 1/2 to 3 feet tall with erect green or purplish spikes", "Spreads through rhizomes", "Some spikelets are flowered and well separated"], 4));
+plantList.push(new PlantObject("Wheat", "Triticum aestivum", [Level.Prairie], false, ["Annual grass with flat blades and thick spikes", "Grows about 1 1/2 to 4 feet tall", "Spikelets placed flatwise at each joint of a continuous or jointed floral stalk with 2 to 5 flowers and is usually solitary"], 4));
+plantList.push(new PlantObject("Foxtail", "Setaria spp.", [Level.Prairie], false, ["Annual grass that grows 1 to 3 feet with panicles that are narrow, dense, and spike-like", "Some bristles are below the spikelets"], 4));
+plantList.push(new PlantObject("Corn", "Zea mays", [Level.Prairie], false, ["Annual plant that is tall and has broad leaf blades with overlapping sheaths", "Spikelets that are staminate occur in long, spike-like branches, which are in large spreading terminal panicles", "Spikelets that are pisitillate are in rows on a thickened axis, which are in leave axils and enclosed in bracts"], 4));
 /*plantList.push(new PlantObject());
 plantList.push(new PlantObject());
 plantList.push(new PlantObject());
