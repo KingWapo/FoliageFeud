@@ -1448,7 +1448,7 @@ var gameplay = {
 				32, CANVAS_HEIGHT - imgChest.height - 32,
 				imgChest.width, imgChest.height
 			);
-			utility.writeText(menuSurface, strings, 96, CANVAS_HEIGHT - imgChest.height + 8, 64 * 4 - 10, 25, true);
+			utility.writeText(menuSurface, strings, 96, CANVAS_HEIGHT - imgChest.height + 8, 64 * 4 - 10, 25, false);
 			if(skillBook.display===true)
 			{
 				this.message("skill")
