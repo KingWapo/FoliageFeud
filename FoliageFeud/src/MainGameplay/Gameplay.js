@@ -23,16 +23,9 @@ var Level = {
 	Forest: 3,
 	Marsh: 4,
 	Hilly: 5,
-<<<<<<< HEAD
-	End: 6,
-	writting:false,
-}
-messageType={
-=======
 	writting:false
 };
 var messageType={
->>>>>>> 6a2f349b40bddc7b30e3c948ef6660cef86de7c4
 	water:0,
 	rock:1,
 	waterCoin:2,
