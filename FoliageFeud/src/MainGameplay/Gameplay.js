@@ -1076,7 +1076,6 @@ var gameplay = {
 	
 	nextLevel: function(map)
 	{
-		console.debug("map: ", map);
 		this.emptyGold();
 		this.botnipSummoned = false;
 		this.currentLevel = map;

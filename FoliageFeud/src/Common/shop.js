@@ -165,11 +165,11 @@ initShop:function()
 						imgChest,
 						785, 10
 					);
-					utility.writeText(menuSurface, strings, 840,45, 64 * 4 - 10, 25, true);
+					utility.writeText(menuSurface, strings, 840,45, 64 * 4 - 10, 25, false);
 					strings.pop();
 					
 				strings.push("Click on the shop keeper for help using the shop." );
-				utility.writeText(gameplaySurface, strings, 228, 28, 64 * 4, 20, true);
+				utility.writeText(gameplaySurface, strings, 228, 28, 64 * 4, 20, false);
 },
 
 buyAdventure:function()
@@ -317,19 +317,19 @@ drawPrices:function()
 {
 	var strings=[];				
 	strings.push("30 gold" );
-	utility.writeText(gameplaySurface, strings, 110, 290, 64 * 4, 20, true);
+	utility.writeText(gameplaySurface, strings, 110, 290, 64 * 4, 20, false);
 	strings.pop();
 	strings.push(" 10 gold ");
-	utility.writeText(gameplaySurface, strings, 270, 290, 64 * 4, 20, true);
+	utility.writeText(gameplaySurface, strings, 270, 290, 64 * 4, 20, false);
 	strings.pop();
 	strings.push(" 10 gold ");
-	utility.writeText(gameplaySurface, strings, 440, 290, 64 * 4, 20, true);
+	utility.writeText(gameplaySurface, strings, 440, 290, 64 * 4, 20, false);
 	strings.pop();
 	strings.push(" 10 gold ");
-	utility.writeText(gameplaySurface, strings, 620, 290, 64 * 4, 20, true);
+	utility.writeText(gameplaySurface, strings, 620, 290, 64 * 4, 20, false);
 	strings.pop();
 	strings.push(" 150 gold ");
-	utility.writeText(gameplaySurface, strings, 780, 290, 64 * 4, 20, true);
+	utility.writeText(gameplaySurface, strings, 780, 290, 64 * 4, 20, false);
 	strings.pop();
 	
 },
@@ -340,7 +340,7 @@ infoDisplay:function()
 	{
 				var strings = [];
 				strings.push(" The adventure hat increases your sprint speed." );
-				utility.writeText(menuSurface, strings, 245, 290, 64 * 4, 25, true);
+				utility.writeText(menuSurface, strings, 245, 290, 64 * 4, 25, false);
 				utility.drawImage(
 				menuSurface, imgAdventure,
 				0, 0, imgAdventure.width, imgAdventure.height,
@@ -358,7 +358,7 @@ infoDisplay:function()
 	{
 				var strings = [];
 				strings.push(" The water coin increases your swim speed.  " );
-				utility.writeText(menuSurface, strings, 245, 290, 64 * 4, 20, true);
+				utility.writeText(menuSurface, strings, 245, 290, 64 * 4, 20, false);
 				utility.drawImage(
 				menuSurface, imgWater,
 				0, 0, imgWater.width, imgWater.height,
@@ -376,7 +376,7 @@ infoDisplay:function()
 	{
 				var strings = [];
 				strings.push(" The water coin increases your swim speed.  " );
-				utility.writeText(menuSurface, strings, 245, 290, 64 * 4, 20, true);
+				utility.writeText(menuSurface, strings, 245, 290, 64 * 4, 20, false);
 				utility.drawImage(
 				menuSurface, imgWater,
 				0, 0, imgWater.width, imgWater.height,
@@ -396,7 +396,7 @@ infoDisplay:function()
 		
 				var strings = [];
 				strings.push(" The rock coin increases your climb speed. " );
-				utility.writeText(menuSurface, strings, 245, 290, 64 * 4, 20, true);
+				utility.writeText(menuSurface, strings, 245, 290, 64 * 4, 20, false);
 				utility.drawImage(
 				menuSurface, imgRock,
 				0, 0, imgRock.width, imgRock.height,
@@ -412,7 +412,7 @@ infoDisplay:function()
 	{
 				var strings = [];
 				strings.push("Welcome to the shop! You can click on any item to see a description of the item. Hit exit to return to the base camp. If you don't have enough gold				explore other maps and complete quests to receive gold to unlock items! " );
-					utility.writeText(menuSurface, strings, 245, 200, 64 * 4, 20, true);
+					utility.writeText(menuSurface, strings, 245, 200, 64 * 4, 20, false);
 		
 	}
 	if(this.parsnipMask.description==true)
@@ -421,7 +421,7 @@ infoDisplay:function()
 		
 				
 				strings.push(" Once you purchase this hit the = button to become professor parsnip " );
-				utility.writeText(menuSurface, strings, 245, 290, 64 * 4, 20, true);
+				utility.writeText(menuSurface, strings, 245, 290, 64 * 4, 20, false);
 				utility.drawImage(
 				menuSurface, imgNip,
 				0, 0, imgNip.width, imgNip.height,
