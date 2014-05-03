@@ -32,7 +32,8 @@ var mainCamp = {
 				  "territories as his own, and is impeding my research. Not only that, but he has kidnapped your fiancee and my assistant. This shall not be tolerated, and we must work together.",
 				  "The two of us can foil his plans! I need you to go out and investigate the plants to see if there is some clue as to where he is hiding. I will have the plants I need posted on this board here, you can choose",
 				  "which ones you'd like to find. I'll stay here and analyse the plants for clues.",
-				  "Oh, before you go, feel free to check out the other buildings here. All are bound to help you in one way or another."
+				  "Oh, before you go, feel free to check out the other buildings here. All are bound to help you in one way or another.",
+				  "You didn't see that plant! You shouldn't lie to me."											// Chose wrong				13
 				  ],
 		
 		sprite: ""
@@ -92,12 +93,6 @@ var mainCamp = {
 			this.dingle.sourceX, this.dingle.sourceY, this.dingle.sourceWidth, this.dingle.sourceHeigth,
 			this.dingle.x, this.dingle.y, this.dingle.width, this.dingle.height
 			);
-		/*
-		utility.drawImage(
-			menuSurface, imgSmallTextBox,
-			0, 0, imgSmallTextBox.width, imgSmallTextBox.height,
-			32, 32, CANVAS_WIDTH - 64, imgSmallTextBox.height + 40
-		);*/
 		
 		for (var i = 0; i < this.listOfQuests.length; i++)
 		{
@@ -122,6 +117,7 @@ var mainCamp = {
 			case 1:
 			case 5:
 			case 7:
+			case 13:
 				this.talkingInMainCamp = false;
 				utility.addClickItem(this.dingle.x, this.dingle.y, this.dingle.width, this.dingle.height, this.talkToBro, []); // First bro talk phrase
 				break;
@@ -229,6 +225,10 @@ var mainCamp = {
 		if (mainCamp.compareInvasives(invasives[index[0]]))
 		{
 			gameplay.gold += 5;
+		}
+		else
+		{
+			mainCamp.broTalk = 13;
 		}
 	},
 	
