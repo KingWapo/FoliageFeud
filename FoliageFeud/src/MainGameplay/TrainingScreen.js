@@ -57,7 +57,7 @@ var trainingScreen = {
 				32, CANVAS_HEIGHT - imgChest.height - 32,
 				imgChest.width, imgChest.height
 			);
-			utility.writeText(menuSurface, strings, 96, CANVAS_HEIGHT - imgChest.height + 8, 64 * 4 - 10, 25, true);
+			utility.writeText(menuSurface, strings, 96, CANVAS_HEIGHT - imgChest.height + 8, 64 * 4 - 10, 25, false);
 			
 			var boxX = 940;
 			var boxY = 400;

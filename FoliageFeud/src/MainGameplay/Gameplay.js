@@ -81,6 +81,7 @@ var gameplay = {
 	phraseIndex: 0,
 	talking: false,
 	visitedBrother: false,
+	questlog: [],
 	
 	// Buildings
 	store: Object.create(spriteObject),
@@ -541,6 +542,8 @@ var gameplay = {
 		this.goldCoin.sprite = imgGoldCoin;
 		
 		this.updateSprite();
+		
+		this.refreshQuestlog();
 		
 		moveUp = false;
 		moveDown = false;
@@ -1573,12 +1576,13 @@ var gameplay = {
 					0,0, imgQuestLog.width, imgQuestLog.height,
 					(CANVAS_WIDTH - imgQuestLog.width) / 2, 0, imgQuestLog.width, imgQuestLog.height
 				);
-				var strings = ["               Plants I need to find"];
-				for (var i = 0; i < quests.plantsToIdentify.length; i++)
+				var string = ["               Plants I need to find"];
+				utility.writeText(menuSurface, string, (CANVAS_WIDTH - imgQuestLog.width) / 2 + 64, 72, imgQuestLog.width, 16, false)
+				for (var i = 0; i < this.questlog.length; i++)
 				{
-					strings.push("Plant: " + plantList[quests.plantsToIdentify[i]].name + "   Region: " + regions[quests.regionsToVisit[i]]);
+					string = "Plant: " + plantList[this.questlog[i][0]].name + "   Region: " + regions[this.questlog[i][1]];
+					utility.writeText(menuSurface, [string], (CANVAS_WIDTH - imgQuestLog.width) / 2 + 64, 105 + i * 32, imgQuestLog.width, 16, this.questlog[i][2])
 				}
-				utility.writeText(menuSurface, strings, (CANVAS_WIDTH - imgQuestLog.width) / 2 + 64, 72, imgQuestLog.width, 16, false)
 			}
 			
 			if (this.talking)
@@ -1687,6 +1691,15 @@ var gameplay = {
 			 return true;
 		else
 			return false;
+	},
+	
+	refreshQuestlog: function()
+	{
+		this.questlog = [];
+		for (var i = 0; i < quests.plantsToIdentify.length; i++)
+		{
+			this.questlog.push([quests.plantsToIdentify[i], quests.regionsToVisit[i], false]);
+		} 
 	}
 }
 

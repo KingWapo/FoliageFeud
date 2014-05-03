@@ -18,6 +18,7 @@ var ispy = {
 	readyToRender: false,
 	invasiveSeen: false,
 	hasInvasive: false,
+	questIndex: -1,
 	
 	// Training mode variables
 	fromTraining: false,
@@ -250,6 +251,15 @@ var ispy = {
 		if (!ispy.fromTraining)
 		{
 			quests.finishedQuests.push(ispy.requestedPlant);
+			for (var i = 0; i < gameplay.questlog.length; i++)
+			{
+				if (gameplay.questlog[i][0] == ispy.requestedPlant &&
+					gameplay.questlog[i][1] == gameplay.currentLevel &&
+					!gameplay.questlog[i][2])
+					{
+						gameplay.questlog[i][2] = true;
+					}
+			}
 			
 			// Show that plant was harvested
 			plantList[ispy.requestedPlant].harvested = true;

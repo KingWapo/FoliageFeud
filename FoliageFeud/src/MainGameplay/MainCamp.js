@@ -243,6 +243,8 @@ var mainCamp = {
 		{
 			mainCamp.broTalk = 0;
 			mainCamp.talkingInMainCamp = false;
+			utility.textShown = false;
+			gameplay.refreshQuestlog();
 			gameplay.invasivesSeen = [];
 			mainCamp.postItPos = [[-1,-1], [-1,-1], [-1,-1], [-1,-1], [-1,-1]];
 			entering[ScreenState.SiblingInteraction] = true;
