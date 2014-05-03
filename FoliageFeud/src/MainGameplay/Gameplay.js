@@ -1733,21 +1733,6 @@ window.addEventListener("keyup", function(event)
 
 		  
 		case ENTER:
-			/*if (gameplay.talking)
-			{
-				if (gameplay.phraseIndex < gameplay.phrases.length) gameplay.phraseIndex += 1;
-			}
-			else if (mainCamp.talkingInMainCamp)
-			{
-				if (mainCamp.broTalk != 12)
-				{
-					mainCamp.broTalk = (mainCamp.broTalk + 1) % (mainCamp.dingle.phrases.length - 1);
-				}
-				else
-				{
-					mainCamp.exitToGameplay("");
-				}
-			}*/
 			if (!gameplay.onPause && !utility.textShown)
 			{
 				if (currentScreen == ScreenState.Gameplay)
