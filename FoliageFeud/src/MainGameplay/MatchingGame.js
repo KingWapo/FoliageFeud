@@ -191,7 +191,9 @@ var matching = {
 		matching.card2 = -1;
 		
 		if (allFound)
+		{
 			matching.exitMatching();
+		}
 	},
 	
 	createNameCard: function(index)
@@ -218,6 +220,12 @@ var matching = {
 	
 	exitMatching: function()
 	{
+		if (matching.fromTraining)
+		{
+			trainingGame.returnRate = Math.min(1.5, (-.0000007 * matching.timer * matching.timer) + (.0021 * matching.timer) + .0009);
+			console.debug("Matching done: ", trainingGame.returnRate);
+			trainingGame.finishGame();
+		}
 		exiting[currentScreen] = true;
 	}
 };
