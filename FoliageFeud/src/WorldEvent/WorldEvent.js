@@ -109,12 +109,6 @@ var worldEvent = {
 		gameplay.player.speed = gameplay.player.runSpeed;
 		gameplay.player.animation = Animation.WorldEventRight;
 		
-		/*
-		gameplay.unicorn.x = gameplay.unicorn.width;
-		gameplay.unicorn.y = gameplay.player.y;
-		gameplay.unicorn.visible = true;
-		*/
-		
 		this.botnip.x = 64;
 		this.botnip.y = gameplay.player.y;
 		this.botnip.sprite = imgBotnipSprite;
@@ -224,7 +218,6 @@ var worldEvent = {
 			this.botnip.x, this.botnip.y, this.botnip.width, this.botnip.height
 			);
 		createScenery.render();
-		utility.debugDimensions(gameplay.unicorn);
 			
 		if (this.questionBeingAsked)
 		{
@@ -262,7 +255,6 @@ var worldEvent = {
 	
 	answerQuestion: function(index)
 	{
-		console.debug("Answer guessed is: " + index + ": " + worldEvent.questions[index].name);
 		if (worldEvent.questions[index].correct)
 		{
 			worldEvent.speedBoost = 5;

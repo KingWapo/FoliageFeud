@@ -75,7 +75,22 @@ var utility = {
 	
 	advanceText: function()
 	{
-		utility.textIndex += 1;
+		if (mainCamp.talkingInMainCamp)
+		{
+			if (mainCamp.broTalk == 1 || mainCamp.broTalk == 4) { }
+			else if (mainCamp.broTalk != 12)
+			{
+				mainCamp.broTalk = (mainCamp.broTalk + 1) % (mainCamp.dingle.phrases.length - 1);
+			}
+			else
+			{
+				mainCamp.exitToGameplay("");
+			}
+		}
+		else
+		{
+			utility.textIndex += 1;
+		}
 	},
 	
 	exitText: function(func)
@@ -553,6 +568,8 @@ var imgSmallTextBox = utility.loadImage("../img/Backgrounds/textboxsmall.png");
 var imgTrainingBackground = utility.loadImage("../img/Backgrounds/trainingicon.png");
 var imgGoldCoin= utility.loadImage("../img/Tokens/speedToken.png");
 var imgPrice=utility.loadImage("../img/Buttons/shopbuybutton.png");
+var imgBackgroundMainCamp = utility.loadImage("../img/Backgrounds/plantsBackground.png");
+var imgPostItNote = utility.loadImage("../img/Backgrounds/plantsUnderlay01.png");
 
 createScenery.tilesheet = utility.loadImage("../img/Tiles/tilesheet.png");
 gameplay.mainCamp.sprite = utility.loadImage("../img/Tiles/missions.png");
@@ -567,6 +584,7 @@ gameplay.store.sprite = utility.loadImage("../img/Tiles/shop.png");
 gameplay.plants.sprite = utility.loadImage("../img/Tiles/plants.png");
 gameplay.parsnip.sprite = utility.loadImage("../img/Player/drparsnip.png");
 gameplay.unicorn.sprite = utility.loadImage("../img/Player/unicorn.png");
+gameplay.botnip.sprite = utility.loadImage("../img/Player/botnip.png");
 cameraController.tilesheetMain = utility.loadImage("../img/Tiles/tilesheet.png");
 cameraController.tilesheetForest = utility.loadImage("../img/Tiles/tilesheetForest.png");
 cameraController.tilesheetMarsh = utility.loadImage("../img/Tiles/tilesheetMarsh.png");

@@ -7,7 +7,8 @@ var mainCamp = {
 	broTalk: 0,
 	arrowOffset: 0,
 	invasivesChosen: [],
-	talkingInMainCamp: true,
+	talkingInMainCamp: false,
+	postItPos: [[-1,-1], [-1,-1], [-1,-1], [-1,-1], [-1,-1]],
 	
 	dingle: {
 		x: 128,
@@ -39,6 +40,7 @@ var mainCamp = {
 	
 	init: function()
 	{
+		this.talkingInMainCamp = true;
 		if (gameplay.visitedBrother)
 		{
 			this.broTalk = 0;
@@ -80,9 +82,9 @@ var mainCamp = {
 		utility.clearAll();
 		
 		utility.drawImage(
-			backgroundSurface, imgCommonBg,
-			0, 0, imgCommonBg.width, imgCommonBg.height,
-			0, 0, imgCommonBg.width, imgCommonBg.height
+			backgroundSurface, imgBackgroundMainCamp,
+			0, 0, imgBackgroundMainCamp.width, imgBackgroundMainCamp.height,
+			0, 0, imgBackgroundMainCamp.width, imgBackgroundMainCamp.height
 		);
 		
 		utility.drawImage(
@@ -90,27 +92,29 @@ var mainCamp = {
 			this.dingle.sourceX, this.dingle.sourceY, this.dingle.sourceWidth, this.dingle.sourceHeigth,
 			this.dingle.x, this.dingle.y, this.dingle.width, this.dingle.height
 			);
-		
+		/*
 		utility.drawImage(
 			menuSurface, imgSmallTextBox,
 			0, 0, imgSmallTextBox.width, imgSmallTextBox.height,
 			32, 32, CANVAS_WIDTH - 64, imgSmallTextBox.height + 40
-		);
+		);*/
 		
 		for (var i = 0; i < this.listOfQuests.length; i++)
 		{
 			var plantName = plantList[this.listOfQuests[i]].name;
-			var randRegion = Math.floor(Math.random() * 4) + 2;
+			var randRegion = plantList[this.listOfQuests[i]].regions[Math.floor(Math.random() * plantList[this.listOfQuests[i]].regions.length)];
 			
 			if (this.broTalk == 0 ||
 				this.broTalk == 1 ||
 				this.broTalk == 5 ||
 				this.broTalk == 7)
-				utility.writeForClick(menuSurface, [plantName], .45 * CANVAS_WIDTH, .4 * CANVAS_HEIGHT + (48 * i), CANVAS_WIDTH / 2, 24, true, [quests.addQuestFromSibling, [this.listOfQuests[i], plantList[this.listOfQuests[i]].regions[Math.floor(Math.random() * plantList[this.listOfQuests[i]].regions.length)]]]);
+			{
+				this.drawPlant(plantName, randRegion, i);
+			}
 		}
 		
-		utility.writeText(menuSurface, [this.dingle.phrases[this.broTalk]], 64, 24 + imgSmallTextBox.height / 2, CANVAS_WIDTH - 128, 24, false);
-		
+		//utility.writeText(menuSurface, [this.dingle.phrases[this.broTalk]], 64, 24 + imgSmallTextBox.height / 2, CANVAS_WIDTH - 128, 24, false);
+		utility.drawTextBox([this.dingle.phrases[this.broTalk]], CANVAS_WIDTH - 128, mainCamp.incrementBroTalk)
 		
 		switch(this.broTalk)
 		{
@@ -133,14 +137,14 @@ var mainCamp = {
 				for (var i = 0; i < Math.min(quests.finishedQuests.length, 5); i++)
 				{
 					var plantName = plantList[quests.finishedQuests[i]].name;
-					utility.writeForClick(menuSurface, [plantName], x + 16, y + 48 + 48 * i, 256 - 32, 24, true, [mainCamp.giveQuest, [i]]);
+					utility.writeForClick(menuSurface, [plantName], x + 16, y + 48 + 48 * i, 256 - 32, 24, false, [mainCamp.giveQuest, [i]]);
 				}
-				utility.writeForClick(menuSurface, ["Done"], x + 32, y + 48 + 48 * 5, 256 - 32, 30, true, [mainCamp.finishGiving, []]);
+				utility.writeForClick(menuSurface, ["Done"], x + 32, y + 48 + 48 * 5, 256 - 32, 30, false, [mainCamp.finishGiving, []]);
 				
 				break;
 			case 4:
-				utility.writeForClick(menuSurface, ["Yes"], CANVAS_WIDTH - 320, imgSmallTextBox.height, 64, 30, true, [mainCamp.anyInvasives, [true]]);
-				utility.writeForClick(menuSurface, ["No"], CANVAS_WIDTH - 320 + 64, imgSmallTextBox.height, 64, 30, true, [mainCamp.anyInvasives, [false]]);
+				utility.writeForClick(menuSurface, ["Yes"], CANVAS_WIDTH - 320 - 128, CANVAS_HEIGHT - imgSmallTextBox.height / 2, 64, 30, false, [mainCamp.anyInvasives, [true]]);
+				utility.writeForClick(menuSurface, ["No"], CANVAS_WIDTH - 320 - 64, CANVAS_HEIGHT - imgSmallTextBox.height / 2, 64, 30, false, [mainCamp.anyInvasives, [false]]);
 				break;
 			case 6:
 				var x = CANVAS_WIDTH - 64 - 512;
@@ -162,22 +166,7 @@ var mainCamp = {
 					index = i;
 					utility.addClickItem(x + 64 + (i % 3) * 96, y + 32 + 88 * Math.floor(i / 3), 64, 64, this.addInvasive, [i])
 				}
-				utility.writeForClick(menuSurface, ["Done"], x + 64 + 96 + 96, y + 88 * 2.75, 64, 30, true, [mainCamp.finishInvasives, []]);
-				break;
-			case 8:
-			case 9:
-			case 10:
-			case 11:
-				// Draw the enter button
-				var x = CANVAS_WIDTH - 160;
-				var y = 142;
-				utility.writeForClick(menuSurface, ["Enter"], x, y, 64, 30, false, [mainCamp.incrementBroTalk,[""]])
-				break;
-			case 12:
-				// Draw the enter button
-				var x = CANVAS_WIDTH - 160;
-				var y = 142;
-				utility.writeForClick(menuSurface, ["Enter"], x, y, 64, 30, false, [mainCamp.exitToGameplay,[""]])
+				utility.writeForClick(menuSurface, ["Done"], x + 64 + 96 + 96, y + 88 * 2.75, 64, 30, false, [mainCamp.finishInvasives, []]);
 				break;
 		}
 		
@@ -187,6 +176,29 @@ var mainCamp = {
 			CANVAS_WIDTH - 320 + 128, CANVAS_HEIGHT - 160, imgExitButton.width, imgExitButton.height
 		);
 		if (!this.talkingInMainCamp) utility.addClickItem(CANVAS_WIDTH - 320 + 128, CANVAS_HEIGHT - 160, imgExitButton.width, imgExitButton.height, this.exitToGameplay, "");
+	},
+	
+	drawPlant: function(plantName, randRegion, i)
+	{
+		var pos = this.postItPos[i];
+		if (pos[0] < 0 && pos[1] < 0) 
+		{
+			this.postItPos[i] = [CANVAS_WIDTH / 2 + 196 * (i % 3),  128+ 128 * (i / 3)];
+			pos = this.postItPos[i];
+		}
+		utility.drawImage(
+			menuSurface, imgPostItNote,
+			0, 0, imgPostItNote.width, imgPostItNote.height,
+			pos[0], pos[1], imgPostItNote.width, imgPostItNote.height
+			);
+		utility.writeText(menuSurface, [plantName], pos[0] + 16, pos[1] + 32, imgPostItNote.width - 32, 16, false);
+		utility.addClickItem(pos[0], pos[1], imgPostItNote.width, imgPostItNote.height, mainCamp.acceptQuest, [this.listOfQuests[i], randRegion, i]);
+	},
+	
+	acceptQuest: function(params)
+	{
+		quests.addQuestFromSibling(params);
+		mainCamp.postItPos.splice(params[2], 1);
 	},
 	
 	giveQuest: function(index)
@@ -214,24 +226,14 @@ var mainCamp = {
 	addInvasive: function(index)
 	{
 		invasives = plant.getInvasivePlants();
-		//mainCamp.invasivesChosen.push(invasives[index[0]]);
-		console.debug("invasive index: " + index[0]);
-		console.debug("plant index: " + invasives[index[0]]);
 		if (mainCamp.compareInvasives(invasives[index[0]]))
 		{
 			gameplay.gold += 5;
-			console.debug("Correct");
 		}
-		else console.debug("Wrong");
 	},
 	
 	finishInvasives: function(empty)
 	{
-		/*
-		if (mainCamp.compareInvasiveLists())
-		{
-			gameplay.gold += 5;
-		}*/
 		mainCamp.broTalk = 7;
 	},
 	
@@ -241,6 +243,8 @@ var mainCamp = {
 		{
 			mainCamp.broTalk = 0;
 			mainCamp.talkingInMainCamp = false;
+			gameplay.invasivesSeen = [];
+			mainCamp.postItPos = [[-1,-1], [-1,-1], [-1,-1], [-1,-1], [-1,-1]];
 			entering[ScreenState.SiblingInteraction] = true;
 			currentScreen = ScreenState.Gameplay;
 			utility.clearAll();
@@ -263,18 +267,15 @@ var mainCamp = {
 	
 	incrementBroTalk: function(empty)
 	{
-		mainCamp.broTalk = (mainCamp.broTalk + 1) % (mainCamp.dingle.phrases.length - 1);
+		//mainCamp.broTalk = (mainCamp.broTalk + 1) % (mainCamp.dingle.phrases.length - 1);
 	},
 	
 	compareInvasives: function(plantIndex)
 	{
-		console.debug("plant index: " + plantIndex);
 		var index = gameplay.invasivesSeen.indexOf(plantIndex);
-		console.debug("index: " + index);
 		if (index == -1) return false;
 		else
 		{
-			console.debug("Plant: " + plantList[plantIndex]);
 			gameplay.invasivesSeen.splice(index, 1);
 			return true;
 		}
