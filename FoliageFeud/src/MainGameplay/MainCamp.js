@@ -137,14 +137,14 @@ var mainCamp = {
 				for (var i = 0; i < Math.min(quests.finishedQuests.length, 5); i++)
 				{
 					var plantName = plantList[quests.finishedQuests[i]].name;
-					utility.writeForClick(menuSurface, [plantName], x + 16, y + 48 + 48 * i, 256 - 32, 24, true, [mainCamp.giveQuest, [i]]);
+					utility.writeForClick(menuSurface, [plantName], x + 16, y + 48 + 48 * i, 256 - 32, 24, false, [mainCamp.giveQuest, [i]]);
 				}
-				utility.writeForClick(menuSurface, ["Done"], x + 32, y + 48 + 48 * 5, 256 - 32, 30, true, [mainCamp.finishGiving, []]);
+				utility.writeForClick(menuSurface, ["Done"], x + 32, y + 48 + 48 * 5, 256 - 32, 30, false, [mainCamp.finishGiving, []]);
 				
 				break;
 			case 4:
-				utility.writeForClick(menuSurface, ["Yes"], CANVAS_WIDTH - 320, imgSmallTextBox.height, 64, 30, true, [mainCamp.anyInvasives, [true]]);
-				utility.writeForClick(menuSurface, ["No"], CANVAS_WIDTH - 320 + 64, imgSmallTextBox.height, 64, 30, true, [mainCamp.anyInvasives, [false]]);
+				utility.writeForClick(menuSurface, ["Yes"], CANVAS_WIDTH - 320 - 128, CANVAS_HEIGHT - imgSmallTextBox.height / 2, 64, 30, false, [mainCamp.anyInvasives, [true]]);
+				utility.writeForClick(menuSurface, ["No"], CANVAS_WIDTH - 320 - 64, CANVAS_HEIGHT - imgSmallTextBox.height / 2, 64, 30, false, [mainCamp.anyInvasives, [false]]);
 				break;
 			case 6:
 				var x = CANVAS_WIDTH - 64 - 512;
@@ -166,22 +166,7 @@ var mainCamp = {
 					index = i;
 					utility.addClickItem(x + 64 + (i % 3) * 96, y + 32 + 88 * Math.floor(i / 3), 64, 64, this.addInvasive, [i])
 				}
-				utility.writeForClick(menuSurface, ["Done"], x + 64 + 96 + 96, y + 88 * 2.75, 64, 30, true, [mainCamp.finishInvasives, []]);
-				break;
-			case 8:
-			case 9:
-			case 10:
-			case 11:
-				// Draw the enter button
-				var x = CANVAS_WIDTH - 160;
-				var y = 142;
-				utility.writeForClick(menuSurface, ["Enter"], x, y, 64, 30, false, [mainCamp.incrementBroTalk,[""]])
-				break;
-			case 12:
-				// Draw the enter button
-				var x = CANVAS_WIDTH - 160;
-				var y = 142;
-				utility.writeForClick(menuSurface, ["Enter"], x, y, 64, 30, false, [mainCamp.exitToGameplay,[""]])
+				utility.writeForClick(menuSurface, ["Done"], x + 64 + 96 + 96, y + 88 * 2.75, 64, 30, false, [mainCamp.finishInvasives, []]);
 				break;
 		}
 		
