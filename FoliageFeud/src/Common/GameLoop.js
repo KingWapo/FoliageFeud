@@ -135,8 +135,7 @@ ScreenState = {
 	SNASelectionScreen: 11,
 	SiblingInteraction: 12,
 
-	Intro:10
-
+	CharacterSelection: 13,
 };
 
 // Instances of the Screens 
@@ -189,9 +188,17 @@ function mainUpdate()
 			if (exiting[currentScreen])
 			{
 				
-				switchGamemode(ScreenState.Gameplay);
+				//switchGamemode(ScreenState.CharacterSelection); Activate CharacterSelection screen
+				switchGamemode(ScreenState.Gameplay); // Remove this
 			}
 			break;
+		case ScreenState.CharacterSelection:
+			if (entering[currentScreen])
+			{
+				characterSelection.init();
+				entering[currentScreen] = false;
+			}
+			characterSelection.render();
 		case ScreenState.BaseCamp: // BaseCamp Screen
 			if (entering[currentScreen])
 			{
