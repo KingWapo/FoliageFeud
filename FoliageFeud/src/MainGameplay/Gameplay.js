@@ -211,6 +211,48 @@ var gameplay = {
 		animation: Animation.Idle
 	},
 	
+	botnip: {
+		// Sprite Located on sheet
+		sourceX: 0,
+		sourceY: 0,
+		sourceWidth: 64,
+		sourceHeight: 64,
+		
+		// Animation info
+		numOfFrames: 2,
+		currentFrame: 0,
+		
+		//Update Animation Function
+		updateAnimation: function()
+		{
+			if (this.animation !== Animation.Idle)
+			{
+				this.sourceX = this.currentFrame * this.sourceWidth;
+				
+				this.currentFrame += 1;
+				if ( this.currentFrame === this.numOfFrames ) {
+					this.currentFrame = 0;
+				}
+			}
+		},
+		
+		// Gameplay info
+		x: -64,
+		y: -64,
+		width: 64,
+		height: 64,
+		vx: 0,
+		vy: 0,
+		speed: 4,
+		walkSpeed: 4,
+		runSpeed: 8,
+		sprite: new Image(),
+		name: "botnip",
+		animation: Animation.Idle
+	},
+	
+	botnipSummoned: false,
+	
 	observationInstance: {
 		sourceX: 0,
 		sourceY: 0,
@@ -843,6 +885,8 @@ var gameplay = {
 				gameplay.swimming = true;
 			}}catch(err) { console.debug(err); }*/
 			//check for collisions with collidables.
+			
+			this.updateBotnip();
 			if (!screensLoaded[ScreenState.WorldEvent] && cameraController.mapBuilt)
 			{
 				try {
@@ -904,6 +948,11 @@ var gameplay = {
 							this.tutorial=false;
 						
 						}	
+						if ( this.botnipSummoned && utility.collisionDetection(gameplay.player, gameplay.botnip))
+						{
+							this.botnipSummoned = false;
+							currentScreen = ScreenState.WorldEvent;
+						}
 						if ( utility.collisionDetection(gameplay.player, gameplay.teleporter.hitbox))
 						{
 							
@@ -1025,6 +1074,7 @@ var gameplay = {
 	nextLevel: function(map)
 	{
 		this.emptyGold();
+		this.botnipSummoned = false;
 		this.currentLevel = map;
 		this.obsCoords = [];
 		utility.clearAll();
@@ -1041,10 +1091,10 @@ var gameplay = {
 		{
 			case Level.BaseCamp:
 				this.drawBaseCamp();
-			
 				break;
 			case Level.Map1:
 				this.drawMap1();
+				this.populateGold();
 				break;
 			case Level.Forest:
 				this.drawForest();
@@ -1059,6 +1109,7 @@ var gameplay = {
 				this.populateGold();
 				break;
 		}
+		if (this.currentLevel > Level.BaseCamp) this.summonBotnip();
 		this.chooseSong(map);
 		this.teleporter.hitbox.x = this.teleporter.x + 32;
 		this.teleporter.hitbox.y = this.teleporter.y + 64;
@@ -1378,6 +1429,27 @@ var gameplay = {
 		cameraController.camera.y = cRotY;
 	},
 	
+	summonBotnip: function()
+	{
+		var randSummon = Math.random() * 18000;
+		if ( randSummon < 600)
+		{
+			this.botnipSummoned = true;
+			this.botnip.x = Math.random() * this.curMap[0].length * 64;
+			this.botnip.y = Math.random() * this.curMap.length * 64;
+			console.debug("Botnip is summoned!");
+		}
+	},
+	
+	updateBotnip: function()
+	{
+		vx = gameplay.player.x - gameplay.botnip.x > 0 ? 1 : -1;
+		vy = gameplay.player.y - gameplay.botnip.y > 0 ? 1 : -1;
+		
+		this.botnip.x += vx * this.player.runSpeed;
+		this.botnip.y += vy * this.player.runSpeed;
+	},
+	
 	clearCollision: function()
 	{
 		this.collisionTiles = [];
@@ -1465,6 +1537,7 @@ var gameplay = {
 			if (this.parsnip.visible) sprites.push(this.parsnip);
 			if (this.unicorn.visible) sprites.push(this.unicorn);
 			if (this.goldStorage.length > 0) sprites = sprites.concat(this.goldStorage);
+			if (this.botnipSummoned) sprites.push(this.botnip);
 			cameraController.renderForeground(sprites);
 			
 			if (this.onPause)
@@ -1564,43 +1637,9 @@ var gameplay = {
 				obsPoint.x = obsX;
 				obsPoint.y = obsY;
 				obsPoint.lowestPos = obsY;
-				
-				//console.debug("x: " + obsX + " y: " + obsY);
 			}
 			
 			obsPoint.plantIndex = listOfPlants[i][1];
-			
-			/*
-			var fromX = Math.floor(obsPoint.x / 64);
-			var fromY = Math.floor(obsPoint.y / 64);
-			
-			if (this.mapOrientation == 1) // x changes
-			{
-				// 90 degree Transpose then Reverse row
-				fromX = this.curMap[0].length - 1 - fromX;
-				
-				var temp = fromX;
-				fromX = fromY;
-				fromY = temp;
-			}
-			else if (this.mapOrientation == 2) // both change
-			{
-				// 180 degrees Reverse row then col
-				fromX = this.curMap[0].length - 1 - fromX;
-				fromY = this.curMap.length - 1 - fromY;
-			}
-			else if (this.mapOrientation == 3) // y changes
-			{
-				// 270 degrees Transpose then reverse col
-				fromY = this.curMap.length - 1 - fromY;
-				
-				var temp = fromY;
-				fromY = fromX;
-				fromX = temp;
-			}
-			
-			this.obsCoords.push([fromX, fromY]);
-			*/
 			this.observationInstances.push(obsPoint);
 		}
 	},

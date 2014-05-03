@@ -8,6 +8,7 @@ var mainCamp = {
 	arrowOffset: 0,
 	invasivesChosen: [],
 	talkingInMainCamp: true,
+	postItPos: [[-1,-1], [-1,-1], [-1,-1], [-1,-1], [-1,-1]],
 	
 	dingle: {
 		x: 128,
@@ -80,9 +81,9 @@ var mainCamp = {
 		utility.clearAll();
 		
 		utility.drawImage(
-			backgroundSurface, imgCommonBg,
-			0, 0, imgCommonBg.width, imgCommonBg.height,
-			0, 0, imgCommonBg.width, imgCommonBg.height
+			backgroundSurface, imgBackgroundMainCamp,
+			0, 0, imgBackgroundMainCamp.width, imgBackgroundMainCamp.height,
+			0, 0, imgBackgroundMainCamp.width, imgBackgroundMainCamp.height
 		);
 		
 		utility.drawImage(
@@ -106,7 +107,9 @@ var mainCamp = {
 				this.broTalk == 1 ||
 				this.broTalk == 5 ||
 				this.broTalk == 7)
-				utility.writeForClick(menuSurface, [plantName], .45 * CANVAS_WIDTH, .4 * CANVAS_HEIGHT + (48 * i), CANVAS_WIDTH / 2, 24, true, [quests.addQuestFromSibling, [this.listOfQuests[i], randRegion]]);
+				{
+					this.drawPlant(plantName, randRegion, i);
+				}
 		}
 		
 		utility.writeText(menuSurface, [this.dingle.phrases[this.broTalk]], 64, 24 + imgSmallTextBox.height / 2, CANVAS_WIDTH - 128, 24, false);
@@ -189,6 +192,29 @@ var mainCamp = {
 		if (!this.talkingInMainCamp) utility.addClickItem(CANVAS_WIDTH - 320 + 128, CANVAS_HEIGHT - 160, imgExitButton.width, imgExitButton.height, this.exitToGameplay, "");
 	},
 	
+	drawPlant: function(plantName, randRegion, i)
+	{
+		var pos = this.postItPos[i];
+		if (pos[0] < 0 && pos[1] < 0) 
+		{
+			this.postItPos[i] = [CANVAS_WIDTH / 2 + 196 * (i % 3),  128+ 128 * (i / 3)];
+			pos = this.postItPos[i];
+		}
+		utility.drawImage(
+			menuSurface, imgPostItNote,
+			0, 0, imgPostItNote.width, imgPostItNote.height,
+			pos[0], pos[1], imgPostItNote.width, imgPostItNote.height
+			);
+		utility.writeText(menuSurface, [plantName], pos[0] + 16, pos[1] + 32, imgPostItNote.width - 32, 16, false);
+		utility.addClickItem(pos[0], pos[1], imgPostItNote.width, imgPostItNote.height, mainCamp.acceptQuest, [this.listOfQuests[i], randRegion, i]);
+	},
+	
+	acceptQuest: function(params)
+	{
+		quests.addQuestFromSibling(params);
+		mainCamp.postItPos.splice(params[2], 1);
+	},
+	
 	giveQuest: function(index)
 	{
 		quests.finishedQuests.splice(index, 1);
@@ -214,24 +240,14 @@ var mainCamp = {
 	addInvasive: function(index)
 	{
 		invasives = plant.getInvasivePlants();
-		//mainCamp.invasivesChosen.push(invasives[index[0]]);
-		console.debug("invasive index: " + index[0]);
-		console.debug("plant index: " + invasives[index[0]]);
 		if (mainCamp.compareInvasives(invasives[index[0]]))
 		{
 			gameplay.gold += 5;
-			console.debug("Correct");
 		}
-		else console.debug("Wrong");
 	},
 	
 	finishInvasives: function(empty)
 	{
-		/*
-		if (mainCamp.compareInvasiveLists())
-		{
-			gameplay.gold += 5;
-		}*/
 		mainCamp.broTalk = 7;
 	},
 	
@@ -241,6 +257,8 @@ var mainCamp = {
 		{
 			mainCamp.broTalk = 0;
 			mainCamp.talkingInMainCamp = false;
+			gameplay.invasivesSeen = [];
+			mainCamp.postItPos = [[-1,-1], [-1,-1], [-1,-1], [-1,-1], [-1,-1]];
 			entering[ScreenState.SiblingInteraction] = true;
 			currentScreen = ScreenState.Gameplay;
 			utility.clearAll();
@@ -268,13 +286,10 @@ var mainCamp = {
 	
 	compareInvasives: function(plantIndex)
 	{
-		console.debug("plant index: " + plantIndex);
 		var index = gameplay.invasivesSeen.indexOf(plantIndex);
-		console.debug("index: " + index);
 		if (index == -1) return false;
 		else
 		{
-			console.debug("Plant: " + plantList[plantIndex]);
 			gameplay.invasivesSeen.splice(index, 1);
 			return true;
 		}

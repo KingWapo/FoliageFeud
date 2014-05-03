@@ -258,7 +258,8 @@ var cameraController = {
 						 currentSprite.name == "plants" ||
 						 currentSprite.name == "observation point" ||
 						 currentSprite.name == "unicorn" ||
-						 currentSprite.name == "dr parsnip")
+						 currentSprite.name == "dr parsnip" ||
+						 currentSprite.name == "botnip")
 				{
 					utility.drawImage
 					(
