@@ -75,7 +75,22 @@ var utility = {
 	
 	advanceText: function()
 	{
-		utility.textIndex += 1;
+		if (mainCamp.talkingInMainCamp)
+		{
+			if (mainCamp.broTalk == 1 || mainCamp.broTalk == 4) { }
+			else if (mainCamp.broTalk != 12)
+			{
+				mainCamp.broTalk = (mainCamp.broTalk + 1) % (mainCamp.dingle.phrases.length - 1);
+			}
+			else
+			{
+				mainCamp.exitToGameplay("");
+			}
+		}
+		else
+		{
+			utility.textIndex += 1;
+		}
 	},
 	
 	exitText: function(func)

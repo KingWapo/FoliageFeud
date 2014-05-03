@@ -7,7 +7,7 @@ var mainCamp = {
 	broTalk: 0,
 	arrowOffset: 0,
 	invasivesChosen: [],
-	talkingInMainCamp: true,
+	talkingInMainCamp: false,
 	postItPos: [[-1,-1], [-1,-1], [-1,-1], [-1,-1], [-1,-1]],
 	
 	dingle: {
@@ -40,6 +40,7 @@ var mainCamp = {
 	
 	init: function()
 	{
+		this.talkingInMainCamp = true;
 		if (gameplay.visitedBrother)
 		{
 			this.broTalk = 0;
@@ -91,12 +92,12 @@ var mainCamp = {
 			this.dingle.sourceX, this.dingle.sourceY, this.dingle.sourceWidth, this.dingle.sourceHeigth,
 			this.dingle.x, this.dingle.y, this.dingle.width, this.dingle.height
 			);
-		
+		/*
 		utility.drawImage(
 			menuSurface, imgSmallTextBox,
 			0, 0, imgSmallTextBox.width, imgSmallTextBox.height,
 			32, 32, CANVAS_WIDTH - 64, imgSmallTextBox.height + 40
-		);
+		);*/
 		
 		for (var i = 0; i < this.listOfQuests.length; i++)
 		{
@@ -112,8 +113,8 @@ var mainCamp = {
 				}
 		}
 		
-		utility.writeText(menuSurface, [this.dingle.phrases[this.broTalk]], 64, 24 + imgSmallTextBox.height / 2, CANVAS_WIDTH - 128, 24, false);
-		
+		//utility.writeText(menuSurface, [this.dingle.phrases[this.broTalk]], 64, 24 + imgSmallTextBox.height / 2, CANVAS_WIDTH - 128, 24, false);
+		utility.drawTextBox([this.dingle.phrases[this.broTalk]], CANVAS_WIDTH - 128, mainCamp.incrementBroTalk)
 		
 		switch(this.broTalk)
 		{
@@ -281,7 +282,7 @@ var mainCamp = {
 	
 	incrementBroTalk: function(empty)
 	{
-		mainCamp.broTalk = (mainCamp.broTalk + 1) % (mainCamp.dingle.phrases.length - 1);
+		//mainCamp.broTalk = (mainCamp.broTalk + 1) % (mainCamp.dingle.phrases.length - 1);
 	},
 	
 	compareInvasives: function(plantIndex)
