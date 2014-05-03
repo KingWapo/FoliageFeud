@@ -102,7 +102,8 @@ var mainCamp = {
 			if (this.broTalk == 0 ||
 				this.broTalk == 1 ||
 				this.broTalk == 5 ||
-				this.broTalk == 7)
+				this.broTalk == 7 ||
+				this.broTalk == 13)
 			{
 				this.drawPlant(plantName, randRegion, i);
 			}
