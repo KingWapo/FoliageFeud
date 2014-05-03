@@ -7,9 +7,17 @@ var characterSelection = {
 	female1: Object.create(spriteObject),
 	male2: Object.create(spriteObject),
 	female2: Object.create(spriteObject),
+	curFrame: 0,
+	curDirection: 3,
+	animReset: 100,
+	animTime: 0,
 	
 	init: function()
 	{
+		this.curFrame = 0;
+		this.curDirection = 3;
+		this.animTime = 0;
+		
 		this.male1.x = CANVAS_WIDTH / 4;
 		this.male1.y = CANVAS_HEIGHT / 4;
 		this.male1.sprite = imgMaleSprite;
@@ -31,6 +39,33 @@ var characterSelection = {
 	{
 		utility.clearAll();
 		
+		this.animTime = (this.animTime + 1) % this.animReset;
+		
+		if (this.animTime % 2 == 0)
+			this.curFrame = (this.curFrame + 1) % 9;
+		
+		if (this.animTime % 5 == 0)
+		{
+			if (this.animTime > this.animReset - 25)
+			{
+				switch(this.curDirection)
+				{
+					case 1:
+						this.curDirection = 4;
+						break;
+					case 2:
+						this.curDirection = 3;
+						break;
+					case 3:
+						this.curDirection = 1;
+						break;
+					case 4:
+						this.curDirection = 2;
+						break;
+				}
+			}
+		}
+		
 		utility.drawImage(
 			backgroundSurface, imgCommonBg,
 			0, 0, imgCommonBg.width, imgCommonBg.height,
@@ -39,26 +74,30 @@ var characterSelection = {
 		
 		utility.drawImage(
 			gameplaySurface, this.male1.sprite,
-			this.male1.sourceX, this.male1.sourceY, this.male1.sourceWidth, this.male1.sourceHeight,
+			this.male1.sourceWidth * this.curFrame, this.male1.sourceHeight * this.curDirection, this.male1.sourceWidth, this.male1.sourceHeight,
 			this.male1.x, this.male1.y, this.male1.width, this.male1.height
 			);
+		utility.addClickItem(this.male1.x, this.male1.y, this.male1.width, this.male1.height, function(){currentSprite = SpriteState.Boy; exiting[currentScreen] = true;});
 			
 		utility.drawImage(
 			gameplaySurface, this.female1.sprite,
-			this.female1.sourceX, this.female1.sourceY, this.female1.sourceWidth, this.female1.sourceHeight,
+			this.female1.sourceWidth * this.curFrame, this.female1.sourceHeight * this.curDirection, this.female1.sourceWidth, this.female1.sourceHeight,
 			this.female1.x, this.female1.y, this.female1.width, this.female1.height
 			);
+		utility.addClickItem(this.female1.x, this.female1.y, this.female1.width, this.female1.height, function(){currentSprite = SpriteState.Girl; exiting[currentScreen] = true;});
 			
 		utility.drawImage(
 			gameplaySurface, this.male2.sprite,
-			this.male2.sourceX, this.male2.sourceY, this.male2.sourceWidth, this.male2.sourceHeight,
+			this.male2.sourceWidth * this.curFrame, this.male2.sourceHeight * this.curDirection, this.male2.sourceWidth, this.male2.sourceHeight,
 			this.male2.x, this.male2.y, this.male2.width, this.male2.height
 			);
+		utility.addClickItem(this.male2.x, this.male2.y, this.male2.width, this.male2.height, function(){currentSprite = SpriteState.Boy2; exiting[currentScreen] = true;});
 			
 		utility.drawImage(
 			gameplaySurface, this.female2.sprite,
-			this.female2.sourceX, this.female2.sourceY, this.female2.sourceWidth, this.female2.sourceHeight,
+			this.female2.sourceWidth * this.curFrame, this.female2.sourceHeight * this.curDirection, this.female2.sourceWidth, this.female2.sourceHeight,
 			this.female2.x, this.female2.y, this.female2.width, this.female2.height
 			);
+		utility.addClickItem(this.female2.x, this.female2.y, this.female2.width, this.female2.height, function(){currentSprite = SpriteState.Girl2; exiting[currentScreen] = true;});
 	}
 };

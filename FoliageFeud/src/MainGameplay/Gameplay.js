@@ -567,6 +567,18 @@ var gameplay = {
 				this.player.sourceHeight = 64;
 				this.player.height = 64;
 				break;	
+			case SpriteState.Boy2:
+				this.player.sprite = imgMaleDiverseSprite;
+				this.player.numOfFrames = 9;
+				this.player.sourceHeight = 64;
+				this.player.height = 64;
+				break;
+			case SpriteState.Girl2:
+				this.player.sprite = imgFemaleDiverseSprite;
+				this.player.numOfFrames = 9;
+				this.player.sourceHeight = 64;
+				this.player.height = 64;
+				break;
 			case SpriteState.Parsnip:
 				if(shop.parsnipMask.purchased==true)
 				{

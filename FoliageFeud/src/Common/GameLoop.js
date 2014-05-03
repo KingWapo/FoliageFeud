@@ -144,6 +144,8 @@ ScreenState = {
 SpriteState = {
 	Girl: 0,
 	Boy: 1,
+	Girl2: 6,
+	Boy2: 7,
 	Parsnip: 2,
 	Dingle: 3,
 	BlackDingle: 4,
@@ -188,8 +190,8 @@ function mainUpdate()
 			if (exiting[currentScreen])
 			{
 				
-				//switchGamemode(ScreenState.CharacterSelection); Activate CharacterSelection screen
-				switchGamemode(ScreenState.Gameplay); // Remove this
+				switchGamemode(ScreenState.CharacterSelection); //Activate CharacterSelection screen
+				//switchGamemode(ScreenState.Gameplay); // Remove this
 			}
 			break;
 		case ScreenState.CharacterSelection:
@@ -199,6 +201,10 @@ function mainUpdate()
 				entering[currentScreen] = false;
 			}
 			characterSelection.render();
+			if (exiting[currentScreen])
+			{
+				switchGamemode(ScreenState.Gameplay);
+			}
 		case ScreenState.BaseCamp: // BaseCamp Screen
 			if (entering[currentScreen])
 			{
