@@ -21,10 +21,12 @@ var utility = {
 	curNumAssets: 0,
 	curSong: '',
 	writting:false,
+	textIndex: 0,
+	textShown: false,
 	scale: 1,
 	originalWidth: 1152,
 	originalHeight: 512,
-	debugSound: true,
+	debugSound: false,
 	debugAll: true,
 	
 	// Clear screen and all objects from clickable
@@ -49,6 +51,38 @@ var utility = {
 			xSrc, ySrc, wSrc, hSrc,
 			x * utility.scale, y * utility.scale, w * utility.scale, h * utility.scale
 		);
+	},
+	
+	drawTextBox: function(strings, width, func)
+	{
+		// width = "not in use"
+		utility.textShown = true;
+		if (utility.textIndex < strings.length)
+		{
+			utility.drawImage
+			(
+				menuSurface, imgLargeTextBox,
+				0, 0, imgLargeTextBox.width, imgLargeTextBox.height,
+				0, CANVAS_HEIGHT - 120, imgLargeTextBox.width, imgLargeTextBox.height
+			);
+			
+			utility.writeText(menuSurface, [strings[utility.textIndex]], 16, CANVAS_HEIGHT - 72, 840, 20, false);
+			utility.writeForClick(menuSurface, ["ENTER"], 800, CANVAS_HEIGHT - 136 + imgLargeTextBox.height, 100, 20, false, [utility.advanceText, ['']]);
+		}
+		else
+			utility.exitText(func);
+	},
+	
+	advanceText: function()
+	{
+		utility.textIndex += 1;
+	},
+	
+	exitText: function(func)
+	{
+		utility.textIndex = 0;
+		utility.textShown = false;
+		func();
 	},
 	
 	handleScale: function()
@@ -239,7 +273,7 @@ var utility = {
 	},
 	 
 	// Write text to screen, wrapping if hits max width
-	writeText: function(context, text, x, y, maxWidth, fontSize, isOutlined)
+	writeText: function(context, text, x, y, maxWidth, fontSize, hasStrikethrough)
 	{
 		var originalWidth = maxWidth;
 		var originalSize = fontSize;
@@ -274,8 +308,15 @@ var utility = {
 						
 					context.fillText(line, x, y);
 					
-					if (isOutlined)
-						context.strokeText(line, x, y);
+					if (hasStrikethrough)
+					{
+						context.beginPath();
+						context.strokeStyle = "black";
+						context.lineWidth = 1;
+						context.moveTo(x - (5 * utility.scale), y - (fontSize * .3));
+						context.lineTo(x + context.measureText(line).width + (5 * utility.scale), y - (fontSize * .3));
+						context.stroke();
+					}
 						
 					line = words[i] + ' ';
 					y += fontSize;
@@ -294,8 +335,15 @@ var utility = {
 			
 			height += originalSize;
 			
-			if (isOutlined)
-				context.strokeText(line, x, y);
+			if (hasStrikethrough)
+			{
+				context.beginPath();
+				context.strokeStyle = "black";
+				context.lineWidth = 1;
+				context.moveTo(x - (5 * utility.scale), y - (fontSize * .3));
+				context.lineTo(x + context.measureText(line).width + (5 * utility.scale), y - (fontSize * .3));
+				context.stroke();
+			}
 			
 			y += fontSize * 2;
 		}
@@ -306,9 +354,9 @@ var utility = {
 	// Write text to screen, wrapping if hits max width, and adding a click handler
 	// clickHandler[0] is function
 	// clickHandler[1] is array of parameters
-	writeForClick: function(context, text, x, y, maxWidth, fontSize, isOutlined, clickHandler)
+	writeForClick: function(context, text, x, y, maxWidth, fontSize, hasStrikethrough, clickHandler)
 	{
-		var size = utility.writeText(context, text, x, y, maxWidth, fontSize, isOutlined);
+		var size = utility.writeText(context, text, x, y, maxWidth, fontSize, hasStrikethrough);
 		utility.addClickItem(x - 5, y - fontSize, size[0] + 10, size[1] + 5, clickHandler[0], clickHandler[1]);
 		
 		/*
@@ -435,7 +483,20 @@ var utility = {
 
 window.addEventListener("click", utility.handleClick, false);
 window.addEventListener("resize", utility.handleScale, false);
-//window.addEventListener("mouseover",utility.handleMouseOver,false);
+window.addEventListener("keyup", function(event)
+{
+	switch (event.keyCode)
+	{
+		case ENTER:
+			//console.debug("enter pressed");
+			if (utility.textShown)
+			{
+				utility.advanceText();
+				//console.debug("advanced");
+			}
+			break;
+	}
+}, false);
 
 var imgCommonBg = utility.loadImage("../img/Backgrounds/commonBackground.png");
 var imgMenuBg = utility.loadImage("../img/Backgrounds/menuscreen.png");
