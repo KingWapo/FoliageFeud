@@ -1510,28 +1510,10 @@ var gameplay = {
 			
 			if (this.talking)
 			{
-				x = 0;
-				y = CANVAS_HEIGHT - imgLargeTextBox.height;
-				utility.drawImage(
-					menuSurface, imgLargeTextBox,
-					0, 0, imgLargeTextBox.width, imgLargeTextBox.height,
-					x, y, imgLargeTextBox.width, imgLargeTextBox.height
-				);
-				try {
-					utility.writeText(menuSurface, [this.phrases[this.phraseIndex]], x + 32, y + 48 , imgSmallTextBox.width - 64, 24, false);
-				} catch (err) { }
-				
-				utility.clearClickHandler();
-				utility.writeForClick(menuSurface, ["Enter"], x + imgLargeTextBox.width - 104, y + 96, 64, 30, false, [gameplay.incrementPhrase, []])
+				utility.drawTextBox(this.phrases, "not in use", function(){gameplay.talking = false;gameplay.phraseIndex = gameplay.phrases.length});
 			}
 		}
 		
-	},
-	
-	incrementPhrase: function(empty)
-	{
-		gameplay.phraseIndex += 1;
-		console.debug("Phrase Index: " + gameplay.phraseIndex);
 	},
 	
 	// Randomly places the observationInstance on the map
@@ -1643,7 +1625,7 @@ var gameplay = {
 		else
 		{
 			this.talking = false;
-			console.debug("index: " + index + " plantIndex: " + plantIndex);
+			//console.debug("index: " + index + " plantIndex: " + plantIndex);
 			this.observationInstances.splice(index, 1);
 			ispy.setRequested(quests.plantsToIdentify[plantIndex]);
 			quests.removeQuest(plantIndex);
@@ -1751,7 +1733,7 @@ window.addEventListener("keyup", function(event)
 
 		  
 		case ENTER:
-			if (gameplay.talking)
+			/*if (gameplay.talking)
 			{
 				if (gameplay.phraseIndex < gameplay.phrases.length) gameplay.phraseIndex += 1;
 			}
@@ -1765,8 +1747,8 @@ window.addEventListener("keyup", function(event)
 				{
 					mainCamp.exitToGameplay("");
 				}
-			}
-			else if (!gameplay.onPause)
+			}*/
+			if (!gameplay.onPause && !utility.textShown)
 			{
 				if (currentScreen == ScreenState.Gameplay)
 				{

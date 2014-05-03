@@ -21,10 +21,12 @@ var utility = {
 	curNumAssets: 0,
 	curSong: '',
 	writting:false,
+	textIndex: 0,
+	textShown: false,
 	scale: 1,
 	originalWidth: 1152,
 	originalHeight: 512,
-	debugSound: true,
+	debugSound: false,
 	debugAll: true,
 	
 	// Clear screen and all objects from clickable
@@ -49,6 +51,38 @@ var utility = {
 			xSrc, ySrc, wSrc, hSrc,
 			x * utility.scale, y * utility.scale, w * utility.scale, h * utility.scale
 		);
+	},
+	
+	drawTextBox: function(strings, width, func)
+	{
+		// width = "not in use"
+		utility.textShown = true;
+		if (utility.textIndex < strings.length)
+		{
+			utility.drawImage
+			(
+				menuSurface, imgLargeTextBox,
+				0, 0, imgLargeTextBox.width, imgLargeTextBox.height,
+				0, CANVAS_HEIGHT - 120, imgLargeTextBox.width, imgLargeTextBox.height
+			);
+			
+			utility.writeText(menuSurface, [strings[utility.textIndex]], 16, CANVAS_HEIGHT - 72, 840, 20, false);
+			utility.writeForClick(menuSurface, ["ENTER"], 800, CANVAS_HEIGHT - 136 + imgLargeTextBox.height, 100, 20, false, [utility.advanceText, ['']]);
+		}
+		else
+			utility.exitText(func);
+	},
+	
+	advanceText: function()
+	{
+		utility.textIndex += 1;
+	},
+	
+	exitText: function(func)
+	{
+		utility.textIndex = 0;
+		utility.textShown = false;
+		func();
 	},
 	
 	handleScale: function()
@@ -435,7 +469,20 @@ var utility = {
 
 window.addEventListener("click", utility.handleClick, false);
 window.addEventListener("resize", utility.handleScale, false);
-//window.addEventListener("mouseover",utility.handleMouseOver,false);
+window.addEventListener("keyup", function(event)
+{
+	switch (event.keyCode)
+	{
+		case ENTER:
+			//console.debug("enter pressed");
+			if (utility.textShown)
+			{
+				utility.advanceText();
+				//console.debug("advanced");
+			}
+			break;
+	}
+}, false);
 
 var imgCommonBg = utility.loadImage("../img/Backgrounds/commonBackground.png");
 var imgMenuBg = utility.loadImage("../img/Backgrounds/menuscreen.png");

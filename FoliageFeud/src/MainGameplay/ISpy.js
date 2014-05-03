@@ -15,7 +15,6 @@ var ispy = {
 	isCorrect: false,
 	dingleBotFailResponses: ["Hmmm, not the one I would have chosen.. Oh well, Come back to base and I'll give you a chance to redeem yourself."],
 	dingleBotWinResponses: ["You make this look easy. Come back to base and I'll give you that dubloon I promised you."],
-	responseOffset: 0,
 	readyToRender: false,
 	invasiveSeen: false,
 	hasInvasive: false,
@@ -198,51 +197,31 @@ var ispy = {
 		
 		if (!this.invasiveSeen && this.hasInvasive)
 		{
-			utility.drawImage
-			(
-				menuSurface, imgLargeTextBox,
-				0, 0, imgLargeTextBox.width, imgLargeTextBox.height,
-				128, CANVAS_HEIGHT - 120, imgLargeTextBox.width, imgLargeTextBox.height
-			);
-			
-			utility.writeText(menuSurface, ["Do you see that red check?  That means a plant is invasive.  After seeing one, come back to camp and I'll give you a reward for identifying them."], 148, CANVAS_HEIGHT - 72, 840, 20, false);
-			utility.writeForClick(menuSurface, ["Close"], 910, CANVAS_HEIGHT - 120 - 32 + imgLargeTextBox.height, 100, 20, false, [function(){ispy.invasiveSeen = true;}, ['']]);
+			utility.drawTextBox(["Do you see that red check?  That means a plant is invasive.  After seeing one, come back to camp and I'll give you a reward for identifying them."], "not in use", function(){ispy.invasiveSeen = true;});
 		}
 		
 		if (this.gameEnd)
 		{
 			if (!ispy.fromTraining)
 			{
-				var textOffset = 128;
-				var responseString = [];
-				
-				utility.drawImage
-				(
-					menuSurface, imgLargeTextBox,
-					0, 0, imgLargeTextBox.width, imgLargeTextBox.height,
-					textOffset, CANVAS_HEIGHT - this.responseOffset, imgLargeTextBox.width, imgLargeTextBox.height
-				);
+				var response = [];
 				
 				if (this.isCorrect)
 				{
 					if (gameplay.currentLevel != Level.Tutorial && !ispy.fromTraining)
-						responseString.push(this.dingleBotWinResponses[Math.floor(Math.random() * this.dingleBotWinResponses.length)]);
+						response.push(this.dingleBotWinResponses[Math.floor(Math.random() * this.dingleBotWinResponses.length)]);
 					else
-						responseString.push("Strong in the ways of plant, you are.");
+						response.push("Strong in the ways of plant, you are.");
 				}
 				else
 				{
 					if (gameplay.currentLevel != Level.Tutorial && !ispy.fromTraining)
-						responseString.push(this.dingleBotFailResponses[Math.floor(Math.random() * this.dingleBotFailResponses.length)]);
+						response.push(this.dingleBotFailResponses[Math.floor(Math.random() * this.dingleBotFailResponses.length)]);
 					else
-						responseString.push("That is not the plant you are looking for.  /space_wizard_brain_manipulation");
+						response.push("That is not the plant you are looking for.  /space_wizard_brain_manipulation");
 				}
-			
-				utility.writeText(menuSurface, responseString, textOffset + 20, CANVAS_HEIGHT - this.responseOffset + 48, 840, 20, false);
-				utility.writeForClick(menuSurface, ["Close"], 782 + textOffset, CANVAS_HEIGHT - this.responseOffset - 32 + imgLargeTextBox.height, 100, 20, false, [ispy.leaveISpy, ['']]);
-					
-				if (this.responseOffset < 120)
-					this.responseOffset += 24;
+				
+				utility.drawTextBox(response, "not in use", ispy.leaveISpy);
 			}
 			else
 			{
