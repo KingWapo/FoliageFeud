@@ -244,7 +244,7 @@ var utility = {
 			menuSurface.fillStyle = "#006600";
 			menuSurface.fillRect(x, y, w * (utility.curNumAssets / utility.totalNumAssets), h);
 			
-			utility.writeText(menuSurface, [loadingStatus[Math.floor(utility.curNumAssets / utility.totalNumAssets) * (loadingStatus.length - 1)]], 100, 270, CANVAS_WIDTH, 48, false);
+			utility.writeText(menuSurface, [loadingStatus[Math.floor(Math.random() * loadingStatus.length)]], 100, 270, CANVAS_WIDTH, 48, false);
 			
 			if (utility.curNumAssets === utility.totalNumAssets)
 				//setTimeout(function(){
