@@ -589,14 +589,12 @@ var utility = {
 				console.debug(quests.finishedQuests[i], " ", plantList[quests.finishedQuests[i]].name);
 			}
 			
-			gameplay.visitedBrother = data[6];
-			endScene.parsnipBeaten = data[7];
+			gameplay.visitedBrother = data[6] == "true" ? true : false;
+			endScene.parsnipBeaten = data[7] == "true" ? true : false;
 			
-			//gameplay.init();
-			switchGamemode(ScreenState.Gameplay);
-			
-			if (gameplay.visitedBrother)
-				gameplay.nextLevel(Level.BaseCamp);
+			gameplay.canSave = true;
+			gameplay.loadingSave = true;
+			currentScreen = ScreenState.Gameplay;
 			
 			console.debug("sprite: ", currentSprite);
 			console.debug("gold: ", gameplay.gold);
