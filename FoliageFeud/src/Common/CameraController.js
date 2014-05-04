@@ -224,7 +224,6 @@ var cameraController = {
 		
 		var theseSprites = spritesFromGameplay;
 		var foregroundSpriteCols = [];
-		var specialCols = [];
 		foregroundSpriteCols = this.foregroundTiles.slice(Math.max(0, Math.floor(this.camera.y / 64) - 2), Math.min(Math.floor((this.camera.y + this.camera.height)/64) + 2, gameplay.curMap.length));
 		for (var i = 0; i < foregroundSpriteCols.length; i++)
 		{
@@ -236,6 +235,18 @@ var cameraController = {
 		//theseSprites = theseSprites.concat(this.specialTiles);
 		var newSprites = utility.reorderArrayByY(theseSprites);
 		
+		var bottomSpecials = [];
+		var topSpecials = [];
+		var i = 0;
+		while (i < this.specialTiles.length && this.specialTiles[i].y + 24 <= gameplay.player.y + 32)
+		{
+			i += 1;
+		}
+		bottomSpecials = this.specialTiles.slice(0, i);
+		topSpecials = this.specialTiles.slice(i, this.specialTiles.length);
+		
+		newSprites = bottomSpecials.concat(newSprites);
+		newSprites = newSprites.concat(topSpecials);
 		
 		try
 		{
@@ -426,7 +437,7 @@ var cameraController = {
 						sprite.name = "praire grass";
 						this.specialTiles.push(sprite);
 						
-						var tempSrite = sprite;
+						var tempSrite = Object.create(sprite);
 						tempSrite.x += 32;
 						tempSrite.y += 32;
 						this.specialTiles.push(tempSrite);
