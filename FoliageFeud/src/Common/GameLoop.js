@@ -59,8 +59,6 @@ window.requestAnimFrame = (function() {
 
 var playerBePlayin = false;
 
-quests.addQuest(Math.floor(Math.random() * plantList.length), 0);
-
 // Bool list for the loaded positions
 entering = [true, // Title
 		 true, // Gameplay
