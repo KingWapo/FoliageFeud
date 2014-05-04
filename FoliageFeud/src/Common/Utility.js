@@ -243,6 +243,8 @@ var utility = {
 			menuSurface.fillStyle = "#006600";
 			menuSurface.fillRect(x, y, w * (utility.curNumAssets / utility.totalNumAssets), h);
 			
+			utility.writeText(menuSurface, [loadingStatus[Math.floor(utility.curNumAssets / utility.totalNumAssets) * (loadingStatus.length - 1)]], 100, 400, CANVAS_WIDTH, 48, false);
+			
 			if (utility.curNumAssets === utility.totalNumAssets)
 				mainUpdate();
 		}
@@ -733,4 +735,5 @@ var songGameplayMarsh = utility.loadSong("../sounds/gameplay/Sneaky Snitch.mp3")
 var songGameplayHilly = utility.loadSong("../sounds/gameplay/Minstrel Guild.mp3");
 var songGameplayCamp = utility.loadSong("../sounds/gameplay/The Builder.mp3");
 var songWorldEvent = utility.loadSong("../sounds/world event/8bit Dungeon Boss.mp3");
+
 var loadingStatus = ["Initializing previsualization matrix", "Analyzing reversal algorithms", "Packaging gui worms", "Constructing dynamic shaders", "Reversing polarity", "I can't allow you to do that, Dave", "Encrypting llamas", "Fixing code, and taking names, but I'm all out of names", "Debugging sassy goats"];
