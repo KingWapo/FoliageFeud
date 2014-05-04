@@ -411,14 +411,6 @@ var utility = {
 			{
 				oldArray.splice(j, 1);
 			}
-			else if (oldArray[j].name == "praire grass")
-			{
-				var tempSprite = Object.create(oldArray[j]);
-				tempSprite.y += 32;
-				tempSprite.x += 32;
-				oldArray.splice(j, 0, tempSprite);
-				j += 2;
-			}
 			else
 				j++
 		}

@@ -39,6 +39,7 @@ var cameraController = {
 	tilesheetHilly: new Image(),
 	baseTiles: [],
 	foregroundTiles: [],
+	specialTiles: [],
 	sprites: [],
 	ROWS: 0,
 	COLUMNS: 0,
@@ -223,6 +224,7 @@ var cameraController = {
 		
 		var theseSprites = spritesFromGameplay;
 		var foregroundSpriteCols = [];
+		var specialCols = [];
 		foregroundSpriteCols = this.foregroundTiles.slice(Math.max(0, Math.floor(this.camera.y / 64) - 2), Math.min(Math.floor((this.camera.y + this.camera.height)/64) + 2, gameplay.curMap.length));
 		for (var i = 0; i < foregroundSpriteCols.length; i++)
 		{
@@ -231,8 +233,9 @@ var cameraController = {
 			theseSprites = theseSprites.concat(spritesWanted);
 		}
 		//console.debug(this.sprites.length);
-		//theseSprites = theseSprites.concat(this.sprites);
+		//theseSprites = theseSprites.concat(this.specialTiles);
 		var newSprites = utility.reorderArrayByY(theseSprites);
+		
 		
 		try
 		{
@@ -421,14 +424,12 @@ var cameraController = {
 					else if (currentTile == PRAIREGRASS)
 					{
 						sprite.name = "praire grass";
-						this.foregroundTiles[row][column] = sprite;
+						this.specialTiles.push(sprite);
 						
-						//for (var i = 0; i < 1; i++)
-						//{
-							var tempSprite = Object.create(sprite);
-							tempSprite.y += 32;
-							this.sprites.push(sprite);
-						//}
+						var tempSrite = sprite;
+						tempSrite.x += 32;
+						tempSrite.y += 32;
+						this.specialTiles.push(tempSrite);
 					}
 					else
 					{
@@ -438,6 +439,7 @@ var cameraController = {
 			  }
 			}
 		}
+		this.specialTiles = utility.reorderArrayByY(this.specialTiles);
 		this.mapBuilt = true;
 	}
 	
