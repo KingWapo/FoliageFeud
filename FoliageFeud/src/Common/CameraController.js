@@ -13,7 +13,7 @@
 //Map code
 var EMPTY = 0;
 var GRASS = 1;
-var WATER = 2;
+var PRAIREGRASS = 2;
 var ROCK = 3;
 var TREE = 5;
 var BIRCHTREE = 7;
@@ -229,6 +229,8 @@ var cameraController = {
 															  Math.min(Math.floor((this.camera.x + this.camera.width)/64) + 2, gameplay.curMap[0].length));
 			theseSprites = theseSprites.concat(spritesWanted);
 		}
+		//console.debug(this.sprites.length);
+		//theseSprites = theseSprites.concat(this.sprites);
 		var newSprites = utility.reorderArrayByY(theseSprites);
 		
 		try
@@ -297,6 +299,7 @@ var cameraController = {
 		
 		this.gameWorld.width = this.WIDTH;
 		this.gameWorld.height = this.HEIGHT;
+		this.sprites = [];
 		
 		if (tier == 0) this.baseTiles = [];
 		else if (tier ==1) this.foregroundTiles = [];
@@ -371,6 +374,8 @@ var cameraController = {
 							hitBox.y = sprite.y + 104;
 							hitBox.width = 16;
 							hitBox.height = 8;
+							sprite.name = "tree";
+							hitBox.name = "tree";
 						}
 						else
 						{
@@ -380,19 +385,30 @@ var cameraController = {
 							hitBox.y = sprite.y + 96;
 							hitBox.width = 32;
 							hitBox.height = 16;
+							sprite.name = "tree";
+							hitBox.name = "tree";
 						}
-						sprite.name = "tree";
-						hitBox.name = "tree";
 						
 						//console.debug("Sprite--x: " + sprite.x + ", y: " + sprite.y + ", w: " + sprite.width + ", h: " + sprite.height);
 						//console.debug("Hit Box--x: " + hitBox.x + ", y: " + hitBox.y + ", w: " + hitBox.width + ", h: " + hitBox.height);
 						this.foregroundTiles[row][column] = sprite;
 						gameplay.collisionTiles[row][column] = hitBox;
 					}
+					else if (currentTile == PRAIREGRASS)
+					{
+						sprite.name = "praire grass";
+						this.foregroundTiles[row][column] = sprite;
+						
+						//for (var i = 0; i < 1; i++)
+						//{
+							var tempSprite = Object.create(sprite);
+							tempSprite.y += 32;
+							this.sprites.push(sprite);
+						//}
+					}
 					else
 					{
 						//levelMap[row][column] = EMPTY;
-						
 					}
 				}
 			  }

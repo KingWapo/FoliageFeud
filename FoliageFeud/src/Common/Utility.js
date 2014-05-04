@@ -447,6 +447,10 @@ var utility = {
 				{
 					yVal += 104;
 				}
+				else if (oldArray[i].name == "praire grass")
+				{
+					yVal += 32;
+				}
 				else if (oldArray[i].name == "teleporter")
 				{
 					yVal += 64;

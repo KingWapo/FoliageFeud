@@ -979,9 +979,6 @@ var gameplay = {
 								this.collide();
 								this.messageType="rock"
 							}
-
-							
-		
 						}
 						
 						if ( utility.collisionDetection(gameplay.player, gameplay.blueCoin) && gameplay.blueCoin.visible==true)
