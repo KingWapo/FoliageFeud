@@ -1501,6 +1501,7 @@ var gameplay = {
 	
 	render: function()
 	{
+		utility.clearAll();
 		this.skillDisplay();
 		this.message();
 		if (currentScreen == ScreenState.WorldEvent)

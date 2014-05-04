@@ -131,6 +131,13 @@ var worldEvent = {
 		
 		if (!isDemo)
 		{
+			if (this.training || this.fromEnd)
+			{
+				gameplay.currentLevel = Level.BaseCamp;
+				gameplay.curMap = allLevelMaps[Level.BaseCamp];
+				gameplay.curObjMap = allLevelMaps[Level.BaseCamp];
+			}
+			gameplay.nextLevel(gameplay.currentLevel);
 			gameplay.player.x = this.playerVars[0];
 			gameplay.player.y = this.playerVars[1];
 			gameplay.player.walkSpeed = this.playerVars[2];
@@ -138,14 +145,8 @@ var worldEvent = {
 			gameplay.player.currentFrame = 0;
 			cameraController.camera.x = this.cameraPosition[0];
 			cameraController.camera.y = this.cameraPosition[1];
-			if (this.training || this.fromEnd)
-			{
-				gameplay.currentLevel = Level.BaseCamp;
-				gameplay.curMap = allLevelMaps[Level.BaseCamp];
-				gameplay.curObjMap = allLevelMaps[Level.BaseCamp];
-			}
-			cameraController.buildMap(allLevelMaps[gameplay.currentLevel], 0);
-			cameraController.buildMap(allObjectMaps[gameplay.currentLevel], 1);
+			cameraController.buildMap(gameplay.curMap, 0);
+			cameraController.buildMap(gameplay.curObjMap, 1);
 		}
 		
 		if (this.training)

@@ -124,19 +124,19 @@ var mainCamp = {
 				break;
 			case 2:
 			case 3:
-				var x = CANVAS_WIDTH - 64 - 128 - 256;
-				var y = 96;
+				var x = CANVAS_WIDTH / 2 - 128;
+				var y = 80;
 				utility.drawImage(
 					menuSurface, imgSmallTextBox,
 					0, 0, imgSmallTextBox.width, imgSmallTextBox.height,
-					x, y, 256, 256 + 64
+					x, y, CANVAS_WIDTH / 2, 256 + 64 + 16
 					);
 				for (var i = 0; i < Math.min(quests.finishedQuests.length, 5); i++)
 				{
 					var plantName = plantList[quests.finishedQuests[i]].name;
-					utility.writeForClick(menuSurface, [plantName], x + 16, y + 48 + 48 * i, 256 - 32, 24, false, [mainCamp.giveQuest, [i]]);
+					utility.writeForClick(menuSurface, [plantName], x + 32, y + 80 + 48 * i, 256 - 32, 24, false, [mainCamp.giveQuest, [i]]);
 				}
-				utility.writeForClick(menuSurface, ["Done"], x + 32, y + 48 + 48 * 5, 256 - 32, 30, false, [mainCamp.finishGiving, []]);
+				utility.writeForClick(menuSurface, ["Done"], x + 480, y + 36 + 48 * 5, 256 - 32, 30, false, [mainCamp.finishGiving, []]);
 				
 				break;
 			case 4:
@@ -144,12 +144,12 @@ var mainCamp = {
 				utility.writeForClick(menuSurface, ["No"], CANVAS_WIDTH - 320 - 64, CANVAS_HEIGHT - imgSmallTextBox.height / 2, 64, 30, false, [mainCamp.anyInvasives, [false]]);
 				break;
 			case 6:
-				var x = CANVAS_WIDTH - 64 - 512;
-				var y = 96;
+				var x = CANVAS_WIDTH / 2 - 128;
+				var y = 128;
 				utility.drawImage(
 					menuSurface, imgSmallTextBox,
 					0, 0, imgSmallTextBox.width, imgSmallTextBox.height,
-					x, y, 256 + 128, 256 + 64
+					x, y - 32, CANVAS_WIDTH / 2, 256 + 64 + 16
 					);
 				var invasives = plant.getInvasivePlants();
 				for (var i = 0; i < invasives.length; i++)
@@ -158,10 +158,10 @@ var mainCamp = {
 					utility.drawImage(
 						menuSurface, invImage,
 						0, 0, invImage.width, invImage.height,
-						x + 64 + (i % 3) * 96, y + 32 + 88 * Math.floor(i / 3), 64, 64
+						x + 64 + (i % 5) * 96, y + 32 + 88 * Math.floor(i / 5), 64, 64
 					);
 					index = i;
-					utility.addClickItem(x + 64 + (i % 3) * 96, y + 32 + 88 * Math.floor(i / 3), 64, 64, this.addInvasive, [i])
+					utility.addClickItem(x + 64 + (i % 5) * 96, y + 32 + 88 * Math.floor(i / 5), 64, 64, this.addInvasive, [i])
 				}
 				utility.writeForClick(menuSurface, ["Done"], x + 64 + 96 + 96, y + 88 * 2.75, 64, 30, false, [mainCamp.finishInvasives, []]);
 				break;
@@ -170,9 +170,9 @@ var mainCamp = {
 		utility.drawImage(
 			menuSurface, imgExitButton,
 			0, 0, imgExitButton.width, imgExitButton.height,
-			CANVAS_WIDTH - 320 + 128, CANVAS_HEIGHT - 160, imgExitButton.width, imgExitButton.height
+			CANVAS_WIDTH - 80, CANVAS_HEIGHT - 80, imgExitButton.width / 2, imgExitButton.height / 2
 		);
-		if (!this.talkingInMainCamp) utility.addClickItem(CANVAS_WIDTH - 320 + 128, CANVAS_HEIGHT - 160, imgExitButton.width, imgExitButton.height, this.exitToGameplay, "");
+		if (!this.talkingInMainCamp) utility.addClickItem(CANVAS_WIDTH - 80, CANVAS_HEIGHT - 80, imgExitButton.width / 2, imgExitButton.height / 2, this.exitToGameplay, "");
 	},
 	
 	drawPlant: function(plantName, randRegion, i)

@@ -4,15 +4,17 @@ var snaSelect = {
 	
 	init: function()
 	{
-		utility.addClickItem(96, 32, imgMapBackground.width, imgMapBackground.height, this.goToMap1, "");
-		utility.addClickItem(imgMapBackground.width + 128, 32, imgMapBackground.width, imgMapBackground.height, this.goToForest, "");
-		utility.addClickItem(96, imgMapBackground.height + 64, imgMapBackground.width, imgMapBackground.height, this.goToMarsh, "");
-		utility.addClickItem(imgMapBackground.width + 128, imgMapBackground.height + 64, imgMapBackground.width, imgMapBackground.height, this.goToHilly, "");
+		
 	},
 	
 	render: function()
 	{
 		gameplay.render();
+		
+		utility.addClickItem(96, 32, imgMapBackground.width, imgMapBackground.height, this.goToMap1, "");
+		utility.addClickItem(imgMapBackground.width + 128, 32, imgMapBackground.width, imgMapBackground.height, this.goToForest, "");
+		utility.addClickItem(96, imgMapBackground.height + 64, imgMapBackground.width, imgMapBackground.height, this.goToMarsh, "");
+		utility.addClickItem(imgMapBackground.width + 128, imgMapBackground.height + 64, imgMapBackground.width, imgMapBackground.height, this.goToHilly, "");
 		
 		//Map 1
 		utility.drawImage(
