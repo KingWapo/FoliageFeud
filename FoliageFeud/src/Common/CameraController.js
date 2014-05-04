@@ -17,6 +17,7 @@ var PRAIREGRASS = 2;
 var ROCK = 3;
 var TREE = 5;
 var BIRCHTREE = 7;
+var BIRCHTREETRUNK = 11;
 var SKY = 8;
 var ENDOFTREES = 11;
 var WATERBOUNDRARYBEGIN = 13
@@ -222,7 +223,7 @@ var cameraController = {
 		
 		var theseSprites = spritesFromGameplay;
 		var foregroundSpriteCols = [];
-		foregroundSpriteCols = this.foregroundTiles.slice(Math.max(0, Math.floor(this.camera.y / 64) - 2), Math.min(Math.floor((this.camera.y + this.camera.height)/64) + 1, gameplay.curMap.length));
+		foregroundSpriteCols = this.foregroundTiles.slice(Math.max(0, Math.floor(this.camera.y / 64) - 2), Math.min(Math.floor((this.camera.y + this.camera.height)/64) + 2, gameplay.curMap.length));
 		for (var i = 0; i < foregroundSpriteCols.length; i++)
 		{
 			var spritesWanted = foregroundSpriteCols[i].slice(Math.max(0, Math.floor(this.camera.x / 64) - 2), 
@@ -272,6 +273,17 @@ var cameraController = {
 						currentSprite.width, currentSprite.height
 					
 					);
+				}
+				else if (currentSprite.name == "birch tree")
+				{
+					utility.drawImage
+					 (
+					   gameplaySurface, tilesheet, 
+					   currentSprite.sourceX, currentSprite.sourceY, 
+					   currentSprite.sourceWidth, currentSprite.sourceHeight,
+					   Math.floor(currentSprite.x), Math.floor(currentSprite.y) - 64, 
+					   currentSprite.width, currentSprite.height
+					 ); 
 				}
 				else if (currentSprite.name !== "empty")
 				{
@@ -356,7 +368,7 @@ var cameraController = {
 				}
 				else if (tier == 1) // Object tiles
 				{
-					if (currentTile == TREE || currentTile == BIRCHTREE)
+					if (currentTile == TREE || currentTile == BIRCHTREETRUNK)
 					{
 						var hitBox = {
 							x: -64,
@@ -366,15 +378,16 @@ var cameraController = {
 						};
 						sprite.sourceHeight = 128;
 						sprite.height = 128;
-						if (currentTile == BIRCHTREE)
+						if (currentTile == BIRCHTREETRUNK)
 						{
 							sprite.sourceWidth = 64;
+							sprite.sourceY -= 64;
 							sprite.width = 64;
 							hitBox.x = sprite.x + 24;
-							hitBox.y = sprite.y + 104;
+							hitBox.y = sprite.y + 40;
 							hitBox.width = 16;
 							hitBox.height = 8;
-							sprite.name = "tree";
+							sprite.name = "birch tree";
 							hitBox.name = "tree";
 						}
 						else

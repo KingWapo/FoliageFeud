@@ -33,20 +33,6 @@ var rotate = {
 					{
 						switch(tile)
 						{
-							case 7:
-							case 11:
-								if (direction == 2)
-								{
-									if (tile == 7)
-										newMap[j][n - i] = 11;
-									else
-										newMap[j][n - i] = 7;
-								}
-								else
-								{
-									newMap[j][n - i] = tile;
-								}
-								break;
 							case 5:
 								newMap[j][n - i] = tile + 1;
 								break;
@@ -83,6 +69,8 @@ var rotate = {
 							case 32:
 								newMap[j][n - i] = tile - 3;
 								break;
+							case 7:
+							case 11:
 							case 23:
 							case 27:
 								newMap[j][n - i] = tile;
