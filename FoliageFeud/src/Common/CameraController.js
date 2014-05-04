@@ -285,6 +285,17 @@ var cameraController = {
 					   currentSprite.width, currentSprite.height
 					 ); 
 				}
+				else if (currentSprite.name == "praire grass")
+				{
+					utility.drawImage
+					 (
+					   gameplaySurface, tilesheet, 
+					   currentSprite.sourceX, currentSprite.sourceY, 
+					   currentSprite.sourceWidth, currentSprite.sourceHeight,
+					   Math.floor(currentSprite.x), Math.floor(currentSprite.y), 
+					   currentSprite.width, currentSprite.height
+					 );
+				}
 				else if (currentSprite.name !== "empty")
 				{
 					utility.drawImage
