@@ -52,6 +52,9 @@ var moveRight = false;
 var moveDown = false;
 
 var gameplay = {
+	victory:false,
+	timeout:true,
+	drawTextBox:false,
 	mapOrientation: 0,
 	mapBuilt: false,
 	onPause: false,
@@ -644,15 +647,18 @@ var gameplay = {
 	message:function()
 	{
 		
+			
+		
 		var strings = [];
-		this.writtingClear();
+		gameplay.createTextBox(25,0);
 		this.writting=true;
 		if(this.messageType=="water" )
 		{	
-			
-				strings.push("Beware you dont know how to swim yet!!");
-				utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, false);
 				
+				strings.push("Beware you dont know how to swim yet!!");
+				gameplay.createTextBox(25,0,256,132);
+				utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, false);
+				gameplay.drawTextBox=true;
 		}
 		 else if(this.messageType =="waterCoin"  )
 		{	
@@ -687,19 +693,40 @@ var gameplay = {
 			strings.push(" ");
 			utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, false);
 		}
-			
-		/*
-		moveDown = false;
-		moveLeft = false;
-		moveRight = false;
-		moveUp = false;
-		*/
+		
+		
+		
+	
 	},
 	writtingClear:function()
 	{
-		menuSurface.clearRect(0, 0, menuCanvas.width, menuCanvas.height);
+		gameplay.messageType="blank";
+		gameplay.timeout=true;
 	},
-	updateAnimation: function()
+
+	createTextBox:function(x,y,height,width)
+	
+	
+	{
+		
+			if(gameplay.drawTextBox==true)
+		{
+				utility.drawImage(
+					menuSurface, imgLargeTextBox,
+					0, 0, imgLargeTextBox.width, imgLargeTextBox.height,
+					x, y, height,width
+					);
+								
+		}
+			
+			if(gameplay.timeout==true){
+				
+				setTimeout(this.writtingClear,3000);
+				gameplay.timeout=false;
+			}
+		
+	},
+		updateAnimation: function()
 	{
 		if (!this.questDisplay && !this.talking) this.player.updateAnimation();
 		for (var i = 0; i < this.observationInstances.length; i++)
