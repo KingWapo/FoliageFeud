@@ -556,6 +556,12 @@ var gameplay = {
 		if (this.loadingSave)
 		{
 			this.nextLevel(Level.BaseCamp);
+			this.blueCoin.visible = false;
+			this.grayCoin.visible = false;
+			skillBook.swim = true;
+			skillBook.climb = true;
+			skillBook.swimLevel = 1;
+			skillBook.climbLevel = 1;
 			if (!this.visitedBrother && quests.plantsToIdentify.length > 0)
 			{
 				quests.plantsToIdentify = [];
@@ -984,7 +990,7 @@ var gameplay = {
 						if ( utility.collisionDetection(gameplay.player, gameplay.teleporter.hitbox))
 						{
 							
-							if(this.canTeleport && (this.visitedBrother || this.currentLevel == Level.Tutorial))
+							if(this.visitedBrother || this.currentLevel == Level.Tutorial)
 							{
 								if (!this.onTeleport)
 								{
