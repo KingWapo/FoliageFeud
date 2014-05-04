@@ -27,6 +27,8 @@ var ispy = {
 	maxGames: 10,
 	gamesCorrect: 0,
 	gameHistory: new Array(this.maxGames),
+	snipHistory: [],
+	snipChance: .8,
 	CORRECT: 0,
 	INCORRECT: 1,
 	
@@ -50,6 +52,8 @@ var ispy = {
 				{
 					this.gameHistory[i] = -1;
 				}
+				
+				this.snipHistory = [];
 			}
 		}
 		
@@ -116,6 +120,23 @@ var ispy = {
 		
 		if (this.fromTraining || this.fromEnd)
 		{
+			utility.drawImage
+			(
+				backgroundSurface, gameplay.player.sprite,
+				128, 0, 64, 64,
+				CANVAS_WIDTH - 68, 32, 64, 64
+			);
+			
+			if (this.fromEnd)
+			{
+				utility.drawImage
+				(
+					backgroundSurface, imgParsnipSprite,
+					0, 192, 64, 64,
+					CANVAS_WIDTH - 132, 32, 64, 64
+				);
+			}
+			
 			for (var i = 0; i < this.gameHistory.length; i++)
 			{
 				if (this.gameHistory[i] == this.CORRECT)
@@ -124,9 +145,8 @@ var ispy = {
 					(
 						backgroundSurface, imgCheckmark,
 						0, 0, imgCheckmark.width, imgCheckmark.height,
-						CANVAS_WIDTH - 52, 32 * i, 32, 32
+						CANVAS_WIDTH - 52, 32 * (i + 3), 32, 32
 					);
-					console.debug("correct");
 				}
 				else if (this.gameHistory[i] == this.INCORRECT)
 				{
@@ -134,9 +154,29 @@ var ispy = {
 					(
 						backgroundSurface, imgInvasivemark,
 						0, 0, imgInvasivemark.width, imgInvasivemark.height,
-						CANVAS_WIDTH - 52, 32 * i, 32, 32
+						CANVAS_WIDTH - 52, 32 * (i + 3), 32, 32
 					);
-					console.debug("incorrect");
+				}
+				if (i < this.snipHistory.length)
+				{
+					if (this.snipHistory[i])
+					{
+						utility.drawImage
+						(
+							backgroundSurface, imgCheckmark,
+							0, 0, imgCheckmark.width, imgCheckmark.height,
+							CANVAS_WIDTH - 116, 32 * (i + 3), 32, 32
+						);
+					}
+					else if (!this.snipHistory[i])
+					{
+						utility.drawImage
+						(
+							backgroundSurface, imgInvasivemark,
+							0, 0, imgInvasivemark.width, imgInvasivemark.height,
+							CANVAS_WIDTH - 116, 32 * (i + 3), 32, 32
+						);
+					}
 				}
 			}
 		}
@@ -300,6 +340,12 @@ var ispy = {
 			ispy.gamesCorrect += 1;
 			ispy.gameHistory[ispy.gamesPlayed] = ispy.CORRECT;
 		}
+		
+		if (ispy.fromEnd){
+			var d = Math.random();
+			ispy.snipHistory.push(d < ispy.snipChance);
+			console.debug(ispy.snipHistory[ispy.snipHistory.length - 1]);
+			}
 
 		// Exit game mode
 		ispy.gameEnd = true;
@@ -328,6 +374,9 @@ var ispy = {
 		{
 			//console.debug("You selected the wrong flower");
 		}
+		
+		if (ispy.fromEnd)
+			ispy.snipHistory.push(Math.random() < ispy.snipChance);
 		
 		gameplay.placeObservationEvent();
 		
