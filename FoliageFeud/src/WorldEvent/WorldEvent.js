@@ -228,6 +228,7 @@ var worldEvent = {
 	
 	render: function()
 	{
+		console.debug("rendering");
 		gameplay.render();
 		cameraController.renderBackground();
 		utility.drawImage(

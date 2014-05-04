@@ -197,27 +197,7 @@ var utility = {
 			}
 		}
 	},
-		/*handleMouseOver: function(event)
-	{
-		// Gets position of click
-		var rect = gameplayCanvas.getBoundingClientRect();
-		var posx = event.clientX;
-		var posy = event.clientY;
-		// Checks each object to see if it was clicked
-		for (var i = 0; i < utility.mouseOver.length; i++)
-		{
-			if (posx >= utility.clickable[i].x && posx <= utility.clickable[i].x + utility.clickable[i].width &&
-				posy >= utility.clickable[i].y && posy <= utility.clickable[i].y + utility.clickable[i].height)
-			{
-				console.debug("this is working I guess");
-				utility.mouseOver[i].func(utility.mouseOver[i].param);
-			}
-				
-				
-			
-		}
-	},
-	*/
+	
 	loadImage: function(source)
 	{
 		try {
@@ -719,6 +699,10 @@ var imgBackgroundMainCamp = utility.loadImage("../img/Backgrounds/plantsBackgrou
 var imgPostItNote = utility.loadImage("../img/Backgrounds/plantsUnderlay01.png");
 var imgTransButton = utility.loadImage("../img/Buttons/buyButtonTransperent.png");
 var imgMysterySprite= utility.loadImage("../img/Player/siblingShopSecret.png");
+
+var imgVsPlayer = utility.loadImage("../img/Backgrounds/vsPlayer.png");
+var imgVsBotnip = utility.loadImage("../img/Backgrounds/vsBotnip.png");
+var imgVsParsnip = utility.loadImage("../img/Backgrounds/vsParsnip.png");
 
 createScenery.tilesheet = utility.loadImage("../img/Tiles/tilesheet.png");
 gameplay.mainCamp.sprite = utility.loadImage("../img/Tiles/missions.png");

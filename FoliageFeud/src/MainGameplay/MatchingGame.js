@@ -8,6 +8,7 @@ var matching = {
 	matchesMade: 0,
 	timer: 1800,
 	timerFull: 1800,
+	timerFullNotTraining: 1200,
 	fromTraining: false,
 	fromEnd: false,
 	won: false,
@@ -18,8 +19,12 @@ var matching = {
 		
 		this.cards = [];
 		this.matchesMade = 0;
-		this.timer = this.timerFull;
+		if (!this.fromEnd)
+			this.timer = this.timerFull;
+		else
+			this.timer = this.timerFullNotTraining;
 		
+		console.debug(this.fromEnd, ", ", this.timer / 30);
 		var plantCards = plant.getMultiplePlants(9);
 		
 		for (var i = 0; i < plantCards.length; i++)
@@ -126,6 +131,13 @@ var matching = {
 	{
 		if (this.timer > 0)
 		{
+			var fullTime;
+			
+			if (!this.fromEnd)
+				fullTime = this.timerFull;
+			else
+				fullTime = this.timerFullNotTraining;
+				
 			utility.drawImage
 			(
 				backgroundSurface, imgTimerBg,
@@ -136,7 +148,7 @@ var matching = {
 			(
 				backgroundSurface, imgTimer,
 				0, 0, imgTimer.width, imgTimer.height,
-				84, 42, Math.floor(256*this.timer/this.timerFull), 32
+				84, 42, Math.floor(256*this.timer/fullTime), 32
 			);
 			
 			this.timer -= 1;

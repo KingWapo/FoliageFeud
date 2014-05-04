@@ -1010,7 +1010,8 @@ var gameplay = {
 						if ( this.botnipSummoned && utility.collisionDetection(gameplay.player, gameplay.botnip))
 						{
 							this.botnipSummoned = false;
-							currentScreen = ScreenState.WorldEvent;
+							vs.init(ScreenState.WorldEvent);
+							//currentScreen = ScreenState.WorldEvent;
 						}
 						if ( utility.collisionDetection(gameplay.player, gameplay.teleporter.hitbox))
 						{
@@ -1658,6 +1659,8 @@ var gameplay = {
 			}
 		}
 		
+		if (vs.transitioning)
+			vs.render();
 	},
 	
 	// Randomly places the observationInstance on the map
