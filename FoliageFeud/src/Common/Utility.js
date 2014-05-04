@@ -701,6 +701,8 @@ var imgGoldCoin= utility.loadImage("../img/Tokens/speedToken.png");
 var imgPrice=utility.loadImage("../img/Buttons/shopbuybutton.png");
 var imgBackgroundMainCamp = utility.loadImage("../img/Backgrounds/plantsBackground.png");
 var imgPostItNote = utility.loadImage("../img/Backgrounds/plantsUnderlay01.png");
+var imgTransButton = utility.loadImage("../img/Buttons/buyButtonTransperent.png");
+var imgMysterySprite= utility.loadImage("../img/Player/siblingShopSecret.png");
 
 createScenery.tilesheet = utility.loadImage("../img/Tiles/tilesheet.png");
 gameplay.mainCamp.sprite = utility.loadImage("../img/Tiles/missions.png");

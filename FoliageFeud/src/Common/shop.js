@@ -6,6 +6,7 @@ var shop ={
 	waterCoin: Object.create(buyableObject),
 	parsnipMask:Object.create(buyableObject),
 	superWaterCoin:Object.create(buyableObject),
+	mystery:Object.create(buyableObject),
 	info:false,
 	shopKeeperDisplay:false,
 	
@@ -13,11 +14,14 @@ render:function()
 {
 	utility.clearAll();	
 	shop.drawPrices();
+	// draws all the shop images 
 		utility.drawImage(
 			gameplaySurface, imgShopBg,
 			0, 0, imgShopBg.width, imgShopBg.height,
 			0, 0, imgShopBg.width, imgShopBg.height
 		);
+		
+		//the price  backgrounds 
 		utility.drawImage(
 			gameplaySurface, imgPrice,
 			0, 0, imgPrice.width, imgPrice.height,
@@ -70,14 +74,14 @@ render:function()
 			0, 0, imgPrice.width, imgPrice.height,
 			930, 270, 128, 32
 		);
-		
+		// the shop exit button
 		utility.drawImage(
 			gameplaySurface, imgExitButton,
 			0, 0, imgExitButton.width, imgExitButton.height,
 			932, 304, imgExitButton.width, imgExitButton.height
 		);
 		
-	
+	//draws the specific coins
 		utility.drawImage(
 			gameplaySurface, imgRock,
 			0, 0, imgRock.width, imgRock.height,
@@ -100,11 +104,15 @@ render:function()
 			0, 0, imgAdventure.width, imgAdventure.height,
 			96, 138, imgAdventure.width,imgAdventure.height
 			);
-			utility.drawImage(
-			gameplaySurface, imgAdventure,
-			0, 0, imgAdventure.width, imgAdventure.height,
-			598, 138, imgAdventure.width,imgAdventure.height
-			);
+			// checks if you have completed the game then draws the mystery sprite or the shop keeper sprite
+			if(gameplay.victory==false)
+			{
+				utility.drawImage(
+				gameplaySurface, imgMysterySprite,
+				0, 0, imgMysterySprite.width, imgMysterySprite.height,
+				598, 138, 128, 128
+				);
+			}
 			utility.drawImage(
 			gameplaySurface, imgNip,
 			0, 0, imgNip.width, imgNip.height,
@@ -115,7 +123,7 @@ render:function()
 			0, 0, imgAdventure.width, imgAdventure.height,
 			934, 138, imgAdventure.width,imgAdventure.height
 			);
-			
+			// shop keeper image
 			utility.drawImage(
 			gameplaySurface, imgShopSibling,
 			0, 0, imgShopSibling.width, imgShopSibling.height,
@@ -123,7 +131,7 @@ render:function()
 			);
 				
 		
-				
+		//these must constantly be rendered in order to be display when needed.		
 		shop.displayInfo();	
 		shop.initShop();
 		shop.buttonHandler();
@@ -133,31 +141,36 @@ render:function()
 },
 initShop:function()
 {	
-	shop.superWaterCoin.price=0;
-	shop.superWaterCoin.name="water Coin";
+   //init the water Coin
+	shop.superWaterCoin.price=30;
 	shop.superWaterCoin.x=97;
 	shop.superWaterCoin.y=308;
 	shop.superWaterCoin.init();
-	shop.adventure.price=1;
-	shop.adventure.name="Adventure Hat";
+	//init the adventure hat
+	shop.adventure.price=30;
 	shop.adventure.x=96;
 	shop.adventure.y=138;
 	shop.adventure.init();
-	shop.rockCoin.price=5;
-	shop.rockCoin.name="Rock Coin";
+	//init the rockCoin
+	shop.rockCoin.price=10;
 	shop.rockCoin.x=265;
 	shop.rockCoin.y=140;
 	shop.rockCoin.init();
-	shop.waterCoin.price=0;
-	shop.waterCoin.name="Water Coin";
+	//init the second water coin
+	shop.waterCoin.price=30;
 	shop.waterCoin.x=429;
 	shop.waterCoin.y=140;
 	shop.waterCoin.init();	
+	//inti the parsnip sprit
 	shop.parsnipMask.x=765;
 	shop.parsnipMask.y=138;
-	shop.parsnipMask.price=0;
-	shop.parsnipMask.name="parsnip Mask ";
+	shop.parsnipMask.price=300;
 	shop.parsnipMask.init();
+	//int the mystery sprite
+	shop.mystery.price=300;
+	shop.mystery.x=598;
+	shop.mystery.y=138;
+	shop.mystery.init();
 	
 	var strings=[];
 			 strings.push(" gold: " + gameplay.gold);	
@@ -190,7 +203,7 @@ buyParsnip:function()
 {
 	if(shop.parsnipMask.description==true&&shop.parsnipMask.purchased==false)
 	{
-		console.debug("parsnip in");
+	
 		shop.parsnipMask.buy();
 		
 		
@@ -232,18 +245,28 @@ buyWater:function()
 },
 buyWaterCoin:function()
 {
-	shop.superWaterCoin.description=true;
-	shop.info=true;
+
 	if(shop.superWaterCoin.description==true&&shop.superWaterCoin.purchased==false)
 	{
 		shop.superWaterCoin.buy();
 		skillBook.swimLevel=skillBook.swimLevel+1;
 	}
-	console.debug("skillBook" +skillBook.swimLevel);
+	shop.superWaterCoin.description=true;
+	shop.info=true;
+	
 },
-
-
-
+buyMystery:function()
+{
+	if(shop.mystery.description==true&&shop.mystery.purchased==false)
+	{
+		shop.mystery.buy();
+		
+	}
+	shop.mystery.description=true;
+	shop.info=true;
+	
+	
+},
 shopKeeper:function()
 {	
 	shop.info=true;
@@ -266,6 +289,7 @@ exitShop:function()
 		shop.shopKeeperDisplay=false;
 		shop.parsnipMask.description=false;
 		shop.superWaterCoin.description=false;
+		shop.mystery.description=false;
 	
 },
 displayInfo:function()
@@ -290,6 +314,7 @@ buttonHandler:function()
 		utility.addClickItem( 97,308,imgWater.width,imgWater.height,this.buyWaterCoin,"");
 		utility.addClickItem(750,300,imgShopSibling.width,imgShopSibling.height,this.shopKeeper,"");
 		utility.addClickItem(765,138,imgNip.width,imgNip.height,this.buyParsnip,"");
+		utility.addClickItem(598,138,128,128,this.buyMystery);
 		
 	}
 	if(shop.info==true)
@@ -300,19 +325,12 @@ buttonHandler:function()
 			338, 364, 64,64
 			
 		);
-		if(this.shopKeeperDisplay==false)
-		{	
-		utility.drawImage(
-			menuSurface, imgPurchaseButton,
-			0, 0, imgPurchaseButton.width, imgPurchaseButton.height,
-			402, 364, 64,64
-			
-		);
-		}
+		
 			utility.addClickItem(338,364, 64,64,this.exitShop, "");
 	}
 	
 },
+//draws the prices below the items on top of the image.
 drawPrices:function()
 {
 	var strings=[];				
@@ -322,14 +340,17 @@ drawPrices:function()
 	strings.push(" 10 gold ");
 	utility.writeText(gameplaySurface, strings, 270, 290, 64 * 4, 20, false);
 	strings.pop();
-	strings.push(" 10 gold ");
+	strings.push(" 30 gold ");
 	utility.writeText(gameplaySurface, strings, 440, 290, 64 * 4, 20, false);
 	strings.pop();
-	strings.push(" 10 gold ");
+	strings.push(" 150 gold ");
 	utility.writeText(gameplaySurface, strings, 620, 290, 64 * 4, 20, false);
 	strings.pop();
-	strings.push(" 150 gold ");
+	strings.push(" 300 gold ");
 	utility.writeText(gameplaySurface, strings, 780, 290, 64 * 4, 20, false);
+	strings.pop();
+	strings.push(" 30 gold ");
+	utility.writeText(gameplaySurface, strings, 94, 460, 64 * 4, 20, false);
 	strings.pop();
 	
 },
@@ -350,9 +371,20 @@ infoDisplay:function()
 			//if you have enough gold assigns the listener to the purchase button
 				if(gameplay.gold>=this.adventure.price)
 				{
+					utility.drawImage(
+			menuSurface, imgPurchaseButton,
+			0, 0, imgPurchaseButton.width, imgPurchaseButton.height,
+			402, 364, 64,64
+			);
 					utility.addClickItem(402,364, 64,64,this.buyAdventure, "");
 					utility.addClickItem(402,364, 64,64,this.exitShop, "");
 				}
+				else
+				utility.drawImage(
+			menuSurface, imgTransButton,
+			0, 0, imgTransButton.width, imgTransButton.height,
+			402, 364, 64,64
+			);
 	}
 	if(this.waterCoin.description==true)
 	{
@@ -364,11 +396,22 @@ infoDisplay:function()
 				0, 0, imgWater.width, imgWater.height,
 				315, 155, imgWater.width,imgWater.height
 			);
-				if(gameplay.gold>=this.waterCoin.price&&this.waterCoin.description==true)
+				if(gameplay.gold>=this.superWaterCoin.price)
 				{
 					utility.addClickItem(402,364, 64,64,this.buyWater, "");
 					utility.addClickItem(402,364, 64,64,this.exitShop, "");
+					utility.drawImage(
+				menuSurface, imgPurchaseButton,
+				0, 0, imgPurchaseButton.width, imgPurchaseButton.height,
+				402, 364, 64,64
+			);
 				}
+				else
+				utility.drawImage(
+			menuSurface, imgTransButton,
+			0, 0, imgTransButton.width, imgTransButton.height,
+			402, 364, 64,64
+			);
 				
 				
 	}
@@ -387,8 +430,20 @@ infoDisplay:function()
 				{
 					utility.addClickItem(402,364, 64,64,this.buyWaterCoin, "");
 					utility.addClickItem(402,364, 64,64,this.exitShop, "");
+					utility.drawImage(
+					menuSurface, imgPurchaseButton,
+					0, 0, imgPurchaseButton.width, imgPurchaseButton.height,
+					402, 364, 64,64
+					);
 				}
-				
+				else
+				{
+					utility.drawImage(
+				    menuSurface, imgTransButton,
+				    0, 0, imgTransButton.width, imgTransButton.height,
+				    402, 364, 64,64
+			);
+				}
 	}
 	
 	if(this.rockCoin.description==true)
@@ -406,7 +461,18 @@ infoDisplay:function()
 				{
 					utility.addClickItem(402,364, 64,64,this.buyRock, "");
 					utility.addClickItem(402,364, 64,64,this.exitShop, "");
+					utility.drawImage(
+			menuSurface, imgPurchaseButton,
+			0, 0, imgPurchaseButton.width, imgPurchaseButton.height,
+			402, 364, 64,64
+			);
 				}
+				else
+				utility.drawImage(
+			menuSurface, imgTransButton,
+			0, 0, imgTransButton.width, imgTransButton.height,
+			402, 364, 64,64
+			);
 	}
 	if(this.shopKeeperDisplay==true)
 	{
@@ -429,9 +495,37 @@ infoDisplay:function()
 			);
 				if(gameplay.gold>=this.parsnipMask.price)
 				{
+					utility.drawImage(
+			menuSurface, imgPurchaseButton,
+			0, 0, imgPurchaseButton.width, imgPurchaseButton.height,
+			402, 364, 64,64
+			);
 					utility.addClickItem(402,364, 64,64,this.buyParsnip, "");
 					utility.addClickItem(402,364, 64,64,this.exitShop, "");
 				}
+				else
+				utility.drawImage(
+			menuSurface, imgTransButton,
+			0, 0, imgTransButton.width, imgTransButton.height,
+			402, 364, 64,64
+			);
+		
+	}
+	if(this.mystery.description==true)
+	{
+		if(gameplay.victory==false)
+		{
+			var strings = [];
+			strings.push(" you have not completed the game yet.Once you defeat evil professor Parsnip this will be unlocked" );
+				utility.writeText(menuSurface, strings, 245, 290, 64 * 4, 20, false);
+				utility.drawImage(
+				menuSurface, imgMysterySprite,
+				0, 0, imgMysterySprite.width, imgMysterySprite.height,
+				315, 155, 96,96
+			);
+		}
+		
+		
 		
 	}
 	
