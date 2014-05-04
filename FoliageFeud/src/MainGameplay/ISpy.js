@@ -281,6 +281,7 @@ var ispy = {
 		if (!ispy.fromTraining && !ispy.fromEnd)
 		{
 			quests.finishedQuests.push(ispy.requestedPlant);
+			plant.totalHarvestAmount += 1;
 			for (var i = 0; i < gameplay.questlog.length; i++)
 			{
 				if (gameplay.questlog[i][0] == ispy.requestedPlant &&

@@ -44,6 +44,7 @@ function PlantObject(name, lname, regions, invasive, traits, numImages)
 var plant = {
 	totalPlantImagesLoaded: 0,
 	curPlantImagesLoaded: 0,
+	totalHarvestAmount: 0,
 	prairie: 0,
 	forest: 0,
 	marsh: 0,

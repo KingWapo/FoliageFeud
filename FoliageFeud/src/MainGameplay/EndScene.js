@@ -11,6 +11,7 @@ var endScene = {
 	
 	checkpoint: Games.ISPY,
 	parsnipBeaten: false,
+	plantsNeeded: 10,
 	
 	phrases: [
 		["You have been ruining my plans for long enough! This time, let's see if you can beat me in a game of wits!"], // Talk before ispy

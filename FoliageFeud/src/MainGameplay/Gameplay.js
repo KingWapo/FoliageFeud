@@ -566,6 +566,7 @@ var gameplay = {
 			{
 				quests.plantsToIdentify = [];
 				quests.regionsToVisit = [];
+				this.refreshQuestlog();
 			}
 		}
 	},
@@ -996,16 +997,22 @@ var gameplay = {
 								{
 									
 									this.onTeleport = true;
-									if (this.currentLevel != Level.BaseCamp)
+									if (!endScene.parsnipBeaten && plant.totalHarvestAmount >= endScene.plantsNeeded) // Activate End Scene
 									{
-										this.canSave = true;
-										this.nextLevel(Level.BaseCamp);
-										this.messageType="blank";
+										currentScreen = ScreenState.End;
 									}
 									else
 									{
-										
-										currentScreen = ScreenState.SNASelectionScreen;
+										if (this.currentLevel != Level.BaseCamp)
+										{
+											this.canSave = true;
+											this.nextLevel(Level.BaseCamp);
+											this.messageType="blank";
+										}
+										else
+										{
+											currentScreen = ScreenState.SNASelectionScreen;
+										}
 									}
 								}
 							}
