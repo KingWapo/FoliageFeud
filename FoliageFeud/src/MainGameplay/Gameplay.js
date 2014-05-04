@@ -82,6 +82,7 @@ var gameplay = {
 	talking: false,
 	visitedBrother: false,
 	questlog: [],
+	loadingSave: false,
 	
 	// Buildings
 	store: Object.create(spriteObject),
@@ -549,6 +550,17 @@ var gameplay = {
 		moveDown = false;
 		moveLeft = false;
 		moveRight = false;
+		
+		
+		if (this.loadingSave)
+		{
+			this.nextLevel(Level.BaseCamp);
+			if (!this.visitedBrother && quests.plantsToIdentify.length > 0)
+			{
+				quests.plantsToIdentify = [];
+				quests.regionsToVisit = [];
+			}
+		}
 	},
 	
 	updateSprite: function()

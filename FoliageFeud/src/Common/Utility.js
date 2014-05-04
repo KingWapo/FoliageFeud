@@ -518,8 +518,8 @@ var utility = {
 		}
 		
 		cookie += ".";
-		cookie += endScene.parsnipBeaten + ".";
-		cookie += gameplay.visitedBrother + ";";
+		cookie += gameplay.visitedBrother + ".";
+		cookie += endScene.parsnipBeaten + ";";
 		cookie += "expires=" + d.toGMTString();
 		
 		document.cookie = cookie;
@@ -559,14 +559,12 @@ var utility = {
 					plantList[i].harvested = true;
 			}
 			
-			gameplay.visitedBrother = data[3];
-			endScene.parsnipBeaten = data[4];
+			gameplay.visitedBrother = data[3] == "true" ? true : false;
+			endScene.parsnipBeaten = data[4] == "true" ? true : false;
 			
+			gameplay.loadingSave = true;
 			//gameplay.init();
-			switchGamemode(ScreenState.Gameplay);
-			
-			if (gameplay.visitedBrother)
-				gameplay.nextLevel(Level.BaseCamp);
+			currentScreen = ScreenState.Gameplay;
 			
 			console.debug("sprite: ", currentSprite);
 			console.debug("gold: ", gameplay.gold);
