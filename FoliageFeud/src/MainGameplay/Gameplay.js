@@ -82,6 +82,7 @@ var gameplay = {
 	talking: false,
 	visitedBrother: false,
 	questlog: [],
+	canSave: false,
 	
 	// Buildings
 	store: Object.create(spriteObject),
@@ -979,6 +980,7 @@ var gameplay = {
 									this.onTeleport = true;
 									if (this.currentLevel != Level.BaseCamp)
 									{
+										this.canSave = true;
 										this.nextLevel(Level.BaseCamp);
 										this.messageType="blank";
 									}

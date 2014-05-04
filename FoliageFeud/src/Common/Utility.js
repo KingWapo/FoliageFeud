@@ -498,7 +498,7 @@ var utility = {
 	
 	drawEsc: function()
 	{
-		utility.writeForClick(menuSurface, ["Save"], 32, 32, 200, 32, false, [function(){console.debug("clickyclick");utility.setCookie();}, ['']]);
+		utility.writeForClick(menuSurface, ["Save"], 32, 32, 200, 32, false, [function(){console.debug("clickyclick");if (gameplay.canSave)utility.setCookie();}, ['']]);
 	},
 	
 	setCookie: function()
