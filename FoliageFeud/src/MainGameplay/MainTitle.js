@@ -44,6 +44,7 @@ var title = {
 	{
 		currentSprite = SpriteState.Girl;
 		exiting[currentScreen] = true;
+		utility.checkCookie();
 	},
 	
 	render: function()

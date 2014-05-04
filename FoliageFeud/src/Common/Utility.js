@@ -498,7 +498,84 @@ var utility = {
 	
 	drawEsc: function()
 	{
-		utility.writeForClick(menuSurface, ["Save"], 32, 32, 200, 32, false, [function(){console.debug("clickyclick");}, ['']]);
+		utility.writeForClick(menuSurface, ["Save"], 32, 32, 200, 32, false, [function(){console.debug("clickyclick");utility.setCookie();}, ['']]);
+	},
+	
+	setCookie: function()
+	{
+		var d = new Date();
+		d.setTime(d.getTime() + (365 * 100 * 24 * 60 * 60 * 1000));
+		var cookie = "FoliageFeud=";
+		cookie += currentSprite + ".";
+		cookie += gameplay.gold + ".";
+		
+		for (var i = 0; i < plantList.length; i++)
+		{
+			if (plantList[i].harvested)
+				cookie += "1";
+			else
+				cookie += "0";
+		}
+		
+		cookie += ".";
+		cookie += endScene.parsnipBeaten + ".";
+		cookie += gameplay.visitedBrother + ";";
+		cookie += "expires=" + d.toGMTString();
+		
+		document.cookie = cookie;
+	},
+	
+	getCookie: function(cname)
+	{
+		var name = cname + "=";
+		var ca = document.cookie.split(';');
+		
+		for (var i = 0; i < ca.length; i++)
+		{
+			var c = ca[i].trim();
+			if (c.indexOf(name) == 0)
+				return c.substring(name.length, c.length);
+		}
+		
+		return "";
+	},
+	
+	checkCookie: function()
+	{
+		var player = utility.getCookie("FoliageFeud");
+		
+		if (player != "")
+		{
+			console.debug("Welcome back, player!");
+			
+			var data = player.split('.');
+			
+			currentSprite = parseInt(data[0]);
+			gameplay.gold = parseInt(data[1]);
+			
+			for (var i = 0; i < data[2].length; i++)
+			{
+				if (i < plantList.length && data[2][i] == "1")
+					plantList[i].harvested = true;
+			}
+			
+			gameplay.visitedBrother = data[3];
+			endScene.parsnipBeaten = data[4];
+			
+			//gameplay.init();
+			switchGamemode(ScreenState.Gameplay);
+			gameplay.nextLevel(Level.BaseCamp);
+			
+			console.debug("sprite: ", currentSprite);
+			console.debug("gold: ", gameplay.gold);
+			console.debug("plants: ", data[2]);
+			console.debug("brother: ", gameplay.visitedBrother);
+			console.debug("snip beat: ", endScene.parsnipBeaten);
+		}
+		else
+		{
+			console.debug("No player data available.");
+		}
 	}
 };
 

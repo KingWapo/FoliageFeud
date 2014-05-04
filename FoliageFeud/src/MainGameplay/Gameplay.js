@@ -458,7 +458,7 @@ var gameplay = {
 			this.goldStorage[i].name="gold coin";
 			this.goldStorage[i].x = Math.random() * (this.curMap[0].length * 64 + 300);
 			this.goldStorage[i].y = Math.random() * (this.curMap.length * 64 - 300);
-			console.debug ("gold x "+ this.goldStorage[i].x+" gold.y"+this.goldStorage[i].y)
+			//console.debug ("gold x "+ this.goldStorage[i].x+" gold.y"+this.goldStorage[i].y)
 			
 		}
 	

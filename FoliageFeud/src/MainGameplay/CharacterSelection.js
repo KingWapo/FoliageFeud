@@ -18,20 +18,20 @@ var characterSelection = {
 		this.curDirection = 3;
 		this.animTime = 0;
 		
-		this.male1.x = CANVAS_WIDTH / 4;
-		this.male1.y = CANVAS_HEIGHT / 4;
+		this.male1.x = CANVAS_WIDTH / 3;
+		this.male1.y = CANVAS_HEIGHT / 3;
 		this.male1.sprite = imgMaleSprite;
 		
-		this.female1.x = 3 * CANVAS_WIDTH / 4;
-		this.female1.y = CANVAS_HEIGHT / 4;
+		this.female1.x = 2 * CANVAS_WIDTH / 3 - 64;
+		this.female1.y = CANVAS_HEIGHT / 3;
 		this.female1.sprite = imgFemaleSprite;
 		
-		this.male2.x = CANVAS_WIDTH / 4;
-		this.male2.y = 3 * CANVAS_HEIGHT / 4;
+		this.male2.x = CANVAS_WIDTH / 3;
+		this.male2.y = 2 * CANVAS_HEIGHT / 3;
 		this.male2.sprite = imgMaleDiverseSprite;
 		
-		this.female2.x = 3 * CANVAS_WIDTH / 4;
-		this.female2.y = 3 * CANVAS_HEIGHT / 4;
+		this.female2.x = 2 * CANVAS_WIDTH / 3 - 64;
+		this.female2.y = 2 * CANVAS_HEIGHT / 3;
 		this.female2.sprite = imgFemaleDiverseSprite;
 	},
 	
@@ -67,9 +67,9 @@ var characterSelection = {
 		}
 		
 		utility.drawImage(
-			backgroundSurface, imgCommonBg,
-			0, 0, imgCommonBg.width, imgCommonBg.height,
-			0, 0, imgCommonBg.width, imgCommonBg.height
+			backgroundSurface, imgMenuBg,
+			0, 0, imgMenuBg.width, imgMenuBg.height,
+			0, 0, imgMenuBg.width, imgMenuBg.height
 			);
 		
 		utility.drawImage(
