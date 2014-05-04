@@ -37,6 +37,7 @@ var title = {
 	{
 		currentSprite = SpriteState.Boy;
 		exiting[currentScreen] = true;
+		quests.addQuest(Math.floor(Math.random() * plantList.length), 0);
 		
 	},
 	

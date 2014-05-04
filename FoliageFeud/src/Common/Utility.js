@@ -509,15 +509,37 @@ var utility = {
 		cookie += currentSprite + ".";
 		cookie += gameplay.gold + ".";
 		
+		var plantsFound = "";
 		for (var i = 0; i < plantList.length; i++)
 		{
 			if (plantList[i].harvested)
-				cookie += "1";
+				plantsFound += "1";
 			else
-				cookie += "0";
+				plantsFound += "0";
 		}
 		
+<<<<<<< HEAD
 		cookie += ".";
+=======
+		var plantsToFind = "";
+		var regionsToVisit = "";
+		for (var i = 0; i < quests.plantsToIdentify.length; i++)
+		{
+			plantsToFind += ("0" + quests.plantsToIdentify[i]).slice(-2);
+			regionsToVisit += quests.regionsToVisit[i];
+		}
+		
+		var finishedQuests = "";
+		for (var i = 0; i < quests.finishedQuests.length; i++)
+		{
+			finishedQuests += ("0" + quests.finishedQuests[i]).slice(-2);
+		}
+		
+		cookie += plantsFound + ".";
+		cookie += plantsToFind + ".";
+		cookie += regionsToVisit + ".";
+		cookie += finishedQuests + ".";
+>>>>>>> f88bf862db417e009bc7e4ee7cbe49420bb686e9
 		cookie += gameplay.visitedBrother + ".";
 		cookie += endScene.parsnipBeaten + ";";
 		cookie += "expires=" + d.toGMTString();
@@ -559,8 +581,25 @@ var utility = {
 					plantList[i].harvested = true;
 			}
 			
+<<<<<<< HEAD
 			gameplay.visitedBrother = data[3] == "true" ? true : false;
 			endScene.parsnipBeaten = data[4] == "true" ? true : false;
+=======
+			for (var i = 0; i < data[3].length / 2; i++)
+			{
+				quests.plantsToIdentify.push((parseInt(data[3][i * 2]) * 10) + parseInt(data[3][i * 2 + 1]));
+				quests.regionsToVisit.push(parseInt(data[4][i]));
+			}
+			
+			for (var i = 0; i < data[5].length / 2; i++)
+			{
+				quests.finishedQuests.push((parseInt(data[5][i * 2]) * 10) + parseInt(data[5][i * 2 + 1]));
+				console.debug(quests.finishedQuests[i], " ", plantList[quests.finishedQuests[i]].name);
+			}
+			
+			gameplay.visitedBrother = data[6];
+			endScene.parsnipBeaten = data[7];
+>>>>>>> f88bf862db417e009bc7e4ee7cbe49420bb686e9
 			
 			gameplay.loadingSave = true;
 			//gameplay.init();
@@ -569,6 +608,9 @@ var utility = {
 			console.debug("sprite: ", currentSprite);
 			console.debug("gold: ", gameplay.gold);
 			console.debug("plants: ", data[2]);
+			console.debug("quests: ", data[3]);
+			console.debug("regions: ", data[4]);
+			console.debug("finished: ", data[5]);
 			console.debug("brother: ", gameplay.visitedBrother);
 			console.debug("snip beat: ", endScene.parsnipBeaten);
 		}
