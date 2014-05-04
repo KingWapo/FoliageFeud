@@ -564,7 +564,9 @@ var utility = {
 			
 			//gameplay.init();
 			switchGamemode(ScreenState.Gameplay);
-			gameplay.nextLevel(Level.BaseCamp);
+			
+			if (gameplay.visitedBrother)
+				gameplay.nextLevel(Level.BaseCamp);
 			
 			console.debug("sprite: ", currentSprite);
 			console.debug("gold: ", gameplay.gold);
