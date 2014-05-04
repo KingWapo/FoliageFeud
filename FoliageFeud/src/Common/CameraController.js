@@ -238,7 +238,7 @@ var cameraController = {
 		var bottomSpecials = [];
 		var topSpecials = [];
 		var i = 0;
-		while (i < this.specialTiles.length && this.specialTiles[i].y + 24 <= gameplay.player.y + 32)
+		while (i < this.specialTiles.length && this.specialTiles[i].y + 2 <= gameplay.player.y)
 		{
 			i += 1;
 		}
