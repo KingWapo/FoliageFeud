@@ -518,9 +518,6 @@ var utility = {
 				plantsFound += "0";
 		}
 		
-<<<<<<< HEAD
-		cookie += ".";
-=======
 		var plantsToFind = "";
 		var regionsToVisit = "";
 		for (var i = 0; i < quests.plantsToIdentify.length; i++)
@@ -539,7 +536,6 @@ var utility = {
 		cookie += plantsToFind + ".";
 		cookie += regionsToVisit + ".";
 		cookie += finishedQuests + ".";
->>>>>>> f88bf862db417e009bc7e4ee7cbe49420bb686e9
 		cookie += gameplay.visitedBrother + ".";
 		cookie += endScene.parsnipBeaten + ";";
 		cookie += "expires=" + d.toGMTString();
@@ -581,10 +577,9 @@ var utility = {
 					plantList[i].harvested = true;
 			}
 			
-<<<<<<< HEAD
 			gameplay.visitedBrother = data[3] == "true" ? true : false;
 			endScene.parsnipBeaten = data[4] == "true" ? true : false;
-=======
+			
 			for (var i = 0; i < data[3].length / 2; i++)
 			{
 				quests.plantsToIdentify.push((parseInt(data[3][i * 2]) * 10) + parseInt(data[3][i * 2 + 1]));
@@ -597,12 +592,8 @@ var utility = {
 				console.debug(quests.finishedQuests[i], " ", plantList[quests.finishedQuests[i]].name);
 			}
 			
-			gameplay.visitedBrother = data[6];
-			endScene.parsnipBeaten = data[7];
->>>>>>> f88bf862db417e009bc7e4ee7cbe49420bb686e9
 			
 			gameplay.loadingSave = true;
-			//gameplay.init();
 			currentScreen = ScreenState.Gameplay;
 			
 			console.debug("sprite: ", currentSprite);
