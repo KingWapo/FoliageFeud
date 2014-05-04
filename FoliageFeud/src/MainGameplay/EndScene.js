@@ -224,6 +224,9 @@ var endScene = {
 		{
 			this.playGame();
 		}
+		
+		if (vs.transitioning)
+			vs.render();
 	},
 	
 	playGame: function()
@@ -234,13 +237,13 @@ var endScene = {
 				console.debug("Playing Ispy");
 				endScene.overallIndex += 1;
 				ispy.fromEnd = true;
-				switchGamemode(ScreenState.Observation);
+				vs.init(ScreenState.Observation);
 				break;
 			case 1:
 				console.debug("Playing Matching");
 				endScene.overallIndex += 1;
 				matching.fromEnd = true;
-				switchGamemode(ScreenState.Matching);
+				vs.init(ScreenState.Matching);
 				break;
 			case 2:
 				endScene.overallIndex += 1;
@@ -283,10 +286,10 @@ var endScene = {
 				{
 					endScene.botnip.x += endScene.botnip.speed;
 				}
-				else
+				else if (!vs.transitioning)
 				{
 					worldEvent.fromEnd = true;
-					switchGamemode(ScreenState.WorldEvent);
+					vs.init(ScreenState.WorldEvent);
 				}
 				break;
 		}

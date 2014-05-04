@@ -26,6 +26,14 @@ var vs =
 			case ScreenState.WorldEvent:
 				this.imgNME = imgVsBotnip;
 				break;
+			case ScreenState.Matching:
+				if (matching.fromEnd)
+					this.imgNME = imgVsParsnip;
+				break;
+			case ScreenState.Observation:
+				if (ispy.fromEnd)
+					this.imgNME = imgVsParsnip;
+				break;
 		}
 	},
 	
@@ -51,6 +59,6 @@ var vs =
 	endTransition: function()
 	{
 		this.transitioning = false;
-		currentScreen = this.toGamemode;
+		switchGamemode(this.toGamemode);
 	}
 };
