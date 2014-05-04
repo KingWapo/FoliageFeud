@@ -328,7 +328,15 @@ function mainUpdate()
 				else if (matching.fromEnd)
 				{
 					matching.fromEnd = false;
-					switchGamemode(ScreenState.End);
+					if (matching.won)
+					{
+						switchGamemode(ScreenState.End);
+					}
+					else
+					{
+						endScene.overallIndex = 1;
+						switchGamemode(ScreenState.End);
+					}
 				}
 				else
 					switchGamemode(ScreenState.Gameplay);

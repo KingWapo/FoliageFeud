@@ -10,6 +10,7 @@ var matching = {
 	timerFull: 1800,
 	fromTraining: false,
 	fromEnd: false,
+	won: false,
 	
 	init: function()
 	{
@@ -142,6 +143,7 @@ var matching = {
 		}
 		else
 		{
+			this.won = false;
 			this.exitMatching();
 		}
 	},
@@ -192,6 +194,7 @@ var matching = {
 		
 		if (allFound)
 		{
+			this.won = true;
 			matching.exitMatching();
 		}
 	},

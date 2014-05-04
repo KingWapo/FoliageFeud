@@ -166,7 +166,7 @@ var endScene = {
 		this.fiancee.sprite = imgMaleSprite;
 		
 		this.botnip.animation = Animation.Right;
-		this.botnip.x = -256;
+		this.botnip.x = -64;
 		this.botnip.y = this.fiancee.y;
 		this.botnip.sprite = imgBotnipSprite;
 		

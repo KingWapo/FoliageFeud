@@ -15,6 +15,7 @@ var worldEvent = {
 	],
 	training: false,
 	fromEnd: false,
+	won: false,
 	xMovement: 0,
 	playerVars: [],
 	cameraPosition: [],
@@ -158,12 +159,29 @@ var worldEvent = {
 		{
 			if (this.fromEnd)
 			{
-				currentLevel = Level.BaseCamp;
-				gameplay.nextLevel(currentLevel);
+				if (this.won)
+				{
+					currentLevel = Level.BaseCamp;
+					gameplay.nextLevel(currentLevel);
+					endScene.parsnipBeaten = true;
+					gameplay.render();
+					gameplay.chooseSong(gameplay.currentLevel);
+					currentScreen = ScreenState.Gameplay;
+				}
+				else
+				{
+					cameraController.buildMap(endscene, 0);
+					endScene.botnip.x = -64;
+					endScene.overallIndex = 4;
+					currentScreen = ScreenState.End;
+				}
 			}
-			gameplay.render();
-			gameplay.chooseSong(gameplay.currentLevel);
-			currentScreen = ScreenState.Gameplay;
+			else
+			{
+				gameplay.render();
+				gameplay.chooseSong(gameplay.currentLevel);
+				currentScreen = ScreenState.Gameplay;
+			}
 		}
 	},
 	
@@ -195,12 +213,14 @@ var worldEvent = {
 		if (gameplay.player.x <= this.botnip.x + this.botnip.width)
 		{
 			trainingGame.returnRate = 0;
+			this.won = false;
 			exiting[currentScreen] = true;
 			trainingGame.finishGame();
 		}
 		if (gameplay.player.x + gameplay.player.width >= this.coin.x)
 		{
 			trainingGame.returnRate = 1.8;
+			this.won = true;
 			exiting[currentScreen] = true;
 			trainingGame.finishGame();
 		}
