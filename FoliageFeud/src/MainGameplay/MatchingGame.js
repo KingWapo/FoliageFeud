@@ -151,6 +151,16 @@ var matching = {
 				84, 42, Math.floor(256*this.timer/fullTime), 32
 			);
 			
+			if (this.fromEnd)
+			{
+				utility.drawImage
+				(
+					backgroundSurface, imgParsnipSprite,
+					0, 192, 64, 64,
+					Math.floor(256*this.timer/fullTime) + 52, 26, 64, 64
+				);
+			}
+			
 			this.timer -= 1;
 		}
 		else
