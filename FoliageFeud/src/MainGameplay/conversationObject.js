@@ -51,8 +51,8 @@ startConvoTutorial:function()
 			this.parsnip=true;
 			var strings=[];
 			strings.push(this.conversation[this.index]);
-				gameplay.createTextBox(400,375,320,132);
-			utility.writeText(menuSurface, strings, 420,425,320, 18, false);
+				gameplay.createTextBox(400,375,352,132);
+			utility.writeText(menuSurface, strings, 410,425,320, 16, false);
 			this.drawTalking();
 		}
 		break;
@@ -65,8 +65,8 @@ startConvoTutorial:function()
 			strings.pop();
 			this.drawTalking();
 			strings.push(this.conversation[this.index]);
-			gameplay.createTextBox(400,375,320,132);
-			utility.writeText(menuSurface, strings, 425,425, 320, 25, false);
+			gameplay.createTextBox(400,375,352,132);
+			utility.writeText(menuSurface, strings, 410,425, 320, 16, false);
 			this.drawTalking();
 		
 			
@@ -81,8 +81,8 @@ startConvoTutorial:function()
 			strings.pop();
 			this.drawTalking();
 			strings.push(this.conversation[this.index]);
-			gameplay.createTextBox(400,375,320,132);
-			utility.writeText(menuSurface, strings, 425,425, 320, 25, false);
+			gameplay.createTextBox(400,375,352,132);
+			utility.writeText(menuSurface, strings, 410,425, 320, 16, false);
 			this.drawTalking();
 		
 			
@@ -98,7 +98,7 @@ startConvoTutorial:function()
 			this.drawTalking();
 			strings.push(this.conversation[this.index]);
 			gameplay.createTextBox(400,375,320,132);
-			utility.writeText(menuSurface, strings, 425,425, 320, 25, false);
+			utility.writeText(menuSurface, strings, 410,425, 320, 16, false);
 			this.drawTalking();
 	}
 	break;
