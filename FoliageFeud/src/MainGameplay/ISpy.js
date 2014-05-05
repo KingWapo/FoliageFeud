@@ -248,7 +248,7 @@ var ispy = {
 				(
 					gameplaySurface, imgInvasivemark,
 					0, 0, imgInvasivemark.width, imgInvasivemark.height,
-					x + 100, y + 140, imgInvasivemark.width, imgInvasivemark.height
+					x + 100, y + 5, imgInvasivemark.width, imgInvasivemark.height
 				);
 				if (!utility.contains(gameplay.invasivesSeen, this.curPlants[j]))
 				{
