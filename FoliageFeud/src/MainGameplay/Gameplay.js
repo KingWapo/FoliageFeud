@@ -1875,7 +1875,7 @@ var gameplay = {
 			this.observationInstances.splice(index, 1);
 			ispy.setRequested(plantIndex);
 			quests.removeQuest(plantIndex);
-			switchGamemode(ScreenState.Observation);
+			vs.init(ScreenState.Observation);
 			this.canTeleport = true;
 		}
 	},

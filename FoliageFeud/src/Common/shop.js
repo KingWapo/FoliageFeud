@@ -95,7 +95,7 @@ render:function()
 		utility.drawImage(
 			gameplaySurface, imgWater,
 			0, 0, imgWater.width, imgWater.height,
-			97, 308, imgWater.width,imgWater.height
+			598, 138, imgWater.width,imgWater.height
 			);
 		//for the second water coin
 		utility.drawImage(
@@ -109,19 +109,58 @@ render:function()
 			96, 138, imgAdventure.width,imgAdventure.height
 			);
 			// checks if you have completed the game then draws the mystery sprite or the shop keeper sprite
-			if(gameplay.victory==false)
+			if(shop.botnipBeaten)
+			{
+				// Botnip sprite forward
+			}
+			else
 			{
 				utility.drawImage(
 				gameplaySurface, imgMysterySprite,
 				0, 0, imgMysterySprite.width, imgMysterySprite.height,
-				598, 138, 128, 128
+				97, 308, 128, 128
 				);
 			}
-			utility.drawImage(
-			gameplaySurface, imgNip,
-			0, 0, imgNip.width, imgNip.height,
-			765, 138, imgNip.width,imgNip.height
-			);
+			if(shop.parsnipBeaten)
+			{
+				utility.drawImage(
+				gameplaySurface, imgNip,
+				0, 0, imgNip.width, imgNip.height,
+				765, 138, imgNip.width,imgNip.height
+				);
+			}
+			else
+			{
+				utility.drawImage(
+				gameplaySurface, imgMysterySprite,
+				0, 0, imgMysterySprite.width, imgMysterySprite.height,
+				97, 308, 128, 128
+				);
+			}
+			if(shop.allPlantsFound)
+			{
+				// brother sprite forward (Changes based off ethnicity of self)
+			}
+			else
+			{
+				utility.drawImage(
+				gameplaySurface, imgMysterySprite,
+				0, 0, imgMysterySprite.width, imgMysterySprite.height,
+				97, 308, 128, 128
+				);
+			}
+			if(shop.englishmanBeaten)
+			{
+				// british Wanderer sprite forward
+			}
+			else
+			{
+				utility.drawImage(
+				gameplaySurface, imgMysterySprite,
+				0, 0, imgMysterySprite.width, imgMysterySprite.height,
+				97, 308, 128, 128
+				);
+			}
 			utility.drawImage(
 			gameplaySurface, imgAdventure,
 			0, 0, imgAdventure.width, imgAdventure.height,
