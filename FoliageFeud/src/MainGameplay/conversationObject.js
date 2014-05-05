@@ -18,7 +18,7 @@ var conversationObject=
 checkConversation:function()
 {
 	
-	//setPlayerSprite();
+	
 	var count=0;
 	this.drawTalking();
 	switch(this.convoType)
@@ -26,7 +26,7 @@ checkConversation:function()
 		case  "tutorial" :
 		{
 			this.speaking=true;
-			this.conversation.push("You are up!?! I have taken your brothers assistant.This merely phase one of my revenge" , "Hey! that is my assitant! How dare you mess with me you sad excuse for a carrot!", "carrot! HOW dare you!!! I am the dreaded Professor Parsnip!"," you are just another one of my failed experiments now return my assistant!", "Sorry to interupt,but that is my fiance")
+			this.conversation.push("You are up!?! I have taken your brothers assistant.This merely phase one of my revenge" , "Hey! that is my assitant! How dare you mess with me you sad excuse for a carrot!", "carrot! HOW dare you!!! I am the dreaded Professor Parsnip!"," you are just another one of my failed experiments now return my assistant!", "Sorry to interupt,but that is my fiance...also why do you look so old?","..I was trying to age myself to get a discount on chemicals...after I did this I heard the chemicals weren't even labeled. I regret my decision","You are a mad scientist who can't afford supplies?", " The hat buisness has been slow thanks to that thing that took your beloved fiance"," It is all part of my plan. As a product of nature I shall claim it for myself. ONLY I can master its knowledge. ", "Well now he ran off hurry brother get to that bouncing exclamation point I have set up", " I can't swim..or climb..","Well lucky for you I have placed my new power coins near by. Gather them and you will instantly learn how to pass over any obstacle."," for a price I will even give you the newer models", "You are making a profit off me losing my fiance.. ", "Maybe my next expriement will be made with NON discount chemicals and won't try to take over the natural world ", " FINE i'll help you, but only because the wedding is coming up"  )
 			this.startConvoTutorial();
 		}
 	break;
@@ -104,11 +104,198 @@ startConvoTutorial:function()
 	break;
 	case 4:
 	{
-	this.speaking=false;
-	this.speakerReset();
+		this.speaking=true;
+			var strings=[];
+			this.speakerReset();
+			this.getPlayerSprite();
+			strings.pop();
+			strings.push(this.conversation[this.index]);
+			gameplay.createTextBox(400,375,320,132);
+			utility.writeText(menuSurface, strings, 410,425, 320, 16, false);
+			this.drawTalking();
+	
 	
 	}
 	break;
+		case 5:
+		{	
+			this.speakerReset();
+			this.speaking=true;
+			var strings=[];
+			this.sibling=true;
+			strings.pop();
+			this.drawTalking();
+			strings.push(this.conversation[this.index]);
+			gameplay.createTextBox(400,375,352,132);
+			utility.writeText(menuSurface, strings, 410,425, 320, 16, false);
+			this.drawTalking();
+		
+			
+		}
+		break;
+		case 6:
+	{
+		this.speaking=true;
+			var strings=[];
+			this.speakerReset();
+			this.getPlayerSprite();
+			strings.pop();
+			strings.push(this.conversation[this.index]);
+			gameplay.createTextBox(400,375,320,132);
+			utility.writeText(menuSurface, strings, 410,425, 320, 16, false);
+			this.drawTalking();
+	
+	
+	}
+	break;
+	case 7:
+		{	
+			this.speakerReset();
+			this.speaking=true;
+			var strings=[];
+			this.sibling=true;
+			strings.pop();
+			this.drawTalking();
+			strings.push(this.conversation[this.index]);
+			gameplay.createTextBox(400,375,352,132);
+			utility.writeText(menuSurface, strings, 410,425, 320, 16, false);
+			this.drawTalking();
+		
+			
+		}
+		break;
+		case 8:
+		
+		{	this.speakerReset();
+			this.speaking=true;
+			this.parsnip=true;
+			var strings=[];
+			strings.push(this.conversation[this.index]);
+				gameplay.createTextBox(400,375,352,132);
+			utility.writeText(menuSurface, strings, 410,425,320, 16, false);
+			this.drawTalking();
+		}
+		break;
+		case 9:
+		{	
+			this.speakerReset();
+			this.speaking=true;
+			var strings=[];
+			this.sibling=true;
+			strings.pop();
+			this.drawTalking();
+			strings.push(this.conversation[this.index]);
+			gameplay.createTextBox(400,375,352,132);
+			utility.writeText(menuSurface, strings, 410,425, 320, 16, false);
+			this.drawTalking();
+		
+			
+		}
+		break;
+			case 10:
+	{
+		this.speaking=true;
+			var strings=[];
+			this.speakerReset();
+			this.getPlayerSprite();
+			strings.pop();
+			strings.push(this.conversation[this.index]);
+			gameplay.createTextBox(400,375,320,132);
+			utility.writeText(menuSurface, strings, 410,425, 320, 16, false);
+			this.drawTalking();
+	
+	
+	}
+	break;
+	case 11:
+		{	
+			this.speakerReset();
+			this.speaking=true;
+			var strings=[];
+			this.sibling=true;
+			strings.pop();
+			this.drawTalking();
+			strings.push(this.conversation[this.index]);
+			gameplay.createTextBox(400,375,352,132);
+			utility.writeText(menuSurface, strings, 410,425, 320, 16, false);
+			this.drawTalking();
+		
+			
+		}
+		break;
+			case 12:
+		{	
+			this.speakerReset();
+			this.speaking=true;
+			var strings=[];
+			this.sibling=true;
+			strings.pop();
+			this.drawTalking();
+			strings.push(this.conversation[this.index]);
+			gameplay.createTextBox(400,375,352,132);
+			utility.writeText(menuSurface, strings, 410,425, 320, 16, false);
+			this.drawTalking();
+		
+			
+		}
+		break;
+				case 13:
+	{
+		this.speaking=true;
+			var strings=[];
+			this.speakerReset();
+			this.getPlayerSprite();
+			strings.pop();
+			strings.push(this.conversation[this.index]);
+			gameplay.createTextBox(400,375,320,132);
+			utility.writeText(menuSurface, strings, 410,425, 320, 16, false);
+			this.drawTalking();
+	
+	
+	}
+	break;
+		case 14:
+		{	
+			this.speakerReset();
+			this.speaking=true;
+			var strings=[];
+			this.sibling=true;
+			strings.pop();
+			this.drawTalking();
+			strings.push(this.conversation[this.index]);
+			gameplay.createTextBox(400,375,352,132);
+			utility.writeText(menuSurface, strings, 410,425, 320, 16, false);
+			this.drawTalking();
+		
+			
+		}
+		break;
+					case 15:
+	{
+		this.speaking=true;
+			var strings=[];
+			this.speakerReset();
+			this.getPlayerSprite();
+			strings.pop();
+			strings.push(this.conversation[this.index]);
+			gameplay.createTextBox(400,375,320,132);
+			utility.writeText(menuSurface, strings, 410,425, 320, 16, false);
+			this.drawTalking();
+	
+	
+	}
+	break;
+	
+					case 16:
+	{
+		this.speaking=false;
+			var strings=[];
+			this.speakerReset();
+	
+	}
+	
+		
+		
 }
 	
 
@@ -162,13 +349,47 @@ speakerReset:function()
 	this.player=false;
 	this.sibling=false;
 },
-/*setPlayerSpite:function()
+getPlayerSprite:function()
 {
      if(this.playerSprite=="boy")
 	 {
-		return 
+		 utility.drawImage(
+			menuSurface, imgBoyTalking,
+			0, 0, imgBoyTalking.width, imgBoyTalking.height,
+			400, 250, 64, 64
+		);
+		 
+		
+	 }
+	  if(this.playerSprite=="girl")
+	 {
+		 utility.drawImage(
+			menuSurface, imgBoyTalking,
+			0, 0, imgBoyTalking.width, imgBoyTalking.height,
+			400, 250, 64, 64
+		);
+		 
+		
+	 } if(this.playerSprite=="boy2")
+	 {
+		 utility.drawImage(
+			menuSurface, imgBoyTalking,
+			0, 0, imgBoyTalking.width, imgBoyTalking.height,
+			400, 250, 64, 64
+		);
+		 
+		
+	 } if(this.playerSprite=="girl2")
+	 {
+		 utility.drawImage(
+			menuSurface, imgBoyTalking,
+			0, 0, imgBoyTalking.width, imgBoyTalking.height,
+			400, 250, 64, 64
+		);
+		 
+		
 	 }
 }
-*/
+
 	
 }

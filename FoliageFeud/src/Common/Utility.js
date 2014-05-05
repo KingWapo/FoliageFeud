@@ -700,6 +700,7 @@ var imgLoadGameButton = utility.loadImage("../img/Buttons/loadButton.png");
 var imgNewGameButton = utility.loadImage("../img/Buttons/newButton.png");
 var imgDemoButton = utility.loadImage("../img/Buttons/demoButton.png");
 var imgCreditsButton = utility.loadImage("../img/Buttons/creditsButton.png");
+var imgBoyTalking = utility.loadImage("../img/Player/characterMaleForward.png");
 
 var imgVsPlayer = utility.loadImage("../img/Backgrounds/vsPlayer.png");
 var imgVsBotnip = utility.loadImage("../img/Backgrounds/vsBotnip.png");
@@ -707,6 +708,7 @@ var imgVsParsnip = utility.loadImage("../img/Backgrounds/vsParsnip.png");
 var imgVsParsnipSecond = utility.loadImage("../img/Backgrounds/vsParsnipSecond.png");
 var imgVsEnglishman = utility.loadImage("../img/Backgrounds/vsEnglishman.png");
 var imgVsNature = utility.loadImage("../img/Backgrounds/vsNature.png");
+
 
 createScenery.tilesheet = utility.loadImage("../img/Tiles/tilesheet.png");
 gameplay.mainCamp.sprite = utility.loadImage("../img/Tiles/missions.png");
