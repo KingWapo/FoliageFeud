@@ -101,6 +101,14 @@ var worldEvent = {
 			this.unicornVars = [gameplay.unicorn.x, gameplay.unicorn.y, gameplay.unicorn.animation, gameplay.unicorn.visible];
 		}
 		
+		if (this.fromEnd)
+		{
+			this.speedBoost = 0;
+			this.speedCooldown = 15;
+			this.countdown = 150;
+			this.countdownFull = 150;
+		}
+		
 		cameraController.buildMap(this.worldEventMap, 0);
 		
 		cameraController.camera.x = 0;
@@ -203,6 +211,7 @@ var worldEvent = {
 				{
 					this.speedBoost = 0;
 					this.speedCooldown = 30;
+					if (this.fromEnd) this.speedCooldown = 15;
 				}
 			}
 			

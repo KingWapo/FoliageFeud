@@ -565,6 +565,7 @@ var gameplay = {
 			skillBook.climb = true;
 			skillBook.swimLevel = 1;
 			skillBook.climbLevel = 1;
+			this.onTeleport = true;
 			if (!this.visitedBrother && quests.plantsToIdentify.length > 0)
 			{
 				quests.plantsToIdentify = [];
@@ -1022,7 +1023,7 @@ var gameplay = {
 								{
 									
 									this.onTeleport = true;
-									if (!endScene.parsnipBeaten && plant.totalHarvestAmount >= endScene.plantsNeeded) // Activate End Scene
+									if (!endScene.parsnipBeaten && plant.getTotalHarvestedAmount() >= endScene.plantsNeeded) // Activate End Scene
 									{
 										currentScreen = ScreenState.End;
 									}
@@ -1695,7 +1696,7 @@ var gameplay = {
 				obsPoint.lowestPos = obsY;
 			}
 			
-			obsPoint.plantIndex = listOfPlants[i][1];
+			obsPoint.plantIndex = listOfPlants[i];
 			this.observationInstances.push(obsPoint);
 		}
 	},
@@ -1740,7 +1741,7 @@ var gameplay = {
 			this.talking = false;
 			//console.debug("index: " + index + " plantIndex: " + plantIndex);
 			this.observationInstances.splice(index, 1);
-			ispy.setRequested(quests.plantsToIdentify[plantIndex]);
+			ispy.setRequested(plantIndex);
 			quests.removeQuest(plantIndex);
 			switchGamemode(ScreenState.Observation);
 			this.canTeleport = true;

@@ -162,6 +162,19 @@ var plant = {
 		}
 		
 		return invasive;
+	},
+	
+	getTotalHarvestedAmount: function()
+	{
+		var plantCount = 0;
+			
+		for (var i = 0; i < plantList.length; i++)
+		{
+			if (plantList[i].harvested)
+				plantCount++;
+		}
+		
+		return plantCount;
 	}
 }
 

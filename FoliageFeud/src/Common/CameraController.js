@@ -235,19 +235,21 @@ var cameraController = {
 		//theseSprites = theseSprites.concat(this.specialTiles);
 		var newSprites = utility.reorderArrayByY(theseSprites);
 		
-		var bottomSpecials = [];
-		var topSpecials = [];
-		var i = 0;
-		while (i < this.specialTiles.length && this.specialTiles[i].y + 2 <= gameplay.player.y)
+		if (gameplay.currentLevel == Level.Prairie)
 		{
-			i += 1;
+			var bottomSpecials = [];
+			var topSpecials = [];
+			var i = 0;
+			while (i < this.specialTiles.length && this.specialTiles[i].y + 2 <= gameplay.player.y)
+			{
+				i += 1;
+			}
+			bottomSpecials = this.specialTiles.slice(0, i);
+			topSpecials = this.specialTiles.slice(i, this.specialTiles.length);
+			
+			newSprites = bottomSpecials.concat(newSprites);
+			newSprites = newSprites.concat(topSpecials);	
 		}
-		bottomSpecials = this.specialTiles.slice(0, i);
-		topSpecials = this.specialTiles.slice(i, this.specialTiles.length);
-		
-		newSprites = bottomSpecials.concat(newSprites);
-		newSprites = newSprites.concat(topSpecials);
-		
 		try
 		{
 			for (var i = 0; i < newSprites.length; i++)

@@ -121,6 +121,7 @@ var mainCamp = {
 			case 13:
 				this.talkingInMainCamp = false;
 				utility.addClickItem(this.dingle.x, this.dingle.y, this.dingle.width, this.dingle.height, this.talkToBro, []); // First bro talk phrase
+				utility.writeForClick(menuSurface, ["Return Plants"], CANVAS_WIDTH / 2, CANVAS_HEIGHT - 40, 64, 24, false, [mainCamp.talkToBro, []]);
 				break;
 			case 2:
 			case 3:
@@ -271,6 +272,7 @@ var mainCamp = {
 	incrementBroTalk: function(empty)
 	{
 		//mainCamp.broTalk = (mainCamp.broTalk + 1) % (mainCamp.dingle.phrases.length - 1);
+		mainCamp.broTalk += 1;
 	},
 	
 	compareInvasives: function(plantIndex)
