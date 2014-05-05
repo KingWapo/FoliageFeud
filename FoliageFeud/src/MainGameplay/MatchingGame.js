@@ -20,7 +20,10 @@ var matching = {
 		this.cards = [];
 		this.matchesMade = 0;
 		if (!this.fromEnd)
+		{
 			this.timer = this.timerFull;
+			utility.startNewSong(songMatching);
+		}
 		else
 			this.timer = this.timerFullNotTraining;
 		

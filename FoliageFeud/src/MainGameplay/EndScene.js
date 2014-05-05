@@ -183,6 +183,7 @@ var endScene = {
 		this.botnip.y = this.fiancee.y;
 		this.botnip.sprite = imgBotnipSprite;
 		
+		utility.startNewSong(songEndScene);
 	},
 	
 	update: function()

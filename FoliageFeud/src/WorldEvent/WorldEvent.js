@@ -83,6 +83,9 @@ var worldEvent = {
 	{
 		utility.clearAll();
 		
+		if (!this.fromEnd)
+			utility.startNewSong(songWorldEvent);
+		
 		if (this.training)
 		{
 			// Randomly choose the current map
@@ -128,8 +131,6 @@ var worldEvent = {
 		this.coin.y = gameplay.player.y;
 		
 		createScenery.init();
-		
-		utility.startNewSong(songWorldEvent);
 	},
 	
 	onExit: function()
