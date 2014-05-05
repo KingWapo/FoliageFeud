@@ -28,11 +28,15 @@ var vs =
 				break;
 			case ScreenState.Matching:
 				if (matching.fromEnd)
-					this.imgNME = imgVsParsnip;
+					this.imgNME = imgVsParsnipSecond;
+				else
+					this.imgNME = imgVsEnglishman;
 				break;
 			case ScreenState.Observation:
 				if (ispy.fromEnd)
 					this.imgNME = imgVsParsnip;
+				else
+					this.imgNME = imgVsNature;
 				break;
 		}
 	},

@@ -390,6 +390,19 @@ var ispy = {
 		if (ispy.fromTraining)
 			trainingGame.finishGame();
 			
+		if (ispy.fromEnd)
+		{
+			var snipCorrect = 0;
+			var playerCorrect = 0;
+			for (var i = 0; i < this.maxGames; i++)
+			{
+				if (ispy.gameHistory[i] == ispy.CORRECT) playerCorrect += 1;
+				if (ispy.snipHistory[i]) snipCorrect += 1;
+			}
+			console.debug("Snip Correct: " + snipCorrect + " Player Correct: " + playerCorrect);
+			if (snipCorrect > playerCorrect) endScene.overallIndex = 0;
+		}
+			
 		ispy.requestedPlant = -1;
 		ispy.gamesPlayed = 0;
 		ispy.gamesCorrect = 0;

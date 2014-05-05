@@ -257,7 +257,49 @@ var gameplay = {
 		animation: Animation.Idle
 	},
 	
+	englishman: {
+		// Sprite Located on sheet
+		sourceX: 0,
+		sourceY: 0,
+		sourceWidth: 64,
+		sourceHeight: 64,
+		
+		// Animation info
+		numOfFrames: 2,
+		currentFrame: 0,
+		
+		//Update Animation Function
+		updateAnimation: function()
+		{
+			if (this.animation !== Animation.Idle)
+			{
+				this.sourceX = this.currentFrame * this.sourceWidth;
+				
+				this.currentFrame += 1;
+				if ( this.currentFrame === this.numOfFrames ) {
+					this.currentFrame = 0;
+				}
+			}
+		},
+		
+		// Gameplay info
+		x: -64,
+		y: -64,
+		width: 64,
+		height: 64,
+		vx: 0,
+		vy: 0,
+		speed: 4,
+		walkSpeed: 4,
+		runSpeed: 8,
+		sprite: new Image(),
+		name: "englishman",
+		cooldown: 0,
+		animation: Animation.Idle
+	},
+	
 	botnipSummoned: false,
+	englishmanSummoned: false,
 	
 	observationInstance: {
 		sourceX: 0,
@@ -949,7 +991,8 @@ var gameplay = {
 			}}catch(err) { console.debug(err); }*/
 			//check for collisions with collidables.
 			
-			this.updateBotnip();
+			if (this.botnipSummoned) this.updateBotnip();
+			if (this.englishmanSummoned) this.updateEnglishman();
 			if (!screensLoaded[ScreenState.WorldEvent] && cameraController.mapBuilt)
 			{
 				try {
@@ -1013,6 +1056,11 @@ var gameplay = {
 							this.botnipSummoned = false;
 							vs.init(ScreenState.WorldEvent);
 							//currentScreen = ScreenState.WorldEvent;
+						}
+						if (this.englishmanSummoned && utility.collisionDetection(gameplay.player, gameplay.englishman))
+						{
+							this.englishmanSummoned = false;
+							vs.init(ScreenState.Matching);
 						}
 						if ( utility.collisionDetection(gameplay.player, gameplay.teleporter.hitbox))
 						{
@@ -1143,6 +1191,7 @@ var gameplay = {
 	{
 		this.emptyGold();
 		this.botnipSummoned = false;
+		this.englishmanSummoned = false;
 		this.currentLevel = map;
 		this.obsCoords = [];
 		utility.clearAll();
@@ -1178,6 +1227,7 @@ var gameplay = {
 				break;
 		}
 		if (this.currentLevel > Level.BaseCamp) this.summonBotnip();
+		if (this.currentLevel > Level.BaseCamp) this.summonEnglishman();
 		this.chooseSong(map);
 		this.teleporter.hitbox.x = this.teleporter.x + 32;
 		this.teleporter.hitbox.y = this.teleporter.y + 64;
@@ -1509,6 +1559,18 @@ var gameplay = {
 		}
 	},
 	
+	summonEnglishman: function()
+	{
+		var randSummon = Math.random() * 1000;
+		if ( randSummon < 10)
+		{
+			this.englishmanSummoned = true;
+			this.englishman.x = Math.random() * this.curMap[0].length * 64;
+			this.englishman.y = Math.random() * this.curMap.length * 64;
+			console.debug("Englishman is summoned!");
+		}
+	},
+	
 	updateBotnip: function()
 	{
 		vx = gameplay.player.x - gameplay.botnip.x > 0 ? 1 : -1;
@@ -1516,6 +1578,46 @@ var gameplay = {
 		
 		this.botnip.x += vx * this.player.runSpeed;
 		this.botnip.y += vy * this.player.runSpeed;
+	},
+	
+	updateEnglishman: function()
+	{
+		/*
+		var randVx = 0;
+		var randVy = 0;
+		if (this.englishman.cooldown <= 0)
+		{
+			randVx = Math.floor(Math.random() * 2) - 1;
+			randVy = Math.floor(Math.random() * 2) - 1;
+			this.englishman.cooldown = Math.random() * 20;
+		}
+		
+		this.englishman.cooldown -= 1;
+		
+		if (this.randVx > 0)  // Right
+		{
+			this.englishman.sourceX = 0;
+		}
+		else if (this.randVx < 0) // Left
+		{
+			this.englishman.sourceX = 64;
+		}
+		if (this.randVy > 0) // Down
+		{
+			this.englishman.sourceX = 2 * 64;
+		}
+		else if (this.randVy < 0) // Up
+		{
+			this.englishman.sourceX = 3 * 64;
+		}
+		
+		this.englishman.x = utility.clamp(this.englishman.x + randVx * this.englishman.speed, 0, this.curMap[0].length * 64);
+		this.englishman.y = utility.clamp(this.englishman.y + randVy * this.englishman.speed, 0, this.curMap.length * 64);
+		
+		if (this.englishman.animation != Animation.Idle)
+		{
+			this.englishman.updateAnimation();
+		}*/
 	},
 	
 	clearCollision: function()
@@ -1607,6 +1709,7 @@ var gameplay = {
 			if (this.unicorn.visible) sprites.push(this.unicorn);
 			if (this.goldStorage.length > 0) sprites = sprites.concat(this.goldStorage);
 			if (this.botnipSummoned) sprites.push(this.botnip);
+			if (this.englishmanSummoned) sprites.push(this.englishman);
 			cameraController.renderForeground(sprites);
 			
 			if (this.onPause)

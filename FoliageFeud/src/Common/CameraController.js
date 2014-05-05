@@ -278,7 +278,8 @@ var cameraController = {
 						 currentSprite.name == "observation point" ||
 						 currentSprite.name == "unicorn" ||
 						 currentSprite.name == "dr parsnip" ||
-						 currentSprite.name == "botnip")
+						 currentSprite.name == "botnip" ||
+						 currentSprite.name == "englishman")
 				{
 					utility.drawImage
 					(
@@ -325,7 +326,7 @@ var cameraController = {
 				}
 			}
 		}
-		catch(err){}
+		catch(err){ console.debug(err); }
 	},
 	
 	buildMap: function(levelMap, tier)
