@@ -81,7 +81,7 @@ var utility = {
 			if (mainCamp.broTalk == 1 || mainCamp.broTalk == 4) { }
 			else if (mainCamp.broTalk != 12)
 			{
-				mainCamp.broTalk = (mainCamp.broTalk + 1) % (mainCamp.dingle.phrases.length - 2);
+				mainCamp.broTalk = (mainCamp.broTalk + 1) % (12);
 			}
 			else
 			{

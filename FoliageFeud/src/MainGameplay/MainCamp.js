@@ -33,7 +33,8 @@ var mainCamp = {
 				  "The two of us can foil his plans! I need you to go out and investigate the plants to see if there is some clue as to where he is hiding. I will have the plants I need posted on this board here, you can choose...",
 				  "which ones you'd like to find. I'll stay here and analyse the plants for clues...",
 				  "Oh, before you go, feel free to check out the other buildings here. All are bound to help you in one way or another.",
-				  "You didn't see that plant! You shouldn't lie to me."											// Chose wrong				13
+				  "You didn't see that plant! You shouldn't lie to me.",											// Chose wrong				13
+				  "Oh no, not that one. I'll have to look into it further...any others?"
 				  ],
 		
 		sprite: ""
@@ -145,6 +146,7 @@ var mainCamp = {
 				utility.writeForClick(menuSurface, ["No"], CANVAS_WIDTH - 320 - 64, CANVAS_HEIGHT - imgSmallTextBox.height / 2, 64, 30, false, [mainCamp.anyInvasives, [false]]);
 				break;
 			case 6:
+			case 14:
 				var x = CANVAS_WIDTH / 2 - 128;
 				var y = 128;
 				utility.drawImage(
@@ -227,10 +229,13 @@ var mainCamp = {
 		if (mainCamp.compareInvasives(invasives[index[0]]))
 		{
 			gameplay.gold += 5;
+			mainCamp.broTalk = 14;
+			mainCamp.dingle.phrases[14] = "Oh no, not the " + plantList[index].name + "...did you see any others?";
 		}
 		else
 		{
 			mainCamp.broTalk = 13;
+			mainCamp.dingle.phrases[13] = "There are no " + plantList[index].name + "s in that area. Don't lie to me.";
 		}
 	},
 	
