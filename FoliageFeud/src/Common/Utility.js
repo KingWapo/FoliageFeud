@@ -530,7 +530,13 @@ var utility = {
 		cookie += regionsToVisit + ".";
 		cookie += finishedQuests + ".";
 		cookie += gameplay.visitedBrother + ".";
-		cookie += shop.parsnipBeaten + ";";
+		cookie += shop.botnipBeaten + ".";
+		cookie += shop.englishmanBeaten + ".";
+		cookie += shop.allPlantsFound + ".";
+		cookie += shop.parsnipBeaten + ".";
+		cookie += skillBook.swimLevel + ".";
+		cookie += skillBook.climbLevel + ".";
+		cookie += skillBook.sprintLevel + ";";
 		cookie += "expires=" + d.toGMTString();
 		
 		document.cookie = cookie;
@@ -583,7 +589,14 @@ var utility = {
 			}
 			
 			gameplay.visitedBrother = data[6] == "true" ? true : false;
-			shop.parsnipBeaten = data[7] == "true" ? true : false;
+			shop.botnipBeaten = data[7] == "true" ? true : false;
+			shop.englishmanBeaten = data[8] == "true" ? true : false;
+			shop.allPlantsFound = data[9] == "true" ? true : false;
+			shop.parsnipBeaten = data[10] == "true" ? true : false;
+			
+			skillBook.swimLevel = parseInt(data[11]);
+			skillBook.climbLevel = parseInt(data[12]);
+			skillBook.sprintLevel = parseInt(data[13]);
 			
 			gameplay.canSave = true;
 			gameplay.loadingSave = true;
@@ -596,7 +609,13 @@ var utility = {
 			console.debug("regions: ", data[4]);
 			console.debug("finished: ", data[5]);
 			console.debug("brother: ", gameplay.visitedBrother);
+			console.debug("bot beat: ", shop.botnipBeaten);
+			console.debug("dean beat: ", shop.englishmanBeaten);
+			console.debug("plants found: ", shop.allPlantsFound);
 			console.debug("snip beat: ", shop.parsnipBeaten);
+			console.debug("swim: ", skillBook.swimLevel);
+			console.debug("climb: ", skillBook.climbLevel);
+			console.debug("sprint: ", skillBook.sprintLevel);
 		}
 		else
 		{
@@ -734,12 +753,14 @@ worldEvent.coin.sprite = utility.loadImage("../img/Tokens/speedToken.png");
 mainCamp.dingle.sprite = utility.loadImage("../img/Player/siblingMale.png");
 
 
-var songMainTitle = utility.loadSong("../sounds/main menu/Who Likes to Party.mp3");
+var songMainTitle = utility.loadSong("../sounds/main menu/Radio Martini.mp3");
 var songGameplayPrairie = utility.loadSong("../sounds/gameplay/Call to Adventure.mp3");
 var songGameplayForest = utility.loadSong("../sounds/gameplay/Pamgaea.mp3");
 var songGameplayMarsh = utility.loadSong("../sounds/gameplay/Sneaky Snitch.mp3");
 var songGameplayHilly = utility.loadSong("../sounds/gameplay/Minstrel Guild.mp3");
 var songGameplayCamp = utility.loadSong("../sounds/gameplay/The Builder.mp3");
 var songWorldEvent = utility.loadSong("../sounds/world event/8bit Dungeon Boss.mp3");
+var songEndScene = utility.loadSong("../sounds/end scene/Black Vortex.mp3");
+var songMatching = utility.loadSong("../sounds/matching/Evil Plan FX.mp3");
 
 var loadingStatus = ["Initializing previsualization matrix", "Analyzing reversal algorithms", "Packaging gui worms", "Constructing dynamic shaders", "Reversing polarity", "I can't allow you to do that, Dave", "Encrypting llamas", "Fixing code, and taking names, but I'm all out of names", "Debugging sassy goats"];
