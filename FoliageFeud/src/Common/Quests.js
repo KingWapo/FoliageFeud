@@ -29,8 +29,12 @@ var quests = {
 	removeQuest:function(plantIndex)
 	{
 		//this.finishedQuests.push(this.plantsToIdentify[plantIndex]);
-		this.plantsToIdentify.splice(plantIndex, 1);
-		this.regionsToVisit.splice(plantIndex, 1);
+		index = this.plantsToIdentify.indexOf(plantIndex);
+		if (this.regionsToVisit[index] == gameplay.currentLevel)
+		{
+			this.plantsToIdentify.splice(index, 1);
+			this.regionsToVisit.splice(index, 1);
+		}
 	},
 	
 	plantsInARegion: function(region)
@@ -40,10 +44,10 @@ var quests = {
 		{
 			if (this.regionsToVisit[i] == region)
 			{
-				indices = [];
-				indices.push(this.plantsToIdentify[i]);
-				indices.push(i);
-				plants.push(indices);
+				//indices = [];
+				//indices.push();
+				//indices.push(i);
+				plants.push(this.plantsToIdentify[i]);
 			}
 		}
 		return plants;

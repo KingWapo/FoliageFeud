@@ -27,7 +27,7 @@ var utility = {
 	scale: 1,
 	originalWidth: 1152,
 	originalHeight: 512,
-	debugSound: false,
+	debugSound: true,
 	debugAll: true,
 	
 	// Clear screen and all objects from clickable
@@ -198,27 +198,7 @@ var utility = {
 			}
 		}
 	},
-		/*handleMouseOver: function(event)
-	{
-		// Gets position of click
-		var rect = gameplayCanvas.getBoundingClientRect();
-		var posx = event.clientX;
-		var posy = event.clientY;
-		// Checks each object to see if it was clicked
-		for (var i = 0; i < utility.mouseOver.length; i++)
-		{
-			if (posx >= utility.clickable[i].x && posx <= utility.clickable[i].x + utility.clickable[i].width &&
-				posy >= utility.clickable[i].y && posy <= utility.clickable[i].y + utility.clickable[i].height)
-			{
-				console.debug("this is working I guess");
-				utility.mouseOver[i].func(utility.mouseOver[i].param);
-			}
-				
-				
-			
-		}
-	},
-	*/
+	
 	loadImage: function(source)
 	{
 		try {
@@ -249,6 +229,7 @@ var utility = {
 	
 	loadedAsset: function()
 	{
+		utility.clearAll();
 		if (utility.curNumAssets < utility.totalNumAssets)
 		{
 			utility.curNumAssets += 1;
@@ -264,8 +245,11 @@ var utility = {
 			menuSurface.fillStyle = "#006600";
 			menuSurface.fillRect(x, y, w * (utility.curNumAssets / utility.totalNumAssets), h);
 			
+			utility.writeText(menuSurface, [loadingStatus[Math.floor(Math.random() * loadingStatus.length)]], 100, 270, CANVAS_WIDTH, 48, false);
+			
 			if (utility.curNumAssets === utility.totalNumAssets)
-				mainUpdate();
+				//setTimeout(function(){
+				mainUpdate();//}, 1000);
 		}
 	},
 	
@@ -447,6 +431,14 @@ var utility = {
 				else if (oldArray[i].name == "tree")
 				{
 					yVal += 104;
+				}
+				else if (oldArray[i].name == "birch tree")
+				{
+					yVal += 40;
+				}
+				else if (oldArray[i].name == "praire grass")
+				{
+					yVal += 32;
 				}
 				else if (oldArray[i].name == "teleporter")
 				{
@@ -704,6 +696,17 @@ var imgBackgroundMainCamp = utility.loadImage("../img/Backgrounds/plantsBackgrou
 var imgPostItNote = utility.loadImage("../img/Backgrounds/plantsUnderlay01.png");
 var imgTransButton = utility.loadImage("../img/Buttons/buyButtonTransperent.png");
 var imgMysterySprite= utility.loadImage("../img/Player/siblingShopSecret.png");
+var imgLoadGameButton = utility.loadImage("../img/Buttons/loadButton.png");
+var imgNewGameButton = utility.loadImage("../img/Buttons/newButton.png");
+var imgDemoButton = utility.loadImage("../img/Buttons/demoButton.png");
+var imgCreditsButton = utility.loadImage("../img/Buttons/creditsButton.png");
+
+var imgVsPlayer = utility.loadImage("../img/Backgrounds/vsPlayer.png");
+var imgVsBotnip = utility.loadImage("../img/Backgrounds/vsBotnip.png");
+var imgVsParsnip = utility.loadImage("../img/Backgrounds/vsParsnip.png");
+var imgVsParsnipSecond = utility.loadImage("../img/Backgrounds/vsParsnipSecond.png");
+var imgVsEnglishman = utility.loadImage("../img/Backgrounds/vsEnglishman.png");
+var imgVsNature = utility.loadImage("../img/Backgrounds/vsNature.png");
 
 createScenery.tilesheet = utility.loadImage("../img/Tiles/tilesheet.png");
 gameplay.mainCamp.sprite = utility.loadImage("../img/Tiles/missions.png");
@@ -719,6 +722,7 @@ gameplay.plants.sprite = utility.loadImage("../img/Tiles/plants.png");
 gameplay.parsnip.sprite = utility.loadImage("../img/Player/drparsnip.png");
 gameplay.unicorn.sprite = utility.loadImage("../img/Player/unicorn.png");
 gameplay.botnip.sprite = utility.loadImage("../img/Player/botnip.png");
+gameplay.englishman.sprite = utility.loadImage("../img/Player/britishWanderer.png");
 cameraController.tilesheetMain = utility.loadImage("../img/Tiles/tilesheet.png");
 cameraController.tilesheetForest = utility.loadImage("../img/Tiles/tilesheetForest.png");
 cameraController.tilesheetMarsh = utility.loadImage("../img/Tiles/tilesheetMarsh.png");
@@ -734,4 +738,5 @@ var songGameplayMarsh = utility.loadSong("../sounds/gameplay/Sneaky Snitch.mp3")
 var songGameplayHilly = utility.loadSong("../sounds/gameplay/Minstrel Guild.mp3");
 var songGameplayCamp = utility.loadSong("../sounds/gameplay/The Builder.mp3");
 var songWorldEvent = utility.loadSong("../sounds/world event/8bit Dungeon Boss.mp3");
+
 var loadingStatus = ["Initializing previsualization matrix", "Analyzing reversal algorithms", "Packaging gui worms", "Constructing dynamic shaders", "Reversing polarity", "I can't allow you to do that, Dave", "Encrypting llamas", "Fixing code, and taking names, but I'm all out of names", "Debugging sassy goats"];

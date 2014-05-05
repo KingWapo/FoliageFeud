@@ -13,10 +13,11 @@
 //Map code
 var EMPTY = 0;
 var GRASS = 1;
-var WATER = 2;
+var PRAIREGRASS = 2;
 var ROCK = 3;
 var TREE = 5;
 var BIRCHTREE = 7;
+var BIRCHTREETRUNK = 11;
 var SKY = 8;
 var ENDOFTREES = 11;
 var WATERBOUNDRARYBEGIN = 13
@@ -38,6 +39,7 @@ var cameraController = {
 	tilesheetHilly: new Image(),
 	baseTiles: [],
 	foregroundTiles: [],
+	specialTiles: [],
 	sprites: [],
 	ROWS: 0,
 	COLUMNS: 0,
@@ -222,15 +224,32 @@ var cameraController = {
 		
 		var theseSprites = spritesFromGameplay;
 		var foregroundSpriteCols = [];
-		foregroundSpriteCols = this.foregroundTiles.slice(Math.max(0, Math.floor(this.camera.y / 64) - 2), Math.min(Math.floor((this.camera.y + this.camera.height)/64) + 1, gameplay.curMap.length));
+		foregroundSpriteCols = this.foregroundTiles.slice(Math.max(0, Math.floor(this.camera.y / 64) - 2), Math.min(Math.floor((this.camera.y + this.camera.height)/64) + 2, gameplay.curMap.length));
 		for (var i = 0; i < foregroundSpriteCols.length; i++)
 		{
 			var spritesWanted = foregroundSpriteCols[i].slice(Math.max(0, Math.floor(this.camera.x / 64) - 2), 
 															  Math.min(Math.floor((this.camera.x + this.camera.width)/64) + 2, gameplay.curMap[0].length));
 			theseSprites = theseSprites.concat(spritesWanted);
 		}
+		//console.debug(this.sprites.length);
+		//theseSprites = theseSprites.concat(this.specialTiles);
 		var newSprites = utility.reorderArrayByY(theseSprites);
 		
+		if (gameplay.currentLevel == Level.Prairie)
+		{
+			var bottomSpecials = [];
+			var topSpecials = [];
+			var i = 0;
+			while (i < this.specialTiles.length && this.specialTiles[i].y + 2 <= gameplay.player.y)
+			{
+				i += 1;
+			}
+			bottomSpecials = this.specialTiles.slice(0, i);
+			topSpecials = this.specialTiles.slice(i, this.specialTiles.length);
+			
+			newSprites = bottomSpecials.concat(newSprites);
+			newSprites = newSprites.concat(topSpecials);	
+		}
 		try
 		{
 			for (var i = 0; i < newSprites.length; i++)
@@ -259,7 +278,8 @@ var cameraController = {
 						 currentSprite.name == "observation point" ||
 						 currentSprite.name == "unicorn" ||
 						 currentSprite.name == "dr parsnip" ||
-						 currentSprite.name == "botnip")
+						 currentSprite.name == "botnip" ||
+						 currentSprite.name == "englishman")
 				{
 					utility.drawImage
 					(
@@ -270,6 +290,28 @@ var cameraController = {
 						currentSprite.width, currentSprite.height
 					
 					);
+				}
+				else if (currentSprite.name == "birch tree")
+				{
+					utility.drawImage
+					 (
+					   gameplaySurface, tilesheet, 
+					   currentSprite.sourceX, currentSprite.sourceY, 
+					   currentSprite.sourceWidth, currentSprite.sourceHeight,
+					   Math.floor(currentSprite.x), Math.floor(currentSprite.y) - 64, 
+					   currentSprite.width, currentSprite.height
+					 ); 
+				}
+				else if (currentSprite.name == "praire grass")
+				{
+					utility.drawImage
+					 (
+					   gameplaySurface, tilesheet, 
+					   currentSprite.sourceX, currentSprite.sourceY, 
+					   currentSprite.sourceWidth, currentSprite.sourceHeight,
+					   Math.floor(currentSprite.x), Math.floor(currentSprite.y), 
+					   currentSprite.width, currentSprite.height
+					 );
 				}
 				else if (currentSprite.name !== "empty")
 				{
@@ -284,7 +326,7 @@ var cameraController = {
 				}
 			}
 		}
-		catch(err){}
+		catch(err){ console.debug(err); }
 	},
 	
 	buildMap: function(levelMap, tier)
@@ -297,6 +339,7 @@ var cameraController = {
 		
 		this.gameWorld.width = this.WIDTH;
 		this.gameWorld.height = this.HEIGHT;
+		this.sprites = [];
 		
 		if (tier == 0) this.baseTiles = [];
 		else if (tier ==1) this.foregroundTiles = [];
@@ -353,7 +396,7 @@ var cameraController = {
 				}
 				else if (tier == 1) // Object tiles
 				{
-					if (currentTile == TREE || currentTile == BIRCHTREE)
+					if (currentTile == TREE || currentTile == BIRCHTREETRUNK)
 					{
 						var hitBox = {
 							x: -64,
@@ -363,14 +406,17 @@ var cameraController = {
 						};
 						sprite.sourceHeight = 128;
 						sprite.height = 128;
-						if (currentTile == BIRCHTREE)
+						if (currentTile == BIRCHTREETRUNK)
 						{
 							sprite.sourceWidth = 64;
+							sprite.sourceY -= 64;
 							sprite.width = 64;
 							hitBox.x = sprite.x + 24;
-							hitBox.y = sprite.y + 104;
+							hitBox.y = sprite.y + 40;
 							hitBox.width = 16;
 							hitBox.height = 8;
+							sprite.name = "birch tree";
+							hitBox.name = "tree";
 						}
 						else
 						{
@@ -380,24 +426,34 @@ var cameraController = {
 							hitBox.y = sprite.y + 96;
 							hitBox.width = 32;
 							hitBox.height = 16;
+							sprite.name = "tree";
+							hitBox.name = "tree";
 						}
-						sprite.name = "tree";
-						hitBox.name = "tree";
 						
 						//console.debug("Sprite--x: " + sprite.x + ", y: " + sprite.y + ", w: " + sprite.width + ", h: " + sprite.height);
 						//console.debug("Hit Box--x: " + hitBox.x + ", y: " + hitBox.y + ", w: " + hitBox.width + ", h: " + hitBox.height);
 						this.foregroundTiles[row][column] = sprite;
 						gameplay.collisionTiles[row][column] = hitBox;
 					}
+					else if (currentTile == PRAIREGRASS)
+					{
+						sprite.name = "praire grass";
+						this.specialTiles.push(sprite);
+						
+						var tempSrite = Object.create(sprite);
+						tempSrite.x += 32;
+						tempSrite.y += 32;
+						this.specialTiles.push(tempSrite);
+					}
 					else
 					{
 						//levelMap[row][column] = EMPTY;
-						
 					}
 				}
 			  }
 			}
 		}
+		this.specialTiles = utility.reorderArrayByY(this.specialTiles);
 		this.mapBuilt = true;
 	}
 	

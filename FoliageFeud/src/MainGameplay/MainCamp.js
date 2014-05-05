@@ -28,10 +28,10 @@ var mainCamp = {
 				  "Oh that's good. Well then, is there anything else?",											// No invasives				5
 				  "Oh no, please tell me which of these you saw.",												// Invasives, choose them	6
 				  "I'll have to make a note of that. Thank you. Anything else?",								// Done choosing			7
-				  "It's so nice to see you again, unfortunately it's not under the best of circumstances. I need your help just as you need mine. My arch nemesis, Dr. Parsnip, has claimed these SNA",
-				  "territories as his own, and is impeding my research. Not only that, but he has kidnapped your fiancee and my assistant. This shall not be tolerated, and we must work together.",
-				  "The two of us can foil his plans! I need you to go out and investigate the plants to see if there is some clue as to where he is hiding. I will have the plants I need posted on this board here, you can choose",
-				  "which ones you'd like to find. I'll stay here and analyse the plants for clues.",
+				  "It's so nice to see you again, unfortunately it's not under the best of circumstances. I need your help just as you need mine. My arch nemesis, Dr. Parsnip, has claimed these SNA...",
+				  "territories as his own, and is impeding my research. Not only that, but he has kidnapped your fiancee and my assistant. This shall not be tolerated, and we must work together...",
+				  "The two of us can foil his plans! I need you to go out and investigate the plants to see if there is some clue as to where he is hiding. I will have the plants I need posted on this board here, you can choose...",
+				  "which ones you'd like to find. I'll stay here and analyse the plants for clues...",
 				  "Oh, before you go, feel free to check out the other buildings here. All are bound to help you in one way or another.",
 				  "You didn't see that plant! You shouldn't lie to me."											// Chose wrong				13
 				  ],
@@ -121,6 +121,7 @@ var mainCamp = {
 			case 13:
 				this.talkingInMainCamp = false;
 				utility.addClickItem(this.dingle.x, this.dingle.y, this.dingle.width, this.dingle.height, this.talkToBro, []); // First bro talk phrase
+				utility.writeForClick(menuSurface, ["Return Plants"], CANVAS_WIDTH / 2, CANVAS_HEIGHT - 40, 64, 24, false, [mainCamp.talkToBro, []]);
 				break;
 			case 2:
 			case 3:
@@ -271,6 +272,7 @@ var mainCamp = {
 	incrementBroTalk: function(empty)
 	{
 		//mainCamp.broTalk = (mainCamp.broTalk + 1) % (mainCamp.dingle.phrases.length - 1);
+		mainCamp.broTalk += 1;
 	},
 	
 	compareInvasives: function(plantIndex)

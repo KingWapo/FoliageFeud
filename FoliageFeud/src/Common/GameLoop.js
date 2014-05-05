@@ -6,7 +6,10 @@ window.addEventListener("keydown", function(event)
 { 
 	if (event.keyCode >= 48 && event.keyCode <= 57) 
 	{ 
-		switchGamemode(event.keyCode - 48); 
+		if (event.keyCode - 48 == ScreenState.WorldEvent)
+			vs.init(ScreenState.WorldEvent);
+		else
+			switchGamemode(event.keyCode - 48); 
 	}
 	if (event.keyCode === 190)
 	{
