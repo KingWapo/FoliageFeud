@@ -701,6 +701,7 @@ var imgNewGameButton = utility.loadImage("../img/Buttons/newButton.png");
 var imgDemoButton = utility.loadImage("../img/Buttons/demoButton.png");
 var imgCreditsButton = utility.loadImage("../img/Buttons/creditsButton.png");
 var imgBoyTalking = utility.loadImage("../img/Player/characterMaleForward.png");
+var imgSwimGoggles = utility.loadImage("../img/Hats/swimming.png");
 
 var imgVsPlayer = utility.loadImage("../img/Backgrounds/vsPlayer.png");
 var imgVsBotnip = utility.loadImage("../img/Backgrounds/vsBotnip.png");

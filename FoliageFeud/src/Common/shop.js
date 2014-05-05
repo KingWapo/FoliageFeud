@@ -95,9 +95,9 @@ render:function()
 			);
 		//for the second water coin
 		utility.drawImage(
-			gameplaySurface, imgWater,
-			0, 0, imgWater.width, imgWater.height,
-			429, 140, imgWater.width,imgWater.height
+			gameplaySurface, imgSwimGoggles,
+			0, 0, imgSwimGoggles.width, imgSwimGoggles.height,
+			429, 140, imgSwimGoggles.width,imgSwimGoggles.height
 			);
 			utility.drawImage(
 			gameplaySurface, imgAdventure,
@@ -231,7 +231,7 @@ buyWater:function()
 	
 	{
 		shop.waterCoin.buy();
-		skillBook.swimLevel=skillBook.swimLevel+1;
+		skillBook.swimSprint=true;
 		
 	}
 	
@@ -389,12 +389,12 @@ infoDisplay:function()
 	if(this.waterCoin.description==true)
 	{
 				var strings = [];
-				strings.push(" The water coin increases your swim speed.  " );
+				strings.push(" The water Goggles allow you to Sprint while swimming." );
 				utility.writeText(menuSurface, strings, 245, 290, 64 * 4, 20, false);
 				utility.drawImage(
-				menuSurface, imgWater,
-				0, 0, imgWater.width, imgWater.height,
-				315, 155, imgWater.width,imgWater.height
+				menuSurface, imgSwimGoggles,
+				0, 0, imgSwimGoggles.width, imgSwimGoggles.height,
+				315, 155, imgSwimGoggles.width,imgSwimGoggles.height
 			);
 				if(gameplay.gold>=this.superWaterCoin.price)
 				{

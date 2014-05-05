@@ -8,6 +8,7 @@ var skillBook =
 	swimLevel:0,
 	climbLevel:0,
 	sprintLevel:1,
+	swimSprint:false,
 
 	
 	reset: function()
@@ -16,6 +17,7 @@ var skillBook =
 		this.climb = false;
 		this.sprint = false;
 		this.display = false;
+
 	}
 
 }

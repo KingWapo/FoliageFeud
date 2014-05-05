@@ -794,7 +794,14 @@ var gameplay = {
 		
 		if(this.swimming)
 		{
-			this.player.speed=this.player.walkSpeed/2*skillBook.swimLevel;
+			if(skillBook.swimSprint==true&&this.sprinting)
+			{
+				this.player.speed=this.player.walkSpeed*skillBook.swimLevel;
+			}
+			else
+			{
+				this.player.speed=this.player.walkSpeed/2*skillBook.swimLevel;
+			}
 		}
 		
 		 else if(this.sprinting&& !this.swimming)
