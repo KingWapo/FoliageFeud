@@ -1223,6 +1223,7 @@ var gameplay = {
 		this.clearCollision();
 		cameraController.buildMap(this.curMap, 0);
 		cameraController.buildMap(this.curObjMap, 1);
+		if (plant.getTotalHarvestedAmount() == plantList.length) shop.allPlantsFound = true;
 		switch(map)
 		{
 			case Level.BaseCamp:

@@ -162,7 +162,21 @@ var endScene = {
 		this.fiancee.animation = Animation.Left;
 		this.fiancee.x = CANVAS_WIDTH - 188;
 		this.fiancee.y = (CANVAS_HEIGHT - this.fiancee.height) / 2 - 128;
-		this.fiancee.sprite = imgMaleSprite;
+		switch(currentSprite)
+		{
+			case SpriteState.Boy:
+				this.fiancee.sprite = imgFemaleSprite;
+				break;
+			case SpriteState.Girl:
+				this.fiancee.sprite = imgMaleSprite;
+				break;
+			case SpriteState.Boy2:
+				this.fiancee.sprite = imgFemaleDiverseSprite;
+				break;
+			case SpriteState.Girl2:
+				this.fiancee.sprite = imgMaleDiverseSprite;
+				break;
+		}
 		
 		this.botnip.animation = Animation.Right;
 		this.botnip.x = -64;
