@@ -696,7 +696,7 @@ var imgPostItNote = utility.loadImage("../img/Backgrounds/plantsUnderlay01.png")
 var imgTransButton = utility.loadImage("../img/Buttons/buyButtonTransperent.png");
 var imgMysterySprite= utility.loadImage("../img/Player/siblingShopSecret.png");
 var imgLoadGameButton = utility.loadImage("../img/Buttons/loadButton.png");
-var imgNewGameButton = utility.loadImage("../img/Buttons/newGameButton.png");
+var imgNewGameButton = utility.loadImage("../img/Buttons/newButton.png");
 
 var imgVsPlayer = utility.loadImage("../img/Backgrounds/vsPlayer.png");
 var imgVsBotnip = utility.loadImage("../img/Backgrounds/vsBotnip.png");
