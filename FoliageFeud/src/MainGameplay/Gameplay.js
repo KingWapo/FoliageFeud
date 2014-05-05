@@ -803,14 +803,13 @@ var gameplay = {
 				this.player.speed=this.player.walkSpeed/2*skillBook.swimLevel;
 			}
 		}
-		
-		 else if(this.sprinting&& !this.swimming)
-		{
-			this.player.speed=this.player.runSpeed*skillBook.sprintLevel;
-		}
 		else if(this.climbing)
 		{
-			this.player.speed=2*skillBook.climbLevel;
+			this.player.speed=this.player.walkSpeed / 2*skillBook.climbLevel;
+		}
+		else if(this.sprinting&& !this.swimming && !this.climbing)
+		{
+			this.player.speed=this.player.runSpeed*skillBook.sprintLevel;
 		}
 		else
 		{
@@ -827,6 +826,15 @@ var gameplay = {
 		else
 		{
 			this.swimming = false;
+		}
+		
+		if (gameplay.collisionTiles[Math.floor(this.player.y/64 + .5)][Math.floor(this.player.x/64 + .5)].name == "rock" && currentSprite != SpriteState.Parsnip)
+		{
+			this.climbing = true;
+		}
+		else
+		{
+			this.climbing = false;
 		}
 		} catch(err) {}
 		// Set velocity in the direction of the key that is pressed.
@@ -1082,7 +1090,7 @@ var gameplay = {
 								{
 									
 									this.onTeleport = true;
-									if (!endScene.parsnipBeaten && plant.getTotalHarvestedAmount() >= endScene.plantsNeeded) // Activate End Scene
+									if (!shop.parsnipBeaten && plant.getTotalHarvestedAmount() >= endScene.plantsNeeded) // Activate End Scene
 									{
 										currentScreen = ScreenState.End;
 									}

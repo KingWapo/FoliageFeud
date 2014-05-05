@@ -9,6 +9,10 @@ var shop ={
 	mystery:Object.create(buyableObject),
 	info:false,
 	shopKeeperDisplay:false,
+	parsnipBeaten: false,
+	botnipBeaten: false,
+	englishmanBeaten: false,
+	allPlantsFound: false,
 	
 render:function()
 {

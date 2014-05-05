@@ -10,7 +10,6 @@ Games = {
 var endScene = {
 	
 	checkpoint: Games.ISPY,
-	parsnipBeaten: false,
 	plantsNeeded: 10,
 	
 	phrases: [

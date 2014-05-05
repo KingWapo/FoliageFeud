@@ -15,6 +15,7 @@ var worldEvent = {
 	],
 	training: false,
 	fromEnd: false,
+	fromBotnip: false,
 	won: false,
 	xMovement: 0,
 	playerVars: [],
@@ -171,7 +172,7 @@ var worldEvent = {
 				{
 					currentLevel = Level.BaseCamp;
 					gameplay.nextLevel(currentLevel);
-					endScene.parsnipBeaten = true;
+					shop.parsnipBeaten = true;
 					gameplay.render();
 					gameplay.chooseSong(gameplay.currentLevel);
 					currentScreen = ScreenState.Gameplay;
@@ -186,6 +187,8 @@ var worldEvent = {
 			}
 			else
 			{
+				shop.botnipBeaten = true;
+				gameplay.gold += 10;
 				gameplay.render();
 				gameplay.chooseSong(gameplay.currentLevel);
 				currentScreen = ScreenState.Gameplay;

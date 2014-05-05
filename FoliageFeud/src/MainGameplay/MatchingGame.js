@@ -251,6 +251,11 @@ var matching = {
 			console.debug("Matching done: ", trainingGame.returnRate);
 			trainingGame.finishGame();
 		}
+		else if (!matching.fromEnd)
+		{
+			shop.englishmanBeaten = true;
+			gameplay.gold += 15;
+		}
 		exiting[currentScreen] = true;
 	}
 };

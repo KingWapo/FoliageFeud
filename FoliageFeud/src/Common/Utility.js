@@ -530,7 +530,7 @@ var utility = {
 		cookie += regionsToVisit + ".";
 		cookie += finishedQuests + ".";
 		cookie += gameplay.visitedBrother + ".";
-		cookie += endScene.parsnipBeaten + ";";
+		cookie += shop.parsnipBeaten + ";";
 		cookie += "expires=" + d.toGMTString();
 		
 		document.cookie = cookie;
@@ -583,7 +583,7 @@ var utility = {
 			}
 			
 			gameplay.visitedBrother = data[6] == "true" ? true : false;
-			endScene.parsnipBeaten = data[7] == "true" ? true : false;
+			shop.parsnipBeaten = data[7] == "true" ? true : false;
 			
 			gameplay.canSave = true;
 			gameplay.loadingSave = true;
@@ -596,7 +596,7 @@ var utility = {
 			console.debug("regions: ", data[4]);
 			console.debug("finished: ", data[5]);
 			console.debug("brother: ", gameplay.visitedBrother);
-			console.debug("snip beat: ", endScene.parsnipBeaten);
+			console.debug("snip beat: ", shop.parsnipBeaten);
 		}
 		else
 		{
