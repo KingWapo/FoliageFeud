@@ -669,6 +669,7 @@ var imgDingleSprite = utility.loadImage("../img/Player/siblingMale.png");
 var imgBlackDingleSprite = utility.loadImage("../img/Player/siblingMaleDiverse.png");
 var imgUnicornSprite = utility.loadImage("../img/Player/unicorn.png");
 var imgBotnipSprite = utility.loadImage("../img/Player/botnip.png");
+var imgEnglishmanSprite = utility.loadImage("../img/Player/britishWanderer.png");
 var imgTimer = utility.loadImage("../img/WorldEvent/timer.png");
 var imgTimerBg = utility.loadImage("../img/WorldEvent/timerBackground.png");
 var imgCheckmark = utility.loadImage("../img/WorldEvent/Checkmark.png");

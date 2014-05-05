@@ -13,9 +13,11 @@ var shop ={
 	botnipBeaten: false,
 	englishmanBeaten: false,
 	allPlantsFound: false,
+	siblingSprite: new Image(),
 	
 render:function()
 {
+	
 	utility.clearAll();	
 	shop.drawPrices();
 	// draws all the shop images 
@@ -168,10 +170,11 @@ render:function()
 			);
 			// shop keeper image
 			utility.drawImage(
-			gameplaySurface, imgShopSibling,
+			gameplaySurface, this.siblingSprite,
 			0, 0, imgShopSibling.width, imgShopSibling.height,
 			750, 300, imgShopSibling.width,imgShopSibling.height
 			);
+			
 				
 		
 		//these must constantly be rendered in order to be display when needed.		
@@ -214,6 +217,16 @@ initShop:function()
 	shop.mystery.x=598;
 	shop.mystery.y=138;
 	shop.mystery.init();
+	
+	
+	if (currentSprite == SpriteState.Boy || currentSprite == SpriteState.Girl)
+	{
+		this.siblingSprite = imgShopSibling;
+	}
+	else if (currentSprite == SpriteState.Boy2 || currentSprite == SpriteState.Girl2)
+	{
+		this.siblingSprite = imgShopSibling2;
+	}
 	
 	var strings=[];
 			 strings.push(" gold: " + gameplay.gold);	

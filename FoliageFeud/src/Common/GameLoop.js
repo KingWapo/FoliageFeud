@@ -29,12 +29,12 @@ window.addEventListener("keydown", function(event)
 	}
 	if (event.keyCode == 61)
 	{
-		currentSprite = (currentSprite + 1) % 5;
+		currentSprite = (currentSprite + 1) % 9;
 		gameplay.updateSprite();
 	}
 	if (event.keyCode == 173)
 	{
-		currentSprite = (currentSprite - 1) % 5;
+		currentSprite = (currentSprite - 1) % 9;
 		gameplay.updateSprite();
 	}
 	if (event.keyCode == 221)
@@ -145,13 +145,13 @@ ScreenState = {
 SpriteState = {
 	Girl: 0,
 	Boy: 1,
-	Girl2: 6,
-	Boy2: 7,
-	Parsnip: 2,
-	Dingle: 3,
-	BlackDingle: 4,
-	Botnip: 5,
-	Englishman: 6
+	Girl2: 2,
+	Boy2: 3,
+	Parsnip: 4,
+	Dingle: 5,
+	BlackDingle: 6,
+	Botnip: 7,
+	Englishman: 8
 };
 
 // vars to hold current and previous screens

@@ -653,13 +653,10 @@ var gameplay = {
 				this.convo.playerSprite="girl2";
 				break;
 			case SpriteState.Parsnip:
-				if(shop.parsnipMask.purchased==true)
-				{
-					this.player.sprite = imgParsnipSprite;
-					this.player.numOfFrames = 9;
-					this.player.sourceHeight = 64;
-					this.player.height = 64;
-				}
+				this.player.sprite = imgParsnipSprite;
+				this.player.numOfFrames = 9;
+				this.player.sourceHeight = 64;
+				this.player.height = 64;
 				break;
 			case SpriteState.Dingle:
 				this.player.sprite = imgDingleSprite;
@@ -673,9 +670,15 @@ var gameplay = {
 				this.player.sourceHeight = 64;
 				this.player.height = 64;
 				break;
-			case SpriteState.Unicorn:
-				this.player.sprite = imgUnicornSprite;
-				this.player.numOfFrames = 4;
+			case SpriteState.Botnip:
+				this.player.sprite = imgBotnipSprite;
+				this.player.numOfFrames = 1;
+				this.player.sourceHeight = 64;
+				this.player.height = 64;
+				break;
+			case SpriteState.Englishman:
+				this.player.sprite = imgEnglishmanSprite;
+				this.player.numOfFrames = 9;
 				this.player.sourceHeight = 64;
 				this.player.height = 64;
 				break;
@@ -818,7 +821,7 @@ var gameplay = {
 		
 		
 		try{
-		if (gameplay.collisionTiles[Math.floor(this.player.y/64 + .5)][Math.floor(this.player.x/64 + .5)].name == "water" && currentSprite != SpriteState.Parsnip)
+		if (gameplay.collisionTiles[Math.floor(this.player.y/64 + .5)][Math.floor(this.player.x/64 + .5)].name == "water" && (currentSprite != SpriteState.Parsnip && currentSprite != SpriteState.Botnip))
 		{
 			this.swimming = true;
 			
@@ -828,7 +831,7 @@ var gameplay = {
 			this.swimming = false;
 		}
 		
-		if (gameplay.collisionTiles[Math.floor(this.player.y/64 + .5)][Math.floor(this.player.x/64 + .5)].name == "rock" && currentSprite != SpriteState.Parsnip)
+		if (gameplay.collisionTiles[Math.floor(this.player.y/64 + .5)][Math.floor(this.player.x/64 + .5)].name == "rock" &&  (currentSprite != SpriteState.Parsnip && currentSprite != SpriteState.Botnip))
 		{
 			this.climbing = true;
 		}
@@ -866,9 +869,6 @@ var gameplay = {
 				
 				if (this.player.animation !== Animation.SwimmingLeft) {
 					this.player.animation = Animation.SwimmingLeft;
-					
-					
-					
 				}
 			}
 			else
@@ -932,7 +932,7 @@ var gameplay = {
 			(moveDown && moveUp && !moveRight && !moveLeft) ||
 			(moveRight && moveLeft && moveDown && moveUp))
 			*/
-		if (this.player.vx == 0 && this.player.vy == 0 && currentSprite != SpriteState.Parsnip)
+		if ((this.player.vx == 0 && this.player.vy == 0 && currentSprite != SpriteState.Parsnip) || currentSprite == SpriteState.Botnip)
 		{
 			if (this.player.animation !== Animation.Idle) {
 				if (this.player.animation == Animation.Right) {

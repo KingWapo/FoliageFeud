@@ -109,8 +109,8 @@ var mainCamp = {
 		
 		utility.drawImage(
 			gameplaySurface, this.dingle.sprite,
-			this.dingle.sourceX, this.dingle.sourceY, this.dingle.sourceWidth, this.dingle.sourceHeigth,
-			this.dingle.x, this.dingle.y, this.dingle.width, this.dingle.height
+			0, 0, imgShopSibling.width, imgShopSibling.height,
+			this.dingle.x, this.dingle.y, imgShopSibling.width, imgShopSibling.height
 			);
 		
 		for (var i = 0; i < this.listOfQuests.length; i++)
