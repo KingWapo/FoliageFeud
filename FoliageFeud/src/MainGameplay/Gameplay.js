@@ -87,12 +87,13 @@ var gameplay = {
 	questlog: [],
 	canSave: false,
 	loadingSave: false,
-	
+	convo:Object.create(conversationObject),
 	// Buildings
 	store: Object.create(spriteObject),
 	mainCamp: Object.create(spriteObject),
 	training: Object.create(spriteObject),
 	plants: Object.create(spriteObject),
+	
 
 	player: {
 		// Sprite Located on sheet
@@ -439,6 +440,7 @@ var gameplay = {
 					
 			}
 			this.update = (this.update+1)%2;
+			
 		},
 		x: 0,
 		y: 0,
@@ -708,16 +710,13 @@ var gameplay = {
 	
 	
 	{
-		
-			if(gameplay.drawTextBox==true)
-		{
 				utility.drawImage(
 					menuSurface, imgLargeTextBox,
 					0, 0, imgLargeTextBox.width, imgLargeTextBox.height,
 					x, y, height,width
 					);
 								
-		}
+		
 			
 			if(gameplay.timeout==true){
 				
@@ -1555,6 +1554,7 @@ var gameplay = {
 	
 	render: function()
 	{
+		
 		utility.clearAll();
 		this.skillDisplay();
 		this.message();
@@ -1660,6 +1660,8 @@ var gameplay = {
 				utility.drawTextBox(this.phrases, "not in use", function(){gameplay.talking = false;gameplay.phraseIndex = gameplay.phrases.length});
 			}
 		}
+		this.convoSetUp();
+		this.convo.checkConversation();
 		
 	},
 	
@@ -1697,6 +1699,13 @@ var gameplay = {
 			
 			obsPoint.plantIndex = listOfPlants[i][1];
 			this.observationInstances.push(obsPoint);
+		}
+	},
+	convoSetUp:function()
+	{
+		if(this.currentLevel==Level.Tutorial)
+		{
+			this.convo.convoType="tutorial";
 		}
 	},
 	

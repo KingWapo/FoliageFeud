@@ -179,6 +179,7 @@ var utility = {
 		var rect = gameplayCanvas.getBoundingClientRect();
 		var posx = event.clientX - rect.left;
 		var posy = event.clientY - rect.top;
+	
 		
 		// Checks each object to see if it was clicked
 		for (var i = 0; i < utility.clickable.length; i++)
@@ -188,7 +189,7 @@ var utility = {
 			var w = utility.clickable[i].width * utility.scale;
 			var h = utility.clickable[i].height * utility.scale;
 			
-			//console.debug(posx+ " "+posy);
+			console.debug(posx+ " "+posy);
 			// If image was clicked, runs specified function
 			if (posx >= x && posx <= x + w &&
 				posy >= y && posy <= y + h )
