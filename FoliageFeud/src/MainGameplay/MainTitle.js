@@ -20,7 +20,7 @@ var title = {
 		this.playAsGirl.height = 107;
 		this.playAsGirl.x = (1152 - this.playAsGirl.width) / 2;
 		this.playAsGirl.y = (512 - this.playAsGirl.height) / 2 - 32;
-		utility.addClickItem(this.playAsGirl.x, this.playAsGirl.y, this.playAsGirl.width, this.playAsGirl.height, this.playAsGirlClicked);
+		utility.addClickItem(this.playAsGirl.x, this.playAsGirl.y, this.playAsGirl.width, this.playAsGirl.height, this.loadClicked);
 		
 		this.playAsBoy.sourceWidth = imgBoyButton.width;
 		this.playAsBoy.sourceHeight = imgBoyButton.height;
@@ -28,40 +28,41 @@ var title = {
 		this.playAsBoy.height = this.playAsGirl.height;
 		this.playAsBoy.x = this.playAsGirl.x;
 		this.playAsBoy.y = this.playAsGirl.y + 128;
-		utility.addClickItem(this.playAsBoy.x, this.playAsBoy.y, this.playAsBoy.width, this.playAsBoy.height, this.playAsBoyClicked);
+		utility.addClickItem(this.playAsBoy.x, this.playAsBoy.y, this.playAsBoy.width, this.playAsBoy.height, this.newGameClicked);
 		
 		utility.startNewSong(songMainTitle);
 	},
 	
-	playAsBoyClicked: function()
+	newGameClicked: function()
 	{
-		currentSprite = SpriteState.Boy;
 		exiting[currentScreen] = true;
 		quests.addQuest(Math.floor(Math.random() * plantList.length), 0);
 		
 	},
 	
-	playAsGirlClicked: function()
+	loadClicked: function()
 	{
-		currentSprite = SpriteState.Girl;
 		exiting[currentScreen] = true;
 		utility.checkCookie();
 	},
 	
 	render: function()
 	{
-		utility.clearSurfaces();
-		
+		utility.clearAll();
+		x = (1152 - imgLoadGameButton.width) / 2;
+		y = (512 - imgLoadGameButton.height) / 2 - 32;
 		utility.drawImage(
-			menuSurface, imgGirlButton,
-			0, 0, this.playAsGirl.sourceWidth, this.playAsGirl.sourceHeight,
-			this.playAsGirl.x, this.playAsGirl.y, this.playAsGirl.width, this.playAsGirl.height
+			menuSurface, imgLoadGameButton,
+			0, 0, imgLoadGameButton.width, imgLoadGameButton.height,
+			x, y, imgLoadGameButton.width, imgLoadGameButton.height
 			);
+		utility.addClickItem(x, y, imgLoadGameButton.width, imgLoadGameButton.height, this.loadClicked);
 		utility.drawImage(
-			menuSurface, imgBoyButton,
-			0, 0, this.playAsBoy.sourceWidth, this.playAsBoy.sourceHeight,
-			this.playAsBoy.x, this.playAsBoy.y, this.playAsBoy.width, this.playAsBoy.height
+			menuSurface, imgNewGameButton,
+			0, 0, imgNewGameButton.width, imgNewGameButton.height,
+			x, y + 128, imgNewGameButton.width, imgNewGameButton.height
 			);
+		utility.addClickItem(x, y + 128, imgNewGameButton.width, imgNewGameButton.height, this.newGameClicked);
 		utility.drawImage(
 			backgroundSurface, imgMenuBg,
 			0, 0, imgMenuBg.width, imgMenuBg.height,
