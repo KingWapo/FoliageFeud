@@ -78,7 +78,7 @@ var utility = {
 	{
 		if (mainCamp.talkingInMainCamp)
 		{
-			if (mainCamp.broTalk == 1 || mainCamp.broTalk == 4) { }
+			if (mainCamp.broTalk <= 7 || mainCamp.broTalk >= 13) { }
 			else if (mainCamp.broTalk != 12)
 			{
 				mainCamp.broTalk = (mainCamp.broTalk + 1) % (12);
@@ -189,7 +189,7 @@ var utility = {
 			var w = utility.clickable[i].width * utility.scale;
 			var h = utility.clickable[i].height * utility.scale;
 			
-			console.debug(posx+ " "+posy);
+			//console.debug(posx+ " "+posy);
 			// If image was clicked, runs specified function
 			if (posx >= x && posx <= x + w &&
 				posy >= y && posy <= y + h )

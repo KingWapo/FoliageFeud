@@ -40,6 +40,15 @@ var mainCamp = {
 		sprite: ""
 	},
 	
+	goldAdders: [],
+	
+	goldAdder: {
+		x: 32,
+		y: CANVAS_HEIGHT - 128,
+		cooldown: 30,
+		string: "+5 gold"
+	},
+	
 	init: function()
 	{
 		this.talkingInMainCamp = true;
@@ -170,12 +179,29 @@ var mainCamp = {
 				break;
 		}
 		
+		for (var i = 0; i < this.goldAdders.length; i++)
+		{
+			utility.writeText(menuSurface, ["+5 gold"], 128, this.goldAdders[i].y, 64, 20, false);
+			this.goldAdders[i].y -= 3;
+			this.goldAdders[i].cooldown -= 1;
+			if (this.goldAdders[i].cooldown <= 0)
+			{
+				this.goldAdders.splice(i, 1);
+			}
+		}
+		
 		utility.drawImage(
 			menuSurface, imgExitButton,
 			0, 0, imgExitButton.width, imgExitButton.height,
 			CANVAS_WIDTH - 80, CANVAS_HEIGHT - 80, imgExitButton.width / 2, imgExitButton.height / 2
 		);
 		if (!this.talkingInMainCamp) utility.addClickItem(CANVAS_WIDTH - 80, CANVAS_HEIGHT - 80, imgExitButton.width / 2, imgExitButton.height / 2, this.exitToGameplay, "");
+	},
+	
+	goldRecieved: function()
+	{
+		var gold = Object.create(this.goldAdder);
+		this.goldAdders.push(gold);
 	},
 	
 	drawPlant: function(plantName, randRegion, i)
@@ -205,6 +231,7 @@ var mainCamp = {
 	{
 		quests.finishedQuests.splice(index, 1);
 		gameplay.gold += 5;
+		mainCamp.goldRecieved();
 		mainCamp.broTalk = 3;
 	},
 	
@@ -231,6 +258,7 @@ var mainCamp = {
 			gameplay.gold += 5;
 			mainCamp.broTalk = 14;
 			mainCamp.dingle.phrases[14] = "Oh no, not the " + plantList[index].name + "...did you see any others?";
+			mainCamp.goldRecieved();
 		}
 		else
 		{
@@ -277,7 +305,7 @@ var mainCamp = {
 	incrementBroTalk: function(empty)
 	{
 		//mainCamp.broTalk = (mainCamp.broTalk + 1) % (mainCamp.dingle.phrases.length - 1);
-		mainCamp.broTalk += 1;
+		//mainCamp.broTalk += 1;
 	},
 	
 	compareInvasives: function(plantIndex)
