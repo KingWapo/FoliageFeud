@@ -55,22 +55,22 @@ render:function()
 		utility.drawImage(
 			gameplaySurface, imgPrice,
 			0, 0, imgPrice.width, imgPrice.height,
-			430, 270, 128, 32
+			425, 270, 128, 32
 		);
 		utility.drawImage(
 			gameplaySurface, imgPrice,
 			0, 0, imgPrice.width, imgPrice.height,
-			430, 435, 128, 32
+			425, 435, 128, 32
 		);
 			utility.drawImage(
 			gameplaySurface, imgPrice,
 			0, 0, imgPrice.width, imgPrice.height,
-			600, 270, 128, 32
+			595, 270, 128, 32
 		);
 		utility.drawImage(
 			gameplaySurface, imgPrice,
 			0, 0, imgPrice.width, imgPrice.height,
-			600, 435, 128, 32
+			595, 435, 128, 32
 		);
 	
 		
@@ -78,7 +78,7 @@ render:function()
 		utility.drawImage(
 			gameplaySurface, imgExitButton,
 			0, 0, imgExitButton.width, imgExitButton.height,
-			932, 304, imgExitButton.width, imgExitButton.height
+			932, 128, imgExitButton.width, imgExitButton.height
 		);
 		
 	//draws the specific coins
@@ -118,7 +118,7 @@ render:function()
 				utility.drawImage(
 				gameplaySurface, imgMysterySprite,
 				0, 0, imgMysterySprite.width, imgMysterySprite.height,
-				429, 308, 128, 128
+				425, 305, 128, 128
 				);
 			}
 			// if parsnip is beaten draws the right sprite
@@ -135,7 +135,7 @@ render:function()
 				utility.drawImage(
 				gameplaySurface, imgMysterySprite,
 				0, 0, imgMysterySprite.width, imgMysterySprite.height,
-				265, 308, 128, 128
+				260, 305, 128, 128
 				);
 			}
 	//decides the sprite for your brother.			
@@ -152,7 +152,7 @@ render:function()
 				utility.drawImage(
 					gameplaySurface, this.siblingSprite,
 					0, 0, imgShopSibling.width, imgShopSibling.height,
-					96, 308, imgShopSibling.width,imgShopSibling.height
+					90, 300, imgShopSibling.width,imgShopSibling.height
 			);
 			}
 			else
@@ -160,7 +160,7 @@ render:function()
 				utility.drawImage(
 				gameplaySurface, imgMysterySprite,
 				0, 0, imgMysterySprite.width, imgMysterySprite.height,
-				96, 308, 128, 128
+				94, 303, 128, 128
 				);
 			}
 			if(shop.englishmanBeaten)
@@ -176,7 +176,7 @@ render:function()
 				utility.drawImage(
 				gameplaySurface, imgMysterySprite,
 				0, 0, imgMysterySprite.width, imgMysterySprite.height,
-				598, 308, 128, 128
+				595, 303, 128, 128
 				);
 			}
 		
@@ -184,8 +184,9 @@ render:function()
 			utility.drawImage(
 			gameplaySurface, this.siblingSprite,
 			0, 0, imgShopSibling.width, imgShopSibling.height,
-			750, 300, imgShopSibling.width,imgShopSibling.height
+			750, 128, imgShopSibling.width,imgShopSibling.height
 			);
+			
 			
 				
 		
@@ -397,12 +398,12 @@ buttonHandler:function()
 {
 	if(shop.info==false)
 	{
-		utility.addClickItem(932, 304, imgExitButton.width, imgExitButton.height,this.exitShop, "");
+		utility.addClickItem(932, 128, imgExitButton.width, imgExitButton.height,this.exitShop, "");
 		utility.addClickItem( 96,138,imgAdventure.width,imgAdventure.height,this.buyAdventure,"");
 		utility.addClickItem( 265,140,imgRock.width,imgRock.height,this.buyRock,"");
 		utility.addClickItem( 429,140,imgWater.width,imgWater.height,this.buyWater,"");
 		utility.addClickItem( 96,308,imgWater.width,imgWater.height,this.buyMystery,"");
-		utility.addClickItem(750,300,imgShopSibling.width,imgShopSibling.height,this.shopKeeper,"");
+		utility.addClickItem(750,128,imgShopSibling.width,imgShopSibling.height,this.shopKeeper,"");
 		utility.addClickItem(265,308,imgNip.width,imgNip.height,this.buyParsnip,"");
 		utility.addClickItem(598,138,128,128,this.buyWaterCoin);
 		utility.addClickItem(436,308,128,128,this.buyRobot);
@@ -432,10 +433,10 @@ drawPrices:function()
 	utility.writeText(gameplaySurface, strings, 270, 290, 64 * 4, 20, false);
 	strings.pop();
 	strings.push(" 30 gold ");
-	utility.writeText(gameplaySurface, strings, 440, 290, 64 * 4, 20, false);
+	utility.writeText(gameplaySurface, strings, 425, 290, 64 * 4, 20, false);
 	strings.pop();
 	strings.push(" 30 gold ");
-	utility.writeText(gameplaySurface, strings, 620, 290, 64 * 4, 20, false);
+	utility.writeText(gameplaySurface, strings, 605, 290, 64 * 4, 20, false);
 	strings.pop();
 	strings.push(" 300 gold ");
 	utility.writeText(gameplaySurface, strings, 270 ,455, 64 * 4, 20, false);
@@ -444,7 +445,7 @@ drawPrices:function()
 	utility.writeText(gameplaySurface, strings, 94, 455, 64 * 4, 20, false);
 	strings.pop();
 	strings.push("150 gold");
-	utility.writeText(gameplaySurface, strings, 435, 455, 64 * 4, 20, false);
+	utility.writeText(gameplaySurface, strings, 430, 455, 64 * 4, 20, false);
 	strings.pop();
 	strings.push("150 gold");
 	utility.writeText(gameplaySurface, strings, 610, 455, 64 * 4, 20, false);
