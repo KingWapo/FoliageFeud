@@ -46,10 +46,20 @@ var title = {
 		utility.checkCookie();
 	},
 	
+	demoClicked: function()
+	{
+		window.location.href = "demo.html";
+	},
+	
+	creditsClicked: function()
+	{
+		
+	},
+	
 	render: function()
 	{
 		utility.clearAll();
-		x = (1152 - imgLoadGameButton.width) / 2;
+		x = (1152 - imgLoadGameButton.width) / 2 - 128;
 		y = (512 - imgLoadGameButton.height) / 2 - 32;
 		utility.drawImage(
 			menuSurface, imgLoadGameButton,
@@ -58,11 +68,23 @@ var title = {
 			);
 		utility.addClickItem(x, y, imgLoadGameButton.width, imgLoadGameButton.height, this.loadClicked);
 		utility.drawImage(
+			menuSurface, imgDemoButton,
+			0, 0, imgDemoButton.width, imgDemoButton.height,
+			x, y + 128, imgDemoButton.width, imgDemoButton.height
+			);
+		utility.addClickItem(x, y + 128, imgDemoButton.width, imgDemoButton.height, this.demoClicked);
+		utility.drawImage(
 			menuSurface, imgNewGameButton,
 			0, 0, imgNewGameButton.width, imgNewGameButton.height,
-			x, y + 128, imgNewGameButton.width, imgNewGameButton.height
+			x + 256 + 32, y, imgNewGameButton.width, imgNewGameButton.height
 			);
-		utility.addClickItem(x, y + 128, imgNewGameButton.width, imgNewGameButton.height, this.newGameClicked);
+		utility.addClickItem(x + 256 + 32, y, imgNewGameButton.width, imgNewGameButton.height, this.newGameClicked);
+		utility.drawImage(
+			menuSurface, imgCreditsButton,
+			0, 0, imgCreditsButton.width, imgCreditsButton.height,
+			x + 256 + 32, y + 128, imgCreditsButton.width, imgCreditsButton.height
+			);
+		utility.addClickItem(x + 256 + 32, y + 128, imgCreditsButton.width, imgCreditsButton.height, this.creditsClicked);
 		utility.drawImage(
 			backgroundSurface, imgMenuBg,
 			0, 0, imgMenuBg.width, imgMenuBg.height,

@@ -491,7 +491,7 @@ var utility = {
 	
 	drawEsc: function()
 	{
-		utility.writeForClick(menuSurface, ["Save"], 32, 32, 200, 32, false, [function(){console.debug("clickyclick");if (gameplay.canSave)utility.setCookie();}, ['']]);
+		utility.writeForClick(menuSurface, ["Save"], CANVAS_WIDTH / 2 - 16, CANVAS_HEIGHT / 2 - 16, 200, 32, false, [function(){console.debug("clickyclick");if (gameplay.canSave)utility.setCookie();}, ['']]);
 	},
 	
 	setCookie: function()
@@ -716,10 +716,12 @@ var imgBackgroundMainCamp = utility.loadImage("../img/Backgrounds/plantsBackgrou
 var imgPostItNote = utility.loadImage("../img/Backgrounds/plantsUnderlay01.png");
 var imgTransButton = utility.loadImage("../img/Buttons/buyButtonTransperent.png");
 var imgMysterySprite= utility.loadImage("../img/Player/siblingShopSecret.png");
+
 var imgLoadGameButton = utility.loadImage("../img/Buttons/loadButton.png");
 var imgNewGameButton = utility.loadImage("../img/Buttons/newButton.png");
 var imgDemoButton = utility.loadImage("../img/Buttons/demoButton.png");
 var imgCreditsButton = utility.loadImage("../img/Buttons/creditsButton.png");
+
 var imgBoyTalking = utility.loadImage("../img/Player/characterMaleForward.png");
 var imgSwimGoggles = utility.loadImage("../img/Hats/swimming.png");
 

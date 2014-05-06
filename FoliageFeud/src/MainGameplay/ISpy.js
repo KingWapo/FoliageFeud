@@ -19,6 +19,7 @@ var ispy = {
 	invasiveSeen: false,
 	hasInvasive: false,
 	questIndex: -1,
+	response: [],
 	
 	// Training mode variables
 	fromTraining: false,
@@ -58,6 +59,7 @@ var ispy = {
 		}
 		
 		this.responseOffset = 0;
+		this.response = [];
 		
 		// Add plants to ispy pool
 		this.curPlants = plant.getMultiplePlants(3);
@@ -275,24 +277,25 @@ var ispy = {
 		{
 			if (!ispy.fromTraining && !this.fromEnd)
 			{
-				var response = [];
-				
-				if (this.isCorrect)
+				//var response = [];
+				if (this.response.length == 0)
 				{
-					if (gameplay.currentLevel != Level.Tutorial && !ispy.fromTraining)
-						response.push(this.dingleBotWinResponses[Math.floor(Math.random() * this.dingleBotWinResponses.length)]);
+					if (this.isCorrect)
+					{
+						if (gameplay.currentLevel != Level.Tutorial && !ispy.fromTraining)
+							this.response.push(this.dingleBotWinResponses[Math.floor(Math.random() * this.dingleBotWinResponses.length)]);
+						else
+							this.response.push("Strong in the ways of plant, you are.");
+					}
 					else
-						response.push("Strong in the ways of plant, you are.");
+					{
+						if (gameplay.currentLevel != Level.Tutorial && !ispy.fromTraining)
+							this.response.push(this.dingleBotFailResponses[Math.floor(Math.random() * this.dingleBotFailResponses.length)]);
+						else
+							this.response.push("That is not the plant you are looking for.  /space_wizard_brain_manipulation");
+					}
 				}
-				else
-				{
-					if (gameplay.currentLevel != Level.Tutorial && !ispy.fromTraining)
-						response.push(this.dingleBotFailResponses[Math.floor(Math.random() * this.dingleBotFailResponses.length)]);
-					else
-						response.push("That is not the plant you are looking for.  /space_wizard_brain_manipulation");
-				}
-				
-				utility.drawTextBox(response, "not in use", ispy.leaveISpy);
+				utility.drawTextBox(ispy.response, "not in use", ispy.leaveISpy);
 			}
 			else
 			{
