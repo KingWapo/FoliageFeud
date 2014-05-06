@@ -27,22 +27,10 @@ var buyableObject = {
 
 				
 		}
-		buyableObject.writeDescription();
+		
 	},
 	
-	writeDescription:function()
-	{
-		if(this.description==true)
-		{
-			if(this.name=="adventure")
-			{
-				var strings = [];
-				strings.push(" The adventure hat increases your sprint speed." );
-				utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, true);
-			}
-		}
-	}
-		
+	
 	
 	
 	
