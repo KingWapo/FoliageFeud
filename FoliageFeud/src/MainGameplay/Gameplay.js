@@ -700,9 +700,6 @@ var gameplay = {
 	
 	message:function()
 	{
-		
-			
-		
 		var strings = [];
 		gameplay.createTextBox(25,0);
 		this.writing=true;
@@ -710,42 +707,39 @@ var gameplay = {
 		{	
 				
 				strings.push("Beware you dont know how to swim yet!!");
-				gameplay.createTextBox(25,0,256,132);
-				utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, false);
-				gameplay.drawTextBox=true;
+				gameplay.createTextBox(25,0,288,164);
+				utility.writeText(menuSurface, strings, 30, 60, 64 * 4 - 10, 20, false);
+			
 		}
 		 else if(this.messageType =="waterCoin"  )
 		{	
 			if( cameraController.levelCounter ===0)
 				strings.push(" You have gained the ability to swim! The swim ability is now unlocked in your skill book.");	
-				utility.writeText(menuSurface, strings, 32, 50, 64 * 4, 25, false);
+				gameplay.createTextBox(25,0,288,164);	
+				utility.writeText(menuSurface, strings, 30, 60, 64 * 4, 20, false);
+				
 		}
 		else if(this.messageType =="rockCoin")
 		{
 	
-			strings.push("You can now climb! you can pass through rocks now");	
-			utility.writeText(menuSurface, strings, 32, 50, 64 * 4 , 25, false);
+			strings.push("You can now climb! you can pass through rocks now");
+			gameplay.createTextBox(25,0,288,164);		
+			utility.writeText(menuSurface, strings, 30, 60, 64 * 4 , 20, false);
+			
 		}
 		else if( this.messageType =="rock")
 		{
 		
 			strings.push("you must learn to climb to pass through that");	
-			utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, false);	
+			gameplay.createTextBox(25,0,288,164);	
+			utility.writeText(menuSurface, strings, 30, 60, 64 * 4 - 10, 20, false);
+			
 		}
-		else if(this.messageType=="goldCoin ")
-		{
-			strings.push(" You acquired a gold coin! Use this to buy power ups at the shop");	
-				utility.writeText(menuSurface, strings, 32, 50, 64 * 4 , 25, false);	
-		}
-		else if(this.messageType=="teleporter")
-		{
-			strings.push(" You must collect plants first!");	
-			utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, false);
-		}
+		
 		else if(this.messageType=="blank")
 		{
 			strings.push(" ");
-			utility.writeText(menuSurface, strings, 32, 50, 64 * 4 - 10, 25, false);
+			utility.writeText(menuSurface, strings, 30, 60, 64 * 4 - 10, 25, false);
 		}
 		
 		

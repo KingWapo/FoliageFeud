@@ -674,14 +674,15 @@ infoDisplay:function()
 			var strings = [];
 			strings.push("Purchase this to become your brilliant scientist of a brother." );
 				utility.writeText(menuSurface, strings, 245, 290, 64 * 4, 20, false);
+				utility.drawImage(
+					menuSurface, this.siblingSprite,
+					0, 0, imgShopSibling.width, imgShopSibling.height,
+					315, 155, imgShopSibling.width,imgShopSibling.height
+					);
 				
 			if(gameplay.gold>=shop.mystery.price&& shop.mystery.purchased==false)
 				{
-					utility.drawImage(
-					menuSurface, this.siblingSprite,
-					0, 0, imgShopSibling.width, imgShopSibling.height,
-					750, 300, imgShopSibling.width,imgShopSibling.height
-					);
+					
 					utility.drawImage(
 				menuSurface, imgPurchaseButton,
 				0, 0, imgPurchaseButton.width, imgPurchaseButton.height,
