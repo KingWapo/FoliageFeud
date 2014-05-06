@@ -11,9 +11,9 @@ var shop ={
 	Robot:Object.create(buyableObject),
 	info:false,
 	shopKeeperDisplay:false,
-	parsnipBeaten: true,
-	botnipBeaten: true,
-	englishmanBeaten: true,
+	parsnipBeaten: false,
+	botnipBeaten: false,
+	englishmanBeaten: false,
 	allPlantsFound: false,
 	siblingSprite: new Image(),
 	
@@ -230,12 +230,14 @@ initShop:function()
 	shop.mystery.y=308;
 	shop.mystery.init();
 	//initate english
-	shop.english.price=0;
+	shop.english.price=150;
 	shop.english.x=604;
 	shop.english.y=316;
 	shop.english.init();
 	//initiate robot
 	shop.Robot.price=150;
+	shop.Robot.x=436;
+	shop.Robot.y=308;
 	shop.Robot.init();
 	var strings=[];
 			 strings.push(" gold: " + gameplay.gold);	
@@ -727,6 +729,53 @@ infoDisplay:function()
 					menuSurface, imgMysterySprite,
 					0, 0, imgMysterySprite.width, imgMysterySprite.height,
 					315, 155, 96,96
+			);	
+				}
+	}
+	
+	if(this.Robot.description==true)
+	{
+		var strings = [];
+		
+				if(shop.botnipBeaten)
+				{
+					strings.push("Purchase this to become the EVIL BOTNIP!!!!" );
+					utility.writeText(menuSurface, strings, 245, 290, 64 * 4, 20, false);
+					utility.drawImage(
+					menuSurface, imgRobotNipFront,
+					0, 0, imgRobotNipFront.width, imgRobotNipFront.height,
+					315, 155, imgRobotNipFront.width,imgRobotNipFront.height		
+					);
+			if(gameplay.gold>=this.Robot.price&&this.botnipBeaten&&this.Robot.purchased==false)
+				{
+					utility.drawImage(
+				menuSurface, imgPurchaseButton,
+				0, 0, imgPurchaseButton.width, imgPurchaseButton.height,
+				402, 364, 64,64
+			);
+					utility.addClickItem(402,364, 64,64,this.buyRobot, "");
+					utility.addClickItem(402,364, 64,64,this.exitShop, "");
+				}
+				else
+				{
+				utility.drawImage(
+				menuSurface, imgTransButton,
+				0, 0, imgTransButton.width, imgTransButton.height,
+				402, 364, 64,64
+				
+				);
+				}
+					
+				}
+				else
+				{
+					var strings = [];
+					strings.push("You must defeat the evil Botnip!" );
+					utility.writeText(menuSurface, strings, 245, 290, 64 * 4, 20, false);
+					utility.drawImage(
+					menuSurface, imgMysterySprite,
+					0, 0, imgMysterySprite.width, imgMysterySprite.height,
+					315, 155, 96,96
 			);
 					
 					
@@ -739,7 +788,6 @@ infoDisplay:function()
 		
 	}
 	
-	// Handles the british images and click utiltiy	
 	
 	
 	
