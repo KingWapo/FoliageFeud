@@ -740,6 +740,11 @@ var imgVsParsnipSecond = utility.loadImage("../img/Backgrounds/vsParsnipSecond.p
 var imgVsEnglishman = utility.loadImage("../img/Backgrounds/vsEnglishman.png");
 var imgVsNature = utility.loadImage("../img/Backgrounds/vsNature.png");
 
+var imgTeleportPrairie = utility.loadImage("../img/Backgrounds/teleportericonPrarie.png");
+var imgTeleportForest = utility.loadImage("../img/Backgrounds/teleportericonForest.png");
+var imgTeleportMarsh = utility.loadImage("../img/Backgrounds/teleportericonMarsh.png");
+var imgTeleportHilly = utility.loadImage("../img/Backgrounds/teleportericonHilly.png");
+
 
 createScenery.tilesheet = utility.loadImage("../img/Tiles/tilesheet.png");
 gameplay.mainCamp.sprite = utility.loadImage("../img/Tiles/missions.png");

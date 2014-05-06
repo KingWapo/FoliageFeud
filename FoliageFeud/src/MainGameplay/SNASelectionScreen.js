@@ -11,62 +11,45 @@ var snaSelect = {
 	{
 		gameplay.render();
 		
-		utility.addClickItem(96, 32, imgMapBackground.width, imgMapBackground.height, this.goToMap1, "");
-		utility.addClickItem(imgMapBackground.width + 128, 32, imgMapBackground.width, imgMapBackground.height, this.goToForest, "");
-		utility.addClickItem(96, imgMapBackground.height + 64, imgMapBackground.width, imgMapBackground.height, this.goToMarsh, "");
-		utility.addClickItem(imgMapBackground.width + 128, imgMapBackground.height + 64, imgMapBackground.width, imgMapBackground.height, this.goToHilly, "");
+		utility.addClickItem(96, 32, imgTeleportPrairie.width, imgTeleportPrairie.height, this.goToMap1, "");
+		utility.addClickItem(imgTeleportForest.width + 128, 32, imgTeleportForest.width, imgTeleportForest.height, this.goToForest, "");
+		utility.addClickItem(96, imgTeleportMarsh.height + 64, imgTeleportMarsh.width, imgTeleportMarsh.height, this.goToMarsh, "");
+		utility.addClickItem(imgTeleportHilly.width + 128, imgTeleportHilly.height + 64, imgTeleportHilly.width, imgTeleportHilly.height, this.goToHilly, "");
 		
-		//Map 1
-		utility.drawImage(
-			menuSurface, imgMapBackground,
-			0, 0, imgMapBackground.width, imgMapBackground.height,
-			96, 32, imgMapBackground.width, imgMapBackground.height
-		);
 		
+		//Prairie
 		utility.drawImage(
-			menuSurface, imgMap1,
-			0, 0, imgMap1.width, imgMap1.height,
-			128 + 128 + 32, 52, imgMap1.width, imgMap1.height
+			menuSurface, imgTeleportPrairie,
+			0, 0, imgTeleportPrairie.width, imgTeleportPrairie.height,
+			96, 32, imgTeleportPrairie.width, imgTeleportPrairie.height
 		);
 		
 		// Forest
 		utility.drawImage(
-			menuSurface, imgMapBackground,
-			0, 0, imgMapBackground.width, imgMapBackground.height,
-			imgMapBackground.width + 128, 32, imgMapBackground.width, imgMapBackground.height
+			menuSurface, imgTeleportForest,
+			0, 0, imgTeleportForest.width, imgTeleportForest.height,
+			imgTeleportForest.width + 128, 32, imgTeleportForest.width, imgTeleportForest.height
 		);
-		
-		utility.drawImage(
-			menuSurface, imgForestMap,
-			0, 0, imgForestMap.width, imgForestMap.height,
-			imgMapBackground.width + 128 + 32 + 128 + 32, 52, imgForestMap.width, imgForestMap.height
-		);
-		
+
 		// Marsh
 		utility.drawImage(
-			menuSurface, imgMapBackground,
-			0, 0, imgMapBackground.width, imgMapBackground.height,
-			96, imgMapBackground.height + 64, imgMapBackground.width, imgMapBackground.height
-		);
-		
-		utility.drawImage(
-			menuSurface, imgMarshMap,
-			0, 0, imgMarshMap.width, imgMarshMap.height,
-			128 + 128 + 32, imgMapBackground.height + 84, imgMarshMap.width, imgMarshMap.height
+			menuSurface, imgTeleportMarsh,
+			0, 0, imgTeleportMarsh.width, imgTeleportMarsh.height,
+			96, imgTeleportMarsh.height + 64, imgTeleportMarsh.width, imgTeleportMarsh.height
 		);
 		
 		// Hilly
 		utility.drawImage(
-			menuSurface, imgMapBackground,
-			0, 0, imgMapBackground.width, imgMapBackground.height,
-			imgMapBackground.width + 128, imgMapBackground.height + 64, imgMapBackground.width, imgMapBackground.height
+			menuSurface, imgTeleportHilly,
+			0, 0, imgTeleportHilly.width, imgTeleportHilly.height,
+			imgTeleportHilly.width + 128, imgTeleportHilly.height + 64, imgTeleportHilly.width, imgTeleportHilly.height
 		);
 		
-		utility.drawImage(
-			menuSurface, imgHillyMap,
-			0, 0, imgHillyMap.width, imgHillyMap.height,
-			imgMapBackground.width + 128 + 32 + 128 + 32, imgMapBackground.height + 84, imgHillyMap.width, imgHillyMap.height
-		);
+		
+		utility.writeText(menuSurface, ["Prairie"], 96 + 32, imgTeleportForest.height + 12, 256, 20, false);
+		utility.writeText(menuSurface, ["Forest"], imgTeleportForest.width + 128 + 32, imgTeleportForest.height + 12, 256, 20, false);
+		utility.writeText(menuSurface, ["Marsh"], 96 + 32, 2 * imgTeleportForest.height + 48, 256, 20, false);
+		utility.writeText(menuSurface, ["Hilly"], imgTeleportForest.width + 128 + 32, 2 * imgTeleportForest.height + 48, 256, 20, false);
 		
 			
 		var x = (CANVAS_WIDTH - imgExitButton.width) / 2;
