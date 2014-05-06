@@ -72,6 +72,7 @@ var gameplay = {
 	climbing: false,
 	sprinting:false,
 	questDisplay: false,
+	englishmanSpeaks: false,
 	curMap: [],
 	curObjMap: [],
 	teleporterCoords: [],
@@ -1011,7 +1012,13 @@ var gameplay = {
 			//check for collisions with collidables.
 			
 			if (this.botnipSummoned) this.updateBotnip();
-			if (this.englishmanSummoned) this.updateEnglishman();
+			if (this.englishmanSummoned){ 
+				this.updateEnglishman();
+				if (!this.englishmanSpeaks)
+				{
+					utility.drawTextBox(["This isn't England..."], "not in use", function() { this.englishmanSpeaks = true; })
+				}
+			}
 			if (!screensLoaded[ScreenState.WorldEvent] && cameraController.mapBuilt)
 			{
 				try {
@@ -1570,7 +1577,6 @@ var gameplay = {
 	summonBotnip: function()
 	{
 		var randSummon = Math.random() * 18000;
-		randSummon = 588;
 		if ( randSummon < 600)
 		{
 			this.botnipSummoned = true;
@@ -1583,12 +1589,12 @@ var gameplay = {
 	summonEnglishman: function()
 	{
 		var randSummon = Math.random() * 1000;
+		randSummon = 1;
 		if ( randSummon < 10)
 		{
 			this.englishmanSummoned = true;
 			this.englishman.x = Math.random() * this.curMap[0].length * 64;
 			this.englishman.y = Math.random() * this.curMap.length * 64;
-			console.debug("Englishman is summoned!");
 		}
 	},
 	
