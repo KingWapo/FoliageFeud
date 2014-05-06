@@ -65,11 +65,11 @@ var mainCamp = {
 		this.dingle.x = 128;
 		this.dingle.y = 1.5 * 128;
 		
-		if (currentSprite == SpriteState.Boy || currentSprite == SpriteState.Girl)
+		if (originalSprite == SpriteState.Boy || originalSprite == SpriteState.Girl)
 		{
 			this.dingle.sprite = imgShopSibling;
 		}
-		else if (currentSprite == SpriteState.Boy2 || currentSprite == SpriteState.Girl2)
+		else if (originalSprite == SpriteState.Boy2 || originalSprite == SpriteState.Girl2)
 		{
 			this.dingle.sprite = imgShopSibling2;
 		}

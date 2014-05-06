@@ -550,7 +550,8 @@ var utility = {
 		cookie += shop.goggles.purchased + ".";
 		cookie += shop.mystery.purchased + ".";
 		cookie += shop.english.purchased + ".";
-		cookie += shop.Robot.purchased + ";";
+		cookie += shop.Robot.purchased + ".";
+		cookie += originalSprite + ";";
 		cookie += "expires=" + d.toGMTString();
 		
 		document.cookie = cookie;
@@ -620,6 +621,7 @@ var utility = {
 			shop.mystery.purchased = data[19] == "true";
 			shop.english.purchased = data[20] == "true";
 			shop.Robot.purchased = data[21] == "true";
+			originalSprite = parseInt(data[22]);
 			
 			gameplay.canSave = true;
 			gameplay.loadingSave = true;

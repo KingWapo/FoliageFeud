@@ -141,11 +141,11 @@ render:function()
 				);
 			}
 	//decides the sprite for your brother.			
-	if (currentSprite == SpriteState.Boy || currentSprite == SpriteState.Girl)
+	if (originalSprite == SpriteState.Boy || originalSprite == SpriteState.Girl)
 	{
 		this.siblingSprite = imgShopSibling;
 	}
-	else if (currentSprite == SpriteState.Boy2 || currentSprite == SpriteState.Girl2)
+	else if (originalSprite == SpriteState.Boy2 || originalSprite == SpriteState.Girl2)
 	{
 		this.siblingSprite = imgShopSibling2;
 	}
@@ -282,7 +282,10 @@ buyAdventure:function()
 changeSkin: function(empty)
 {
 	console.debug("Changing Skin");
-	if (shop.parsnipMask.purchased || shop.siblingSprite.purchased || shop.english.purchased || shop.Robot.purchased)
+	if (shop.parsnipMask.purchased || 
+		shop.mystery.purchased || 
+		shop.english.purchased || 
+		shop.Robot.purchased)
 	{
 		characterSelection.fromShop = true;
 		characterSelection.init();
