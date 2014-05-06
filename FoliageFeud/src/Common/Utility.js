@@ -542,7 +542,15 @@ var utility = {
 		cookie += shop.parsnipBeaten + ".";
 		cookie += skillBook.swimLevel + ".";
 		cookie += skillBook.climbLevel + ".";
-		cookie += skillBook.sprintLevel + ";";
+		cookie += skillBook.sprintLevel + ".";
+		cookie += shop.adventure.purchased + ".";
+		cookie += shop.rockCoin.purchased + ".";
+		cookie += shop.waterCoin.purchased + ".";
+		cookie += shop.parsnipMask.purchased + ".";
+		cookie += shop.goggles.purchased + ".";
+		cookie += shop.mystery.purchased + ".";
+		cookie += shop.english.purchased + ".";
+		cookie += shop.Robot.purchased + ";";
 		cookie += "expires=" + d.toGMTString();
 		
 		document.cookie = cookie;
@@ -594,15 +602,24 @@ var utility = {
 				console.debug(quests.finishedQuests[i], " ", plantList[quests.finishedQuests[i]].name);
 			}
 			
-			gameplay.visitedBrother = data[6] == "true" ? true : false;
-			shop.botnipBeaten = data[7] == "true" ? true : false;
-			shop.englishmanBeaten = data[8] == "true" ? true : false;
-			shop.allPlantsFound = data[9] == "true" ? true : false;
-			shop.parsnipBeaten = data[10] == "true" ? true : false;
+			gameplay.visitedBrother = data[6] == "true";
+			shop.botnipBeaten = data[7] == "true";
+			shop.englishmanBeaten = data[8] == "true";
+			shop.allPlantsFound = data[9] == "true";
+			shop.parsnipBeaten = data[10] == "true";
 			
 			skillBook.swimLevel = parseInt(data[11]);
 			skillBook.climbLevel = parseInt(data[12]);
 			skillBook.sprintLevel = parseInt(data[13]);
+			
+			shop.adventure.purchased = data[14] == "true";
+			shop.rockCoin.purchased = data[15] == "true";
+			shop.waterCoin.purchased = data[16] == "true";
+			shop.parsnipMask.purchased = data[17] == "true";
+			shop.goggles.purchased = data[18] == "true";
+			shop.mystery.purchased = data[19] == "true";
+			shop.english.purchased = data[20] == "true";
+			shop.Robot.purchased = data[21] == "true";
 			
 			gameplay.canSave = true;
 			gameplay.loadingSave = true;
