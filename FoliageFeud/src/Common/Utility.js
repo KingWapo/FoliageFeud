@@ -685,6 +685,7 @@ var imgLeftDrawnArrow = utility.loadImage("../img/Buttons/arrowDrawnLeft.png");
 var imgRightDrawnArrow = utility.loadImage("../img/Buttons/arrowDrawnRight.png");
 var imgQuestionMark = utility.loadImage("../img/Buttons/QuestionMark.png");
 var imgInfoButton = utility.loadImage("../img/Buttons/infoButton.png");
+
 var imgMaleSprite = utility.loadImage("../img/Player/characterMale.png");
 var imgFemaleSprite = utility.loadImage("../img/Player/characterFemale.png");
 var imgMaleDiverseSprite = utility.loadImage("../img/Player/characterMaleDiverse.png");
@@ -695,6 +696,7 @@ var imgBlackDingleSprite = utility.loadImage("../img/Player/siblingMaleDiverse.p
 var imgUnicornSprite = utility.loadImage("../img/Player/unicorn.png");
 var imgBotnipSprite = utility.loadImage("../img/Player/botnip.png");
 var imgEnglishmanSprite = utility.loadImage("../img/Player/britishWanderer.png");
+
 var imgTimer = utility.loadImage("../img/WorldEvent/timer.png");
 var imgTimerBg = utility.loadImage("../img/WorldEvent/timerBackground.png");
 var imgCheckmark = utility.loadImage("../img/WorldEvent/Checkmark.png");
