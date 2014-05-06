@@ -551,7 +551,8 @@ var utility = {
 		cookie += shop.mystery.purchased + ".";
 		cookie += shop.english.purchased + ".";
 		cookie += shop.Robot.purchased + ".";
-		cookie += originalSprite + ";";
+		cookie += originalSprite + ".";
+		cookie += gameplay.introStoryDone + ";";
 		cookie += "expires=" + d.toGMTString();
 		
 		document.cookie = cookie;
@@ -622,6 +623,7 @@ var utility = {
 			shop.english.purchased = data[20] == "true";
 			shop.Robot.purchased = data[21] == "true";
 			originalSprite = parseInt(data[22]);
+			gameplay.introStoryDone = data[23] == "true";
 			
 			gameplay.canSave = true;
 			gameplay.loadingSave = true;
