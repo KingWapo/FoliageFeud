@@ -70,16 +70,8 @@ render:function()
 			0, 0, imgPrice.width, imgPrice.height,
 			600, 435, 128, 32
 		);
-		utility.drawImage(
-			gameplaySurface, imgPrice,
-			0, 0, imgPrice.width, imgPrice.height,
-			765, 270, 128, 32
-		);
-		utility.drawImage(
-			gameplaySurface, imgPrice,
-			0, 0, imgPrice.width, imgPrice.height,
-			930, 270, 128, 32
-		);
+	
+		
 		// the shop exit button
 		utility.drawImage(
 			gameplaySurface, imgExitButton,
@@ -164,11 +156,7 @@ render:function()
 				598, 308, 128, 128
 				);
 			}
-			utility.drawImage(
-			gameplaySurface, imgAdventure,
-			0, 0, imgAdventure.width, imgAdventure.height,
-			934, 138, imgAdventure.width,imgAdventure.height
-			);
+		
 			// shop keeper image
 			utility.drawImage(
 			gameplaySurface, this.siblingSprite,
