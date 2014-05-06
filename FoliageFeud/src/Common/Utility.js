@@ -722,6 +722,8 @@ var imgBackgroundMainCamp = utility.loadImage("../img/Backgrounds/plantsBackgrou
 var imgPostItNote = utility.loadImage("../img/Backgrounds/plantsUnderlay01.png");
 var imgTransButton = utility.loadImage("../img/Buttons/buyButtonTransperent.png");
 var imgMysterySprite= utility.loadImage("../img/Player/siblingShopSecret.png");
+var imgRobotNipFront=utility.loadImage("../img/Player/botnipForward.png");
+var imgBritish = utility.loadImage("../img/Player/britishWandererForward.png");
 
 var imgLoadGameButton = utility.loadImage("../img/Buttons/loadButton.png");
 var imgNewGameButton = utility.loadImage("../img/Buttons/newButton.png");

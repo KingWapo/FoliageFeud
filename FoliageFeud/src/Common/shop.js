@@ -9,10 +9,10 @@ var shop ={
 	mystery:Object.create(buyableObject),
 	info:false,
 	shopKeeperDisplay:false,
-	parsnipBeaten: true,
-	botnipBeaten: false,
-	englishmanBeaten: false,
-	allPlantsFound: true,
+	parsnipBeaten: false,
+	botnipBeaten: true,
+	englishmanBeaten: true,
+	allPlantsFound: false,
 	siblingSprite: new Image(),
 	
 render:function()
@@ -105,7 +105,11 @@ render:function()
 			// checks if you have completed the game then draws the mystery sprite or the shop keeper sprite
 			if(shop.botnipBeaten)
 			{
-				// Botnip sprite forward
+				utility.drawImage(
+					menuSurface, imgRobotNipFront,
+					0, 0, imgRobotNipFront.width, imgRobotNipFront.height,
+					436, 308, 96,96
+			);
 			}
 			else
 			{
@@ -132,9 +136,22 @@ render:function()
 				265, 308, 128, 128
 				);
 			}
+	//decides the sprite for your brother.			
+	if (currentSprite == SpriteState.Boy || currentSprite == SpriteState.Girl)
+	{
+		this.siblingSprite = imgShopSibling;
+	}
+	else if (currentSprite == SpriteState.Boy2 || currentSprite == SpriteState.Girl2)
+	{
+		this.siblingSprite = imgShopSibling2;
+	}
 			if(shop.allPlantsFound)
 			{
-				// brother sprite forward (Changes based off ethnicity of self)
+				utility.drawImage(
+					gameplaySurface, this.siblingSprite,
+					0, 0, imgShopSibling.width, imgShopSibling.height,
+					96, 308, imgShopSibling.width,imgShopSibling.height
+			);
 			}
 			else
 			{
@@ -146,7 +163,11 @@ render:function()
 			}
 			if(shop.englishmanBeaten)
 			{
-				// british Wanderer sprite forward
+				utility.drawImage(
+					menuSurface, imgBritish,
+					0, 0, imgBritish.width, imgBritish.height,
+					604, 316, 96,96
+			);
 			}
 			else
 			{
@@ -177,45 +198,37 @@ render:function()
 initShop:function()
 {	
    //init the water Coin
-	shop.superWaterCoin.price=0;
+	shop.superWaterCoin.price=30;
 	shop.superWaterCoin.x=598;
 	shop.superWaterCoin.y=138;
 	shop.superWaterCoin.init();
 	//init the adventure hat
-	shop.adventure.price=0;
+	shop.adventure.price=30;
 	shop.adventure.x=96;
 	shop.adventure.y=138;
 	shop.adventure.init();
 	//init the rockCoin
-	shop.rockCoin.price=0;
+	shop.rockCoin.price=10;
 	shop.rockCoin.x=265;
 	shop.rockCoin.y=140;
 	shop.rockCoin.init();
 	//init the second water coin
-	shop.waterCoin.price=0;
+	shop.waterCoin.price=30;
 	shop.waterCoin.x=429;
 	shop.waterCoin.y=140;
 	shop.waterCoin.init();	
-	//inti the parsnip sprit
+	//init the parsnip sprit
 	shop.parsnipMask.x=265;
 	shop.parsnipMask.y=308;
-	shop.parsnipMask.price=0;
+	shop.parsnipMask.price=300;
 	shop.parsnipMask.init();
-	//int the mystery sprite
-	shop.mystery.price=0;
+	//init the unlockable brother sprite.
+	shop.mystery.price=150;
 	shop.mystery.x=96;
 	shop.mystery.y=308;
 	shop.mystery.init();
-	
-	
-	if (currentSprite == SpriteState.Boy || currentSprite == SpriteState.Girl)
-	{
-		this.siblingSprite = imgShopSibling;
-	}
-	else if (currentSprite == SpriteState.Boy2 || currentSprite == SpriteState.Girl2)
-	{
-		this.siblingSprite = imgShopSibling2;
-	}
+	//initate
+
 	
 	var strings=[];
 			 strings.push(" gold: " + gameplay.gold);	
@@ -397,6 +410,8 @@ drawPrices:function()
 	strings.push(" 150 gold ");
 	utility.writeText(gameplaySurface, strings, 94, 460, 64 * 4, 20, false);
 	strings.pop();
+	strings.push("150 gold");
+	utility.writeText(gameplaySurface, strings, 435, 455, 64 * 4, 20, false);
 	
 },
 
@@ -588,10 +603,13 @@ infoDisplay:function()
 			strings.push("Collect all the plants to unlock this skin!" );
 				utility.writeText(menuSurface, strings, 245, 290, 64 * 4, 20, false);
 				utility.drawImage(
-				menuSurface, imgMysterySprite,
-				0, 0, imgMysterySprite.width, imgMysterySprite.height,
-				315, 155, 96,96
+					menuSurface, imgMysterySprite,
+					0, 0, imgMysterySprite.width, imgMysterySprite.height,
+					315, 155, 96,96
 			);
+				
+			
+		
 			
 		}
 		else
@@ -599,20 +617,31 @@ infoDisplay:function()
 			var strings = [];
 			strings.push("Purchase this to become your brilliant scientist of a brother." );
 				utility.writeText(menuSurface, strings, 245, 290, 64 * 4, 20, false);
-				utility.drawImage(
-				menuSurface, imgMysterySprite,
-				0, 0, imgMysterySprite.width, imgMysterySprite.height,
-				315, 155, 96,96
-		);
+				
 			if(gameplay.gold>=shop.mystery.price&& shop.mystery.purchased==false)
 				{
+					utility.drawImage(
+					gameplaySurface, this.siblingSprite,
+					0, 0, imgShopSibling.width, imgShopSibling.height,
+					750, 300, imgShopSibling.width,imgShopSibling.height
+					);
 					utility.drawImage(
 				menuSurface, imgPurchaseButton,
 				0, 0, imgPurchaseButton.width, imgPurchaseButton.height,
 				402, 364, 64,64
-			);
+				);
 					utility.addClickItem(402,364, 64,64,this.buyMystery, "");
 					utility.addClickItem(402,364, 64,64,this.exitShop, "");
+				}
+				else
+				{
+						
+				utility.drawImage(
+				menuSurface, imgTransButton,
+				0, 0, imgTransButton.width, imgTransButton.height,
+				402, 364, 64,64
+				);
+					
 				}
 			
 		}
