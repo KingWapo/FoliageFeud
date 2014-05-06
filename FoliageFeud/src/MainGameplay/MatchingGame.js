@@ -260,6 +260,8 @@ var matching = {
 			gameplay.gold += 15;
 		}
 		exiting[currentScreen] = true;
+		
+		gameplay.chooseSong(gameplay.currentLevel);
 	}
 };
 
