@@ -491,7 +491,13 @@ var utility = {
 	
 	drawEsc: function()
 	{
-		utility.writeForClick(menuSurface, ["Save"], CANVAS_WIDTH / 2 - 16, CANVAS_HEIGHT / 2 - 16, 200, 32, false, [function(){console.debug("clickyclick");if (gameplay.canSave)utility.setCookie();}, ['']]);
+		utility.writeForClick(menuSurface, ["Save"], CANVAS_WIDTH / 2 - 16, CANVAS_HEIGHT / 2 - 16, 200, 32, false, [utility.save, [100]]);
+	},
+	
+	save: function(cooldown)
+	{
+		if (gameplay.canSave)utility.setCookie();
+		utility.writeText(menuSurface, ["Saved..."], 32, 32, 200, 32, false, [function() {if(cooldown > 0) utility.save; } [cooldown - 1]]);
 	},
 	
 	setCookie: function()
@@ -721,6 +727,8 @@ var imgLoadGameButton = utility.loadImage("../img/Buttons/loadButton.png");
 var imgNewGameButton = utility.loadImage("../img/Buttons/newButton.png");
 var imgDemoButton = utility.loadImage("../img/Buttons/demoButton.png");
 var imgCreditsButton = utility.loadImage("../img/Buttons/creditsButton.png");
+
+var imgCage = utility.loadImage("../img/Tiles/cage.png");
 
 var imgBoyTalking = utility.loadImage("../img/Player/characterMaleForward.png");
 var imgSwimGoggles = utility.loadImage("../img/Hats/swimming.png");

@@ -11,6 +11,7 @@ var endScene = {
 	
 	checkpoint: Games.ISPY,
 	plantsNeeded: 10,
+	fianceeFreed: false,
 	
 	phrases: [
 		["You have been ruining my plans for long enough! This time, let's see if you can beat me in a game of wits!"], // Talk before ispy
@@ -160,8 +161,8 @@ var endScene = {
 		this.parsnip.sprite = imgParsnipSprite;
 		
 		this.fiancee.animation = Animation.Left;
-		this.fiancee.x = CANVAS_WIDTH - 188;
-		this.fiancee.y = (CANVAS_HEIGHT - this.fiancee.height) / 2 - 128;
+		this.fiancee.x = CANVAS_WIDTH - 188 - 32;
+		this.fiancee.y = (CANVAS_HEIGHT - this.fiancee.height) / 2 - 128 + 32;
 		switch(currentSprite)
 		{
 			case SpriteState.Boy:
@@ -212,6 +213,19 @@ var endScene = {
 			this.parsnip.width, this.parsnip.height
 		
 		);
+		
+		if (!this.fianceeFreed)
+		{
+			utility.drawImage
+			(
+				gameplaySurface, imgCage, 
+				0, 0, 
+				128, 128,
+				Math.floor(this.fiancee.x) - 32, Math.floor(this.fiancee.y) - 32, 
+				128, 128
+			
+			);
+		}
 		utility.drawImage
 		(
 			gameplaySurface, this.fiancee.sprite, 
@@ -221,6 +235,30 @@ var endScene = {
 			this.fiancee.width, this.fiancee.height
 		
 		);
+		if (!this.fianceeFreed)
+		{
+			utility.drawImage
+			(
+				gameplaySurface, imgCage, 
+				128, 0, 
+				128, 128,
+				Math.floor(this.fiancee.x) - 32, Math.floor(this.fiancee.y) - 32, 
+				128, 128
+			
+			);
+		}
+		else
+		{
+			utility.drawImage
+			(
+				gameplaySurface, imgCage, 
+				2 * 128, 0, 
+				128, 128,
+				Math.floor(this.fiancee.x) - 32, Math.floor(this.fiancee.y) - 32, 
+				128, 128
+			
+			);
+		}
 		utility.drawImage
 		(
 			gameplaySurface, this.botnip.sprite, 
@@ -288,6 +326,7 @@ var endScene = {
 				}
 				else
 				{
+					this.fianceeFreed = true;
 					endScene.overallIndex += 1;
 				}
 				break;

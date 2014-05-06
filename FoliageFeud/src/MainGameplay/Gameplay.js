@@ -1570,6 +1570,7 @@ var gameplay = {
 	summonBotnip: function()
 	{
 		var randSummon = Math.random() * 18000;
+		randSummon = 588;
 		if ( randSummon < 600)
 		{
 			this.botnipSummoned = true;
@@ -1595,6 +1596,15 @@ var gameplay = {
 	{
 		vx = gameplay.player.x - gameplay.botnip.x > 0 ? 1 : -1;
 		vy = gameplay.player.y - gameplay.botnip.y > 0 ? 1 : -1;
+		
+		if (vx > 0)
+		{
+			this.botnip.sourceX = 0;
+		}
+		else
+		{
+			this.botnip.sourceX = 64;
+		}
 		
 		this.botnip.x += vx * this.player.runSpeed;
 		this.botnip.y += vy * this.player.runSpeed;
