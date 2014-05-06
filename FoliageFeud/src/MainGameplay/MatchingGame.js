@@ -260,6 +260,7 @@ var matching = {
 			gameplay.gold += 15;
 		}
 		exiting[currentScreen] = true;
+		matching.numFlipped = 0;
 		
 		gameplay.chooseSong(gameplay.currentLevel);
 	}

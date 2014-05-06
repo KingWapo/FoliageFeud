@@ -332,6 +332,7 @@ function mainUpdate()
 				else if (matching.fromEnd)
 				{
 					matching.fromEnd = false;
+					entering[currentScreen] = true;
 					if (matching.won)
 					{
 						switchGamemode(ScreenState.End);
