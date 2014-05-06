@@ -111,9 +111,7 @@ render:function()
 					menuSurface, imgRobotNipFront,
 					0, 0, imgRobotNipFront.width, imgRobotNipFront.height,
 					436, 308, 96,96
-					
 			);
-			Robot.init();
 			}
 			else
 			{
@@ -167,14 +165,11 @@ render:function()
 			}
 			if(shop.englishmanBeaten)
 			{
-				
 				utility.drawImage(
 					menuSurface, imgBritish,
 					0, 0, imgBritish.width, imgBritish.height,
 					604, 316, 96,96
-				
 			);
-			this.english.init();
 			}
 			else
 			{
@@ -246,11 +241,12 @@ initShop:function()
 	shop.english.price=150;
 	shop.english.x=604;
 	shop.english.y=316;
-	
+	shop.english.init();
 	//initiate robot
 	shop.Robot.price=150;
 	shop.Robot.x=436;
 	shop.Robot.y=308;
+	shop.Robot.init();
 	var strings=[];
 			 strings.push(" gold: " + gameplay.gold);	
 				menuSurface.drawImage(
