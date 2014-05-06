@@ -10,6 +10,30 @@
 var title = {
 	playAsGirl: Object.create(spriteObject),
 	playAsBoy: Object.create(spriteObject),
+	onCredits: false,
+	credits: ["-Programmers-",
+			  "Adam Holcombe",
+			  "Brandon Felch",
+			  "Chase Christensen",
+			  "",
+			  "-Artists-",
+			  "Ben Pease",
+			  "Dylan Kuiper",
+			  "",
+			  "-Music-",
+			  "Black Vortex",
+			  "Call to Adventure",
+			  "Minstrel Guild",
+			  "Monkeys Spinning",
+			  "Pangaea",
+			  "Sneaky Snitch",
+			  "The Builder",
+			  "Radio Martini",
+			  "Evil Plan FX",
+			  "8bit Dungeon Boss",
+			  "Steel and Seething",
+			  "All by Keven Macleod"],
+	yPos: CANVAS_HEIGHT + 200,
 	
 	init: function()
 	{
@@ -53,7 +77,7 @@ var title = {
 	
 	creditsClicked: function()
 	{
-		
+		title.onCredits = true;
 	},
 	
 	render: function()
@@ -61,30 +85,43 @@ var title = {
 		utility.clearAll();
 		x = (1152 - imgLoadGameButton.width) / 2 - 128;
 		y = (512 - imgLoadGameButton.height) / 2 - 32;
-		utility.drawImage(
-			menuSurface, imgLoadGameButton,
-			0, 0, imgLoadGameButton.width, imgLoadGameButton.height,
-			x, y, imgLoadGameButton.width, imgLoadGameButton.height
-			);
-		utility.addClickItem(x, y, imgLoadGameButton.width, imgLoadGameButton.height, this.loadClicked);
-		utility.drawImage(
-			menuSurface, imgDemoButton,
-			0, 0, imgDemoButton.width, imgDemoButton.height,
-			x, y + 128, imgDemoButton.width, imgDemoButton.height
-			);
-		utility.addClickItem(x, y + 128, imgDemoButton.width, imgDemoButton.height, this.demoClicked);
-		utility.drawImage(
-			menuSurface, imgNewGameButton,
-			0, 0, imgNewGameButton.width, imgNewGameButton.height,
-			x + 256 + 32, y, imgNewGameButton.width, imgNewGameButton.height
-			);
-		utility.addClickItem(x + 256 + 32, y, imgNewGameButton.width, imgNewGameButton.height, this.newGameClicked);
-		utility.drawImage(
-			menuSurface, imgCreditsButton,
-			0, 0, imgCreditsButton.width, imgCreditsButton.height,
-			x + 256 + 32, y + 128, imgCreditsButton.width, imgCreditsButton.height
-			);
-		utility.addClickItem(x + 256 + 32, y + 128, imgCreditsButton.width, imgCreditsButton.height, this.creditsClicked);
+		if (!this.onCredits)
+		{
+			utility.drawImage(
+				menuSurface, imgLoadGameButton,
+				0, 0, imgLoadGameButton.width, imgLoadGameButton.height,
+				x, y, imgLoadGameButton.width, imgLoadGameButton.height
+				);
+			utility.addClickItem(x, y, imgLoadGameButton.width, imgLoadGameButton.height, this.loadClicked);
+			utility.drawImage(
+				menuSurface, imgDemoButton,
+				0, 0, imgDemoButton.width, imgDemoButton.height,
+				x, y + 128, imgDemoButton.width, imgDemoButton.height
+				);
+			utility.addClickItem(x, y + 128, imgDemoButton.width, imgDemoButton.height, this.demoClicked);
+			utility.drawImage(
+				menuSurface, imgNewGameButton,
+				0, 0, imgNewGameButton.width, imgNewGameButton.height,
+				x + 256 + 32, y, imgNewGameButton.width, imgNewGameButton.height
+				);
+			utility.addClickItem(x + 256 + 32, y, imgNewGameButton.width, imgNewGameButton.height, this.newGameClicked);
+			utility.drawImage(
+				menuSurface, imgCreditsButton,
+				0, 0, imgCreditsButton.width, imgCreditsButton.height,
+				x + 256 + 32, y + 128, imgCreditsButton.width, imgCreditsButton.height
+				);
+			utility.addClickItem(x + 256 + 32, y + 128, imgCreditsButton.width, imgCreditsButton.height, this.creditsClicked);
+		}
+		else
+		{
+			utility.writeText(menuSurface, title.credits, 300, this.yPos, CANVAS_WIDTH / 2, 24, false);
+			this.yPos -= 16;
+			if (this.yPos < -1200)
+			{
+				this.yPos = CANVAS_HEIGHT + 200;
+				this.onCredits = false;
+			}
+		}
 		utility.drawImage(
 			backgroundSurface, imgMenuBg,
 			0, 0, imgMenuBg.width, imgMenuBg.height,
