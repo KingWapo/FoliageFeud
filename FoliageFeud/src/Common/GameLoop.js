@@ -249,7 +249,7 @@ function mainUpdate()
 			}
 			if (exiting[currentScreen])
 			{
-				gameplay.writtingClear();
+				gameplay.writingClear();
 				if (ispy.fromTraining)
 				{
 					switchGamemode(ScreenState.TrainingMode);

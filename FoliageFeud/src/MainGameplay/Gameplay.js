@@ -23,7 +23,7 @@ var Level = {
 	Forest: 3,
 	Marsh: 4,
 	Hilly: 5,
-	writting:false
+	writing:false
 };
 var messageType={
 	water:0,
@@ -66,7 +66,7 @@ var gameplay = {
 	onTeleport: false,
 	onTraining: false,
 	onPlants: false,
-	writting:false,
+	writing:false,
 	trainning:true,
 	swimming: false,
 	climbing: false,
@@ -705,7 +705,7 @@ var gameplay = {
 		
 		var strings = [];
 		gameplay.createTextBox(25,0);
-		this.writting=true;
+		this.writing=true;
 		if(this.messageType=="water" )
 		{	
 				
@@ -752,7 +752,7 @@ var gameplay = {
 		
 	
 	},
-	writtingClear:function()
+	writingClear:function()
 	{
 		gameplay.messageType="blank";
 		gameplay.timeout=true;
@@ -772,7 +772,7 @@ var gameplay = {
 			
 			if(gameplay.timeout==true){
 				
-				setTimeout(this.writtingClear,7000);
+				setTimeout(this.writingClear,7000);
 				gameplay.timeout=false;
 			}
 		
@@ -1714,7 +1714,7 @@ var gameplay = {
 		{
 			backgroundSurface.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
 			gameplaySurface.clearRect(0, 0, gameplayCanvas.width, gameplayCanvas.height);
-			if(this.writting==false)
+			if(this.writing==false)
 			{
 				
 				menuSurface.clearRect(0, 0, menuCanvas.width, menuCanvas.height);
@@ -2003,7 +2003,7 @@ window.addEventListener("keyup", function(event)
 	{		
 		
 			skillBook.display=false;
-			gameplay.writtingClear();
+			gameplay.writingClear();
 	}
 	if (event.keyCode == 81)
 	{

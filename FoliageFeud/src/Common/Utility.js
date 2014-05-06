@@ -20,7 +20,7 @@ var utility = {
 	totalNumAssets: 0,
 	curNumAssets: 0,
 	curSong: '',
-	writting:false,
+	writing:false,
 	textIndex: 0,
 	textShown: false,
 	onEsc: false,

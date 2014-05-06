@@ -5,7 +5,7 @@ var shop ={
 	rockCoin: Object.create(buyableObject),
 	waterCoin: Object.create(buyableObject),
 	parsnipMask:Object.create(buyableObject),
-	superWaterCoin:Object.create(buyableObject),
+	goggles:Object.create(buyableObject),
 	mystery:Object.create(buyableObject),
 	info:false,
 	shopKeeperDisplay:false,
@@ -198,10 +198,10 @@ render:function()
 initShop:function()
 {	
    //init the water Coin
-	shop.superWaterCoin.price=30;
-	shop.superWaterCoin.x=598;
-	shop.superWaterCoin.y=138;
-	shop.superWaterCoin.init();
+	shop.goggles.price=30;
+	shop.goggles.x=598;
+	shop.goggles.y=138;
+	shop.goggles.init();
 	//init the adventure hat
 	shop.adventure.price=30;
 	shop.adventure.x=96;
@@ -304,12 +304,12 @@ buyWater:function()
 buyWaterCoin:function()
 {
 
-	if(shop.superWaterCoin.description==true&&shop.superWaterCoin.purchased==false)
+	if(shop.goggles.description==true&&shop.goggles.purchased==false)
 	{
-		shop.superWaterCoin.buy();
+		shop.goggles.buy();
 		skillBook.swimLevel=skillBook.swimLevel+1;
 	}
-	shop.superWaterCoin.description=true;
+	shop.goggles.description=true;
 	shop.info=true;
 	
 },
@@ -346,7 +346,7 @@ exitShop:function()
 		shop.rockCoin.description=false;
 		shop.shopKeeperDisplay=false;
 		shop.parsnipMask.description=false;
-		shop.superWaterCoin.description=false;
+		shop.goggles.description=false;
 		shop.mystery.description=false;
 	
 },
@@ -475,7 +475,7 @@ infoDisplay:function()
 				
 				
 	}
-	if(this.superWaterCoin.description==true)
+	if(this.goggles.description==true)
 	{
 				var strings = [];
 				strings.push(" The water coin increases your swim speed.  " );
@@ -486,7 +486,7 @@ infoDisplay:function()
 				315, 155, imgWater.width,imgWater.height
 			);
 				
-				if(gameplay.gold>=this.superWaterCoin.price&&this.superWaterCoin.purchased==false)
+				if(gameplay.gold>=this.goggles.price&&this.goggles.purchased==false)
 				{
 					utility.addClickItem(402,364, 64,64,this.buyWaterCoin, "");
 					utility.addClickItem(402,364, 64,64,this.exitShop, "");
