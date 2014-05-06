@@ -7,9 +7,11 @@ var shop ={
 	parsnipMask:Object.create(buyableObject),
 	goggles:Object.create(buyableObject),
 	mystery:Object.create(buyableObject),
+	english:Object.create(buyableObject),
+	Robot:Object.create(buyableObject),
 	info:false,
 	shopKeeperDisplay:false,
-	parsnipBeaten: false,
+	parsnipBeaten: true,
 	botnipBeaten: true,
 	englishmanBeaten: true,
 	allPlantsFound: false,
@@ -189,10 +191,10 @@ render:function()
 		
 		//these must constantly be rendered in order to be display when needed.		
 		shop.displayInfo();	
-		shop.initShop();
 		shop.buttonHandler();
 		shop.infoDisplay();
 		shop.drawPrices();
+		shop.initShop();
 		
 },
 initShop:function()
@@ -227,9 +229,14 @@ initShop:function()
 	shop.mystery.x=96;
 	shop.mystery.y=308;
 	shop.mystery.init();
-	//initate
-
-	
+	//initate english
+	shop.english.price=0;
+	shop.english.x=604;
+	shop.english.y=316;
+	shop.english.init();
+	//initiate robot
+	shop.Robot.price=150;
+	shop.Robot.init();
 	var strings=[];
 			 strings.push(" gold: " + gameplay.gold);	
 				menuSurface.drawImage(
@@ -325,6 +332,26 @@ buyMystery:function()
 	
 	
 },
+buyEnglish:function()
+{
+	
+	if(shop.english.description==true&&shop.english.purchased==false)
+	{
+		shop.english.buy();
+	}
+	shop.english.description=true;
+	shop.info=true;
+	
+},
+buyRobot:function()
+{
+	if(shop.Robot.description==true)
+	{
+		shop.Robot.buy();
+	}
+	shop.Robot.description=true;
+	shop.info=true;
+},
 shopKeeper:function()
 {	
 	shop.info=true;
@@ -348,12 +375,15 @@ exitShop:function()
 		shop.parsnipMask.description=false;
 		shop.goggles.description=false;
 		shop.mystery.description=false;
+		shop.english.description=false;
+		shop.Robot.description=false;
 	
 },
 displayInfo:function()
 {
 				if(shop.info==true)
 				{
+					
 					utility.drawImage(
 					menuSurface,imgItemInfo,
 					0,0,imgItemInfo.width,imgItemInfo.height,
@@ -373,7 +403,8 @@ buttonHandler:function()
 		utility.addClickItem(750,300,imgShopSibling.width,imgShopSibling.height,this.shopKeeper,"");
 		utility.addClickItem(265,308,imgNip.width,imgNip.height,this.buyParsnip,"");
 		utility.addClickItem(598,138,128,128,this.buyWaterCoin);
-		
+		utility.addClickItem(436,308,128,128,this.buyRobot);
+		utility.addClickItem(604,316,128,128,this.buyEnglish);
 	}
 	if(shop.info==true)
 	{
@@ -405,13 +436,17 @@ drawPrices:function()
 	utility.writeText(gameplaySurface, strings, 620, 290, 64 * 4, 20, false);
 	strings.pop();
 	strings.push(" 300 gold ");
-	utility.writeText(gameplaySurface, strings, 270 ,460, 64 * 4, 20, false);
+	utility.writeText(gameplaySurface, strings, 270 ,455, 64 * 4, 20, false);
 	strings.pop();
 	strings.push(" 150 gold ");
-	utility.writeText(gameplaySurface, strings, 94, 460, 64 * 4, 20, false);
+	utility.writeText(gameplaySurface, strings, 94, 455, 64 * 4, 20, false);
 	strings.pop();
 	strings.push("150 gold");
 	utility.writeText(gameplaySurface, strings, 435, 455, 64 * 4, 20, false);
+	strings.pop();
+	strings.push("150 gold");
+	utility.writeText(gameplaySurface, strings, 610, 455, 64 * 4, 20, false);
+	
 	
 },
 
@@ -621,7 +656,7 @@ infoDisplay:function()
 			if(gameplay.gold>=shop.mystery.price&& shop.mystery.purchased==false)
 				{
 					utility.drawImage(
-					gameplaySurface, this.siblingSprite,
+					menuSurface, this.siblingSprite,
 					0, 0, imgShopSibling.width, imgShopSibling.height,
 					750, 300, imgShopSibling.width,imgShopSibling.height
 					);
@@ -647,8 +682,64 @@ infoDisplay:function()
 		}
 		
 		
+	}
+	// copied for english man beaten code.
+	if(this.english.description==true)
+	{
+		var strings = [];
+		
+				if(shop.englishmanBeaten)
+				{
+					strings.push("Purchase this to become the wondering English man" );
+					utility.writeText(menuSurface, strings, 245, 290, 64 * 4, 20, false);
+					utility.drawImage(
+					menuSurface, imgBritish,
+					0, 0, imgBritish.width, imgBritish.height,
+					315, 155, imgBritish.width,imgBritish.height		
+					);
+			if(gameplay.gold>=this.english.price&&this.englishmanBeaten&&this.english.purchased==false)
+				{
+					utility.drawImage(
+				menuSurface, imgPurchaseButton,
+				0, 0, imgPurchaseButton.width, imgPurchaseButton.height,
+				402, 364, 64,64
+			);
+					utility.addClickItem(402,364, 64,64,this.buyEnglish, "");
+					utility.addClickItem(402,364, 64,64,this.exitShop, "");
+				}
+				else
+				{
+				utility.drawImage(
+				menuSurface, imgTransButton,
+				0, 0, imgTransButton.width, imgTransButton.height,
+				402, 364, 64,64
+				
+				);
+				}
+					
+				}
+				else
+				{
+					var strings = [];
+					strings.push("This unlocks once you have defeated the English man!" );
+					utility.writeText(menuSurface, strings, 245, 290, 64 * 4, 20, false);
+					utility.drawImage(
+					menuSurface, imgMysterySprite,
+					0, 0, imgMysterySprite.width, imgMysterySprite.height,
+					315, 155, 96,96
+			);
+					
+					
+					
+					
+				}
+			
+				
+				
 		
 	}
+	
+	// Handles the british images and click utiltiy	
 	
 	
 	
