@@ -1586,7 +1586,6 @@ var gameplay = {
 	summonEnglishman: function()
 	{
 		var randSummon = Math.random() * 1000;
-		randSummon = 1;
 		if ( randSummon < 10)
 		{
 			this.englishmanSummoned = true;
