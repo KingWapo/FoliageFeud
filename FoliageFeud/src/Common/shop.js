@@ -70,16 +70,8 @@ render:function()
 			0, 0, imgPrice.width, imgPrice.height,
 			600, 435, 128, 32
 		);
-		utility.drawImage(
-			gameplaySurface, imgPrice,
-			0, 0, imgPrice.width, imgPrice.height,
-			765, 270, 128, 32
-		);
-		utility.drawImage(
-			gameplaySurface, imgPrice,
-			0, 0, imgPrice.width, imgPrice.height,
-			930, 270, 128, 32
-		);
+	
+		
 		// the shop exit button
 		utility.drawImage(
 			gameplaySurface, imgExitButton,
@@ -123,12 +115,13 @@ render:function()
 				97, 308, 128, 128
 				);
 			}
+			// if parsnip is beaten draws the right sprite
 			if(shop.parsnipBeaten)
 			{
 				utility.drawImage(
 				gameplaySurface, imgNip,
 				0, 0, imgNip.width, imgNip.height,
-				765, 138, imgNip.width,imgNip.height
+				429, 308, imgNip.width,imgNip.height
 				);
 			}
 			else
@@ -136,7 +129,7 @@ render:function()
 				utility.drawImage(
 				gameplaySurface, imgMysterySprite,
 				0, 0, imgMysterySprite.width, imgMysterySprite.height,
-				97, 308, 128, 128
+				429, 308, 128, 128
 				);
 			}
 			if(shop.allPlantsFound)
@@ -148,7 +141,7 @@ render:function()
 				utility.drawImage(
 				gameplaySurface, imgMysterySprite,
 				0, 0, imgMysterySprite.width, imgMysterySprite.height,
-				97, 308, 128, 128
+				265, 308, 128, 128
 				);
 			}
 			if(shop.englishmanBeaten)
@@ -160,14 +153,10 @@ render:function()
 				utility.drawImage(
 				gameplaySurface, imgMysterySprite,
 				0, 0, imgMysterySprite.width, imgMysterySprite.height,
-				97, 308, 128, 128
+				598, 308, 128, 128
 				);
 			}
-			utility.drawImage(
-			gameplaySurface, imgAdventure,
-			0, 0, imgAdventure.width, imgAdventure.height,
-			934, 138, imgAdventure.width,imgAdventure.height
-			);
+		
 			// shop keeper image
 			utility.drawImage(
 			gameplaySurface, this.siblingSprite,
@@ -367,10 +356,10 @@ buttonHandler:function()
 		utility.addClickItem( 96,138,imgAdventure.width,imgAdventure.height,this.buyAdventure,"");
 		utility.addClickItem( 265,140,imgRock.width,imgRock.height,this.buyRock,"");
 		utility.addClickItem( 429,140,imgWater.width,imgWater.height,this.buyWater,"");
-		utility.addClickItem( 97,308,imgWater.width,imgWater.height,this.buyWaterCoin,"");
+		utility.addClickItem( 97,308,imgWater.width,imgWater.height,this.buyMystery,"");
 		utility.addClickItem(750,300,imgShopSibling.width,imgShopSibling.height,this.shopKeeper,"");
-		utility.addClickItem(765,138,imgNip.width,imgNip.height,this.buyParsnip,"");
-		utility.addClickItem(598,138,128,128,this.buyMystery);
+		utility.addClickItem(265,308,imgNip.width,imgNip.height,this.buyParsnip,"");
+		utility.addClickItem(598,138,128,128,this.buyWaterCoin);
 		
 	}
 	if(shop.info==true)
@@ -399,13 +388,13 @@ drawPrices:function()
 	strings.push(" 30 gold ");
 	utility.writeText(gameplaySurface, strings, 440, 290, 64 * 4, 20, false);
 	strings.pop();
-	strings.push(" 150 gold ");
+	strings.push(" 30 gold ");
 	utility.writeText(gameplaySurface, strings, 620, 290, 64 * 4, 20, false);
 	strings.pop();
 	strings.push(" 300 gold ");
-	utility.writeText(gameplaySurface, strings, 780, 290, 64 * 4, 20, false);
+	utility.writeText(gameplaySurface, strings, 270 ,460, 64 * 4, 20, false);
 	strings.pop();
-	strings.push(" 30 gold ");
+	strings.push(" 150 gold ");
 	utility.writeText(gameplaySurface, strings, 94, 460, 64 * 4, 20, false);
 	strings.pop();
 	
@@ -541,30 +530,51 @@ infoDisplay:function()
 	{
 		var strings = [];
 		
-				
-				strings.push(" Once you purchase this hit the = button to become professor parsnip " );
-				utility.writeText(menuSurface, strings, 245, 290, 64 * 4, 20, false);
-				utility.drawImage(
-				menuSurface, imgNip,
-				0, 0, imgNip.width, imgNip.height,
-				315, 155, imgNip.width,imgNip.height
+				if(shop.parsnipBeaten)
+				{
+					strings.push("Purchase this to become the dreaded Parsnip!" );
+					utility.writeText(menuSurface, strings, 245, 290, 64 * 4, 20, false);
+					utility.drawImage(
+					menuSurface, imgNip,
+					0, 0, imgNip.width, imgNip.height,
+					315, 155, imgNip.width,imgNip.height		
+					);
+				}
+				else
+				{
+					var strings = [];
+					strings.push(" once you have beaten something whatever" );
+					utility.writeText(menuSurface, strings, 245, 290, 64 * 4, 20, false);
+					utility.drawImage(
+					menuSurface, imgMysterySprite,
+					0, 0, imgMysterySprite.width, imgMysterySprite.height,
+					315, 155, 96,96
 			);
-				if(gameplay.gold>=this.parsnipMask.price)
+					
+					
+					
+					
+				}
+				if(gameplay.gold>=this.parsnipMask.price&& shop.parsnipBeaten)
 				{
 					utility.drawImage(
-			menuSurface, imgPurchaseButton,
-			0, 0, imgPurchaseButton.width, imgPurchaseButton.height,
-			402, 364, 64,64
+				menuSurface, imgPurchaseButton,
+				0, 0, imgPurchaseButton.width, imgPurchaseButton.height,
+				402, 364, 64,64
 			);
 					utility.addClickItem(402,364, 64,64,this.buyParsnip, "");
 					utility.addClickItem(402,364, 64,64,this.exitShop, "");
 				}
 				else
+				{
 				utility.drawImage(
-			menuSurface, imgTransButton,
-			0, 0, imgTransButton.width, imgTransButton.height,
-			402, 364, 64,64
-			);
+				menuSurface, imgTransButton,
+				0, 0, imgTransButton.width, imgTransButton.height,
+				402, 364, 64,64
+				
+				);
+				utility.addClickItem(402,364, 64,64,this.exitShop, "");
+				}
 		
 	}
 	if(this.mystery.description==true)
@@ -572,7 +582,7 @@ infoDisplay:function()
 		if(gameplay.victory==false)
 		{
 			var strings = [];
-			strings.push(" you have not completed the game yet.Once you defeat evil professor Parsnip this will be unlocked" );
+			strings.push(" once you have beaten something whatever" );
 				utility.writeText(menuSurface, strings, 245, 290, 64 * 4, 20, false);
 				utility.drawImage(
 				menuSurface, imgMysterySprite,
