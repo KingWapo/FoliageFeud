@@ -42,65 +42,43 @@ checkConversation:function()
 startConvoTutorial:function()
 {
 	
-	switch(this.index)
+	switch(utility.textIndex)
 	{
 		case 0:
-		
-		{	this.speakerReset();
+		case 2:
+		case 8:
+		{	/*this.speakerReset();
 			this.speaking=true;
-			this.parsnip=true;
 			var strings=[];
 			strings.push(this.conversation[this.index]);
 				gameplay.createTextBox(400,375,352,132);
-			utility.writeText(menuSurface, strings, 410,425,320, 16, false);
+			utility.writeText(menuSurface, strings, 410,425,320, 16, false);*/
+			this.parsnip=true;
 			this.drawTalking();
 		}
 		break;
 		case 1:
-		{	
-			this.speakerReset();
-			this.speaking=true;
-			var strings=[];
-			this.sibling=true;
-			strings.pop();
-			this.drawTalking();
-			strings.push(this.conversation[this.index]);
-			gameplay.createTextBox(400,375,352,132);
-			utility.writeText(menuSurface, strings, 410,425, 320, 16, false);
-			this.drawTalking();
-		
-			
-		}
-		break;
-		case 2:
-		{	
-			this.speakerReset();
-			this.speaking=true;
-			var strings=[];
-			this.parsnip=true;
-			strings.pop();
-			this.drawTalking();
-			strings.push(this.conversation[this.index]);
-			gameplay.createTextBox(400,375,352,132);
-			utility.writeText(menuSurface, strings, 410,425, 320, 16, false);
-			this.drawTalking();
-		
-			
-		}
-		break;
 		case 3:
-		{
-		this.speaking=true;
+		case 5:
+		case 7:
+		case 9:
+		case 11:
+		case 12:
+		case 14:
+		{	
+			/*this.speakerReset();
+			this.speaking=true;
 			var strings=[];
-			this.speakerReset();
-			this.sibling=true;
 			strings.pop();
 			this.drawTalking();
 			strings.push(this.conversation[this.index]);
-			gameplay.createTextBox(400,375,320,132);
-			utility.writeText(menuSurface, strings, 410,425, 320, 16, false);
+			gameplay.createTextBox(400,375,352,132);
+			utility.writeText(menuSurface, strings, 410,425, 320, 16, false);*/
+			this.sibling=true;
 			this.drawTalking();
-	}
+		
+			
+		}
 	break;
 	case 4:
 	{
@@ -117,22 +95,6 @@ startConvoTutorial:function()
 	
 	}
 	break;
-		case 5:
-		{	
-			this.speakerReset();
-			this.speaking=true;
-			var strings=[];
-			this.sibling=true;
-			strings.pop();
-			this.drawTalking();
-			strings.push(this.conversation[this.index]);
-			gameplay.createTextBox(400,375,352,132);
-			utility.writeText(menuSurface, strings, 410,425, 320, 16, false);
-			this.drawTalking();
-		
-			
-		}
-		break;
 		case 6:
 	{
 		this.speaking=true;
@@ -148,50 +110,6 @@ startConvoTutorial:function()
 	
 	}
 	break;
-	case 7:
-		{	
-			this.speakerReset();
-			this.speaking=true;
-			var strings=[];
-			this.sibling=true;
-			strings.pop();
-			this.drawTalking();
-			strings.push(this.conversation[this.index]);
-			gameplay.createTextBox(400,375,352,132);
-			utility.writeText(menuSurface, strings, 410,425, 320, 16, false);
-			this.drawTalking();
-		
-			
-		}
-		break;
-		case 8:
-		
-		{	this.speakerReset();
-			this.speaking=true;
-			this.parsnip=true;
-			var strings=[];
-			strings.push(this.conversation[this.index]);
-				gameplay.createTextBox(400,375,352,132);
-			utility.writeText(menuSurface, strings, 410,425,320, 16, false);
-			this.drawTalking();
-		}
-		break;
-		case 9:
-		{	
-			this.speakerReset();
-			this.speaking=true;
-			var strings=[];
-			this.sibling=true;
-			strings.pop();
-			this.drawTalking();
-			strings.push(this.conversation[this.index]);
-			gameplay.createTextBox(400,375,352,132);
-			utility.writeText(menuSurface, strings, 410,425, 320, 16, false);
-			this.drawTalking();
-		
-			
-		}
-		break;
 			case 10:
 	{
 		this.speaking=true;
@@ -207,38 +125,6 @@ startConvoTutorial:function()
 	
 	}
 	break;
-	case 11:
-		{	
-			this.speakerReset();
-			this.speaking=true;
-			var strings=[];
-			this.sibling=true;
-			strings.pop();
-			this.drawTalking();
-			strings.push(this.conversation[this.index]);
-			gameplay.createTextBox(400,375,352,132);
-			utility.writeText(menuSurface, strings, 410,425, 320, 16, false);
-			this.drawTalking();
-		
-			
-		}
-		break;
-			case 12:
-		{	
-			this.speakerReset();
-			this.speaking=true;
-			var strings=[];
-			this.sibling=true;
-			strings.pop();
-			this.drawTalking();
-			strings.push(this.conversation[this.index]);
-			gameplay.createTextBox(400,375,352,132);
-			utility.writeText(menuSurface, strings, 410,425, 320, 16, false);
-			this.drawTalking();
-		
-			
-		}
-		break;
 				case 13:
 	{
 		this.speaking=true;
@@ -253,23 +139,6 @@ startConvoTutorial:function()
 	
 	
 	}
-	break;
-		case 14:
-		{	
-			this.speakerReset();
-			this.speaking=true;
-			var strings=[];
-			this.sibling=true;
-			strings.pop();
-			this.drawTalking();
-			strings.push(this.conversation[this.index]);
-			gameplay.createTextBox(400,375,352,132);
-			utility.writeText(menuSurface, strings, 410,425, 320, 16, false);
-			this.drawTalking();
-		
-			
-		}
-		break;
 					case 15:
 	{
 		this.speaking=true;

@@ -12,9 +12,17 @@
 		border: none;
 		position: absolute;
 	}
+	#backgroundCanvas{
+		box-shadow: 0 0 8px #333;
+	}
 	#description{
 		font-family: ComingSoon;
+		font-weight: bold;
 		position: relative;
+		z-index: -2;
+	}
+	body{
+		background-image: url("../img/Tiles/prairieGrass.png");
 	}
 </style>
 
@@ -26,7 +34,7 @@
 	</div>
 	<div id="description">
 		<p>Controls:
-		<br/> &nbsp &nbsp Arrow keys - Move - Move Character/Mini map
+		<br/> &nbsp &nbsp Arrow keys - Move Character/Mini map
 		<br/> &nbsp &nbsp Hold shift - Sprint
 		<br/> &nbsp &nbsp Q - Quest Log
 		<br/> &nbsp &nbsp Enter - Minimap
