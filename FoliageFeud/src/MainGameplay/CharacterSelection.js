@@ -146,7 +146,7 @@ var characterSelection = {
 				utility.addClickItem(this.sprite2.x, this.sprite2.y, this.sprite2.width, this.sprite2.height, function(){currentSprite = SpriteState.Parsnip; exiting[currentScreen] = true;});
 			}
 			
-			if (shop.siblingSprite.purchased)
+			if (shop.mystery.purchased)
 			{
 				utility.drawImage(
 					gameplaySurface, this.sprite3.sprite,

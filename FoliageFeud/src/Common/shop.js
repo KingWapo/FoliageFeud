@@ -278,7 +278,10 @@ buyAdventure:function()
 changeSkin: function(empty)
 {
 	console.debug("Changing Skin");
-	if (shop.parsnipMask.purchased || shop.siblingSprite.purchased || shop.english.purchased || shop.Robot.purchased)
+	if (shop.parsnipMask.purchased || 
+		shop.mystery.purchased || 
+		shop.english.purchased || 
+		shop.Robot.purchased)
 	{
 		characterSelection.fromShop = true;
 		characterSelection.init();
