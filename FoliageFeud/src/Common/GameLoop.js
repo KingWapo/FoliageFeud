@@ -164,6 +164,7 @@ else
 	var currentScreen = ScreenState.Title;
 }
 var currentSprite = SpriteState.Girl;
+var originalSprite = SpriteState.Girl;
 
 // Frames per a second
 var fps = 60;
@@ -205,6 +206,7 @@ function mainUpdate()
 			characterSelection.render();
 			if (exiting[currentScreen])
 			{
+				entering[currentScreen] = true;
 				switchGamemode(ScreenState.Gameplay);
 			}
 		case ScreenState.BaseCamp: // BaseCamp Screen
