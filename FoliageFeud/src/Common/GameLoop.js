@@ -207,6 +207,7 @@ function mainUpdate()
 			if (exiting[currentScreen])
 			{
 				entering[currentScreen] = true;
+				gameplay.updateSprite();
 				switchGamemode(ScreenState.Gameplay);
 			}
 		case ScreenState.BaseCamp: // BaseCamp Screen

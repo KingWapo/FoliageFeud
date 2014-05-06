@@ -12,7 +12,7 @@ var characterSelection = {
 	curDirection: 3,
 	animReset: 100,
 	animTime: 0,
-	fromShop: true,
+	fromShop: false,
 	
 	init: function()
 	{
@@ -126,33 +126,45 @@ var characterSelection = {
 				);
 			utility.addClickItem(this.sprite0.x, this.sprite0.y, this.sprite0.width, this.sprite0.height, function(){currentSprite = originalSprite; exiting[currentScreen] = true;});
 			
-			utility.drawImage(
-				gameplaySurface, this.sprite1.sprite,
-				this.sprite1.sourceWidth * (this.curDirection - 1), 0, this.sprite1.sourceWidth, this.sprite1.sourceHeight,
-				this.sprite1.x, this.sprite1.y, this.sprite1.width, this.sprite1.height
-				);
-			utility.addClickItem(this.sprite1.x, this.sprite1.y, this.sprite1.width, this.sprite1.height, function(){currentSprite = SpriteState.Botnip; exiting[currentScreen] = true;});
+			if (shop.Robot.purchased)
+			{
+				utility.drawImage(
+					gameplaySurface, this.sprite1.sprite,
+					this.sprite1.sourceWidth * (this.curDirection - 1), 0, this.sprite1.sourceWidth, this.sprite1.sourceHeight,
+					this.sprite1.x, this.sprite1.y, this.sprite1.width, this.sprite1.height
+					);
+				utility.addClickItem(this.sprite1.x, this.sprite1.y, this.sprite1.width, this.sprite1.height, function(){currentSprite = SpriteState.Botnip; exiting[currentScreen] = true;});
+			}
 				
-			utility.drawImage(
-				gameplaySurface, this.sprite2.sprite,
-				this.sprite2.sourceWidth * this.curFrame, this.sprite2.sourceHeight * this.curDirection, this.sprite2.sourceWidth, this.sprite2.sourceHeight,
-				this.sprite2.x, this.sprite2.y, this.sprite2.width, this.sprite2.height
-				);
-			utility.addClickItem(this.sprite2.x, this.sprite2.y, this.sprite2.width, this.sprite2.height, function(){currentSprite = SpriteState.Parsnip; exiting[currentScreen] = true;});
-				
-			utility.drawImage(
-				gameplaySurface, this.sprite3.sprite,
-				this.sprite3.sourceWidth * this.curFrame, this.sprite3.sourceHeight * this.curDirection, this.sprite3.sourceWidth, this.sprite3.sourceHeight,
-				this.sprite3.x, this.sprite3.y, this.sprite3.width, this.sprite3.height
-				);
-			utility.addClickItem(this.sprite3.x, this.sprite3.y, this.sprite3.width, this.sprite3.height, this.chooseSibling);
-				
-			utility.drawImage(
-				gameplaySurface, this.sprite4.sprite,
-				this.sprite4.sourceWidth * this.curFrame, this.sprite4.sourceHeight * this.curDirection, this.sprite4.sourceWidth, this.sprite4.sourceHeight,
-				this.sprite4.x, this.sprite4.y, this.sprite4.width, this.sprite4.height
-				);
-			utility.addClickItem(this.sprite4.x, this.sprite4.y, this.sprite4.width, this.sprite4.height, function(){currentSprite = SpriteState.Englishman; exiting[currentScreen] = true;});
+			if (shop.parsnipMask.purchased)
+			{
+				utility.drawImage(
+					gameplaySurface, this.sprite2.sprite,
+					this.sprite2.sourceWidth * this.curFrame, this.sprite2.sourceHeight * this.curDirection, this.sprite2.sourceWidth, this.sprite2.sourceHeight,
+					this.sprite2.x, this.sprite2.y, this.sprite2.width, this.sprite2.height
+					);
+				utility.addClickItem(this.sprite2.x, this.sprite2.y, this.sprite2.width, this.sprite2.height, function(){currentSprite = SpriteState.Parsnip; exiting[currentScreen] = true;});
+			}
+			
+			if (shop.siblingSprite.purchased)
+			{
+				utility.drawImage(
+					gameplaySurface, this.sprite3.sprite,
+					this.sprite3.sourceWidth * this.curFrame, this.sprite3.sourceHeight * this.curDirection, this.sprite3.sourceWidth, this.sprite3.sourceHeight,
+					this.sprite3.x, this.sprite3.y, this.sprite3.width, this.sprite3.height
+					);
+				utility.addClickItem(this.sprite3.x, this.sprite3.y, this.sprite3.width, this.sprite3.height, this.chooseSibling);
+			}
+			
+			if (shop.english.purchased)
+			{
+				utility.drawImage(
+					gameplaySurface, this.sprite4.sprite,
+					this.sprite4.sourceWidth * this.curFrame, this.sprite4.sourceHeight * this.curDirection, this.sprite4.sourceWidth, this.sprite4.sourceHeight,
+					this.sprite4.x, this.sprite4.y, this.sprite4.width, this.sprite4.height
+					);
+				utility.addClickItem(this.sprite4.x, this.sprite4.y, this.sprite4.width, this.sprite4.height, function(){currentSprite = SpriteState.Englishman; exiting[currentScreen] = true;});
+			}
 		}
 		else
 		{

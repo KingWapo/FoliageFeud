@@ -748,6 +748,7 @@ var imgLoadGameButton = utility.loadImage("../img/Buttons/loadButton.png");
 var imgNewGameButton = utility.loadImage("../img/Buttons/newButton.png");
 var imgDemoButton = utility.loadImage("../img/Buttons/demoButton.png");
 var imgCreditsButton = utility.loadImage("../img/Buttons/creditsButton.png");
+var imgMorphButton = utility.loadImage("../img/Buttons/morphButton.png");
 
 var imgCage = utility.loadImage("../img/Tiles/cage.png");
 

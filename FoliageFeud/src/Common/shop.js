@@ -187,7 +187,14 @@ render:function()
 			750, 128, imgShopSibling.width,imgShopSibling.height
 			);
 			
+			// shop keeper image
+			utility.drawImage(
+			gameplaySurface, imgMorphButton,
+			0, 0, imgMorphButton.width, imgMorphButton.height,
+			750, 320, imgMorphButton.width,imgMorphButton.height
+			);
 			
+			utility.addClickItem(750, 320, imgMorphButton.width, imgMorphButton.height, this.changeSkin, [])
 				
 		
 		//these must constantly be rendered in order to be display when needed.		
@@ -267,6 +274,18 @@ buyAdventure:function()
 	
 		
 },
+
+changeSkin: function(empty)
+{
+	console.debug("Changing Skin");
+	if (shop.parsnipMask.purchased || shop.siblingSprite.purchased || shop.english.purchased || shop.Robot.purchased)
+	{
+		characterSelection.fromShop = true;
+		characterSelection.init();
+		currentScreen = ScreenState.CharacterSelection;
+	}
+},
+
 buyParsnip:function()
 {
 	if(shop.parsnipMask.description==true&&shop.parsnipMask.purchased==false)
